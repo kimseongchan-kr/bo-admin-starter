@@ -30,17 +30,19 @@ const ExampleHeadCell = [
     { id: "carbs", numeric: true, disablePadding: false, sort: false, filter: true, label: "탄수화물" },
     { id: "protein", numeric: true, disablePadding: false, sort: false, filter: false, label: "프로틴" },
     { id: "useYn", numeric: false, disablePadding: false, sort: false, filter: false, label: "사용여부" },
-    { id: "viewYn", numeric: false, disablePadding: false, sort: false, filter: false, label: "메인노출" }
+    { id: "viewYn", numeric: false, disablePadding: false, sort: false, filter: false, label: "메인노출" },
+    { id: "textExample", numeric: false, disablePadding: false, sort: false, filter: false, label: "사용자 입력" },
+    { id: "status", numeric: false, disablePadding: false, sort: false, filter: false, label: "관리" }
 ];
 
 const SampleRowData = [
-    { key: 1, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y" },
-    { key: 2, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y" },
-    { key: 3, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y" },
-    { key: 4, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y" },
-    { key: 5, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y" },
-    { key: 6, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y" },
-    { key: 7, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y" }
+    { key: 1, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y", textExample: "사용자 입력" },
+    { key: 2, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y", textExample: "사용자 입력" },
+    { key: 3, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y", textExample: "사용자 입력" },
+    { key: 4, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y", textExample: "사용자 입력" },
+    { key: 5, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y", textExample: "사용자 입력" },
+    { key: 6, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y", textExample: "사용자 입력" },
+    { key: 7, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y", textExample: "사용자 입력" }
 ];
 
 export { ExampleSelectBoxType, ExampleSelectBoxObjPerType, ExampleSelectBoxState, ExampleFilter, ExampleHeadCell, SampleRowData };

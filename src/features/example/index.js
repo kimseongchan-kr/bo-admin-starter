@@ -16,7 +16,7 @@ import Modal from "react-modal";
 import AddModifyModal from "features/example/modal/EditModal";
 import DetailModal from "features/example/modal/DetailModal";
 
-export default function Summary() {
+export default function Example() {
     const classes = layoutStyles();
     const dispatch = useDispatch();
     const searchList = useSelector(searchSelector);
@@ -53,9 +53,20 @@ export default function Summary() {
         await dispatch(setDetail(true));
     };
 
+    // 데이터 삭제하기
+    const handleDelete = async (modalId) => {
+        console.log("deleting data...");
+    };
+
     // 데이터 추가/수정하기
     const handleSubmit = async (data) => {
         console.log(data);
+    };
+
+    // cell edit
+    const handleChange = async (e) => {
+        console.log("changing data");
+        console.log(e.target.value, e.target.name);
     };
 
     // 사용여부/노출여부 데이터 수정하기
@@ -72,7 +83,14 @@ export default function Summary() {
                 <ThemeProvider theme={searchTheme}>
                     <DateTermSearch handleSearch={handleSearch} />
                 </ThemeProvider>
-                <ExampleTable handleOneData={handleOneData} handleDetailData={handleDetailData} handleSearch={handleSearch} handleSelect={handleSelect} />
+                <ExampleTable
+                    handleOneData={handleOneData}
+                    handleDetailData={handleDetailData}
+                    handleDelete={handleDelete}
+                    handleSearch={handleSearch}
+                    handleChange={handleChange}
+                    handleSelect={handleSelect}
+                />
             </Container>
             <ThemeProvider theme={tableTheme}>
                 <AddModifyModal handleDataSubmit={handleSubmit} />

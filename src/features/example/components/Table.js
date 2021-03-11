@@ -11,6 +11,9 @@ import ViewSelect from "common/inputs/ViewSelect";
 import TablePaginationActions from "common/table/Pagination";
 
 import { ExampleHeadCell as headCells, SampleRowData as rowData } from "features/example/ExampleData";
+import EditButton from "common/inputs/EditButton";
+import DeleteButton from "common/inputs/DeleteButton";
+import TextInput from "common/inputs/TextField";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function SummaryTable({ handleOneData, handleDetailData, handleSelect, handleSearch }) {
+export default function ExampleTable({ handleOneData, handleDetailData, handleDelete, handleChange, handleSelect, handleSearch }) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { pageNumber, pageShow, sortNm, sortOrder } = useSelector(searchSelector);
@@ -113,6 +116,13 @@ export default function SummaryTable({ handleOneData, handleDetailData, handleSe
                                         </TableCell>
                                         <TableCell className={classes.selectRow} padding="none">
                                             <ViewSelect useYn={row.viewYn} handleSelect={handleSelect} />
+                                        </TableCell>
+                                        <TableCell align="center" padding="none">
+                                            <TextInput handleChange={handleChange} value={row.textExample} />
+                                        </TableCell>
+                                        <TableCell align="center" padding="none">
+                                            <EditButton modalId={row.key} handleOneData={handleOneData} />
+                                            <DeleteButton modalId={row.key} handleDelete={handleDelete} />
                                         </TableCell>
                                     </TableRow>
                                 );

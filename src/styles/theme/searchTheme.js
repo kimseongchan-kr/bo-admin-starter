@@ -22,13 +22,24 @@ const searchTheme = createMuiTheme({
         },
         MuiOutlinedInput: {
             root: {
-                height: "100%"
+                height: "100%",
+                "&&$focused fieldset": {
+                    borderColor: "#3D393534",
+                    borderWidth: "1px"
+                },
+                "&&:hover fieldset": {
+                    borderColor: "#3D393534",
+                    borderWidth: "1px"
+                }
             },
             input: {
                 padding: "13px 8px"
             },
             adornedEnd: {
                 paddingRight: 8
+            },
+            notchedOutline: {
+                borderColor: "#3D393534"
             }
         },
         MuiIconButton: {

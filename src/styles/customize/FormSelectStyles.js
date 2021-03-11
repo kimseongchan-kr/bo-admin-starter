@@ -1,6 +1,13 @@
 const customStyles = {
     option: (provided, state) => ({
-        ...provided
+        ...provided,
+        backgroundColor: state.isSelected ? "#039BE5" : "#ffffff",
+        color: "#333333",
+        "&:hover": {
+            backgroundColor: state.isSelected ? "#039BE5" : "#039be533"
+        },
+        height: 32,
+        padding: "8px 10px"
     }),
     container: (provided) => ({
         ...provided,
@@ -13,7 +20,11 @@ const customStyles = {
         minHeight: 32,
         height: 32,
         lineHeight: 32,
-        borderColor: "#3D393534"
+        borderColor: "#3D393534",
+        boxShadow: "unset",
+        "&:hover": {
+            borderColor: "#3D393534"
+        }
     }),
     valueContainer: (provided) => ({
         ...provided,
