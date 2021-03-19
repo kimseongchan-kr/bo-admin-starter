@@ -53,9 +53,7 @@ export default function TablePaginationActions(props) {
                 page={page + 1} // 1부터 시작
                 onChange={handleChange}
             />
-            <div className={classes.buttonRoot}>
-                <ModalAddButton handleOpenModal={handleOpenModal} />
-            </div>
+            <div className={classes.buttonRoot}>{/* <ModalAddButton handleOpenModal={handleOpenModal} /> */}</div>
         </div>
     );
 }

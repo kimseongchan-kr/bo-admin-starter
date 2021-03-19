@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getData } from "api/Api";
 import { format } from "utils/CommonFunction";
-const today = format(new Date());
+const today = format("일간", new Date());
 
 export const fetchSearchBox = createAsyncThunk("search/fetchSearchBox", async (url, thunkAPI) => {
     try {
@@ -56,21 +56,12 @@ export const searchSlice = createSlice({
         },
 
         setSort: (state, { payload }) => {
-            console.log("sorting data...");
             state.sortNm = payload.sortNm;
             state.sortOrder = payload.sortOrder;
         },
 
         setSearchFilter: (state, { payload }) => {
-            console.log(payload.type, payload.value);
             state[payload.type] = payload.value;
-        },
-        setSearchKeyword: (state, { payload }) => {
-            state.searchKeyword = payload;
-        },
-
-        setTerm: (state, { payload }) => {
-            state.term = payload;
         },
         setDate: (state, { payload }) => {
             state[payload.type] = payload.date;
@@ -79,6 +70,7 @@ export const searchSlice = createSlice({
         setFilter: (state, { payload }) => {
             state[payload.name] = payload.checked;
         },
+
         setSearchBox: (state, { payload }) => {
             state.searchBox = payload;
         },
@@ -117,7 +109,7 @@ export const searchSlice = createSlice({
     }
 });
 
-export const { setSort, setPage, setSearchFilter, setSearchKeyword, setTerm, setDate, setFilter, setSearchBox, reset } = searchSlice.actions;
+export const { setSort, setPage, setSearchFilter, setDate, setFilter, setSearchBox, reset } = searchSlice.actions;
 
 export const searchSelector = (state) => state.search;
 

@@ -2,35 +2,18 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { searchSelector } from "slices/searchSlice";
 
-import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
+import filterStyles from "styles/customize/FilterStyles";
 
-import { makeStyles } from "@material-ui/core/styles";
+import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 import { Menu, MenuItem, IconButton, Typography, FormControlLabel, Checkbox } from "@material-ui/core";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import FilterList from "@material-ui/icons/FilterList";
 
-import { SummaryFilter } from "features/summary/Data";
-
-const useStyles = makeStyles(() => ({
-    iconButton: {
-        padding: "0 4px",
-        height: 48,
-        lineHeight: "48px"
-    },
-    listItem: {
-        height: 32
-    },
-    okButton: {
-        display: "block",
-        textAlign: "center",
-        height: 32,
-        borderTop: "1px solid #3d39351a"
-    }
-}));
+import { SummaryFilter as filter } from "features/summary/Data";
 
 export default function Filters({ filterType, handleFilter, handleSearch }) {
-    const classes = useStyles();
+    const classes = filterStyles();
     const filterList = useSelector(searchSelector);
 
     const handleChange = (event) => {
@@ -38,7 +21,7 @@ export default function Filters({ filterType, handleFilter, handleSearch }) {
     };
 
     return (
-        <PopupState variant="popover" popupId="demo-popup-menu">
+        <PopupState variant="popover" popupId="filter-popup-menu">
             {(popupState) => (
                 <React.Fragment>
                     <IconButton {...bindTrigger(popupState)} className={classes.iconButton}>
@@ -56,7 +39,7 @@ export default function Filters({ filterType, handleFilter, handleSearch }) {
                             horizontal: "right"
                         }}
                     >
-                        {SummaryFilter[filterType].map((filter, index) => (
+                        {filter[filterType].map((filter, index) => (
                             <MenuItem key={`menu-item-${index}`} className={classes.listItem}>
                                 <FormControlLabel
                                     key={`form-control-label-${index}`}

@@ -9,12 +9,12 @@ import SearchTheme from "styles/theme/search";
 import TableTheme from "styles/theme/table";
 
 import DashboardSearch from "features/summary/components/Search";
-import DashboardTable from "features/summary/components/Table";
+import DashboardTable from "features/summary/components/SelectionTable";
 
 import Modal from "react-modal";
 import AddModifyModal from "features/summary/modal/EditModal";
 import DetailModal from "features/summary/modal/DetailModal";
-import { SampleDetailData } from "./Data";
+import { SampleDetailData } from "features/summary/Data";
 
 export default function Dashboard() {
     const dispatch = useDispatch();
@@ -23,6 +23,7 @@ export default function Dashboard() {
 
     const [dataList, setDataList] = useState([]);
     const [selected, setSelected] = useState([]);
+    const menu = "Dashboard";
 
     // 데이터 불러오기
     const handleData = useCallback(() => {
@@ -53,7 +54,6 @@ export default function Dashboard() {
         if (searchItems) {
             search = { ...search, ...searchItems };
         }
-
         console.log(search);
     };
 
@@ -117,9 +117,10 @@ export default function Dashboard() {
         <>
             <MenuRedux menu="summary" title="Dashboard" num={1} />
             <ThemeProvider theme={SearchTheme}>
-                <DashboardSearch handleSearchFilter={handleSearchFilter} handleSearch={handleSearch} />
+                <DashboardSearch menu={menu} handleSearchFilter={handleSearchFilter} handleSearch={handleSearch} />
             </ThemeProvider>
             <DashboardTable
+                menu={menu}
                 data={dataList}
                 selected={selected}
                 setSelected={setSelected}

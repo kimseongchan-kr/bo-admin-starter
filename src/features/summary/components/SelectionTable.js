@@ -3,10 +3,12 @@ import { useSelector } from "react-redux";
 import { searchSelector } from "slices/searchSlice";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { TableContainer, Paper, Table, TableHead, TableSortLabel, TableBody, TableRow, TableCell, TablePagination } from "@material-ui/core";
+import { TableContainer, Paper, Table, TableHead, TableSortLabel, TableBody, TableRow, TableCell, TablePagination, Checkbox } from "@material-ui/core";
 
 import Filters from "features/summary/components/Filter";
 import UseSelect from "common/inputs/UseSelect";
+import ViewSelect from "common/inputs/ViewSelect";
+import SortOrder from "common/inputs/SortOrder";
 import TablePaginationActions from "common/table/Pagination";
 
 import { SummaryHeadCell as headCells, SampleRowData as rowData } from "features/summary/Data";
@@ -40,10 +42,42 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-// 기본 테이블
-export default function SummaryTable({ menu, handleOneData, handleDetailData, handleChange, handleSelect, handleFilter, handleSearch, handleSort, handlePage }) {
+// Row Selection 가능한 테이블
+export default function SummarySelectionTable({ menu, selected, setSelected, handleOneData, handleDetailData, handleChange, handleSelect, handleFilter, handleSearch, handleSort, handlePage }) {
     const classes = useStyles();
     const { pageNumber, pageShow, sortNm, sortOrder } = useSelector(searchSelector);
+
+    // Summary의 Dashboard 메뉴 table 데이터
+    const DashboardData = ({ row }) => {
+        return (
+            <>
+                <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleOneData(row.key)}>
+                    {row.name}
+                </TableCell>
+                <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleDetailData(row.key)}>
+                    {row.calories}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.fat}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.carbs}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.protein}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    <UseSelect useYn={row.useYn} handleSelect={handleSelect} />
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    <ViewSelect useYn={row.viewYn} handleSelect={handleSelect} />
+                </TableCell>
+                <TableCell width={80} align="center" padding="none">
+                    <SortOrder handleChange={handleChange} sortOrder={row.sortOrder} />
+                </TableCell>
+            </>
+        );
+    };
 
     // Summary의 Summary 메뉴 table 데이터
     const SummaryData = ({ row }) => {
@@ -74,6 +108,34 @@ export default function SummaryTable({ menu, handleOneData, handleDetailData, ha
         );
     };
 
+    // all rows selection
+    const handleSelectAllClick = (event) => {
+        if (event.target.checked) {
+            const newSelecteds = rowData.map((n) => n.key);
+            setSelected(newSelecteds);
+            return;
+        }
+        setSelected([]);
+    };
+
+    // one row selection
+    const handleClick = (event, name) => {
+        const selectedIndex = selected.indexOf(name);
+        let newSelected = [];
+
+        if (selectedIndex === -1) {
+            newSelected = newSelected.concat(selected, name);
+        } else if (selectedIndex === 0) {
+            newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+            newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+        }
+
+        setSelected(newSelected);
+    };
+
     // 정렬하기
     const createSortHandler = (property) => (event) => {
         const isAsc = sortNm === property && sortOrder === "asc";
@@ -90,6 +152,10 @@ export default function SummaryTable({ menu, handleOneData, handleDetailData, ha
         handlePage({ pageNumber: 0, pageShow: parseInt(event.target.value, 10) });
     };
 
+    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const numSelected = selected.length;
+    const rowCount = rowData.length;
+
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
@@ -97,6 +163,14 @@ export default function SummaryTable({ menu, handleOneData, handleDetailData, ha
                     <Table className={classes.table} aria-labelledby="summaryTable" size="medium" aria-label="summary table">
                         <TableHead>
                             <TableRow>
+                                <TableCell padding="checkbox">
+                                    <Checkbox
+                                        indeterminate={numSelected > 0 && numSelected < rowCount}
+                                        checked={rowCount > 0 && numSelected === rowCount}
+                                        onChange={handleSelectAllClick}
+                                        inputProps={{ "aria-label": "select all desserts" }}
+                                    />
+                                </TableCell>
                                 {headCells[menu].map((headCell) => (
                                     <TableCell
                                         key={headCell.id}
@@ -116,11 +190,20 @@ export default function SummaryTable({ menu, handleOneData, handleDetailData, ha
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rowData.map((row, index) => (
-                                <TableRow hover tabIndex={-1} key={index}>
-                                    {menu === "Summary" && <SummaryData row={row} />}
-                                </TableRow>
-                            ))}
+                            {rowData.map((row, index) => {
+                                const isItemSelected = isSelected(row.key);
+                                const labelId = `enhanced-table-checkbox-${index}`;
+
+                                return (
+                                    <TableRow hover role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={index} selected={isItemSelected}>
+                                        <TableCell padding="checkbox">
+                                            <Checkbox onClick={(event) => handleClick(event, row.key)} checked={isItemSelected} inputProps={{ "aria-labelledby": labelId }} />
+                                        </TableCell>
+                                        {menu === "Dashboard" && <DashboardData row={row} />}
+                                        {menu === "Summary" && <SummaryData row={row} />}
+                                    </TableRow>
+                                );
+                            })}
                             {rowData === 0 && (
                                 <TableRow>
                                     <TableCell align="center" colSpan={6}>

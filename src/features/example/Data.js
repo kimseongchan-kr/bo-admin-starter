@@ -1,23 +1,3 @@
-const ExampleSelectBoxType = ["gender"];
-const ExampleSelectBoxObjPerType = {
-    gender: [
-        { value: "전체", label: "전체" },
-        { value: "M", label: "M" },
-        { value: "F", label: "F" }
-    ],
-    searchType: [
-        { value: "전체", label: "전체" },
-        { value: "아이디", label: "아이디" },
-        { value: "이름", label: "이름" },
-        { value: "연락처", label: "연락처" }
-    ],
-    term: [
-        { value: "일간", label: "일간" },
-        { value: "월간", label: "월간" }
-    ]
-};
-const ExampleSelectBoxState = { gender: "성별" };
-
 const ExampleFilter = {
     calories: ["cupcake", "cake", "cookie", "macaroon"],
     carbs: ["example1", "example2", "example3", "example4"]
@@ -66,4 +46,4 @@ const SampleDetailData = [
     { key: 7, name: "Cupcake", calories: 305, fat: 3.7, carbs: 67, protein: 4.3, useYn: "사용", viewYn: "활성화" }
 ];
 
-export { ExampleSelectBoxType, ExampleSelectBoxObjPerType, ExampleSelectBoxState, ExampleFilter, ExampleHeadCell, SampleRowData, SampleDetailData };
+export { ExampleFilter, ExampleHeadCell, SampleRowData, SampleDetailData };

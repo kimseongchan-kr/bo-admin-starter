@@ -10,6 +10,7 @@ import { Mail as MailIcon, ExpandMore as ExpandMoreIcon } from "@material-ui/ico
 import MuiAccordion from "@material-ui/core/Accordion";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
 import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
+import { reset } from "slices/searchSlice";
 
 const drawerWidth = 240;
 const Accordion = withStyles({
@@ -181,6 +182,11 @@ export default function Menubar() {
         setExpanded(isExpanded ? panel : false);
     };
 
+    const handlePageChange = (menu) => {
+        dispatch(setMenu(menu));
+        dispatch(reset());
+    };
+
     return (
         <Drawer
             variant="permanent"
@@ -192,7 +198,7 @@ export default function Menubar() {
         >
             <Box className={classes.toolbar}>
                 <Typography variant="h1" component="h1">
-                    <Link component={RouterLink} className={classes.logo} to="/" onClick={() => dispatch(setMenu({ menu: "summary", title: "Dashboard", num: 1 }))}>
+                    <Link component={RouterLink} className={classes.logo} to="/" onClick={() => handlePageChange({ menu: "summary", title: "Dashboard", num: 1 })}>
                         LOGO
                     </Link>
                 </Typography>
@@ -209,14 +215,14 @@ export default function Menubar() {
                         </AccordionSummary>
                         <AccordionDetails className={menuNum === 1 ? classes.active : ""}>
                             <Typography className="nav-link">
-                                <RouterLink to="/dashboard" onClick={async () => await dispatch(setMenu({ menu: "summary", title: "Dashboard", num: 1 }))}>
+                                <RouterLink to="/dashboard" onClick={() => handlePageChange({ menu: "summary", title: "Dashboard", num: 1 })}>
                                     Dashboard
                                 </RouterLink>
                             </Typography>
                         </AccordionDetails>
                         <AccordionDetails className={menuNum === 2 ? classes.active : ""}>
                             <Typography className="nav-link">
-                                <RouterLink to="/summary" onClick={async () => await dispatch(setMenu({ menu: "summary", title: "Summary", num: 2 }))}>
+                                <RouterLink to="/summary" onClick={() => handlePageChange({ menu: "summary", title: "Summary", num: 2 })}>
                                     Summary
                                 </RouterLink>
                             </Typography>
@@ -225,7 +231,7 @@ export default function Menubar() {
                 </ListItem>
                 <ListItem className={classes.list}>
                     <Accordion square expanded={expanded === "example"} onChange={handleChange("example")}>
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`panel1d-content`} id={`panel1d-header`}>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`panel2d-content`} id={`pane2d-header`}>
                             <ListItemIcon>
                                 <MailIcon />
                             </ListItemIcon>
@@ -233,7 +239,7 @@ export default function Menubar() {
                         </AccordionSummary>
                         <AccordionDetails className={menuNum === 3 ? classes.active : ""}>
                             <Typography className="nav-link">
-                                <RouterLink to="/example" onClick={async () => await dispatch(setMenu({ menu: "example", title: "Example", num: 3 }))}>
+                                <RouterLink to="/example" onClick={() => handlePageChange({ menu: "example", title: "Example", num: 3 })}>
                                     Example
                                 </RouterLink>
                             </Typography>

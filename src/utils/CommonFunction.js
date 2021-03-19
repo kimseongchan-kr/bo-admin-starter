@@ -1,5 +1,6 @@
-export const format = (date, time) => {
+export const format = (type, date, time) => {
     let datefm = new Date(date);
+
     let day = "" + datefm.getDate();
     let month = "" + (datefm.getMonth() + 1);
     let year = "" + datefm.getFullYear();
@@ -19,6 +20,10 @@ export const format = (date, time) => {
         let date = [year, month, day].join("-");
         date = date + " " + [hour, minutes, seconds].join(":");
         return date;
+    }
+
+    if (type === "월간") {
+        return [year, month].join("-");
     }
 
     return [year, month, day].join("-");
