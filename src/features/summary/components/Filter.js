@@ -1,20 +1,16 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { useSelector } from "react-redux";
+import { searchSelector } from "slices/searchSlice";
 
-import { IconButton, Typography } from "@material-ui/core";
-import FilterList from "@material-ui/icons/FilterList";
-
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { makeStyles } from "@material-ui/core/styles";
+import { Menu, MenuItem, IconButton, Typography, FormControlLabel, Checkbox } from "@material-ui/core";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
-import { useDispatch, useSelector } from "react-redux";
-import { searchSelector, setFilter } from "slices/searchSlice";
-import { SummaryFilter } from "../SummaryData";
+import FilterList from "@material-ui/icons/FilterList";
+
+import { SummaryFilter } from "features/summary/Data";
 
 const useStyles = makeStyles(() => ({
     iconButton: {
@@ -33,13 +29,12 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function Filters({ filterType, handleSearch }) {
+export default function Filters({ filterType, handleFilter, handleSearch }) {
     const classes = useStyles();
-    const dispatch = useDispatch();
     const filterList = useSelector(searchSelector);
 
-    const handleChange = async (event) => {
-        await dispatch(setFilter({ name: event.target.name, checked: event.target.checked }));
+    const handleChange = (event) => {
+        handleFilter({ name: event.target.name, checked: event.target.checked });
     };
 
     return (
@@ -49,7 +44,18 @@ export default function Filters({ filterType, handleSearch }) {
                     <IconButton {...bindTrigger(popupState)} className={classes.iconButton}>
                         <FilterList />
                     </IconButton>
-                    <Menu {...bindMenu(popupState)} getContentAnchorEl={null} anchorOrigin={{ vertical: "bottom", horizontal: "right" }} transformOrigin={{ vertical: "top", horizontal: "right" }}>
+                    <Menu
+                        {...bindMenu(popupState)}
+                        getContentAnchorEl={null}
+                        anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "right"
+                        }}
+                        transformOrigin={{
+                            vertical: "top",
+                            horizontal: "right"
+                        }}
+                    >
                         {SummaryFilter[filterType].map((filter, index) => (
                             <MenuItem key={`menu-item-${index}`} className={classes.listItem}>
                                 <FormControlLabel

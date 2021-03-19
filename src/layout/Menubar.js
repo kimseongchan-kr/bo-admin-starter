@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { menuSelector, setMenu } from "slices/menuSlice";
 
@@ -170,7 +170,12 @@ export default function Menubar() {
     const dispatch = useDispatch();
     const menuList = useSelector(menuSelector);
     const { menu, menuNum } = menuList;
-    const [expanded, setExpanded] = useState(menu ? menu : false);
+
+    const [expanded, setExpanded] = useState(false);
+
+    useEffect(() => {
+        setExpanded(menu ? menu : false);
+    }, [menu]);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
@@ -187,8 +192,8 @@ export default function Menubar() {
         >
             <Box className={classes.toolbar}>
                 <Typography variant="h1" component="h1">
-                    <Link className={classes.logo} href="/">
-                        Link
+                    <Link component={RouterLink} className={classes.logo} to="/" onClick={() => dispatch(setMenu({ menu: "summary", title: "Dashboard", num: 1 }))}>
+                        LOGO
                     </Link>
                 </Typography>
             </Box>
@@ -204,50 +209,33 @@ export default function Menubar() {
                         </AccordionSummary>
                         <AccordionDetails className={menuNum === 1 ? classes.active : ""}>
                             <Typography className="nav-link">
-                                <NavLink to="/dashboard" onClick={async () => await dispatch(setMenu({ menu: "summary", title: "Dashboard", num: 1 }))}>
+                                <RouterLink to="/dashboard" onClick={async () => await dispatch(setMenu({ menu: "summary", title: "Dashboard", num: 1 }))}>
                                     Dashboard
-                                </NavLink>
+                                </RouterLink>
                             </Typography>
                         </AccordionDetails>
                         <AccordionDetails className={menuNum === 2 ? classes.active : ""}>
                             <Typography className="nav-link">
-                                <NavLink to="/example1" onClick={async () => await dispatch(setMenu({ menu: "summary", title: "Example 1", num: 2 }))}>
-                                    Example 1
-                                </NavLink>
+                                <RouterLink to="/summary" onClick={async () => await dispatch(setMenu({ menu: "summary", title: "Summary", num: 2 }))}>
+                                    Summary
+                                </RouterLink>
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
                 </ListItem>
                 <ListItem className={classes.list}>
-                    <Accordion square expanded={expanded === "example1"} onChange={handleChange("example1")}>
+                    <Accordion square expanded={expanded === "example"} onChange={handleChange("example")}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`panel1d-content`} id={`panel1d-header`}>
                             <ListItemIcon>
                                 <MailIcon />
                             </ListItemIcon>
-                            <Typography>Example 1</Typography>
+                            <Typography>Example</Typography>
                         </AccordionSummary>
                         <AccordionDetails className={menuNum === 3 ? classes.active : ""}>
                             <Typography className="nav-link">
-                                <NavLink to="/" onClick={async () => await dispatch(setMenu({ menu: "example1", title: "Example 1 - 1", num: 3 }))}>
-                                    Example 1 - 1
-                                </NavLink>
-                            </Typography>
-                        </AccordionDetails>
-                    </Accordion>
-                </ListItem>
-                <ListItem className={classes.list}>
-                    <Accordion square expanded={expanded === "example2"} onChange={handleChange("example2")}>
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`panel1d-content`} id={`panel1d-header`}>
-                            <ListItemIcon>
-                                <MailIcon />
-                            </ListItemIcon>
-                            <Typography>Example 2</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails className={menuNum === 4 ? classes.active : ""}>
-                            <Typography className="nav-link">
-                                <NavLink to="/" onClick={async () => await dispatch(setMenu({ menu: "example2", title: "Example 2 - 1", num: 4 }))}>
-                                    Example 2 - 1
-                                </NavLink>
+                                <RouterLink to="/example" onClick={async () => await dispatch(setMenu({ menu: "example", title: "Example", num: 3 }))}>
+                                    Example
+                                </RouterLink>
                             </Typography>
                         </AccordionDetails>
                     </Accordion>

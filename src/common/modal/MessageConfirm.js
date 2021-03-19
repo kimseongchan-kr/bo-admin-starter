@@ -3,7 +3,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider, IconButton, Typography, Grid } from "@material-ui/core";
 import theme from "styles/theme/button";
-import { Close } from "@material-ui/icons";
+import { CheckOutlined, Close } from "@material-ui/icons";
 
 import Modal from "react-modal";
 import { disableScroll, enableScroll } from "utils/CommonFunction";
@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function MessageModal({ open, setModal, message }) {
+export default function ConfirmModal({ open, setModal, message }) {
     const classes = useStyles();
 
     return (
@@ -28,12 +28,16 @@ export default function MessageModal({ open, setModal, message }) {
             <Typography variant="body1" display="block" color="inherit" className={classes.message}>
                 {message}
             </Typography>
-            <Grid container justify="center" alignItems="center">
+            <Grid container justify="flex-end" alignItems="center">
                 <Grid item>
                     <ThemeProvider theme={theme}>
                         <IconButton onClick={() => setModal(false)}>
                             <Close style={{ color: "#DE5D5D" }} />
-                            닫기
+                            취소
+                        </IconButton>
+                        <IconButton onClick={() => setModal(false)}>
+                            <CheckOutlined />
+                            확인
                         </IconButton>
                     </ThemeProvider>
                 </Grid>

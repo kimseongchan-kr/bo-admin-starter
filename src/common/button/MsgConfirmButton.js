@@ -2,14 +2,14 @@ import React from "react";
 
 import { ThemeProvider, IconButton } from "@material-ui/core";
 import theme from "styles/theme/button";
-import { Close } from "@material-ui/icons";
+import { CheckOutlined } from "@material-ui/icons";
 
-export default function DeleteButton({ handleSubmit }) {
+export default function ConfirmButton({ handleSubmit }) {
     return (
         <ThemeProvider theme={theme}>
             <IconButton onClick={handleSubmit}>
-                <Close style={{ color: "#DE5D5D" }} />
-                삭제
+                <CheckOutlined />
+                확인
             </IconButton>
         </ThemeProvider>
     );

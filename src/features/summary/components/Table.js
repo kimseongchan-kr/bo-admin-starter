@@ -1,6 +1,7 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { searchSelector, setPage, setSort } from "slices/searchSlice";
+import { useSelector } from "react-redux";
+import { searchSelector } from "slices/searchSlice";
+import { menuSelector } from "slices/menuSlice";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { TableContainer, Paper, Table, TableHead, TableSortLabel, TableBody, TableRow, TableCell, TablePagination, Checkbox } from "@material-ui/core";
@@ -11,7 +12,7 @@ import ViewSelect from "common/inputs/ViewSelect";
 import SortOrder from "common/inputs/SortOrder";
 import TablePaginationActions from "common/table/Pagination";
 
-import { SummaryHeadCell as headCells, SampleRowData as rowData } from "features/summary/SummaryData";
+import { SummaryHeadCell as headCells, SampleRowData as rowData } from "features/summary/Data";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 750
     },
     cursor: {
+        textDecoration: "underline",
         cursor: "pointer"
     },
     visuallyHidden: {
@@ -41,12 +43,73 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function SummaryTable({ selected, setSelected, handleOneData, handleDetailData, handleChange, handleSelect, handleSearch }) {
+export default function SummaryTable({ selected, setSelected, handleOneData, handleDetailData, handleChange, handleSelect, handleFilter, handleSearch, handleSort, handlePage }) {
     const classes = useStyles();
-    const dispatch = useDispatch();
     const { pageNumber, pageShow, sortNm, sortOrder } = useSelector(searchSelector);
+    const { menuTitle } = useSelector(menuSelector);
 
-    // row selection
+    // Summary의 Dashboard 메뉴 table 데이터
+    const DashboardData = ({ row }) => {
+        return (
+            <>
+                <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleOneData(row.key)}>
+                    {row.name}
+                </TableCell>
+                <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleDetailData(row.key)}>
+                    {row.calories}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.fat}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.carbs}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.protein}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    <UseSelect useYn={row.useYn} handleSelect={handleSelect} />
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    <ViewSelect useYn={row.viewYn} handleSelect={handleSelect} />
+                </TableCell>
+                <TableCell width={80} align="center" padding="none">
+                    <SortOrder handleChange={handleChange} sortOrder={row.sortOrder} />
+                </TableCell>
+            </>
+        );
+    };
+
+    // Summary의 Summary 메뉴 table 데이터
+    const SummaryData = ({ row }) => {
+        return (
+            <>
+                <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleOneData(row.key)}>
+                    {row.name}
+                </TableCell>
+                <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleDetailData(row.key)}>
+                    {row.calories}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.fat}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.carbs}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.protein}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    <UseSelect useYn={row.useYn} handleSelect={handleSelect} />
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.regdate}
+                </TableCell>
+            </>
+        );
+    };
+
+    // all rows selection
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
             const newSelecteds = rowData.map((n) => n.key);
@@ -56,7 +119,7 @@ export default function SummaryTable({ selected, setSelected, handleOneData, han
         setSelected([]);
     };
 
-    // row selection
+    // one row selection
     const handleClick = (event, name) => {
         const selectedIndex = selected.indexOf(name);
         let newSelected = [];
@@ -75,22 +138,19 @@ export default function SummaryTable({ selected, setSelected, handleOneData, han
     };
 
     // 정렬하기
-    const createSortHandler = (property) => async (event) => {
+    const createSortHandler = (property) => (event) => {
         const isAsc = sortNm === property && sortOrder === "asc";
-        await dispatch(setSort({ sortNm: property, sortOrder: isAsc ? "desc" : "asc" }));
-        await handleSearch();
+        handleSort({ sortNm: property, sortOrder: isAsc ? "desc" : "asc" });
     };
 
     // 페이지 이동하기
-    const handleChangePage = async (newPage) => {
-        await dispatch(setPage({ pageNumber: newPage, pageShow }));
-        await handleSearch();
+    const handleChangePage = (newPage) => {
+        handlePage({ pageNumber: newPage, pageShow });
     };
 
     // rows per page 변경하기
-    const handleChangeRowsPerPage = async (event) => {
-        await dispatch(setPage({ pageNumber: 0, pageShow: parseInt(event.target.value, 10) }));
-        await handleSearch();
+    const handleChangeRowsPerPage = (event) => {
+        handlePage({ pageNumber: 0, pageShow: parseInt(event.target.value, 10) });
     };
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -112,7 +172,7 @@ export default function SummaryTable({ selected, setSelected, handleOneData, han
                                         inputProps={{ "aria-label": "select all desserts" }}
                                     />
                                 </TableCell>
-                                {headCells.map((headCell) => (
+                                {headCells[menuTitle].map((headCell) => (
                                     <TableCell
                                         key={headCell.id}
                                         align="center"
@@ -125,7 +185,7 @@ export default function SummaryTable({ selected, setSelected, handleOneData, han
                                                 {sortNm === headCell.id ? <span className={classes.visuallyHidden}>{sortOrder === "desc" ? "sorted descending" : "sorted ascending"}</span> : null}
                                             </TableSortLabel>
                                         )}
-                                        {headCell.filter && <Filters filterType={headCell.id} handleSearch={handleSearch} />}
+                                        {headCell.filter && <Filters filterType={headCell.id} handleFilter={handleFilter} handleSearch={handleSearch} />}
                                     </TableCell>
                                 ))}
                             </TableRow>
@@ -140,30 +200,8 @@ export default function SummaryTable({ selected, setSelected, handleOneData, han
                                         <TableCell padding="checkbox">
                                             <Checkbox onClick={(event) => handleClick(event, row.key)} checked={isItemSelected} inputProps={{ "aria-labelledby": labelId }} />
                                         </TableCell>
-                                        <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleOneData(row.key)}>
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleDetailData(row.key)}>
-                                            {row.calories}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.fat}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.carbs}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.protein}
-                                        </TableCell>
-                                        <TableCell className={classes.selectRow} padding="none">
-                                            <UseSelect useYn={row.useYn} handleSelect={handleSelect} />
-                                        </TableCell>
-                                        <TableCell className={classes.selectRow} padding="none">
-                                            <ViewSelect useYn={row.viewYn} handleSelect={handleSelect} />
-                                        </TableCell>
-                                        <TableCell width={80} align="center" padding="none">
-                                            <SortOrder handleChange={handleChange} sortOrder={row.sortOrder} />
-                                        </TableCell>
+                                        {menuTitle === "Dashboard" && <DashboardData row={row} />}
+                                        {menuTitle === "Summary" && <SummaryData row={row} />}
                                     </TableRow>
                                 );
                             })}

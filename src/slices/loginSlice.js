@@ -20,9 +20,9 @@ export const loginSlice = createSlice({
         position: ""
     },
     reducers: {
-        setLogOut: (state, { payload }) => {
-            state.isLogin = payload.login;
-            state.userName = payload.userName;
+        setLogOut: (state) => {
+            state.isLogin = false;
+            state.userName = "";
             localStorage.clear();
         }
     },
@@ -31,7 +31,7 @@ export const loginSlice = createSlice({
             state.loading = true;
         },
         [fetchLogin.fulfilled]: (state, { payload }) => {
-            state.isLogin = false;
+            state.isLogin = true;
             state.loading = false;
             state.hasErrors = false;
         },

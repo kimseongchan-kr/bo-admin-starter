@@ -1,11 +1,11 @@
 import React from "react";
 import { TextField, ThemeProvider } from "@material-ui/core";
-import textFieldTheme from "styles/theme/textFieldTheme";
+import theme from "styles/theme/textfield";
 
-export default function TextInput({ handleChange, value }) {
+export default function TextInput({ idx, handleChange, value }) {
     return (
-        <ThemeProvider theme={textFieldTheme}>
-            <TextField id="outlined-text" label="" size="small" variant="outlined" type="text" name="textExample" onChange={handleChange} value={value} />
+        <ThemeProvider theme={theme}>
+            <TextField id={`outlined-text-${idx}`} label="" size="small" variant="outlined" type="text" name="textExample" onChange={handleChange} value={value} />
         </ThemeProvider>
     );
 }

@@ -1,6 +1,7 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { searchSelector, setPage, setSort } from "slices/searchSlice";
+import { useSelector } from "react-redux";
+import { searchSelector } from "slices/searchSlice";
+import { menuSelector } from "slices/menuSlice";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { TableContainer, Paper, Table, TableHead, TableSortLabel, TableBody, TableRow, TableCell, TablePagination } from "@material-ui/core";
@@ -8,12 +9,12 @@ import { TableContainer, Paper, Table, TableHead, TableSortLabel, TableBody, Tab
 import Filters from "features/example/components/Filter";
 import UseSelect from "common/inputs/UseSelect";
 import ViewSelect from "common/inputs/ViewSelect";
-import TablePaginationActions from "common/table/Pagination";
-
-import { ExampleHeadCell as headCells, SampleRowData as rowData } from "features/example/ExampleData";
 import EditButton from "common/inputs/EditButton";
 import DeleteButton from "common/inputs/DeleteButton";
 import TextInput from "common/inputs/TextField";
+import TablePaginationActions from "common/table/Pagination";
+
+import { ExampleHeadCell as headCells, SampleRowData as rowData } from "features/example/Data";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 750
     },
     cursor: {
-        cursor: "pointer"
+        cursor: "pointer",
+        textDecoration: "underline"
     },
     visuallyHidden: {
         border: 0,
@@ -43,28 +45,60 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ExampleTable({ handleOneData, handleDetailData, handleDelete, handleChange, handleSelect, handleSearch }) {
+export default function ExampleTable({ handleOneData, handleDetailData, handleDelete, handleChange, handleSelect, handleFilter, handleSearch, handleSort, handlePage }) {
     const classes = useStyles();
-    const dispatch = useDispatch();
     const { pageNumber, pageShow, sortNm, sortOrder } = useSelector(searchSelector);
+    const { menuTitle } = useSelector(menuSelector);
+
+    const ExampleData = ({ row, index }) => {
+        return (
+            <>
+                <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleOneData(row.key)}>
+                    {row.name}
+                </TableCell>
+                <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleDetailData(row.key)}>
+                    {row.calories}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.fat}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.carbs}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.protein}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    <UseSelect useYn={row.useYn} handleSelect={handleSelect} />
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    <ViewSelect useYn={row.viewYn} handleSelect={handleSelect} />
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    <TextInput idx={index} handleChange={handleChange} value={row.textExample} />
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    <EditButton modalId={row.key} handleOneData={handleOneData} />
+                    <DeleteButton modalId={row.key} handleDelete={handleDelete} />
+                </TableCell>
+            </>
+        );
+    };
 
     // 정렬하기
-    const createSortHandler = (property) => async (event) => {
+    const createSortHandler = (property) => (event) => {
         const isAsc = sortNm === property && sortOrder === "asc";
-        await dispatch(setSort({ sortNm: property, sortOrder: isAsc ? "desc" : "asc" }));
-        handleSearch();
+        handleSort({ sortNm: property, sortOrder: isAsc ? "desc" : "asc" });
     };
 
     // 페이지 이동하기
-    const handleChangePage = async (newPage) => {
-        await dispatch(setPage({ pageNumber: newPage, pageShow }));
-        handleSearch();
+    const handleChangePage = (newPage) => {
+        handlePage({ pageNumber: newPage, pageShow });
     };
 
     // rows per page 변경하기
-    const handleChangeRowsPerPage = async (event) => {
-        await dispatch(setPage({ pageNumber: 0, pageShow: parseInt(event.target.value, 10) }));
-        handleSearch();
+    const handleChangeRowsPerPage = (event) => {
+        handlePage({ pageNumber: 0, pageShow: parseInt(event.target.value, 10) });
     };
 
     return (
@@ -74,7 +108,7 @@ export default function ExampleTable({ handleOneData, handleDetailData, handleDe
                     <Table className={classes.table} aria-labelledby="exampleTable" size="medium" aria-label="example table">
                         <TableHead>
                             <TableRow>
-                                {headCells.map((headCell) => (
+                                {headCells[menuTitle].map((headCell) => (
                                     <TableCell
                                         key={headCell.id}
                                         align="center"
@@ -87,7 +121,7 @@ export default function ExampleTable({ handleOneData, handleDetailData, handleDe
                                                 {sortNm === headCell.id ? <span className={classes.visuallyHidden}>{sortOrder === "desc" ? "sorted descending" : "sorted ascending"}</span> : null}
                                             </TableSortLabel>
                                         )}
-                                        {headCell.filter && <Filters filterType={headCell.id} handleSearch={handleSearch} />}
+                                        {headCell.filter && <Filters filterType={headCell.id} handleFilter={handleFilter} handleSearch={handleSearch} />}
                                     </TableCell>
                                 ))}
                             </TableRow>
@@ -96,34 +130,7 @@ export default function ExampleTable({ handleOneData, handleDetailData, handleDe
                             {rowData.map((row, index) => {
                                 return (
                                     <TableRow hover tabIndex={-1} key={index}>
-                                        <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleOneData(row.key)}>
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleDetailData(row.key)}>
-                                            {row.calories}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.fat}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.carbs}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.protein}
-                                        </TableCell>
-                                        <TableCell className={classes.selectRow} padding="none">
-                                            <UseSelect useYn={row.useYn} handleSelect={handleSelect} />
-                                        </TableCell>
-                                        <TableCell className={classes.selectRow} padding="none">
-                                            <ViewSelect useYn={row.viewYn} handleSelect={handleSelect} />
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            <TextInput handleChange={handleChange} value={row.textExample} />
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            <EditButton modalId={row.key} handleOneData={handleOneData} />
-                                            <DeleteButton modalId={row.key} handleDelete={handleDelete} />
-                                        </TableCell>
+                                        {menuTitle === "Example" && <ExampleData index={index} row={row} />}
                                     </TableRow>
                                 );
                             })}

@@ -17,7 +17,7 @@ const buttonTheme = createMuiTheme({
                 letterSpacing: "0.52px",
 
                 "&:hover": {
-                    backgroundColor: "transparent"
+                    backgroundColor: "#ffffff"
                 }
             }
         },

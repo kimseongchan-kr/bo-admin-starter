@@ -1,9 +1,8 @@
 import React from "react";
-import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
-import Pagination from "@material-ui/lab/Pagination";
 
-import ModalAddButton from "common/button/AddButton";
-import buttonTheme from "styles/theme/buttonTheme";
+import { makeStyles } from "@material-ui/core/styles";
+import Pagination from "@material-ui/lab/Pagination";
+import ModalAddButton from "common/button/ModalAddButton";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -31,10 +30,9 @@ const useStyles = makeStyles(() => ({
 
 export default function TablePaginationActions(props) {
     const classes = useStyles();
-    const { count, page, rowsPerPage, onChangePage } = props;
+    const { count, page, rowsPerPage, onChangePage, handleOpenModal } = props;
 
     const handleChange = (event, value) => {
-        // console.log(page, value, rowsPerPage, count);
         onChangePage(value);
     };
 
@@ -56,9 +54,7 @@ export default function TablePaginationActions(props) {
                 onChange={handleChange}
             />
             <div className={classes.buttonRoot}>
-                <ThemeProvider theme={buttonTheme}>
-                    <ModalAddButton />
-                </ThemeProvider>
+                <ModalAddButton handleOpenModal={handleOpenModal} />
             </div>
         </div>
     );

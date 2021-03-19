@@ -19,6 +19,13 @@ const useStyles = makeStyles(() => ({
     row: {
         borderBottom: " 1px solid #3d35951a"
     },
+    editorRow: {
+        height: 400,
+        "&& td": {
+            height: 400,
+            paddingLeft: 0
+        }
+    },
     label: {
         width: 160,
         height: 48,

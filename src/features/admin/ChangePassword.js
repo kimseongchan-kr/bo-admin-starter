@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
+import MenuRedux from "common/menu/MenuRedux";
+
 import { makeStyles } from "@material-ui/core/styles";
-import { Container, TextField, Grid, Typography } from "@material-ui/core";
+import { TextField, Grid, Typography } from "@material-ui/core";
 
 import Modal from "react-modal";
-import layoutStyles from "styles/customize/LayoutStyles";
-import buttonStyles from "styles/customize/ButtonStyles";
-import MenuRedux from "common/menu/MenuRedux";
+import MessageModal from "common/modal/MessageModal";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -69,8 +69,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ChangePassword() {
-    const layout = layoutStyles();
-    const button = buttonStyles();
     const classes = useStyles();
 
     const [pw, setPw] = useState("");
@@ -86,97 +84,76 @@ export default function ChangePassword() {
 
     const handleSubmit = () => {
         console.log(pw, pwCheck, newPw);
-        modalSetting("success", true);
+        handleModal("success", true);
     };
 
-    const modalSetting = (status, isOpen) => {
+    const handleModal = (status, isOpen) => {
         setModalStatus(status);
         setModal(isOpen);
     };
 
     return (
-        <main className={layout.main}>
-            <MenuRedux title="비밀번호 변경" menu="" num="" />
-            <Container maxWidth={false} className={layout.container} layout={{ root: layout.containerRoot }}>
-                <div className={layout.appBarSpacer} />
-                <div className={classes.container}>
-                    <Grid container justify="center" alignItems="center" direction="column" className={classes.grid}>
-                        <Grid item>
-                            <Typography variant="h3" component="h3" className={classes.title}>
-                                주기적인 <span style={{ fontWeight: 500 }}>비밀번호 변경</span>으로 <br />
-                                안전하게 <span style={{ fontWeight: 500 }}>정보</span>를 <span style={{ fontWeight: 500 }}>보호</span>하세요
-                            </Typography>
-                        </Grid>
-                        <Grid item className={classes.curPassword}>
-                            <TextField
-                                className={classes.input}
-                                id="outlined-pw"
-                                label=""
-                                size="small"
-                                type="password"
-                                placeholder="현재 비밀번호"
-                                onChange={(e) => setPw(e.target.value)}
-                                value={pw}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item className={classes.newPassword}>
-                            <TextField
-                                className={classes.input}
-                                id="outlined-new-pw"
-                                label=""
-                                size="small"
-                                type="password"
-                                placeholder="새 비밀번호"
-                                value={newPw}
-                                onChange={(e) => setNewPw(e.target.value)}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item className={classes.pwCheck}>
-                            <TextField
-                                className={classes.input}
-                                id="outlined-pw-check"
-                                label=""
-                                size="small"
-                                type="password"
-                                placeholder="새 비밀번호 확인"
-                                value={pwCheck}
-                                onChange={(e) => setPwCheck(e.target.value)}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item className={classes.submitContainer}>
-                            <button className={classes.submitButton} onClick={handleSubmit}>
-                                변경
-                            </button>
-                        </Grid>
+        <>
+            <MenuRedux menu={null} title="비밀번호 변경" num={0} />
+            <div className={classes.container}>
+                <Grid container justify="center" alignItems="center" direction="column" className={classes.grid}>
+                    <Grid item>
+                        <Typography variant="h3" component="h3" className={classes.title}>
+                            주기적인 <span style={{ fontWeight: 500 }}>비밀번호 변경</span>으로 <br />
+                            안전하게 <span style={{ fontWeight: 500 }}>정보</span>를 <span style={{ fontWeight: 500 }}>보호</span>하세요
+                        </Typography>
                     </Grid>
-                    <Modal isOpen={modal} style={modalStyles} contentLabel="Login Failed">
-                        <div style={{ fontSize: "14px" }}>
-                            {modalStatus === "success" ? "비밀번호가 변경되었습니다." : modalStatus === "fail" ? "비밀번호 변경에 실패하였습니다." : "비밀번호를 다시 확인해주시기 바랍니다."}
-                        </div>
-                        <div style={{ display: "flex", justifyContent: "center" }}>
-                            <button className={button.button} onClick={() => setModal(false)}>
-                                확인
-                            </button>
-                        </div>
-                    </Modal>
-                </div>
-            </Container>
-        </main>
+                    <Grid item className={classes.curPassword}>
+                        <TextField
+                            className={classes.input}
+                            id="outlined-pw"
+                            label=""
+                            size="small"
+                            type="password"
+                            placeholder="현재 비밀번호"
+                            onChange={(e) => setPw(e.target.value)}
+                            value={pw}
+                            variant="outlined"
+                        />
+                    </Grid>
+                    <Grid item className={classes.newPassword}>
+                        <TextField
+                            className={classes.input}
+                            id="outlined-new-pw"
+                            label=""
+                            size="small"
+                            type="password"
+                            placeholder="새 비밀번호"
+                            value={newPw}
+                            onChange={(e) => setNewPw(e.target.value)}
+                            variant="outlined"
+                        />
+                    </Grid>
+                    <Grid item className={classes.pwCheck}>
+                        <TextField
+                            className={classes.input}
+                            id="outlined-pw-check"
+                            label=""
+                            size="small"
+                            type="password"
+                            placeholder="새 비밀번호 확인"
+                            value={pwCheck}
+                            onChange={(e) => setPwCheck(e.target.value)}
+                            variant="outlined"
+                        />
+                    </Grid>
+                    <Grid item className={classes.submitContainer}>
+                        <button className={classes.submitButton} onClick={handleSubmit}>
+                            변경
+                        </button>
+                    </Grid>
+                </Grid>
+                <MessageModal
+                    open={modal}
+                    setModal={setModal}
+                    message={modalStatus === "success" ? "비밀번호가 변경되었습니다." : modalStatus === "fail" ? "비밀번호 변경에 실패하였습니다." : "비밀번호를 다시 확인해주시기 바랍니다."}
+                />
+            </div>
+        </>
     );
 }
-
-const modalStyles = {
-    content: {
-        padding: "30px 60px",
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-50%, -50%)",
-        maxHeight: "80%"
-    }
-};

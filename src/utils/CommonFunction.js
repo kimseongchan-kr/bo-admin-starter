@@ -1,6 +1,4 @@
-import qs from "qs";
-
-export const format = (date, type) => {
+export const format = (date, time) => {
     let datefm = new Date(date);
     let day = "" + datefm.getDate();
     let month = "" + (datefm.getMonth() + 1);
@@ -9,7 +7,7 @@ export const format = (date, type) => {
     if (day.length < 2) day = "0" + day;
     if (month.length < 2) month = "0" + month;
 
-    if (type) {
+    if (time) {
         let hour = "" + datefm.getHours();
         let minutes = "" + datefm.getMinutes();
         let seconds = "" + datefm.getSeconds();
@@ -26,10 +24,5 @@ export const format = (date, type) => {
     return [year, month, day].join("-");
 };
 
-export const setSearchKeywords = (obj) => {
-    const strParams = qs.stringify(obj, { arrayFormat: "comma" });
-    return strParams;
-};
-
+export const enableScroll = () => (document.body.style.overflowY = "auto");
 export const disableScroll = () => (document.body.style.overflowY = "hidden");
-export const ableScroll = () => (document.body.style.overflowY = "auto");

@@ -56,20 +56,14 @@ export const searchSlice = createSlice({
         },
 
         setSort: (state, { payload }) => {
+            console.log("sorting data...");
             state.sortNm = payload.sortNm;
             state.sortOrder = payload.sortOrder;
         },
 
-        setUseYn: (state, { payload }) => {
-            state.useYn = payload;
-        },
-        setGender: (state, { payload }) => {
-            state.genderType = payload;
-        },
-
-        setSearchType: (state, { payload }) => {
-            console.log(payload.type, payload.searchType);
-            state[payload.type] = payload.searchType;
+        setSearchFilter: (state, { payload }) => {
+            console.log(payload.type, payload.value);
+            state[payload.type] = payload.value;
         },
         setSearchKeyword: (state, { payload }) => {
             state.searchKeyword = payload;
@@ -123,7 +117,7 @@ export const searchSlice = createSlice({
     }
 });
 
-export const { setSort, setPage, setSearchType, setSearchKeyword, setTerm, setDate, setFilter, setSearchBox, reset } = searchSlice.actions;
+export const { setSort, setPage, setSearchFilter, setSearchKeyword, setTerm, setDate, setFilter, setSearchBox, reset } = searchSlice.actions;
 
 export const searchSelector = (state) => state.search;
 

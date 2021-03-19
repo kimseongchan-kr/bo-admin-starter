@@ -1,36 +1,42 @@
 import React from "react";
-
-import { useDispatch, useSelector } from "react-redux";
-import { searchSelector, setSearchKeyword, setSearchType, setDate } from "slices/searchSlice";
+import { useSelector } from "react-redux";
+import { searchSelector } from "slices/searchSlice";
 import { format } from "utils/CommonFunction";
 
 import useStyles from "styles/customize/SearchStyles";
 import customStyles from "styles/customize/SearchSelectStyles";
 
-import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
-import Typography from "@material-ui/core/Typography";
-
 import DateFnsUtils from "@date-io/date-fns";
+import { Grid, Divider, Typography, IconButton, InputAdornment, TextField, Button } from "@material-ui/core";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
-import { IconButton, InputAdornment } from "@material-ui/core";
 import InsertInvitationIcon from "@material-ui/icons/InsertInvitation";
 
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-
 import Select from "react-select";
-import { SummarySelectBoxType, SummarySelectBoxState, SummarySelectBoxObjPerType } from "features/summary/SummaryData";
+import { SummarySelectBoxType, SummarySelectBoxState, SummarySelectBoxObjPerType } from "features/summary/Data";
 
-export default function SummarySearch({ handleSearch }) {
+export default function SummarySearch({ handleSearchFilter, handleSearch }) {
     const classes = useStyles();
-    const dispatch = useDispatch();
     const { gender, searchType, searchKeyword, startDate, endDate } = useSelector(searchSelector);
     const dailyFormat = "yyyy/MM/dd";
 
-    // 검색 조건 변경
-    const handleChange = async (value, name) => {
-        await dispatch(setSearchType({ type: name, searchType: value.value }));
+    // 검색 조건 (select) 변경
+    const handleChange = (value, name) => {
+        handleSearchFilter({ type: name, value: value.value });
+    };
+
+    // 검색 기간 변경
+    const handleDate = (type, date) => {
+        handleSearchFilter({ type: type, value: date });
+    };
+
+    // 검색 키워드 변경
+    const handleKeyword = (value) => {
+        handleSearchFilter({ type: "searchKeyword", value: value });
+    };
+
+    // 검색하기
+    const handleSubmit = () => {
+        handleSearch();
     };
 
     return (
@@ -47,7 +53,10 @@ export default function SummarySearch({ handleSearch }) {
                         format={dailyFormat}
                         id="date-picker-inline start"
                         value={startDate}
-                        onChange={async (e) => await dispatch(setDate({ type: "startDate", date: format(e) }))}
+                        maxDate={endDate}
+                        maxDateMessage="시작일을 다시 선택해주세요"
+                        invalidDateMessage="시작일을 선택해주세요"
+                        onChange={(e) => handleDate("startDate", format(e))}
                         allowKeyboardControl={false}
                         InputProps={{
                             endAdornment: (
@@ -74,7 +83,10 @@ export default function SummarySearch({ handleSearch }) {
                         format={dailyFormat}
                         id="date-picker-inline end"
                         value={endDate}
-                        onChange={async (e) => await dispatch(setDate({ type: "endDate", date: format(e) }))}
+                        minDate={startDate}
+                        minDateMessage="종료일을 다시 선택해주세요"
+                        invalidDateMessage="종료일을 선택해주세요"
+                        onChange={(e) => handleDate("endDate", format(e))}
                         allowKeyboardControl={false}
                         InputProps={{
                             endAdornment: (
@@ -131,13 +143,13 @@ export default function SummarySearch({ handleSearch }) {
                     size="small"
                     variant="outlined"
                     type="search"
-                    onChange={(e) => dispatch(setSearchKeyword(e.target.value))}
+                    onChange={(e) => handleKeyword(e.target.value)}
                     value={searchKeyword}
                 />
             </Grid>
             <Grid item>
                 <div className={classes.spacer}></div>
-                <Button variant="contained" onClick={handleSearch}>
+                <Button variant="contained" onClick={handleSubmit}>
                     조회
                 </Button>
             </Grid>

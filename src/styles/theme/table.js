@@ -63,22 +63,6 @@ const tableTheme = createMuiTheme({
                 }
             }
         },
-        MuiIconButton: {
-            root: {
-                width: 100,
-                height: 40,
-                lineHeight: "40px",
-                border: "1px solid #00000033",
-                borderRadius: 4,
-                fontSize: 13,
-                color: "#333333",
-                letterSpacing: "-0.52px",
-
-                "&:hover": {
-                    backgroundColor: "transparent"
-                }
-            }
-        },
         MuiGrid: {
             item: {
                 paddingTop: 20,
@@ -87,12 +71,6 @@ const tableTheme = createMuiTheme({
                 "&:last-child": {
                     marginRight: 0
                 }
-            }
-        },
-        MuiSvgIcon: {
-            root: {
-                width: 14,
-                height: 15
             }
         }
     }

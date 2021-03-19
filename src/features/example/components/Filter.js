@@ -1,16 +1,16 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { searchSelector, setFilter } from "slices/searchSlice";
+import { useSelector } from "react-redux";
+import { searchSelector } from "slices/searchSlice";
 
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Menu, MenuItem, IconButton, Typography, FormControlLabel, Checkbox } from "@material-ui/core";
-import FilterList from "@material-ui/icons/FilterList";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import FilterList from "@material-ui/icons/FilterList";
 
-import { ExampleFilter } from "features/example/ExampleData";
+import { ExampleFilter } from "features/example/Data";
 
 const useStyles = makeStyles(() => ({
     iconButton: {
@@ -29,13 +29,12 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function Filters({ filterType, handleSearch }) {
+export default function Filters({ filterType, handleFilter, handleSearch }) {
     const classes = useStyles();
-    const dispatch = useDispatch();
     const filterList = useSelector(searchSelector);
 
-    const handleChange = async (event) => {
-        await dispatch(setFilter({ name: event.target.name, checked: event.target.checked }));
+    const handleChange = (event) => {
+        handleFilter({ name: event.target.name, checked: event.target.checked });
     };
 
     return (
@@ -77,8 +76,8 @@ export default function Filters({ filterType, handleSearch }) {
                         ))}
                         <MenuItem
                             onClick={() => {
-                                popupState.close();
                                 handleSearch();
+                                popupState.close();
                             }}
                             className={classes.okButton}
                         >

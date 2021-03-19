@@ -9,18 +9,22 @@ import Router from "routes/Router";
 export default function App() {
     const { isLogin } = useSelector(loginSelector);
 
-    return isLogin ? (
+    const PrivateRoutes = () => (
         <BrowserRouter>
             <Router />
         </BrowserRouter>
-    ) : (
+    );
+
+    const PublicRoutes = () => (
         <BrowserRouter>
             <Switch>
-                <Route path="/login" exact>
+                <Route exact path="/login">
                     <Login />
                 </Route>
                 <Redirect path="*" to="/login" />
             </Switch>
         </BrowserRouter>
     );
+
+    return isLogin ? <PrivateRoutes /> : <PublicRoutes />;
 }

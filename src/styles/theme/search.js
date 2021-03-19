@@ -65,6 +65,16 @@ const searchTheme = createMuiTheme({
                     boxShadow: "unset"
                 }
             }
+        },
+        MuiFormHelperText: {
+            root: {
+                fontSize: 10,
+                width: "100%"
+            },
+            contained: {
+                marginLeft: 3,
+                marginRight: 0
+            }
         }
     }
 });

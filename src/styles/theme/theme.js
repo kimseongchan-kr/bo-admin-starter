@@ -30,7 +30,7 @@ const theme = createMuiTheme({
         MuiIconButton: {
             root: {
                 "&:hover": {
-                    backgroundColor: "transparent"
+                    backgroundColor: "#ffffff"
                 }
             }
         },

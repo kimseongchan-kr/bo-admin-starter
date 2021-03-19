@@ -1,23 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { menuSelector, setMenu } from "slices/menuSlice";
+import { setLogOut } from "slices/loginSlice";
 
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+import { AppBar, Toolbar, IconButton, Typography, List, ListItem, ListItemText } from "@material-ui/core";
 
 import Popover from "material-ui-popup-state/HoverPopover";
 import PopupState, { bindHover, bindPopover } from "material-ui-popup-state";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 
 import user from "assets/Images/img_logout.png";
-import { useSelector } from "react-redux";
-import { menuSelector } from "slices/menuSlice";
 
-const drawerWidth = 240; // Menubar의 넓이
-const useStyles = makeStyles((theme) => ({
+const drawerWidth = 240;
+const useStyles = makeStyles(() => ({
     root: {
         display: "flex"
     },
@@ -60,15 +56,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ListItemLink(props) {
-    return <ListItem button component="a" {...props} />;
+    return <ListItem button component={Link} {...props} />;
 }
 
 export default function Dashboard() {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const { menuTitle } = useSelector(menuSelector);
 
     const handleLogOut = () => {
         console.log("logout");
+        dispatch(setLogOut());
     };
 
     return (
@@ -104,10 +102,10 @@ export default function Dashboard() {
                                     disableRestoreFocus
                                 >
                                     <List component="nav" aria-label="admin menu">
-                                        <ListItemLink classes={{ root: classes.listItem }} href="/myinfo">
+                                        <ListItemLink classes={{ root: classes.listItem }} to="/info" onClick={() => dispatch(setMenu({ menu: null, title: "정보 변경", num: 0 }))}>
                                             <ListItemText primary="정보수정" />
                                         </ListItemLink>
-                                        <ListItemLink classes={{ root: classes.listItem }} href="/password">
+                                        <ListItemLink classes={{ root: classes.listItem }} to="/password" onClick={() => dispatch(setMenu({ menu: null, title: "비밀번호 변경", num: 0 }))}>
                                             <ListItemText primary="비밀번호 변경" />
                                         </ListItemLink>
                                         <ListItem classes={{ root: classes.listItem }} button onClick={handleLogOut}>
