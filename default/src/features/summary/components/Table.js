@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SummaryTable(props) {
     const classes = useStyles();
     const { pageNumber, pageShow, sortNm, sortOrder } = useSelector(searchSelector);
-    const { menu, handleOneData, handleDetailData, handleSelect, handleFilter, handleSearch, handleSort, handlePage, onOpen, onConfirm } = props;
+    const { menu, handleSelect, handleFilter, handleSearch, handleSort, handlePage, onOpen, onConfirm } = props;
 
     // Summary의 Summary 메뉴 table 데이터
     const SummaryData = ({ row }) => {

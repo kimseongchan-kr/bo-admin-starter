@@ -49,6 +49,7 @@
         - 사용여부 (UseSelect), 메인 노출 (ViewSelect), Cell Edit (TextField), 수정버튼 (EditButton), 삭제버튼 (DeleteButton)
         - Detail Modal, Edit Modal (+ react-quill 에디터)
         - Pagination, 추가 버튼
+        - Message Modal
 
 [확인하기](https://github.com/BlockOdyssey/bo-admin-starter#project-structure "프로젝트 구조")
 
