@@ -22,6 +22,34 @@
 -   **Select** : [react-select](https://react-select.com/home "react-select")
 
 ## 프로젝트 구조
+- Header
+- Menu
+
+- Login
+- ChangePassword
+- ChangeInfo
+
+- Summary
+    - Dashboard
+        - 기간 검색 (DatePicker), 성별 검색 (SearchSelects), 조회조건+검색 input (SearchField), 조회 버튼
+        - Checkbox Table, Table Sort, Table Filter
+        - 사용여부 (UseSelect), 메인노출(ViewSelect), 노출순서 (SortOrder)
+        - Detail Modal, Edit Modal (+ react-hook-form)
+        - Pagination, 추가 버튼, 삭제 버튼
+        - Message Modal, Confirm Modal
+    - Summary
+        - 조회조건 + 검색 input (SearchField), 조회버튼
+        - Table
+        - 사용여부 (UseSelect)
+        - Pagination, 엑셀 다운로드 버튼
+- Example
+    - Example
+        - 기간단위 (SearchSelects), 기간 검색 (DatePicker), 조회버튼
+        - Table, Table Sort, Filter
+        - 사용여부 (UseSelect), 메인 노출 (ViewSelect), Cell Edit (TextField), 수정버튼 (EditButton), 삭제버튼 (DeleteButton)
+        - Detail Modal, Edit Modal (+ react-quill 에디터)
+        - Pagination, 추가 버튼
+
 [확인하기](https://github.com/BlockOdyssey/bo-admin-starter#project-structure "프로젝트 구조")
 
 ---

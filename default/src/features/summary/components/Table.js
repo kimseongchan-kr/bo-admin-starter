@@ -50,10 +50,10 @@ export default function SummaryTable(props) {
     const SummaryData = ({ row }) => {
         return (
             <>
-                <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleOneData(row.key)}>
+                <TableCell align="center" padding="none">
                     {row.name}
                 </TableCell>
-                <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleDetailData(row.key)}>
+                <TableCell align="center" padding="none">
                     {row.calories}
                 </TableCell>
                 <TableCell align="center" padding="none">

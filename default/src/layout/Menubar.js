@@ -211,7 +211,7 @@ export default function Menubar() {
                             <ListItemIcon>
                                 <MailIcon />
                             </ListItemIcon>
-                            <Typography>Dashboard</Typography>
+                            <Typography>Summary</Typography>
                         </AccordionSummary>
                         <AccordionDetails className={menuNum === 1 ? classes.active : ""}>
                             <Typography className="nav-link">
