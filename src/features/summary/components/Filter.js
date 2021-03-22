@@ -10,7 +10,7 @@ import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import FilterList from "@material-ui/icons/FilterList";
 
-import { SummaryFilter as filter } from "features/summary/Data";
+import { summaryFilter as filter } from "features/summary/Data";
 
 export default function Filters({ filterType, handleFilter, handleSearch }) {
     const classes = filterStyles();

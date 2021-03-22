@@ -9,7 +9,7 @@ import DateSearchPickers from "common/search/DatePicker";
 import SearchSelects from "common/search/SearchSelect";
 import SearchField from "common/search/SearchField";
 
-import { SummarySearchComponents as componentExists, SummarySearchType as searchCondition, SummarySearchOptions as options, SummarySearchCaption as caption } from "features/summary/Data";
+import { summarySearchComponents as componentExists, summarySearchType as searchCondition, summarySearchOptions as options, summarySearchCaption as caption } from "features/summary/Data";
 
 export default function SummarySearch({ menu, keyword, setKeyword, handleSearchFilter, handleSearch }) {
     const classes = useStyles();

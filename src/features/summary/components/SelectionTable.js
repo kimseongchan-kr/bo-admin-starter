@@ -11,7 +11,7 @@ import ViewSelect from "common/table/ViewSelect";
 import SortOrder from "common/table/SortOrder";
 import TablePaginationActions from "common/table/Pagination";
 
-import { SummaryHeadCell as headCells, SampleRowData as rowData } from "features/summary/Data";
+import { summaryHeadCell as headCells, sampleRowData as rowData } from "features/summary/Data";
 
 const useStyles = makeStyles((theme) => ({
     root: {

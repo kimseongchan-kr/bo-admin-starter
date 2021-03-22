@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Table, TableHead, TableBody, TableRow, TableCell, Typography } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 
-import { SummaryHeadCell } from "features/summary/Data";
+import { summaryHeadCell } from "features/summary/Data";
 import { disableScroll, enableScroll } from "utils/CommonFunction";
 
 import Modal from "react-modal";
@@ -91,7 +91,7 @@ export default function DetailModal({ onClose, handleDetailData }) {
                     <Table className={classes.table} aria-labelledby="summaryTable" size="medium" aria-label="summary table">
                         <TableHead>
                             <TableRow>
-                                {SummaryHeadCell["DashboardDetail"].map((headCell) => (
+                                {summaryHeadCell["DashboardDetail"].map((headCell) => (
                                     <TableCell key={headCell.id} align="center" padding={headCell.disablePadding ? "none" : "default"}>
                                         {headCell.label}
                                     </TableCell>

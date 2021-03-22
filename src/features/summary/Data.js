@@ -4,7 +4,7 @@
 
 // 만약 date : true
 // 해당 메뉴에서 날짜 검색하는 Component가 필요하는 의미
-const SummarySearchComponents = {
+const summarySearchComponents = {
     Dashboard: {
         date: true,
         selects: true,
@@ -22,13 +22,13 @@ const SummarySearchComponents = {
 // 메뉴별 검색 조건
 // Dashboard는 성별을 검색할 수 있는 Select가 필요
 // Summary는 추가적인 검색이 필요 없음
-const SummarySearchType = {
+const summarySearchType = {
     Dashboard: ["gender"],
     Summary: []
 };
 
 // select별 Options
-const SummarySearchOptions = {
+const summarySearchOptions = {
     gender: [
         { value: "전체", label: "전체" },
         { value: "M", label: "M" },
@@ -46,11 +46,11 @@ const SummarySearchOptions = {
     ]
 };
 
-const SummarySearchCaption = { gender: "성별" };
+const summarySearchCaption = { gender: "성별" };
 
 // 테이블에서 필터가 필요한 컬럼의 필터 조건들
 // calories, carbs = 테이블 컬럼명
-const SummaryFilter = {
+const summaryFilter = {
     calories: ["cupcake", "cake", "cookie", "macaroon"],
     carbs: ["example1", "example2", "example3", "example4"]
 };
@@ -61,7 +61,7 @@ const SummaryFilter = {
 // id는 DB에서 가져오는 데이터명과 같아야 함
 // label이 테이블 컬럼명
 // Dashboard, Summary, DashboardDetail은 메뉴 이름
-const SummaryHeadCell = {
+const summaryHeadCell = {
     Dashboard: [
         { id: "name", numeric: false, disablePadding: true, sort: true, filter: false, label: "디저트" },
         { id: "calories", numeric: true, disablePadding: false, sort: false, filter: true, label: "칼로리" },
@@ -94,7 +94,7 @@ const SummaryHeadCell = {
 
 // 샘플용 데이터
 // 삭제 필수
-const SampleRowData = [
+const sampleRowData = [
     { key: 1, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y", sortOrder: 1, regdate: "2020-02-02" },
     { key: 2, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y", sortOrder: 1, regdate: "2020-02-02" },
     { key: 3, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y", sortOrder: 1, regdate: "2020-02-02" },
@@ -106,7 +106,7 @@ const SampleRowData = [
 
 // 샘플용 데이터
 // 삭제 필수
-const SampleDetailData = [
+const sampleDetailData = [
     { key: 1, name: "Cupcake", calories: 305, fat: 3.7, carbs: 67, protein: 4.3, useYn: "사용", viewYn: "활성화" },
     { key: 2, name: "Cupcake", calories: 305, fat: 3.7, carbs: 67, protein: 4.3, useYn: "사용", viewYn: "활성화" },
     { key: 3, name: "Cupcake", calories: 305, fat: 3.7, carbs: 67, protein: 4.3, useYn: "사용", viewYn: "활성화" },
@@ -116,4 +116,4 @@ const SampleDetailData = [
     { key: 7, name: "Cupcake", calories: 305, fat: 3.7, carbs: 67, protein: 4.3, useYn: "사용", viewYn: "활성화" }
 ];
 
-export { SummarySearchComponents, SummarySearchType, SummarySearchOptions, SummarySearchCaption, SummaryFilter, SummaryHeadCell, SampleRowData, SampleDetailData };
+export { summarySearchComponents, summarySearchType, summarySearchOptions, summarySearchCaption, summaryFilter, summaryHeadCell, sampleRowData, sampleDetailData };

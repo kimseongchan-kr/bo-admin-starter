@@ -14,7 +14,7 @@ import DashboardTable from "features/summary/components/SelectionTable";
 import Modal from "react-modal";
 import EditModal from "features/summary/modal/DashboardEditModal";
 import DetailModal from "features/summary/modal/DetailModal";
-import { SampleDetailData } from "features/summary/Data";
+import { sampleDetailData } from "features/summary/Data";
 import MessageModal from "common/modal/MessageModal";
 import ConfirmModal from "common/modal/MessageConfirm";
 
@@ -93,7 +93,7 @@ export default function Dashboard() {
         console.log(modalId, pageNumber);
         // 데이터를 불러오고
         // 함께 데이터 넘겨주기
-        dispatch(setDetail({ open: true, modalId: modalId, modalData: SampleDetailData }));
+        dispatch(setDetail({ open: true, modalId: modalId, modalData: sampleDetailData }));
     };
 
     // 데이터 추가하기/수정하기
