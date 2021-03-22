@@ -15,6 +15,8 @@ export default function Summary() {
     const { searchType, searchKeyword, sortNm, sortOrder, pageNumber, pageShow } = searchList;
 
     const [dataList, setDataList] = useState([]);
+    const [keyword, setKeyword] = useState(searchKeyword ? searchKeyword : "");
+
     const menu = "Summary";
 
     // 데이터 불러오기
@@ -40,7 +42,7 @@ export default function Summary() {
     // 검색하기
     const handleSearch = (searchItems) => {
         console.log("데이터 검색하기...");
-        let search = { searchType, searchKeyword, sortNm, sortOrder, pageNumber, pageShow };
+        let search = { searchType, keyword, sortNm, sortOrder, pageNumber, pageShow };
 
         if (searchItems) {
             search = { ...search, ...searchItems };
@@ -71,7 +73,7 @@ export default function Summary() {
         <>
             <MenuRedux menu="summary" title="Summary" num={2} />
             <ThemeProvider theme={SearchTheme}>
-                <SummarySearch menu={menu} handleSearchFilter={handleSearchFilter} handleSearch={handleSearch} />
+                <SummarySearch menu={menu} keyword={keyword} setKeyword={setKeyword} handleSearchFilter={handleSearchFilter} handleSearch={handleSearch} />
             </ThemeProvider>
             <SummaryTable menu={menu} data={dataList} handleSelect={handleSelect} handleSort={handleSort} handlePage={handlePage} handleSearch={handleSearch} />
         </>

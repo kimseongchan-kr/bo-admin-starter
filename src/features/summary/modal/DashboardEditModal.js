@@ -2,18 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { modalSelector } from "slices/modalSlice";
 
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import Select from "react-select";
-import customStyles from "styles/customize/FormSelectStyles";
 import useStyles from "styles/customize/ModalFormStyles";
-import { Typography, TextField, Grid, Checkbox, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
+
+import FormSelect from "common/form/Select";
+import Input from "common/form/Input";
+import RadioButton from "common/form/RadioButton";
+import CheckBox from "common/form/Checkbox";
 
 import Modal from "react-modal";
 import ModalCloseButton from "common/button/CloseButton";
-import ModalEditButton from "common/button/ModalEditButton";
+import ModalEditButton from "common/button/EditButton";
 import { disableScroll, enableScroll } from "utils/CommonFunction";
 
 Modal.defaultStyles.overlay.zIndex = 9999;
@@ -22,7 +25,6 @@ const schema = yup.object().shape({
     dessert: yup.object().required(),
     calories: yup.number().min(0).integer().required(),
     fat: yup.string().required(),
-    radio: yup.string().required(),
     image: yup
         .mixed()
         .required()
@@ -37,7 +39,7 @@ const options = [
     { value: "Snack", label: "Snack" }
 ];
 
-export default function EditModal({ onClose, handleDataSubmit }) {
+export default function DashboardEditModal({ onClose, handleDataSubmit }) {
     const classes = useStyles();
     const { open, modalId, modalData, modalStatus } = useSelector(modalSelector);
     const { errors, clearErrors, reset, control, register, handleSubmit } = useForm({
@@ -55,8 +57,8 @@ export default function EditModal({ onClose, handleDataSubmit }) {
     });
 
     useEffect(() => {
-        clearErrors();
         if (modalStatus === "modify") {
+            clearErrors();
             reset({
                 dessert: { value: modalData.dessert, label: modalData.dessert },
                 calories: modalData.calories,
@@ -76,12 +78,13 @@ export default function EditModal({ onClose, handleDataSubmit }) {
                 checkbox3: false
             });
         } else if (modalStatus === "add") {
+            clearErrors();
             reset({
-                dessert: "",
+                dessert: options[0],
                 calories: 0,
                 fat: "",
                 radio: "1",
-                checkbox1: false,
+                checkbox1: true,
                 checkbox2: false,
                 checkbox3: false
             });
@@ -102,7 +105,7 @@ export default function EditModal({ onClose, handleDataSubmit }) {
     };
 
     return (
-        <Modal isOpen={open} onRequestClose={onClose} style={modalStyles} contentLabel="Add/Modify Summary" onAfterOpen={disableScroll} onAfterClose={enableScroll}>
+        <Modal isOpen={open} onRequestClose={onClose} style={modalStyles} contentLabel="Add/Modify Dashboard" onAfterOpen={disableScroll} onAfterClose={enableScroll}>
             {open && (
                 <>
                     <Typography variant="h2" component="h2" color="inherit" className={classes.title}>
@@ -116,23 +119,10 @@ export default function EditModal({ onClose, handleDataSubmit }) {
                                         <Typography variant="body2">디저트</Typography>
                                     </td>
                                     <td>
-                                        <Controller
-                                            defaultValue={{ value: form.dessert, label: form.dessert }}
-                                            name="dessert"
-                                            control={control}
-                                            render={({ onChange }) => (
-                                                <Select
-                                                    styles={customStyles}
-                                                    name="dessert"
-                                                    defaultValue={{ value: form.dessert, label: form.dessert }}
-                                                    isClearable={false}
-                                                    isSearchable={false}
-                                                    options={options}
-                                                    onChange={onChange}
-                                                />
-                                            )}
-                                        />
-                                        <span style={{ color: "red" }}>{errors.dessert && "디저트를 선택해주세요."}</span>
+                                        <FormSelect name="dessert" defaultValue={{ value: form.dessert, label: form.dessert }} control={control} options={options} />
+                                        <Typography component="span" variant="body2" className={classes.errorMessage}>
+                                            {errors.dessert && "디저트를 선택해주세요."}
+                                        </Typography>
                                     </td>
                                 </tr>
                                 <tr className={classes.row}>
@@ -140,15 +130,10 @@ export default function EditModal({ onClose, handleDataSubmit }) {
                                         <Typography variant="body2">지방</Typography>
                                     </td>
                                     <td>
-                                        <Controller
-                                            name="fat"
-                                            defaultValue={form.fat}
-                                            control={control}
-                                            render={({ onChange, value }) => (
-                                                <TextField className={classes.textInput} id="outline-fat" label="" variant="outlined" name="fat" value={value} onChange={onChange} />
-                                            )}
-                                        />
-                                        <span style={{ color: "red" }}>{errors.fat && "지방을 입력해주세요."}</span>
+                                        <Input inputType="text" name="fat" defaultValue={form.fat} control={control} classes={classes} />
+                                        <Typography component="span" variant="body2" className={classes.errorMessage}>
+                                            {errors.fat && "지방을 입력해주세요."}
+                                        </Typography>
                                     </td>
                                 </tr>
                                 <tr className={classes.row}>
@@ -156,27 +141,10 @@ export default function EditModal({ onClose, handleDataSubmit }) {
                                         <Typography variant="body2">칼로리</Typography>
                                     </td>
                                     <td>
-                                        <Controller
-                                            name="calories"
-                                            defaultValue={form.calories}
-                                            control={control}
-                                            render={({ onChange, value }) => (
-                                                <TextField
-                                                    className={classes.textInput}
-                                                    id="outlined-calories"
-                                                    label=""
-                                                    type="number"
-                                                    InputLabelProps={{
-                                                        shrink: true
-                                                    }}
-                                                    variant="outlined"
-                                                    name="calories"
-                                                    value={value}
-                                                    onChange={onChange}
-                                                />
-                                            )}
-                                        />
-                                        <span style={{ color: "red" }}>{errors.calories && "칼로리를 입력해주세요."}</span>
+                                        <Input inputType="number" name="calories" defaultValue={form.calories} control={control} classes={classes} />
+                                        <Typography component="span" variant="body2" className={classes.errorMessage}>
+                                            {errors.calories && "칼로리를 입력해주세요."}
+                                        </Typography>
                                     </td>
                                 </tr>
                                 <tr className={classes.row}>
@@ -184,19 +152,16 @@ export default function EditModal({ onClose, handleDataSubmit }) {
                                         <Typography variant="body2">radio example</Typography>
                                     </td>
                                     <td>
-                                        <Controller
+                                        <RadioButton
                                             name="radio"
                                             defaultValue={form.radio}
                                             control={control}
-                                            render={({ onChange, value }) => (
-                                                <RadioGroup aria-label="radio" onChange={(e) => onChange(e.target.value)} value={value}>
-                                                    <FormControlLabel value="1" control={<Radio color="primary" />} label="1" />
-                                                    <FormControlLabel value="2" control={<Radio color="primary" />} label="2" />
-                                                    <FormControlLabel value="3" control={<Radio color="primary" />} label="3" />
-                                                </RadioGroup>
-                                            )}
+                                            options={[
+                                                { value: "1", label: "1" },
+                                                { value: "2", label: "2" },
+                                                { value: "3", label: "3" }
+                                            ]}
                                         />
-                                        <span style={{ color: "red" }}>{errors.radio && "radio를 선택해주세요."}</span>
                                     </td>
                                 </tr>
                                 <tr className={classes.row}>
@@ -204,29 +169,13 @@ export default function EditModal({ onClose, handleDataSubmit }) {
                                         <Typography variant="body2">checkbox example</Typography>
                                     </td>
                                     <td>
-                                        <Controller
-                                            name="checkbox1"
+                                        <CheckBox
+                                            options={[
+                                                { name: "checkbox1", defaultValue: form.checkbox1, label: "1" },
+                                                { name: "checkbox2", defaultValue: form.checkbox2, label: "2" },
+                                                { name: "checkbox3", defaultValue: form.checkbox3, label: "3" }
+                                            ]}
                                             control={control}
-                                            defaultValue={form.checkbox1}
-                                            render={({ onChange, value }) => (
-                                                <FormControlLabel control={<Checkbox onChange={(e) => onChange(e.target.checked)} checked={value} name="checkbox1" color="primary" />} label="1" />
-                                            )}
-                                        />
-                                        <Controller
-                                            name="checkbox2"
-                                            control={control}
-                                            defaultValue={form.checkbox2}
-                                            render={({ onChange, value }) => (
-                                                <FormControlLabel control={<Checkbox onChange={(e) => onChange(e.target.checked)} checked={value} name="checkbox2" color="primary" />} label="2" />
-                                            )}
-                                        />
-                                        <Controller
-                                            name="checkbox3"
-                                            control={control}
-                                            defaultValue={form.checkbox3}
-                                            render={({ onChange, value }) => (
-                                                <FormControlLabel control={<Checkbox onChange={(e) => onChange(e.target.checked)} checked={value} name="checkbox3" color="primary" />} label="3" />
-                                            )}
                                         />
                                     </td>
                                 </tr>
@@ -236,7 +185,9 @@ export default function EditModal({ onClose, handleDataSubmit }) {
                                     </td>
                                     <td>
                                         <input name="image" type="file" ref={register} />
-                                        <span style={{ color: "red" }}>{errors.image && "이미지를 선택해주세요."}</span>
+                                        <Typography component="span" variant="body2" className={classes.errorMessage}>
+                                            {errors.image && "이미지를 선택해주세요."}
+                                        </Typography>
                                     </td>
                                 </tr>
                             </tbody>

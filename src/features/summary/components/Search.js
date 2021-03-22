@@ -5,15 +5,15 @@ import { searchSelector } from "slices/searchSlice";
 import useStyles from "styles/customize/SearchStyles";
 import { Grid, Divider, Button } from "@material-ui/core";
 
-import DateSearchPickers from "common/inputs/DatePicker";
-import SearchSelects from "common/inputs/SearchSelects";
-import SearchField from "common/inputs/SearchField";
+import DateSearchPickers from "common/search/DatePicker";
+import SearchSelects from "common/search/SearchSelect";
+import SearchField from "common/search/SearchField";
 
 import { SummarySearchComponents as componentExists, SummarySearchType as searchCondition, SummarySearchOptions as options, SummarySearchCaption as caption } from "features/summary/Data";
 
-export default function SummarySearch({ menu, handleSearchFilter, handleSearch }) {
+export default function SummarySearch({ menu, keyword, setKeyword, handleSearchFilter, handleSearch }) {
     const classes = useStyles();
-    const { gender, searchType, searchKeyword, startDate, endDate } = useSelector(searchSelector);
+    const { gender, searchType, startDate, endDate } = useSelector(searchSelector);
     const dailyFormat = "yyyy/MM/dd";
 
     // 검색 조건 (select) 변경
@@ -28,11 +28,12 @@ export default function SummarySearch({ menu, handleSearchFilter, handleSearch }
 
     // 검색 키워드 변경
     const handleKeyword = (value) => {
-        handleSearchFilter({ type: "searchKeyword", value: value });
+        setKeyword(value);
     };
 
     // 검색하기
     const handleSubmit = () => {
+        handleSearchFilter({ type: "searchKeyword", value: keyword });
         handleSearch();
     };
 
@@ -41,7 +42,16 @@ export default function SummarySearch({ menu, handleSearchFilter, handleSearch }
             {/* 날짜 검색 있을 경우 */}
             {componentExists[menu].date && (
                 <>
-                    <DateSearchPickers dateFormat={dailyFormat} term="일간" startDate={startDate} endDate={endDate} handleDate={handleDate} />
+                    {/*
+                        dateFormat: 일간이면 yyyy/MM/dd
+                                    월간이면 yyyy/MM
+                        term:       일간 / 월간
+                                    default 값은 항상 일간
+                        startDate:  시작일
+                        endDate:    종료일
+                        handleDate: function
+                    */}
+                    <DateSearchPickers classes={classes} dateFormat={dailyFormat} term="일간" startDate={startDate} endDate={endDate} handleDate={handleDate} />
                     <Divider orientation="vertical" flexItem classes={{ flexItem: classes.divider }} />
                 </>
             )}
@@ -63,6 +73,7 @@ export default function SummarySearch({ menu, handleSearchFilter, handleSearch }
                                     value: selectValue,
                                     label: selectLabel
                                 }}
+                                options={options[type]}
                                 handleChange={handleChange}
                             />
                         );
@@ -73,7 +84,7 @@ export default function SummarySearch({ menu, handleSearchFilter, handleSearch }
 
             {/* 조회조건 + 검색어 */}
             {componentExists[menu].searchKeyword && (
-                <SearchField searchType={searchType} searchKeyword={searchKeyword} options={options["searchType"]} handleChange={handleChange} handleKeyword={handleKeyword} />
+                <SearchField classes={classes} searchType={searchType} searchKeyword={keyword} options={options["searchType"]} handleChange={handleChange} handleKeyword={handleKeyword} />
             )}
 
             {/* 검색 조회 버튼 */}

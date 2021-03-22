@@ -1,20 +1,22 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import MenuRedux from "common/menu/MenuRedux";
 import { searchSelector, setFilter, setPage, setSearchFilter, setSort } from "slices/searchSlice";
-import { setClose, setDetail, setModal } from "slices/modalSlice";
+import { setClose, setDetail, setMessage, setModal, setMsgConfirm } from "slices/modalSlice";
+import MenuRedux from "common/menu/MenuRedux";
 
 import { ThemeProvider } from "@material-ui/core";
-import searchTheme from "styles/theme/search";
-import tableTheme from "styles/theme/table";
+import SearchTheme from "styles/theme/search";
+import TableTheme from "styles/theme/table";
 
 import DateTermSearch from "common/search/DateTermSearch";
 import ExampleTable from "features/example/components/Table";
 
 import Modal from "react-modal";
-import AddModifyModal from "features/example/modal/EditModal";
+import EditModal from "features/example/modal/EditModal";
 import DetailModal from "features/example/modal/DetailModal";
-import { SampleDetailData } from "./Data";
+import { SampleDetailData } from "features/example/Data";
+import MessageModal from "common/modal/MessageModal";
+import ConfirmModal from "common/modal/MessageConfirm";
 
 export default function Example() {
     const dispatch = useDispatch();
@@ -23,11 +25,11 @@ export default function Example() {
 
     const [dataList, setDataList] = useState([]);
     const [contents, setContents] = useState("hello");
+    const menu = "Example";
 
     // 데이터 불러오기
     const handleData = useCallback(() => {
         console.log("데이터 불러오기...");
-
         if (!sortNm) {
             dispatch(setSort({ sortNm: "name", sortOrder: "asc" }));
         } else {
@@ -99,8 +101,10 @@ export default function Example() {
     };
 
     // 데이터 삭제하기
-    const handleDelete = (modalId) => {
-        console.log("deleting data...");
+    const handleDelete = () => {
+        dispatch(setClose());
+        console.log("삭제되었습니다...");
+        dispatch(setMessage({ open: true, message: "삭제되었습니다." }));
     };
 
     // 사용여부/노출여부 등 select 데이터 수정하기
@@ -113,6 +117,16 @@ export default function Example() {
         console.log("changing sort...");
     };
 
+    // 추가 모달 열기
+    const onOpen = () => {
+        dispatch(setModal({ open: true, modalId: "", modalStatus: "add" }));
+    };
+
+    // 삭제 확인 모달 열기
+    const onConfirm = () => {
+        dispatch(setMsgConfirm({ open: true, message: "해당 디저트를 삭제하시겠습니까?" }));
+    };
+
     // modal 닫기
     const onClose = () => {
         dispatch(setClose());
@@ -121,10 +135,11 @@ export default function Example() {
     return (
         <>
             <MenuRedux menu="example" title="Example" num={3} />
-            <ThemeProvider theme={searchTheme}>
+            <ThemeProvider theme={SearchTheme}>
                 <DateTermSearch handleSearchFilter={handleSearchFilter} handleSearch={handleSearch} />
             </ThemeProvider>
             <ExampleTable
+                menu={menu}
                 data={dataList}
                 handleOneData={handleOneData}
                 handleDetailData={handleDetailData}
@@ -135,11 +150,15 @@ export default function Example() {
                 handlePage={handlePage}
                 handleFilter={handleFilter}
                 handleSearch={handleSearch}
+                onOpen={onOpen}
+                onConfirm={onConfirm}
             />
-            <ThemeProvider theme={tableTheme}>
-                <AddModifyModal contents={contents} setContents={setContents} handleDataSubmit={handleSubmit} onClose={onClose} />
+            <ThemeProvider theme={TableTheme}>
+                <EditModal contents={contents} setContents={setContents} handleDataSubmit={handleSubmit} onClose={onClose} />
             </ThemeProvider>
             <DetailModal handleDetailData={handleDetailData} onClose={onClose} />
+            <ConfirmModal onClose={onClose} handleDelete={handleDelete} />
+            <MessageModal onClose={onClose} />
         </>
     );
 }

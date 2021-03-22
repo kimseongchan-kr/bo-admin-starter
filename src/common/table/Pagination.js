@@ -1,8 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Pagination from "@material-ui/lab/Pagination";
-import ModalAddButton from "common/button/ModalAddButton";
+
+import ExcelExport from "common/excel";
+import DeleteButton from "common/button/DeleteButton";
+import AddButton from "common/button/AddButton";
+
+import { PerMenuButton as buttons } from "common/table/Data";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -28,9 +34,9 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function TablePaginationActions(props) {
+function TablePaginationActions(props) {
     const classes = useStyles();
-    const { count, page, rowsPerPage, onChangePage, handleOpenModal } = props;
+    const { count, page, rowsPerPage, onChangePage, menu, onOpen, onConfirm } = props;
 
     const handleChange = (event, value) => {
         onChangePage(value);
@@ -53,7 +59,23 @@ export default function TablePaginationActions(props) {
                 page={page + 1} // 1부터 시작
                 onChange={handleChange}
             />
-            <div className={classes.buttonRoot}>{/* <ModalAddButton handleOpenModal={handleOpenModal} /> */}</div>
+            <div className={classes.buttonRoot}>
+                {buttons[menu].add && <AddButton onOpen={onOpen} />}
+                {buttons[menu].delete && <DeleteButton onConfirm={onConfirm} />}
+                {buttons[menu].excel && <ExcelExport />}
+            </div>
         </div>
     );
 }
+
+TablePaginationActions.propTypes = {
+    count: PropTypes.number.isRequired,
+    page: PropTypes.number.isRequired,
+    rowsPerPage: PropTypes.number.isRequired,
+    onChangePage: PropTypes.func.isRequired,
+    menu: PropTypes.string.isRequired,
+    onOpen: PropTypes.func,
+    onConfirm: PropTypes.func
+};
+
+export default TablePaginationActions;

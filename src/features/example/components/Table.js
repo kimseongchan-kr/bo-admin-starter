@@ -1,17 +1,16 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { searchSelector } from "slices/searchSlice";
-import { menuSelector } from "slices/menuSlice";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { TableContainer, Paper, Table, TableHead, TableSortLabel, TableBody, TableRow, TableCell, TablePagination } from "@material-ui/core";
 
 import Filters from "features/example/components/Filter";
-import UseSelect from "common/inputs/UseSelect";
-import ViewSelect from "common/inputs/ViewSelect";
-import EditButton from "common/inputs/EditButton";
-import DeleteButton from "common/inputs/DeleteButton";
-import TextInput from "common/inputs/TextField";
+import UseSelect from "common/table/UseSelect";
+import ViewSelect from "common/table/ViewSelect";
+import EditButton from "common/table/EditButton";
+import DeleteButton from "common/table/DeleteButton";
+import TextInput from "common/table/TextField";
 import TablePaginationActions from "common/table/Pagination";
 
 import { ExampleHeadCell as headCells, SampleRowData as rowData } from "features/example/Data";
@@ -45,10 +44,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ExampleTable({ handleOneData, handleDetailData, handleDelete, handleChange, handleSelect, handleFilter, handleSearch, handleSort, handlePage }) {
+export default function ExampleTable(props) {
     const classes = useStyles();
     const { pageNumber, pageShow, sortNm, sortOrder } = useSelector(searchSelector);
-    const { menuTitle } = useSelector(menuSelector);
+    const { menu, handleOneData, handleDetailData, handleChange, handleDelete, handleSelect, handleFilter, handleSearch, handleSort, handlePage, onOpen, onConfirm } = props;
 
     const ExampleData = ({ row, index }) => {
         return (
@@ -75,7 +74,7 @@ export default function ExampleTable({ handleOneData, handleDetailData, handleDe
                     <ViewSelect useYn={row.viewYn} handleSelect={handleSelect} />
                 </TableCell>
                 <TableCell align="center" padding="none">
-                    <TextInput idx={index} handleChange={handleChange} value={row.textExample} />
+                    <TextInput index={index} handleChange={handleChange} value={row.textExample} />
                 </TableCell>
                 <TableCell align="center" padding="none">
                     <EditButton modalId={row.key} handleOneData={handleOneData} />
@@ -108,7 +107,7 @@ export default function ExampleTable({ handleOneData, handleDetailData, handleDe
                     <Table className={classes.table} aria-labelledby="exampleTable" size="medium" aria-label="example table">
                         <TableHead>
                             <TableRow>
-                                {headCells[menuTitle].map((headCell) => (
+                                {headCells[menu].map((headCell) => (
                                     <TableCell
                                         key={headCell.id}
                                         align="center"
@@ -130,7 +129,7 @@ export default function ExampleTable({ handleOneData, handleDetailData, handleDe
                             {rowData.map((row, index) => {
                                 return (
                                     <TableRow hover tabIndex={-1} key={index}>
-                                        {menuTitle === "Example" && <ExampleData index={index} row={row} />}
+                                        {menu === "Example" && <ExampleData index={index} row={row} />}
                                     </TableRow>
                                 );
                             })}
@@ -146,7 +145,7 @@ export default function ExampleTable({ handleOneData, handleDetailData, handleDe
                 </TableContainer>
                 <TablePagination
                     component="div"
-                    ActionsComponent={TablePaginationActions}
+                    ActionsComponent={(props) => <TablePaginationActions menu={menu} onOpen={onOpen} onConfirm={onConfirm} {...props} />}
                     classes={{
                         caption: classes.caption
                     }}

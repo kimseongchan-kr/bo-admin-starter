@@ -6,6 +6,7 @@ const buttonTheme = createMuiTheme({
             root: {
                 width: 100,
                 height: 40,
+                marginLeft: 5,
                 color: "#333333",
                 backgroundColor: "#ffffff",
                 boxShadow: "unset",

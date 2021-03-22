@@ -5,8 +5,8 @@ import { searchSelector } from "slices/searchSlice";
 import useStyles from "styles/customize/SearchStyles";
 import { Grid, Button } from "@material-ui/core";
 
-import DateSearchPickers from "common/inputs/DatePicker";
-import SearchSelects from "common/inputs/SearchSelects";
+import DateSearchPickers from "common/search/DatePicker";
+import SearchSelect from "common/search/SearchSelect";
 
 import { DateTermSearchOptions as options } from "common/search/Data";
 
@@ -34,7 +34,7 @@ export default function DateTermSearch({ handleSearchFilter, handleSearch }) {
 
     return (
         <Grid container direction="row" justify="flex-start" alignItems="center" className={classes.root}>
-            <SearchSelects
+            <SearchSelect
                 index={0}
                 type="term"
                 caption="기간단위"
@@ -46,6 +46,7 @@ export default function DateTermSearch({ handleSearchFilter, handleSearch }) {
                 handleChange={handleChange}
             />
             <DateSearchPickers
+                classes={classes}
                 dateFormat={term === "일간" ? dailyFormat : monthlyFormat}
                 term={term}
                 views={term === "월간" ? ["year", "month"] : ["date"]}
@@ -53,7 +54,6 @@ export default function DateTermSearch({ handleSearchFilter, handleSearch }) {
                 endDate={endDate}
                 handleDate={handleDate}
             />
-
             <Grid item>
                 <div className={classes.spacer}></div>
                 <Button variant="contained" onClick={handleSubmit}>

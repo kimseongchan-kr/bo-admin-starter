@@ -13,7 +13,8 @@ const customStyles = {
         ...provided,
         width: 120,
         height: 32,
-        fontSize: 12
+        fontSize: 12,
+        display: "inline-block"
     }),
     control: (provided) => ({
         ...provided,

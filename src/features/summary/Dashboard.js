@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import MenuRedux from "common/menu/MenuRedux";
 import { searchSelector, setFilter, setPage, setSearchFilter, setSort } from "slices/searchSlice";
-import { setClose, setDetail, setModal } from "slices/modalSlice";
+import { setClose, setDetail, setMessage, setModal, setMsgConfirm } from "slices/modalSlice";
+import MenuRedux from "common/menu/MenuRedux";
 
 import { ThemeProvider } from "@material-ui/core";
 import SearchTheme from "styles/theme/search";
@@ -12,9 +12,11 @@ import DashboardSearch from "features/summary/components/Search";
 import DashboardTable from "features/summary/components/SelectionTable";
 
 import Modal from "react-modal";
-import AddModifyModal from "features/summary/modal/EditModal";
+import EditModal from "features/summary/modal/DashboardEditModal";
 import DetailModal from "features/summary/modal/DetailModal";
 import { SampleDetailData } from "features/summary/Data";
+import MessageModal from "common/modal/MessageModal";
+import ConfirmModal from "common/modal/MessageConfirm";
 
 export default function Dashboard() {
     const dispatch = useDispatch();
@@ -23,6 +25,7 @@ export default function Dashboard() {
 
     const [dataList, setDataList] = useState([]);
     const [selected, setSelected] = useState([]);
+    const [keyword, setKeyword] = useState(searchKeyword ? searchKeyword : "");
     const menu = "Dashboard";
 
     // 데이터 불러오기
@@ -49,7 +52,7 @@ export default function Dashboard() {
     // 검색하기
     const handleSearch = (searchItems) => {
         console.log("데이터 검색하기...");
-        let search = { startDate, endDate, gender, searchType, searchKeyword, sortNm, sortOrder, pageNumber, pageShow };
+        let search = { startDate, endDate, gender, searchType, keyword, sortNm, sortOrder, pageNumber, pageShow };
 
         if (searchItems) {
             search = { ...search, ...searchItems };
@@ -98,6 +101,14 @@ export default function Dashboard() {
         console.log(data, modalId);
     };
 
+    // 선택한 데이터 삭제하기
+    const handleDelete = () => {
+        dispatch(setClose());
+        console.log(selected);
+        console.log("삭제되었습니다...");
+        dispatch(setMessage({ open: true, message: "삭제되었습니다." }));
+    };
+
     // 사용여부/노출여부 등 select 데이터 수정하기
     const handleSelect = (type, value) => {
         console.log("changing status...");
@@ -106,6 +117,16 @@ export default function Dashboard() {
     // 노출순서 등 input 데이터 수정하기
     const handleChange = (value) => {
         console.log("changing sort...");
+    };
+
+    // 추가 모달 열기
+    const onOpen = () => {
+        dispatch(setModal({ open: true, modalId: "", modalStatus: "add" }));
+    };
+
+    // 삭제 확인 모달 열기
+    const onConfirm = () => {
+        dispatch(setMsgConfirm({ open: true, message: "해당 디저트를 삭제하시겠습니까?" }));
     };
 
     // 모달 닫기
@@ -117,7 +138,7 @@ export default function Dashboard() {
         <>
             <MenuRedux menu="summary" title="Dashboard" num={1} />
             <ThemeProvider theme={SearchTheme}>
-                <DashboardSearch menu={menu} handleSearchFilter={handleSearchFilter} handleSearch={handleSearch} />
+                <DashboardSearch menu={menu} keyword={keyword} setKeyword={setKeyword} handleSearchFilter={handleSearchFilter} handleSearch={handleSearch} />
             </ThemeProvider>
             <DashboardTable
                 menu={menu}
@@ -132,11 +153,15 @@ export default function Dashboard() {
                 handlePage={handlePage}
                 handleFilter={handleFilter}
                 handleSearch={handleSearch}
+                onOpen={onOpen}
+                onConfirm={onConfirm}
             />
             <ThemeProvider theme={TableTheme}>
-                <AddModifyModal handleDataSubmit={handleSubmit} onClose={onClose} />
+                <EditModal handleDataSubmit={handleSubmit} onClose={onClose} />
             </ThemeProvider>
             <DetailModal handleDetailData={handleDetailData} onClose={onClose} />
+            <ConfirmModal onClose={onClose} handleDelete={handleDelete} />
+            <MessageModal onClose={onClose} />
         </>
     );
 }

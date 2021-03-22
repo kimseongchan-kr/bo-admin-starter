@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import Select from "react-select";
 import styles from "styles/customize/TableSelectStyles";
 
@@ -7,8 +9,15 @@ const options = [
     { value: "N", label: "미사용" }
 ];
 
-export default function UseSelect({ useYn, handleSelect }) {
+function UseSelect({ useYn, handleSelect }) {
     const label = useYn === "Y" ? "사용" : "미사용";
 
     return <Select isClearable={false} isSearchable={false} styles={styles} defaultValue={{ value: useYn, label: label }} options={options} onChange={(e) => handleSelect("use", e.value)} />;
 }
+
+UseSelect.propTypes = {
+    useYn: PropTypes.string.isRequired,
+    handleSelect: PropTypes.func.isRequired
+};
+
+export default UseSelect;

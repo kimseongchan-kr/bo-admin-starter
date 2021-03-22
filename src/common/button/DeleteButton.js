@@ -1,16 +1,23 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-import { ThemeProvider, IconButton } from "@material-ui/core";
 import theme from "styles/theme/button";
+import { ThemeProvider, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 
-export default function DeleteButton({ handleSubmit }) {
+function DeleteButton({ onConfirm }) {
     return (
         <ThemeProvider theme={theme}>
-            <IconButton onClick={handleSubmit}>
+            <IconButton onClick={onConfirm}>
                 <Close style={{ color: "#DE5D5D" }} />
                 삭제
             </IconButton>
         </ThemeProvider>
     );
 }
+
+DeleteButton.propTypes = {
+    onConfirm: PropTypes.func.isRequired
+};
+
+export default DeleteButton;

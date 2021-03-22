@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setClose, setMessage } from "slices/modalSlice";
 import MenuRedux from "common/menu/MenuRedux";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,9 +11,9 @@ import MessageModal from "common/modal/MessageModal";
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        width: "calc(100% - 60px)",
+        width: "100%",
         height: 560,
-        margin: "0 30px",
+        margin: "0 auto",
         background: "#ffffff",
         display: "flex",
         justifyContent: "center",
@@ -70,13 +72,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ChangePassword() {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     const [pw, setPw] = useState("");
     const [newPw, setNewPw] = useState("");
     const [pwCheck, setPwCheck] = useState("");
-
-    const [modal, setModal] = useState(false);
-    const [modalStatus, setModalStatus] = useState("");
 
     useEffect(() => {
         Modal.setAppElement("body");
@@ -84,12 +84,14 @@ export default function ChangePassword() {
 
     const handleSubmit = () => {
         console.log(pw, pwCheck, newPw);
-        handleModal("success", true);
+        dispatch(setMessage({ open: true, message: "비밀번호가 변경되었습니다." }));
+        // dispatch(setMessage({open: true, message: "비밀번호 변경에 실패하였습니다."}))
+        // dispatch(setMessage({open: true, message: "비밀번호를 다시 확인해주시기 바랍니다."}))
     };
 
-    const handleModal = (status, isOpen) => {
-        setModalStatus(status);
-        setModal(isOpen);
+    // 모달 닫기
+    const onClose = () => {
+        dispatch(setClose());
     };
 
     return (
@@ -148,11 +150,7 @@ export default function ChangePassword() {
                         </button>
                     </Grid>
                 </Grid>
-                <MessageModal
-                    open={modal}
-                    setModal={setModal}
-                    message={modalStatus === "success" ? "비밀번호가 변경되었습니다." : modalStatus === "fail" ? "비밀번호 변경에 실패하였습니다." : "비밀번호를 다시 확인해주시기 바랍니다."}
-                />
+                <MessageModal onClose={onClose} />
             </div>
         </>
     );

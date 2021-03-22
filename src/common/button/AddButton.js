@@ -5,19 +5,19 @@ import theme from "styles/theme/button";
 import { ThemeProvider, IconButton } from "@material-ui/core";
 import { CheckOutlined } from "@material-ui/icons";
 
-function ConfirmButton({ handleSubmit }) {
+function AddButton({ onOpen }) {
     return (
         <ThemeProvider theme={theme}>
-            <IconButton onClick={handleSubmit}>
+            <IconButton onClick={onOpen}>
                 <CheckOutlined style={{ color: "#039BE5" }} />
-                확인
+                추가
             </IconButton>
         </ThemeProvider>
     );
 }
 
-ConfirmButton.propTypes = {
-    handleSubmit: PropTypes.func.isRequired
+AddButton.propTypes = {
+    onOpen: PropTypes.func.isRequired
 };
 
-export default ConfirmButton;
+export default AddButton;

@@ -1,8 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import { modalSelector } from "slices/modalSlice";
+
+import theme from "styles/theme/button";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider, IconButton, Typography, Grid } from "@material-ui/core";
-import theme from "styles/theme/button";
 import { CheckOutlined, Close } from "@material-ui/icons";
 
 import Modal from "react-modal";
@@ -20,22 +24,24 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function ConfirmModal({ open, setModal, message }) {
+// 삭제 확인 모달
+function ConfirmModal({ onClose, handleDelete }) {
     const classes = useStyles();
+    const { msgConfirmOpen, message } = useSelector(modalSelector);
 
     return (
-        <Modal isOpen={open} onRequestClose={() => setModal(false)} style={modalStyles} contentLabel="Message Modal" onAfterOpen={disableScroll} onAfterClose={enableScroll}>
+        <Modal isOpen={msgConfirmOpen} onRequestClose={onClose} style={modalStyles} contentLabel="Message Modal" onAfterOpen={disableScroll} onAfterClose={enableScroll}>
             <Typography variant="body1" display="block" color="inherit" className={classes.message}>
                 {message}
             </Typography>
-            <Grid container justify="flex-end" alignItems="center">
+            <Grid container justify="center" alignItems="center">
                 <Grid item>
                     <ThemeProvider theme={theme}>
-                        <IconButton onClick={() => setModal(false)}>
+                        <IconButton onClick={onClose}>
                             <Close style={{ color: "#DE5D5D" }} />
                             취소
                         </IconButton>
-                        <IconButton onClick={() => setModal(false)}>
+                        <IconButton onClick={handleDelete}>
                             <CheckOutlined />
                             확인
                         </IconButton>
@@ -59,3 +65,10 @@ const modalStyles = {
         maxHeight: "80%"
     }
 };
+
+ConfirmModal.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired
+};
+
+export default ConfirmModal;

@@ -37,6 +37,11 @@ const useStyles = makeStyles(() => ({
     textInput: {
         width: 320,
         height: 32
+    },
+    errorMessage: {
+        lineHeight: "32px",
+        color: "red",
+        marginLeft: 10
     }
 }));
 

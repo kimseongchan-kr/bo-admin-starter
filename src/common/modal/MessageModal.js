@@ -1,9 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import { modalSelector } from "slices/modalSlice";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { ThemeProvider, IconButton, Typography, Grid } from "@material-ui/core";
-import theme from "styles/theme/button";
-import { Close } from "@material-ui/icons";
+import { Typography, Grid } from "@material-ui/core";
+import CloseButton from "common/button/CloseButton";
 
 import Modal from "react-modal";
 import { disableScroll, enableScroll } from "utils/CommonFunction";
@@ -20,22 +22,18 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function MessageModal({ open, setModal, message }) {
+function MessageModal({ onClose }) {
     const classes = useStyles();
+    const { msgOpen, message } = useSelector(modalSelector);
 
     return (
-        <Modal isOpen={open} onRequestClose={() => setModal(false)} style={modalStyles} contentLabel="Message Modal" onAfterOpen={disableScroll} onAfterClose={enableScroll}>
+        <Modal isOpen={msgOpen} onRequestClose={onClose} style={modalStyles} contentLabel="Message Modal" onAfterOpen={disableScroll} onAfterClose={enableScroll}>
             <Typography variant="body1" display="block" color="inherit" className={classes.message}>
                 {message}
             </Typography>
             <Grid container justify="center" alignItems="center">
                 <Grid item>
-                    <ThemeProvider theme={theme}>
-                        <IconButton onClick={() => setModal(false)}>
-                            <Close style={{ color: "#DE5D5D" }} />
-                            닫기
-                        </IconButton>
-                    </ThemeProvider>
+                    <CloseButton onClose={onClose} text="닫기" />
                 </Grid>
             </Grid>
         </Modal>
@@ -55,3 +53,9 @@ const modalStyles = {
         maxHeight: "80%"
     }
 };
+
+MessageModal.propTypes = {
+    onClose: PropTypes.func.isRequired
+};
+
+export default MessageModal;

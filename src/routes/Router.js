@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import Container from "hoc";
 
@@ -11,10 +11,13 @@ import Example from "features/example/Example";
 import ChangeInfo from "features/admin/ChangeInfo";
 import ChangePassword from "features/admin/ChangePassword";
 
+import Page404 from "features/404";
+
 export default function Router() {
     return (
         <Switch>
             <Route path="/" exact component={Container(Dashboard)} />
+            <Route path="/dashboard" exact component={Container(Dashboard)} />
             <Route path="/summary" exact component={Container(Summary)} />
 
             <Route path="/example" exact component={Container(Example)} />
@@ -22,7 +25,7 @@ export default function Router() {
             <Route path="/info" exact component={Container(ChangeInfo)} />
             <Route path="/password" exact component={Container(ChangePassword)} />
 
-            <Redirect path="*" to="/" />
+            <Route path="*" component={Page404} />
         </Switch>
     );
 }

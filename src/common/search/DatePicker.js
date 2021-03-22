@@ -1,6 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-import useStyles from "styles/customize/SearchStyles";
 import { format } from "utils/CommonFunction";
 
 import DateFnsUtils from "@date-io/date-fns";
@@ -8,9 +8,7 @@ import { Grid, Typography, IconButton, InputAdornment } from "@material-ui/core"
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import InsertInvitationIcon from "@material-ui/icons/InsertInvitation";
 
-export default function DateSearchPickers({ dateFormat, term, views, startDate, endDate, handleDate }) {
-    const classes = useStyles();
-
+function DateSearchPickers({ classes, dateFormat, term, views, startDate, endDate, handleDate }) {
     return (
         <>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -24,7 +22,7 @@ export default function DateSearchPickers({ dateFormat, term, views, startDate, 
                         inputVariant="outlined"
                         format={dateFormat}
                         views={views ? views : ["date"]}
-                        id="date-picker-inline start"
+                        id="date-picker-inline-start"
                         value={startDate}
                         maxDate={endDate}
                         maxDateMessage="시작일을 다시 선택해주세요"
@@ -55,7 +53,7 @@ export default function DateSearchPickers({ dateFormat, term, views, startDate, 
                         inputVariant="outlined"
                         format={dateFormat}
                         views={views ? views : ["date"]}
-                        id="date-picker-inline end"
+                        id="date-picker-inline-end"
                         value={endDate}
                         minDate={startDate}
                         minDateMessage="종료일을 다시 선택해주세요"
@@ -77,3 +75,15 @@ export default function DateSearchPickers({ dateFormat, term, views, startDate, 
         </>
     );
 }
+
+DateSearchPickers.propTypes = {
+    classes: PropTypes.object.isRequired,
+    dateFormat: PropTypes.string.isRequired,
+    term: PropTypes.string.isRequired,
+    views: PropTypes.array,
+    startDate: PropTypes.string.isRequired,
+    endDate: PropTypes.string.isRequired,
+    handleDate: PropTypes.func.isRequired
+};
+
+export default DateSearchPickers;

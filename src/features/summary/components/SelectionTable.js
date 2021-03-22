@@ -6,9 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { TableContainer, Paper, Table, TableHead, TableSortLabel, TableBody, TableRow, TableCell, TablePagination, Checkbox } from "@material-ui/core";
 
 import Filters from "features/summary/components/Filter";
-import UseSelect from "common/inputs/UseSelect";
-import ViewSelect from "common/inputs/ViewSelect";
-import SortOrder from "common/inputs/SortOrder";
+import UseSelect from "common/table/UseSelect";
+import ViewSelect from "common/table/ViewSelect";
+import SortOrder from "common/table/SortOrder";
 import TablePaginationActions from "common/table/Pagination";
 
 import { SummaryHeadCell as headCells, SampleRowData as rowData } from "features/summary/Data";
@@ -43,9 +43,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // Row Selection 가능한 테이블
-export default function SummarySelectionTable({ menu, selected, setSelected, handleOneData, handleDetailData, handleChange, handleSelect, handleFilter, handleSearch, handleSort, handlePage }) {
+export default function SummarySelectionTable(props) {
     const classes = useStyles();
     const { pageNumber, pageShow, sortNm, sortOrder } = useSelector(searchSelector);
+    const { menu, selected, setSelected, handleOneData, handleDetailData, handleChange, handleSelect, handleFilter, handleSearch, handleSort, handlePage, onOpen, onConfirm } = props;
 
     // Summary의 Dashboard 메뉴 table 데이터
     const DashboardData = ({ row }) => {
@@ -216,7 +217,7 @@ export default function SummarySelectionTable({ menu, selected, setSelected, han
                 </TableContainer>
                 <TablePagination
                     component="div"
-                    ActionsComponent={TablePaginationActions}
+                    ActionsComponent={(props) => <TablePaginationActions menu={menu} onOpen={onOpen} onConfirm={onConfirm} {...props} />}
                     classes={{
                         caption: classes.caption
                     }}

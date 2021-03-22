@@ -53,6 +53,34 @@ export default function DetailModal({ onClose, handleDetailData }) {
         setPageNumber(value);
     };
 
+    const DashboardData = ({ row, index }) => {
+        return (
+            <TableRow hover tabIndex={-1} key={index}>
+                <TableCell align="center" padding="none">
+                    {row.name}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.calories}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.fat}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.carbs}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.protein}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.useYn}
+                </TableCell>
+                <TableCell align="center" padding="none">
+                    {row.viewYn}
+                </TableCell>
+            </TableRow>
+        );
+    };
+
     return (
         <Modal isOpen={detailOpen} onRequestClose={onClose} style={modalStyles} contentLabel="Detail Modal" onAfterOpen={disableScroll} onAfterClose={enableScroll}>
             {detailOpen && (
@@ -72,31 +100,7 @@ export default function DetailModal({ onClose, handleDetailData }) {
                         </TableHead>
                         <TableBody>
                             {modalData.map((row, index) => {
-                                return (
-                                    <TableRow hover tabIndex={-1} key={index}>
-                                        <TableCell align="center" padding="none">
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.calories}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.fat}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.carbs}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.protein}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.useYn}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.viewYn}
-                                        </TableCell>
-                                    </TableRow>
-                                );
+                                return <DashboardData row={row} index={index} />;
                             })}
                             {modalData === 0 && (
                                 <TableRow>

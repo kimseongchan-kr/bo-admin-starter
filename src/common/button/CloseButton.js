@@ -1,10 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-import { ThemeProvider, IconButton } from "@material-ui/core";
 import theme from "styles/theme/button";
+import { ThemeProvider, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 
-export default function CloseButton({ text, onClose }) {
+function CloseButton({ text, onClose }) {
     return (
         <ThemeProvider theme={theme}>
             <IconButton onClick={onClose}>
@@ -14,3 +15,10 @@ export default function CloseButton({ text, onClose }) {
         </ThemeProvider>
     );
 }
+
+CloseButton.propTypes = {
+    text: PropTypes.string.isRequired,
+    onClose: PropTypes.func.isRequired
+};
+
+export default CloseButton;

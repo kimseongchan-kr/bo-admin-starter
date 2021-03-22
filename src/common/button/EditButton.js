@@ -1,11 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "styles/theme/button";
-import { IconButton } from "@material-ui/core";
+import { ThemeProvider, IconButton } from "@material-ui/core";
 import { CheckOutlined } from "@material-ui/icons";
 
-export default function ModalEditButton({ text }) {
+function EditButton({ text }) {
     return (
         <ThemeProvider theme={theme}>
             <IconButton type="submit">
@@ -15,3 +15,9 @@ export default function ModalEditButton({ text }) {
         </ThemeProvider>
     );
 }
+
+EditButton.propTypes = {
+    text: PropTypes.string.isRequired
+};
+
+export default EditButton;

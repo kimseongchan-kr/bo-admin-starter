@@ -1,8 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { Button, ThemeProvider } from "@material-ui/core";
 import theme from "styles/theme/button";
 
-export default function DeleteButton({ modalId, handleDelete }) {
+function DeleteButton({ modalId, handleDelete }) {
     return (
         <ThemeProvider theme={theme}>
             <Button variant="contained" onClick={() => handleDelete(modalId)}>
@@ -11,3 +13,10 @@ export default function DeleteButton({ modalId, handleDelete }) {
         </ThemeProvider>
     );
 }
+
+DeleteButton.propTypes = {
+    modalId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+    handleDelete: PropTypes.func.isRequired
+};
+
+export default DeleteButton;

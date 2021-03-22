@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { TableContainer, Paper, Table, TableHead, TableSortLabel, TableBody, TableRow, TableCell, TablePagination } from "@material-ui/core";
 
 import Filters from "features/summary/components/Filter";
-import UseSelect from "common/inputs/UseSelect";
+import UseSelect from "common/table/UseSelect";
 import TablePaginationActions from "common/table/Pagination";
 
 import { SummaryHeadCell as headCells, SampleRowData as rowData } from "features/summary/Data";
@@ -41,9 +41,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // 기본 테이블
-export default function SummaryTable({ menu, handleOneData, handleDetailData, handleChange, handleSelect, handleFilter, handleSearch, handleSort, handlePage }) {
+export default function SummaryTable(props) {
     const classes = useStyles();
     const { pageNumber, pageShow, sortNm, sortOrder } = useSelector(searchSelector);
+    const { menu, handleOneData, handleDetailData, handleSelect, handleFilter, handleSearch, handleSort, handlePage, onOpen, onConfirm } = props;
 
     // Summary의 Summary 메뉴 table 데이터
     const SummaryData = ({ row }) => {
@@ -133,7 +134,7 @@ export default function SummaryTable({ menu, handleOneData, handleDetailData, ha
                 </TableContainer>
                 <TablePagination
                     component="div"
-                    ActionsComponent={TablePaginationActions}
+                    ActionsComponent={(props) => <TablePaginationActions menu={menu} onOpen={onOpen} onConfirm={onConfirm} {...props} />}
                     classes={{
                         caption: classes.caption
                     }}
