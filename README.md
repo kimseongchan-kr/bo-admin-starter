@@ -21,7 +21,7 @@
 -   **PopupState** : [material-ui-popup-state](https://github.com/jcoreio/material-ui-popup-state#material-ui-popup-state, "material-ui-popup-state")
 -   **Select** : [react-select](https://react-select.com/home "react-select")
 
-## 구현되어 있는 부분들
+## 프로젝트 구조
 [확인하기](https://github.com/BlockOdyssey/bo-admin-starter#project-structure "프로젝트 구조")
 
 ---
@@ -547,126 +547,123 @@ function TablePaginationActions() {
 
 ```
 .
-├── README.md
-├── jsconfig.json
-├── package-lock.json
+├── README.md                                   # 사용 설명서
+├── jsconfig.json                               # 프로젝트 환경 설정
 ├── package.json
 ├── public
 │   ├── favicon.ico
-│   ├── index.html
-│   ├── manifest.json
-│   └── robots.txt
+│   └── index.html                              # 폰트 설정 (link)
 └── src
-    ├── api
-    │   ├── Api.js
-    │   └── Url.js
-    ├── app
-    │   ├── App.js
-    │   ├── rootReducer.js
-    │   └── store.js
+    ├── api                                     # API 
+    │   ├── Api.js                                  # axios 설정 파일
+    │   └── Url.js                                  # URL
+    ├── app                                     # APP
+    │   ├── App.js                                  # PublicRoutes, PrivateRoutes 구분
+    │   ├── rootReducer.js                          # reducer 설정
+    │   └── store.js                                # redux-persist 설정, store 설정
     ├── assets
-    │   ├── Fonts
-    │   └── Images
+    │   ├── Fonts                               # 폰트
+    │   └── Images                              # 이미지
     │       └── img_logout.png
-    ├── common
-    │   ├── button
-    │   │   ├── AddButton.js
-    │   │   ├── CloseButton.js
-    │   │   ├── DeleteButton.js
-    │   │   ├── EditButton.js
-    │   │   └── MsgConfirmButton.js
-    │   ├── editor
+    ├── common                                  # COMMON
+    │   ├── button                                  # BUTTON
+    │   │   ├── AddButton.js                            # 추가 모달 여는 버튼
+    │   │   ├── CloseButton.js                          # 모달 닫기 버튼
+    │   │   ├── DeleteButton.js                         # 삭제 버튼
+    │   │   ├── EditButton.js                           # 수정 모달 수정 버튼
+    │   │   └── MsgConfirmButton.js                     # 확인 버튼
+    │   ├── editor                                  # 에디터
+    │   │   └── index.js                                
+    │   ├── excel                                   # 엑셀
     │   │   └── index.js
-    │   ├── excel
-    │   │   └── index.js
-    │   ├── form
-    │   │   ├── Checkbox.js
-    │   │   ├── Input.js
-    │   │   ├── RadioButton.js
-    │   │   └── Select.js
-    │   ├── menu
-    │   │   └── MenuRedux.js
-    │   ├── modal
-    │   │   ├── MessageConfirm.js
-    │   │   └── MessageModal.js
-    │   ├── search
-    │   │   ├── Data.js
-    │   │   ├── DatePicker.js
-    │   │   ├── DateTermSearch.js
-    │   │   ├── SearchField.js
-    │   │   └── SearchSelect.js
-    │   └── table
-    │       ├── Data.js
-    │       ├── DeleteButton.js
-    │       ├── EditButton.js
-    │       ├── Pagination.js
-    │       ├── SortOrder.js
-    │       ├── TextField.js
-    │       ├── UseSelect.js
-    │       └── ViewSelect.js
+    │   ├── form                                    # FORM
+    │   │   ├── Checkbox.js                             # 체크박스
+    │   │   ├── Input.js                                # input
+    │   │   ├── RadioButton.js                          # 라디오 버튼
+    │   │   └── Select.js                               # select
+    │   ├── menu                                    # MENU
+    │   │   └── MenuRedux.js                            # Menu Dispatch
+    │   ├── modal                                   # MODAL
+    │   │   ├── MessageConfirm.js                       # window.confirm()
+    │   │   └── MessageModal.js                         # alert()
+    │   ├── search                                  # 검색
+    │   │   ├── Data.js                                 # 검색 관련 설정 파일
+    │   │   ├── DatePicker.js                           # Date Picker (시작일, 종료일)
+    │   │   ├── DateTermSearch.js                       # 기간 검색 (일간/월간, 시작일, 종료일, 조회버튼)
+    │   │   ├── SearchField.js                          # 조회조건 + 검색 input
+    │   │   └── SearchSelect.js                         # 검색 조건 select
+    │   └── table                                   # table
+    │       ├── Data.js                                 # 테이블 버튼 관련 설정 파일
+    │       ├── DeleteButton.js                         # 삭제 버튼
+    │       ├── EditButton.js                           # 수정 버튼
+    │       ├── Pagination.js                           # Pagination + Button
+    │       ├── SortOrder.js                            # 노출순서 input
+    │       ├── TextField.js                            # 사용자 입력 input
+    │       ├── UseSelect.js                            # 사용여부 select
+    │       └── ViewSelect.js                           # 노출여부 select
     ├── features
-    │   ├── 404
+    │   ├── 404                                     # 404 Page
     │   │   └── index.js
-    │   ├── admin
-    │   │   ├── ChangeInfo.js
-    │   │   └── ChangePassword.js
-    │   ├── example
-    │   │   ├── Data.js
-    │   │   ├── Example.js
-    │   │   ├── components
-    │   │   │   ├── Filter.js
-    │   │   │   └── Table.js
-    │   │   └── modal
-    │   │       ├── DetailModal.js
-    │   │       └── EditModal.js
-    │   ├── login
+    │   ├── admin                                   # 관리자
+    │   │   ├── ChangeInfo.js                           # 관리자 정보 변경
+    │   │   └── ChangePassword.js                       # 관리자 비밀번호 변경
+    │   ├── example                                 # Example
+    │   │   ├── Data.js                                 # Example 폴더의 테이블과 검색 관련 설정 파일
+    │   │   ├── Example.js                              # Example 메뉴 파일
+    │   │   ├── components                              # Example에서 사용하는 Components
+    │   │   │   ├── Filter.js                               # Table Filter
+    │   │   │   └── Table.js                                # Table (Checkbox없는 기본 테이블)
+    │   │   └── modal                                   # Modal
+    │   │       ├── DetailModal.js                          # 상세 모달
+    │   │       └── EditModal.js                            # 추가/수정 모달
+    │   ├── login                                   # 로그인
     │   │   └── index.js
-    │   └── summary
-    │       ├── Dashboard.js
-    │       ├── Data.js
-    │       ├── Summary.js
-    │       ├── components
-    │       │   ├── Filter.js
-    │       │   ├── Search.js
-    │       │   ├── SelectionTable.js
-    │       │   └── Table.js
-    │       └── modal
-    │           ├── DashboardEditModal.js
-    │           ├── DetailModal.js
-    │           └── SummaryEditModal.js
-    ├── hoc
-    │   └── index.js
+    │   └── summary                                 # Summary
+    │       ├── Dashboard.js                            # Dashboard 메뉴 파일
+    │       ├── Data.js                                 # Summary 폴더의 테이블과 검색 관련 설정 파일
+    │       ├── Summary.js                              # Summary 메뉴 파일
+    │       ├── components                              # Dashboard, Summary에서 사용하는 Components
+    │       │   ├── Filter.js                               # Table Filter
+    │       │   ├── Search.js                               # 검색
+    │       │   ├── SelectionTable.js                       # Table (Checkbox 있는)
+    │       │   └── Table.js                                # Table (Checkbox 없는)
+    │       └── modal                                   # Modal
+    │           ├── DashboardEditModal.js                   # Dashboard의 추가/수정 모달
+    │           ├── DetailModal.js                          # 상세 모달
+    │           └── SummaryEditModal.js                     # Summarydml 추가/수정 모달
+    ├── hoc                                         # Base Container
+    │   └── index.js            
     ├── index.js
-    ├── layout
-    │   ├── Header.js
-    │   └── Menubar.js
-    ├── routes
+    ├── layout                                      # 레이아웃
+    │   ├── Header.js                                   # 헤더 (+ 정보변경/비밀번호 수정/로그아웃)
+    │   └── Menubar.js                                  # 메뉴 (Navigation)
+    ├── routes                                      # 라우터
     │   └── Router.js
-    ├── slices
-    │   ├── exampleSlice.js
-    │   ├── loginSlice.js
-    │   ├── menuSlice.js
-    │   ├── modalSlice.js
-    │   ├── searchSlice.js
-    │   └── summarySlice.js
-    ├── styles
-    │   ├── customize
-    │   │   ├── ButtonStyles.js
-    │   │   ├── DefaultStyles.js
-    │   │   ├── FilterStyles.js
-    │   │   ├── FormSelectStyles.js
-    │   │   ├── LayoutStyles.js
-    │   │   ├── ModalFormStyles.js
-    │   │   ├── SearchSelectStyles.js
-    │   │   ├── SearchStyles.js
-    │   │   └── TableSelectStyles.js
-    │   └── theme
-    │       ├── button.js
-    │       ├── search.js
-    │       ├── table.js
-    │       ├── textfield.js
-    │       ├── theme.js
-    │       └── typography.js
-    └── utils
-        └── CommonFunction.js
+    ├── slices                                      # Slices (redux-toolkit createSlice)
+    │   ├── exampleSlice.js                             # Example 폴더의 slice 파일
+    │   ├── loginSlice.js                               # 로그인 slice 파일
+    │   ├── menuSlice.js                                # 메뉴 slice 파일
+    │   ├── modalSlice.js                               # modal slice 파일
+    │   ├── searchSlice.js                              # 검색 slice 파일
+    │   └── summarySlice.js                             # Summary 폴더의 slice 파일
+    ├── styles                                      # Styles
+    │   ├── customize                                   # makeStyles / react-select 커스터마이징
+    │   │   ├── ButtonStyles.js                             # 엑셀 버튼
+    │   │   ├── DefaultStyles.js                            # html, body... 기본 style
+    │   │   ├── FilterStyles.js                             # 테이블 필터
+    │   │   ├── FormSelectStyles.js                         # react-select 모달창용 style
+    │   │   ├── LayoutStyles.js                             # 레이아웃 style
+    │   │   ├── ModalFormStyles.js                          # 추가/수정 모달 style
+    │   │   ├── SearchSelectStyles.js                       # react-select 검색용 style
+    │   │   ├── SearchStyles.js                             # 검색 style
+    │   │   └── TableSelectStyles.js                        # react-select 테이블용 style
+    │   └── theme                                       # ThemeProvider 
+    │       ├── button.js                                   # 버튼
+    │       ├── search.js                                   # 검색
+    │       ├── table.js                                    # 테이블
+    │       ├── textfield.js                                # input
+    │       ├── theme.js                                    # global theme 설정
+    │       └── typography.js                               # font 관련 설정
+    └── utils                                       # Utils
+        └── CommonFunction.js                           # 공용 함수
 ```
