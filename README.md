@@ -1,6 +1,6 @@
 # bo-admin-starter
 
-:smiley: 블록오디세이를 위한 React용 관리자 페이지 Boilerplate입니다. :smiley:
+:smiley: 블록오디세이를 위한 React용 관리자 페이지 Boilerplate입니다. :smiley:   
 :bangbang: [프로젝트 설치 방법](https://github.com/BlockOdyssey/bo-admin-starter#project-installation "project-installation") & [사용 설명서](https://github.com/BlockOdyssey/bo-admin-starter#사용방법 "usage") :bangbang:
 
 ## Project Main Features
@@ -20,6 +20,9 @@
 -   **Modal** : [react-modal](https://github.com/reactjs/react-modal#react-modal "react-modal")
 -   **PopupState** : [material-ui-popup-state](https://github.com/jcoreio/material-ui-popup-state#material-ui-popup-state, "material-ui-popup-state")
 -   **Select** : [react-select](https://react-select.com/home "react-select")
+
+## 구현되어 있는 부분들
+[확인하기](https://github.com/BlockOdyssey/bo-admin-starter#project-structure "프로젝트 구조")
 
 ---
 
@@ -46,7 +49,7 @@
 
 ## 사용방법
 
-> Data.js 파일 작성 방법
+> Data.js 파일 작성 방법   
 > Data.js 적용 방법
 
 ### Search (검색)
