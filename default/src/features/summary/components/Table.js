@@ -65,7 +65,7 @@ export default function SummaryTable(props) {
                 <TableCell align="center" padding="none">
                     {row.protein}
                 </TableCell>
-                <TableCell align="center" padding="none">
+                <TableCell padding="none">
                     <UseSelect useYn={row.useYn} handleSelect={handleSelect} />
                 </TableCell>
                 <TableCell align="center" padding="none">

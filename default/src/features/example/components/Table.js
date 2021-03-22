@@ -71,7 +71,7 @@ export default function ExampleTable(props) {
                     <UseSelect useYn={row.useYn} handleSelect={handleSelect} />
                 </TableCell>
                 <TableCell align="center" padding="none">
-                    <ViewSelect useYn={row.viewYn} handleSelect={handleSelect} />
+                    <ViewSelect viewYn={row.viewYn} handleSelect={handleSelect} />
                 </TableCell>
                 <TableCell align="center" padding="none">
                     <TextInput index={index} handleChange={handleChange} value={row.textExample} />

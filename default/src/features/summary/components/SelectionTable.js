@@ -67,11 +67,11 @@ export default function SummarySelectionTable(props) {
                 <TableCell align="center" padding="none">
                     {row.protein}
                 </TableCell>
-                <TableCell align="center" padding="none">
+                <TableCell padding="none">
                     <UseSelect useYn={row.useYn} handleSelect={handleSelect} />
                 </TableCell>
-                <TableCell align="center" padding="none">
-                    <ViewSelect useYn={row.viewYn} handleSelect={handleSelect} />
+                <TableCell padding="none">
+                    <ViewSelect viewYn={row.viewYn} handleSelect={handleSelect} />
                 </TableCell>
                 <TableCell width={80} align="center" padding="none">
                     <SortOrder handleChange={handleChange} sortOrder={row.sortOrder} />
