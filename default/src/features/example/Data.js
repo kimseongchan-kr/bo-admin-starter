@@ -1,9 +1,13 @@
-const ExampleFilter = {
+const exampleFilter = {
     calories: ["cupcake", "cake", "cookie", "macaroon"],
     carbs: ["example1", "example2", "example3", "example4"]
 };
 
-const ExampleHeadCell = {
+const exampleDefaultSort = {
+    Example: "name"
+};
+
+const exampleHeadCell = {
     Example: [
         { id: "name", numeric: false, disablePadding: true, sort: true, filter: false, label: "디저트" },
         { id: "calories", numeric: true, disablePadding: false, sort: false, filter: true, label: "칼로리" },
@@ -26,7 +30,7 @@ const ExampleHeadCell = {
     ]
 };
 
-const SampleRowData = [
+const sampleRowData = [
     { key: 1, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y", textExample: "사용자 입력" },
     { key: 2, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y", textExample: "사용자 입력" },
     { key: 3, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y", textExample: "사용자 입력" },
@@ -36,7 +40,7 @@ const SampleRowData = [
     { key: 7, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", viewYn: "Y", textExample: "사용자 입력" }
 ];
 
-const SampleDetailData = [
+const sampleDetailData = [
     { key: 1, name: "Cupcake", calories: 305, fat: 3.7, carbs: 67, protein: 4.3, useYn: "사용", viewYn: "활성화" },
     { key: 2, name: "Cupcake", calories: 305, fat: 3.7, carbs: 67, protein: 4.3, useYn: "사용", viewYn: "활성화" },
     { key: 3, name: "Cupcake", calories: 305, fat: 3.7, carbs: 67, protein: 4.3, useYn: "사용", viewYn: "활성화" },
@@ -46,4 +50,4 @@ const SampleDetailData = [
     { key: 7, name: "Cupcake", calories: 305, fat: 3.7, carbs: 67, protein: 4.3, useYn: "사용", viewYn: "활성화" }
 ];
 
-export { ExampleFilter, ExampleHeadCell, SampleRowData, SampleDetailData };
+export { exampleFilter, exampleDefaultSort, exampleHeadCell, sampleRowData, sampleDetailData };

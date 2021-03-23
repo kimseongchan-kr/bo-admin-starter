@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { searchSelector, setFilter, setPage, setSearchFilter, setSort } from "slices/searchSlice";
 import { setClose, setDetail, setMessage, setModal, setMsgConfirm } from "slices/modalSlice";
+import { getList, summarySelector } from "slices/summarySlice";
 import MenuRedux from "common/menu/MenuRedux";
 
 import { ThemeProvider } from "@material-ui/core";
@@ -11,19 +12,22 @@ import TableTheme from "styles/theme/table";
 import DashboardSearch from "features/summary/components/Search";
 import DashboardTable from "features/summary/components/SelectionTable";
 
-import Modal from "react-modal";
 import EditModal from "features/summary/modal/DashboardEditModal";
 import DetailModal from "features/summary/modal/DetailModal";
-import { sampleDetailData } from "features/summary/Data";
+
 import MessageModal from "common/modal/MessageModal";
 import ConfirmModal from "common/modal/MessageConfirm";
 
+import { sampleDetailData } from "features/summary/Data";
+
 export default function Dashboard() {
     const dispatch = useDispatch();
+    const summaryList = useSelector(summarySelector);
+    const { dataList, isLoading, hasErrors, errorMsg } = summaryList;
+
     const searchList = useSelector(searchSelector);
     const { startDate, endDate, gender, searchType, searchKeyword, sortNm, sortOrder, pageNumber, pageShow } = searchList;
 
-    const [dataList, setDataList] = useState([]);
     const [selected, setSelected] = useState([]);
     const [keyword, setKeyword] = useState(searchKeyword ? searchKeyword : "");
     const menu = "Dashboard";
@@ -31,17 +35,19 @@ export default function Dashboard() {
     // 데이터 불러오기
     const handleData = useCallback(() => {
         console.log("데이터 불러오기...");
-        if (!sortNm) {
-            dispatch(setSort({ sortNm: "name", sortOrder: "asc" }));
-        } else {
-            setDataList([]);
-        }
-    }, [dispatch, sortNm]);
+        // dispatch(getList("/web/user"));
+    }, [dispatch]);
 
     useEffect(() => {
-        Modal.setAppElement("body");
         handleData();
     }, [handleData]);
+
+    // 에러 메시지
+    // -> 네트워크 오류입니다.
+    // -> 다시 시도해주세요.
+    useEffect(() => {
+        dispatch(setMessage({ open: hasErrors, message: errorMsg }));
+    }, [dispatch, hasErrors, errorMsg]);
 
     // 검색 조건 변경하기
     const handleSearchFilter = (searchFilterItems) => {
@@ -111,12 +117,12 @@ export default function Dashboard() {
 
     // 사용여부/노출여부 등 select 데이터 수정하기
     const handleSelect = (type, value) => {
-        console.log("changing status...");
+        console.log("changing status...", type, value);
     };
 
     // 노출순서 등 input 데이터 수정하기
     const handleChange = (value) => {
-        console.log("changing sort...");
+        console.log("changing input value...", value);
     };
 
     // 추가 모달 열기
@@ -142,7 +148,8 @@ export default function Dashboard() {
             </ThemeProvider>
             <DashboardTable
                 menu={menu}
-                data={dataList}
+                loading={isLoading}
+                data={dataList ? dataList : []}
                 selected={selected}
                 setSelected={setSelected}
                 handleOneData={handleOneData}

@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setMenu } from "slices/menuSlice";
+import { setClose, setMessage } from "slices/modalSlice";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, FormControlLabel, Checkbox } from "@material-ui/core";
 
 import Modal from "react-modal";
 import MessageModal from "common/modal/MessageModal";
+
+Modal.setAppElement("body");
 
 const useStyles = makeStyles((theme) => ({
     loginContainer: {
@@ -90,15 +93,14 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [checked, setChecked] = useState(true);
     const [isFocused, setFocused] = useState(null);
-    const [modalIsOpen, setModal] = useState(false);
 
-    useEffect(() => {
-        Modal.setAppElement("body");
-    }, []);
+    const handleSubmit = () => {
+        dispatch(setMessage({ open: true, message: "로그인" }));
+        dispatch(setMenu({ menu: "summary", title: "Dashboard", num: 1 }));
+    };
 
-    const submit = async () => {
-        await setModal(true);
-        await dispatch(setMenu({ menu: "summary", title: "Dashboard", num: 1 }));
+    const onClose = () => {
+        dispatch(setClose());
     };
 
     return (
@@ -137,11 +139,11 @@ export default function Login() {
                         />
                         <FormControlLabel className={classes.checkbox} control={<Checkbox checked={checked} name="checked" onChange={(e) => setChecked(e.target.checked)} />} label="자동 로그인" />
                         <div>
-                            <button type="button" className={classes.loginButton} onClick={submit}>
+                            <button type="button" className={classes.loginButton} onClick={handleSubmit}>
                                 로그인
                             </button>
                         </div>
-                        <MessageModal open={modalIsOpen} setModal={setModal} message="로그인에 실패하였습니다." />
+                        <MessageModal onClose={onClose} />
                     </div>
                 </Grid>
             </Grid>

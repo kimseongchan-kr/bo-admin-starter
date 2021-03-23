@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setClose, setMessage } from "slices/modalSlice";
 import MenuRedux from "common/menu/MenuRedux";
@@ -6,7 +6,6 @@ import MenuRedux from "common/menu/MenuRedux";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Grid, Typography } from "@material-ui/core";
 
-import Modal from "react-modal";
 import MessageModal from "common/modal/MessageModal";
 
 const useStyles = makeStyles((theme) => ({
@@ -77,10 +76,6 @@ export default function ChangePassword() {
     const [pw, setPw] = useState("");
     const [newPw, setNewPw] = useState("");
     const [pwCheck, setPwCheck] = useState("");
-
-    useEffect(() => {
-        Modal.setAppElement("body");
-    }, []);
 
     const handleSubmit = () => {
         console.log(pw, pwCheck, newPw);

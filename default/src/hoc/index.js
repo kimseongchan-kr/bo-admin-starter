@@ -5,6 +5,9 @@ import Header from "layout/Header";
 import { Container } from "@material-ui/core";
 import layoutStyles from "styles/customize/LayoutStyles";
 
+import Modal from "react-modal";
+Modal.setAppElement("body");
+
 export default function container(Component) {
     const classes = layoutStyles();
 

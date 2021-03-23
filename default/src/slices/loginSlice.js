@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { postData } from "api/Api";
 
-export const fetchLogin = createAsyncThunk("login/fetchLogin", async (body, thunkAPI) => {
+export const login = createAsyncThunk("login/login", async (body, { rejectWithValue }) => {
     try {
         const response = await postData(body.url, null, { body });
-        return response;
+        console.log("api::", response);
+        return response.data;
     } catch (error) {
-        return error.data.payload;
+        console.log("error::", error);
+        return rejectWithValue(error.response.data);
     }
 });
 
@@ -14,12 +16,17 @@ export const loginSlice = createSlice({
     name: "login",
     initialState: {
         isLogin: true,
-        userName: "",
-        userEmail: "",
-        userTel: "",
-        position: ""
+        hasErrors: false,
+
+        userName: ""
     },
     reducers: {
+        // Sample
+        // Login API와 연결한 경우 삭제
+        // fetchLogin을 사용
+        setIsLogin: (state) => {
+            state.isLogin = true;
+        },
         setLogOut: (state) => {
             state.isLogin = false;
             state.userName = "";
@@ -27,16 +34,10 @@ export const loginSlice = createSlice({
         }
     },
     extraReducers: {
-        [fetchLogin.pending]: (state) => {
-            state.loading = true;
-        },
-        [fetchLogin.fulfilled]: (state, { payload }) => {
+        [login.fulfilled]: (state, { payload }) => {
             state.isLogin = true;
-            state.loading = false;
-            state.hasErrors = false;
         },
-        [fetchLogin.rejected]: (state) => {
-            state.loading = false;
+        [login.rejected]: (state) => {
             state.hasErrors = true;
         }
     }

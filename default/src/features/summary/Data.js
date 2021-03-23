@@ -55,6 +55,14 @@ const summaryFilter = {
     carbs: ["example1", "example2", "example3", "example4"]
 };
 
+//  메뉴별 default 정렬
+//      있는 경우 -> 해당 컬럼 명
+//      없는 경우 -> ""
+const summaryDefaultSort = {
+    Dashboard: "name",
+    Summary: ""
+};
+
 // 테이블 컬럼명 + 필터 설정 + 정렬 설정
 // 필터/정렬이 필요하면 -> true
 // 아니면 -> false
@@ -116,4 +124,4 @@ const sampleDetailData = [
     { key: 7, name: "Cupcake", calories: 305, fat: 3.7, carbs: 67, protein: 4.3, useYn: "사용", viewYn: "활성화" }
 ];
 
-export { summarySearchComponents, summarySearchType, summarySearchOptions, summarySearchCaption, summaryFilter, summaryHeadCell, sampleRowData, sampleDetailData };
+export { summarySearchComponents, summarySearchType, summarySearchOptions, summarySearchCaption, summaryFilter, summaryDefaultSort, summaryHeadCell, sampleRowData, sampleDetailData };

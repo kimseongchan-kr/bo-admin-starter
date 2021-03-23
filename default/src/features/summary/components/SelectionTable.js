@@ -11,7 +11,7 @@ import ViewSelect from "common/table/ViewSelect";
 import SortOrder from "common/table/SortOrder";
 import TablePaginationActions from "common/table/Pagination";
 
-import { summaryHeadCell as headCells, sampleRowData as rowData } from "features/summary/Data";
+import { summaryHeadCell as headCells, sampleRowData as rowData, summaryDefaultSort as defaultSort } from "features/summary/Data";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SummarySelectionTable(props) {
     const classes = useStyles();
     const { pageNumber, pageShow, sortNm, sortOrder } = useSelector(searchSelector);
-    const { menu, selected, setSelected, handleOneData, handleDetailData, handleChange, handleSelect, handleFilter, handleSearch, handleSort, handlePage, onOpen, onConfirm } = props;
+    const { menu, loading, data, selected, setSelected, handleOneData, handleDetailData, handleChange, handleSelect, handleFilter, handleSearch, handleSort, handlePage, onOpen, onConfirm } = props;
 
     // Summary의 Dashboard 메뉴 table 데이터
     const DashboardData = ({ row }) => {
@@ -172,22 +172,26 @@ export default function SummarySelectionTable(props) {
                                         inputProps={{ "aria-label": "select all desserts" }}
                                     />
                                 </TableCell>
-                                {headCells[menu].map((headCell) => (
-                                    <TableCell
-                                        key={headCell.id}
-                                        align="center"
-                                        padding={headCell.disablePadding ? "none" : "default"}
-                                        sortDirection={headCell.sort && sortNm === headCell.id ? sortOrder : false}
-                                    >
-                                        {headCell.label}
-                                        {headCell.sort && (
-                                            <TableSortLabel active={sortNm === headCell.id} direction={sortNm === headCell.id ? sortOrder : "asc"} onClick={createSortHandler(headCell.id)}>
-                                                {sortNm === headCell.id ? <span className={classes.visuallyHidden}>{sortOrder === "desc" ? "sorted descending" : "sorted ascending"}</span> : null}
-                                            </TableSortLabel>
-                                        )}
-                                        {headCell.filter && <Filters filterType={headCell.id} handleFilter={handleFilter} handleSearch={handleSearch} />}
-                                    </TableCell>
-                                ))}
+                                {headCells[menu].map((headCell) => {
+                                    let sort = sortNm ? sortNm : defaultSort[menu];
+
+                                    return (
+                                        <TableCell
+                                            key={headCell.id}
+                                            align="center"
+                                            padding={headCell.disablePadding ? "none" : "default"}
+                                            sortDirection={headCell.sort && sort === headCell.id ? sortOrder : false}
+                                        >
+                                            {headCell.label}
+                                            {headCell.sort && (
+                                                <TableSortLabel active={sort === headCell.id} direction={sort === headCell.id ? sortOrder : "asc"} onClick={createSortHandler(headCell.id)}>
+                                                    {sort === headCell.id ? <span className={classes.visuallyHidden}>{sortOrder === "desc" ? "sorted descending" : "sorted ascending"}</span> : null}
+                                                </TableSortLabel>
+                                            )}
+                                            {headCell.filter && <Filters filterType={headCell.id} handleFilter={handleFilter} handleSearch={handleSearch} />}
+                                        </TableCell>
+                                    );
+                                })}
                             </TableRow>
                         </TableHead>
                         <TableBody>

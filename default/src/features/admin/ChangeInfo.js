@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setClose, setMessage } from "slices/modalSlice";
 import MenuRedux from "common/menu/MenuRedux";
@@ -11,7 +11,6 @@ import theme from "styles/theme/table";
 import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
 import { Grid, Typography } from "@material-ui/core";
 
-import Modal from "react-modal";
 import MessageModal from "common/modal/MessageModal";
 import EditButton from "common/button/EditButton";
 import Input from "common/form/Input";
@@ -83,9 +82,7 @@ export default function ChangeInfo() {
     });
 
     useEffect(() => {
-        Modal.setAppElement("body");
         clearErrors();
-
         // 회원정보 불러오기
         reset({
             name: "이름",

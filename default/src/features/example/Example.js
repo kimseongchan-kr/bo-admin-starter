@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { searchSelector, setFilter, setPage, setSearchFilter, setSort } from "slices/searchSlice";
 import { setClose, setDetail, setMessage, setModal, setMsgConfirm } from "slices/modalSlice";
+import { exampleSelector, getList } from "slices/exampleSlice";
+
 import MenuRedux from "common/menu/MenuRedux";
 
 import { ThemeProvider } from "@material-ui/core";
@@ -11,36 +13,41 @@ import TableTheme from "styles/theme/table";
 import DateTermSearch from "common/search/DateTermSearch";
 import ExampleTable from "features/example/components/Table";
 
-import Modal from "react-modal";
 import EditModal from "features/example/modal/EditModal";
 import DetailModal from "features/example/modal/DetailModal";
-import { SampleDetailData } from "features/example/Data";
+
 import MessageModal from "common/modal/MessageModal";
 import ConfirmModal from "common/modal/MessageConfirm";
 
+import { sampleDetailData } from "features/example/Data";
+
 export default function Example() {
     const dispatch = useDispatch();
+    const exampleList = useSelector(exampleSelector);
+    const { dataList, isLoading, hasErrors, errorMsg } = exampleList;
+
     const searchList = useSelector(searchSelector);
     const { term, startDate, endDate, sortNm, sortOrder, pageNumber, pageShow } = searchList;
 
-    const [dataList, setDataList] = useState([]);
     const [contents, setContents] = useState("hello");
     const menu = "Example";
 
     // 데이터 불러오기
     const handleData = useCallback(() => {
         console.log("데이터 불러오기...");
-        if (!sortNm) {
-            dispatch(setSort({ sortNm: "name", sortOrder: "asc" }));
-        } else {
-            setDataList([]);
-        }
-    }, [dispatch, sortNm]);
+        // dispatch(getList("/web/user"))
+    }, [dispatch]);
 
     useEffect(() => {
-        Modal.setAppElement("body");
         handleData();
     }, [handleData]);
+
+    // 에러 메시지
+    // -> 네트워크 오류입니다.
+    // -> 다시 시도해주세요.
+    useEffect(() => {
+        dispatch(setMessage({ open: hasErrors, message: errorMsg }));
+    }, [dispatch, hasErrors, errorMsg]);
 
     // 검색 조건 변경하기
     const handleSearchFilter = (searchFilterItems) => {
@@ -92,7 +99,7 @@ export default function Example() {
         console.log(modalId, pageNumber);
         // 데이터를 불러오고
         // 함께 데이터 넘겨주기
-        dispatch(setDetail({ open: true, modalId: modalId, modalData: SampleDetailData }));
+        dispatch(setDetail({ open: true, modalId: modalId, modalData: sampleDetailData }));
     };
 
     // 데이터 추가하기/수정하기
@@ -109,12 +116,12 @@ export default function Example() {
 
     // 사용여부/노출여부 등 select 데이터 수정하기
     const handleSelect = (type, value) => {
-        console.log("changing status...");
+        console.log("changing status...", type, value);
     };
 
     // 노출순서 등 input 데이터 수정하기
     const handleChange = (value) => {
-        console.log("changing sort...");
+        console.log("changing input...", value);
     };
 
     // 추가 모달 열기
@@ -140,7 +147,8 @@ export default function Example() {
             </ThemeProvider>
             <ExampleTable
                 menu={menu}
-                data={dataList}
+                loading={isLoading}
+                data={dataList ? dataList : []}
                 handleOneData={handleOneData}
                 handleDetailData={handleDetailData}
                 handleDelete={handleDelete}

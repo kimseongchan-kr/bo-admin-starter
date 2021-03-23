@@ -13,7 +13,7 @@ import DeleteButton from "common/table/DeleteButton";
 import TextInput from "common/table/TextField";
 import TablePaginationActions from "common/table/Pagination";
 
-import { ExampleHeadCell as headCells, SampleRowData as rowData } from "features/example/Data";
+import { exampleDefaultSort as defaultSort, exampleHeadCell as headCells, sampleRowData as rowData } from "features/example/Data";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -107,22 +107,25 @@ export default function ExampleTable(props) {
                     <Table className={classes.table} aria-labelledby="exampleTable" size="medium" aria-label="example table">
                         <TableHead>
                             <TableRow>
-                                {headCells[menu].map((headCell) => (
-                                    <TableCell
-                                        key={headCell.id}
-                                        align="center"
-                                        padding={headCell.disablePadding ? "none" : "default"}
-                                        sortDirection={headCell.sort && sortNm === headCell.id ? sortOrder : false}
-                                    >
-                                        {headCell.label}
-                                        {headCell.sort && (
-                                            <TableSortLabel active={sortNm === headCell.id} direction={sortNm === headCell.id ? sortOrder : "asc"} onClick={createSortHandler(headCell.id)}>
-                                                {sortNm === headCell.id ? <span className={classes.visuallyHidden}>{sortOrder === "desc" ? "sorted descending" : "sorted ascending"}</span> : null}
-                                            </TableSortLabel>
-                                        )}
-                                        {headCell.filter && <Filters filterType={headCell.id} handleFilter={handleFilter} handleSearch={handleSearch} />}
-                                    </TableCell>
-                                ))}
+                                {headCells[menu].map((headCell) => {
+                                    let sort = sortNm ? sortNm : defaultSort[menu];
+                                    return (
+                                        <TableCell
+                                            key={headCell.id}
+                                            align="center"
+                                            padding={headCell.disablePadding ? "none" : "default"}
+                                            sortDirection={headCell.sort && sort === headCell.id ? sortOrder : false}
+                                        >
+                                            {headCell.label}
+                                            {headCell.sort && (
+                                                <TableSortLabel active={sort === headCell.id} direction={sort === headCell.id ? sortOrder : "asc"} onClick={createSortHandler(headCell.id)}>
+                                                    {sort === headCell.id ? <span className={classes.visuallyHidden}>{sortOrder === "desc" ? "sorted descending" : "sorted ascending"}</span> : null}
+                                                </TableSortLabel>
+                                            )}
+                                            {headCell.filter && <Filters filterType={headCell.id} handleFilter={handleFilter} handleSearch={handleSearch} />}
+                                        </TableCell>
+                                    );
+                                })}
                             </TableRow>
                         </TableHead>
                         <TableBody>

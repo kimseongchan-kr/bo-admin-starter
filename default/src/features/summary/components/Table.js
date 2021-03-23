@@ -9,7 +9,7 @@ import Filters from "features/summary/components/Filter";
 import UseSelect from "common/table/UseSelect";
 import TablePaginationActions from "common/table/Pagination";
 
-import { summaryHeadCell as headCells, sampleRowData as rowData } from "features/summary/Data";
+import { summaryHeadCell as headCells, sampleRowData as rowData, summaryDefaultSort as defaultSort } from "features/summary/Data";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SummaryTable(props) {
     const classes = useStyles();
     const { pageNumber, pageShow, sortNm, sortOrder } = useSelector(searchSelector);
-    const { menu, handleSelect, handleFilter, handleSearch, handleSort, handlePage, onOpen, onConfirm } = props;
+    const { menu, loading, data, handleSelect, handleFilter, handleSearch, handleSort, handlePage, onOpen, onConfirm } = props;
 
     // Summary의 Summary 메뉴 table 데이터
     const SummaryData = ({ row }) => {
@@ -98,36 +98,46 @@ export default function SummaryTable(props) {
                     <Table className={classes.table} aria-labelledby="summaryTable" size="medium" aria-label="summary table">
                         <TableHead>
                             <TableRow>
-                                {headCells[menu].map((headCell) => (
-                                    <TableCell
-                                        key={headCell.id}
-                                        align="center"
-                                        padding={headCell.disablePadding ? "none" : "default"}
-                                        sortDirection={headCell.sort && sortNm === headCell.id ? sortOrder : false}
-                                    >
-                                        {headCell.label}
-                                        {headCell.sort && (
-                                            <TableSortLabel active={sortNm === headCell.id} direction={sortNm === headCell.id ? sortOrder : "asc"} onClick={createSortHandler(headCell.id)}>
-                                                {sortNm === headCell.id ? <span className={classes.visuallyHidden}>{sortOrder === "desc" ? "sorted descending" : "sorted ascending"}</span> : null}
-                                            </TableSortLabel>
-                                        )}
-                                        {headCell.filter && <Filters filterType={headCell.id} handleFilter={handleFilter} handleSearch={handleSearch} />}
-                                    </TableCell>
-                                ))}
+                                {headCells[menu].map((headCell) => {
+                                    let sort = sortNm ? sortNm : defaultSort[menu];
+                                    return (
+                                        <TableCell
+                                            key={headCell.id}
+                                            align="center"
+                                            padding={headCell.disablePadding ? "none" : "default"}
+                                            sortDirection={headCell.sort && sort === headCell.id ? sortOrder : false}
+                                        >
+                                            {headCell.label}
+                                            {headCell.sort && (
+                                                <TableSortLabel active={sort === headCell.id} direction={sort === headCell.id ? sortOrder : "asc"} onClick={createSortHandler(headCell.id)}>
+                                                    {sort === headCell.id ? <span className={classes.visuallyHidden}>{sortOrder === "desc" ? "sorted descending" : "sorted ascending"}</span> : null}
+                                                </TableSortLabel>
+                                            )}
+                                            {headCell.filter && <Filters filterType={headCell.id} handleFilter={handleFilter} handleSearch={handleSearch} />}
+                                        </TableCell>
+                                    );
+                                })}
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rowData.map((row, index) => (
-                                <TableRow hover tabIndex={-1} key={index}>
-                                    {menu === "Summary" && <SummaryData row={row} />}
-                                </TableRow>
-                            ))}
-                            {rowData === 0 && (
+                            {loading ? (
                                 <TableRow>
-                                    <TableCell align="center" colSpan={6}>
+                                    <TableCell align="center" colSpan={7}>
+                                        Loading...
+                                    </TableCell>
+                                </TableRow>
+                            ) : data.length === 0 ? (
+                                <TableRow>
+                                    <TableCell align="center" colSpan={7}>
                                         No Data
                                     </TableCell>
                                 </TableRow>
+                            ) : (
+                                data.map((row, index) => (
+                                    <TableRow hover tabIndex={-1} key={index}>
+                                        {menu === "Summary" && <SummaryData row={row} />}
+                                    </TableRow>
+                                ))
                             )}
                         </TableBody>
                     </Table>
