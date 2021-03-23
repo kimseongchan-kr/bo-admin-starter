@@ -1,6 +1,8 @@
 import { createMuiTheme } from "@material-ui/core";
+import { typography } from "styles/theme/typography";
 
 const textFieldTheme = createMuiTheme({
+    typography,
     overrides: {
         MuiTextField: {
             root: {

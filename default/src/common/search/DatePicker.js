@@ -8,7 +8,7 @@ import { Grid, Typography, IconButton, InputAdornment } from "@material-ui/core"
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import InsertInvitationIcon from "@material-ui/icons/InsertInvitation";
 
-function DateSearchPickers({ classes, dateFormat, term, views, startDate, endDate, handleDate }) {
+function DateSearchPicker({ classes, dateFormat, term, views, startDate, endDate, handleDate }) {
     return (
         <>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -76,7 +76,7 @@ function DateSearchPickers({ classes, dateFormat, term, views, startDate, endDat
     );
 }
 
-DateSearchPickers.propTypes = {
+DateSearchPicker.propTypes = {
     classes: PropTypes.object.isRequired,
     dateFormat: PropTypes.string.isRequired,
     term: PropTypes.string.isRequired,
@@ -86,4 +86,4 @@ DateSearchPickers.propTypes = {
     handleDate: PropTypes.func.isRequired
 };
 
-export default DateSearchPickers;
+export default DateSearchPicker;

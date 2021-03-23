@@ -1,6 +1,8 @@
 import { createMuiTheme } from "@material-ui/core";
+import { typography } from "styles/theme/typography";
 
 const buttonTheme = createMuiTheme({
+    typography,
     overrides: {
         MuiIconButton: {
             root: {

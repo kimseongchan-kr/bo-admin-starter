@@ -242,6 +242,51 @@ export default function Menubar() {
                         </AccordionDetails>
                     </Accordion>
                 </ListItem>
+                <ListItem className={classes.list}>
+                    <Accordion square expanded={expanded === "components"} onChange={handleChange("components")}>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`panel3d-content`} id={`pane3d-header`}>
+                            <ListItemIcon>
+                                <MailIcon />
+                            </ListItemIcon>
+                            <Typography>Components</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails className={menuNum === 4 ? classes.active : ""}>
+                            <Typography className="nav-link">
+                                <RouterLink to="/search" onClick={() => handlePageChange({ menu: "components", title: "Search", num: 4 })}>
+                                    Search
+                                </RouterLink>
+                            </Typography>
+                        </AccordionDetails>
+                        <AccordionDetails className={menuNum === 5 ? classes.active : ""}>
+                            <Typography className="nav-link">
+                                <RouterLink to="/table" onClick={() => handlePageChange({ menu: "components", title: "Table", num: 5 })}>
+                                    Table
+                                </RouterLink>
+                            </Typography>
+                        </AccordionDetails>
+                        <AccordionDetails className={menuNum === 6 ? classes.active : ""}>
+                            <Typography className="nav-link">
+                                <RouterLink to="/form" onClick={() => handlePageChange({ menu: "components", title: "Form", num: 6 })}>
+                                    Form
+                                </RouterLink>
+                            </Typography>
+                        </AccordionDetails>
+                        <AccordionDetails className={menuNum === 7 ? classes.active : ""}>
+                            <Typography className="nav-link">
+                                <RouterLink to="/modal" onClick={() => handlePageChange({ menu: "components", title: "Modal", num: 7 })}>
+                                    Modal
+                                </RouterLink>
+                            </Typography>
+                        </AccordionDetails>
+                        <AccordionDetails className={menuNum === 8 ? classes.active : ""}>
+                            <Typography className="nav-link">
+                                <RouterLink to="/typography" onClick={() => handlePageChange({ menu: "components", title: "Typography", num: 8 })}>
+                                    Table
+                                </RouterLink>
+                            </Typography>
+                        </AccordionDetails>
+                    </Accordion>
+                </ListItem>
             </List>
             <Box className={classes.copyright}>
                 <p>
