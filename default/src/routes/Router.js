@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import Container from "hoc";
 
@@ -13,6 +13,9 @@ import ChangePassword from "features/admin/ChangePassword";
 
 import Page404 from "features/404";
 
+import SearchComponent from "features/components/Search";
+import TableComponent from "features/components/Table";
+
 export default function Router() {
     return (
         <Switch>
@@ -25,6 +28,10 @@ export default function Router() {
             <Route path="/info" exact component={Container(ChangeInfo)} />
             <Route path="/password" exact component={Container(ChangePassword)} />
 
+            <Route path="/search" exact component={Container(SearchComponent)} />
+            <Route path="/table" exact component={Container(TableComponent)} />
+
+            <Redirect path="/login" to="/" />
             <Route path="*" component={Page404} />
         </Switch>
     );

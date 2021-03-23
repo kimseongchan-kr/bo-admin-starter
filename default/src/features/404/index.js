@@ -1,5 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setMenu } from "slices/menuSlice";
+
 import { Button, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
@@ -31,15 +34,6 @@ const useStyles = makeStyles(() => ({
         letterSpacing: "-1.5px",
         textAlign: "center"
     },
-    description: {
-        marginBottom: 90,
-        textAlign: "center",
-        fontSize: 15,
-        lineHeight: "22px",
-        letterSpacing: "-0.75px",
-        color: "#333333",
-        opacity: 0.7
-    },
     button: {
         width: 196,
         height: 40,
@@ -64,17 +58,18 @@ const useStyles = makeStyles(() => ({
 
 export default function Page404() {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     return (
         <div className={classes.page404}>
             <div className={classes.content}>
                 <div className={classes.img}>404</div>
                 <h3 className={classes.text}>페이지를 찾을 수 없습니다.</h3>
-                <p className={classes.description}>
-                    기술적인 문제로 일시적으로 접속되지 않습니다. <br /> 잠시 후 다시 이용 부탁 드리며 이용에 불편을 드려 사과드립니다.
-                </p>
-                <Button className={classes.button}>
-                    <Link to="/">메인 페이지로 돌아가기</Link>
+
+                <Button type="button" className={classes.button}>
+                    <Link to="/" onClick={() => dispatch(setMenu({ menu: "summary", menuTitle: "dashboard", num: 1 }))}>
+                        메인 페이지로 돌아가기
+                    </Link>
                 </Button>
             </div>
         </div>
