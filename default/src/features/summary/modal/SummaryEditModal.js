@@ -17,6 +17,7 @@ import ModalEditButton from "common/button/EditButton";
 import { disableScroll, enableScroll } from "utils/CommonFunction";
 
 Modal.defaultStyles.overlay.zIndex = 9999;
+Modal.defaultStyles.overlay.backgroundColor = "rgba(0, 0, 0, .45)";
 
 const schema = yup.object().shape({
     title: yup.object().required()

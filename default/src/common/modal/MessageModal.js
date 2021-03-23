@@ -11,6 +11,7 @@ import Modal from "react-modal";
 import { disableScroll, enableScroll } from "utils/CommonFunction";
 
 Modal.defaultStyles.overlay.zIndex = 9999;
+Modal.defaultStyles.overlay.backgroundColor = "rgba(0, 0, 0, .45)";
 
 const useStyles = makeStyles(() => ({
     message: {
