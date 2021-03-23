@@ -83,7 +83,7 @@ export const searchSlice = createSlice({
             state.searchKeyword = "";
 
             state.sortNm = "";
-            state.sortOrder = "";
+            state.sortOrder = "desc";
 
             state.pageNumber = 1;
             state.pageShow = 10;

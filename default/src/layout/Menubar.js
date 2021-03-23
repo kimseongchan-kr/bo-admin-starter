@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { menuSelector, setMenu } from "slices/menuSlice";
+import { reset } from "slices/searchSlice";
 
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { Box, Link, Drawer, Typography, Divider, ListItemIcon, List, ListItem } from "@material-ui/core";
@@ -10,7 +11,6 @@ import { Mail as MailIcon, ExpandMore as ExpandMoreIcon } from "@material-ui/ico
 import MuiAccordion from "@material-ui/core/Accordion";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
 import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
-import { reset } from "slices/searchSlice";
 
 const drawerWidth = 240;
 const Accordion = withStyles({
@@ -172,11 +172,7 @@ export default function Menubar() {
     const menuList = useSelector(menuSelector);
     const { menu, menuNum } = menuList;
 
-    const [expanded, setExpanded] = useState(false);
-
-    useEffect(() => {
-        setExpanded(menu ? menu : false);
-    }, [menu]);
+    const [expanded, setExpanded] = useState(menu ? menu : false);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);

@@ -4,8 +4,9 @@ import { ApiURL as api } from "api/Url";
 const token = localStorage.getItem("token");
 
 const checkPermission = (res) => {
-    if (res.status === "EXAMPLE111") return (window.location.href = `/`);
-    if (res.status === "EXAMPLE222") return (window.location.href = `/login`);
+    console.log("permission check", res);
+
+    if (res.status === "401") return (window.location.href = `/login`);
 
     return res;
 };
