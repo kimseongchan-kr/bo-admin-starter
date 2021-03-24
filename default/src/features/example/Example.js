@@ -2,13 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { searchSelector, setFilter, setPage, setSearchFilter, setSort } from "slices/searchSlice";
 import { setClose, setDetail, setMessage, setModal, setMsgConfirm } from "slices/modalSlice";
-import { exampleSelector, getList } from "slices/exampleSlice";
 
 import MenuRedux from "common/menu/MenuRedux";
 
 import { ThemeProvider } from "@material-ui/core";
 import SearchTheme from "styles/theme/search";
-import TableTheme from "styles/theme/table";
+import TableTheme from "styles/theme/form";
 
 import DateTermSearch from "common/search/DateTermSearch";
 import ExampleTable from "features/example/components/Table";
@@ -23,8 +22,6 @@ import { sampleDetailData } from "features/example/Data";
 
 export default function Example() {
     const dispatch = useDispatch();
-    const exampleList = useSelector(exampleSelector);
-    const { dataList, isLoading, hasErrors, errorMsg } = exampleList;
 
     const searchList = useSelector(searchSelector);
     const { term, startDate, endDate, sortNm, sortOrder, pageNumber, pageShow } = searchList;
@@ -35,19 +32,11 @@ export default function Example() {
     // 데이터 불러오기
     const handleData = useCallback(() => {
         console.log("데이터 불러오기...");
-        // dispatch(getList("/web/user"))
     }, [dispatch]);
 
     useEffect(() => {
         handleData();
     }, [handleData]);
-
-    // 에러 메시지
-    // -> 네트워크 오류입니다.
-    // -> 다시 시도해주세요.
-    useEffect(() => {
-        dispatch(setMessage({ open: hasErrors, message: errorMsg }));
-    }, [dispatch, hasErrors, errorMsg]);
 
     // 검색 조건 변경하기
     const handleSearchFilter = (searchFilterItems) => {
@@ -147,8 +136,6 @@ export default function Example() {
             </ThemeProvider>
             <ExampleTable
                 menu={menu}
-                loading={isLoading}
-                data={dataList ? dataList : []}
                 handleOneData={handleOneData}
                 handleDetailData={handleDetailData}
                 handleDelete={handleDelete}

@@ -67,7 +67,6 @@ const tableTheme = createMuiTheme({
             item: {
                 paddingTop: 20,
                 marginRight: 4,
-
                 "&:last-child": {
                     marginRight: 0
                 }

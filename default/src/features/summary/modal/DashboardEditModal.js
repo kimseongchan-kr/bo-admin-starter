@@ -12,7 +12,7 @@ import { Grid, Typography } from "@material-ui/core";
 import FormSelect from "common/form/Select";
 import Input from "common/form/Input";
 import RadioButton from "common/form/RadioButton";
-import CheckBox from "common/form/Checkbox";
+import CheckBox from "common/form/CheckBox";
 
 import Modal from "react-modal";
 import ModalCloseButton from "common/button/CloseButton";

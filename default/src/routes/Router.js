@@ -15,6 +15,8 @@ import Page404 from "features/404";
 
 import SearchComponent from "features/components/Search";
 import TableComponent from "features/components/Table";
+import FormComponent from "features/components/Form";
+import ButtonComponent from "features/components/Button";
 
 export default function Router() {
     return (
@@ -30,6 +32,8 @@ export default function Router() {
 
             <Route path="/search" exact component={Container(SearchComponent)} />
             <Route path="/table" exact component={Container(TableComponent)} />
+            <Route path="/form" exact component={Container(FormComponent)} />
+            <Route path="/button" exact component={Container(ButtonComponent)} />
 
             <Redirect path="/login" to="/" />
             <Route path="*" component={Page404} />

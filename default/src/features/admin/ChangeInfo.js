@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import theme from "styles/theme/table";
+import theme from "styles/theme/form";
 import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
 import { Grid, Typography } from "@material-ui/core";
 

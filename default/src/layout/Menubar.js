@@ -281,7 +281,14 @@ export default function Menubar() {
                         <AccordionDetails className={menuNum === 8 ? classes.active : ""}>
                             <Typography className="nav-link">
                                 <RouterLink to="/typography" onClick={() => handlePageChange({ menu: "components", title: "Typography", num: 8 })}>
-                                    Table
+                                    Typography
+                                </RouterLink>
+                            </Typography>
+                        </AccordionDetails>
+                        <AccordionDetails className={menuNum === 9 ? classes.active : ""}>
+                            <Typography className="nav-link">
+                                <RouterLink to="/button" onClick={() => handlePageChange({ menu: "components", title: "Button", num: 9 })}>
+                                    Button
                                 </RouterLink>
                             </Typography>
                         </AccordionDetails>
