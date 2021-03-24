@@ -46,7 +46,7 @@ const useStyles = makeStyles(() => ({
             background: "#333333"
         },
 
-        "& a": {
+        "& span": {
             fontSize: 13,
             lineHeight: "17px",
             letterSpacing: "-0.52px",
@@ -66,11 +66,11 @@ export default function Page404() {
                 <div className={classes.img}>404</div>
                 <h3 className={classes.text}>페이지를 찾을 수 없습니다.</h3>
 
-                <Button type="button" className={classes.button}>
-                    <Link to="/" onClick={() => dispatch(setMenu({ menu: "summary", menuTitle: "dashboard", num: 1 }))}>
+                <Link to="/" onClick={() => dispatch(setMenu({ menu: "summary", menuTitle: "dashboard", num: 1 }))}>
+                    <Button type="button" className={classes.button}>
                         메인 페이지로 돌아가기
-                    </Link>
-                </Button>
+                    </Button>
+                </Link>
             </div>
         </div>
     );

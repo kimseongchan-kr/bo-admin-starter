@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 import { Button, ThemeProvider } from "@material-ui/core";
 import theme from "styles/theme/button";
 
-function DeleteButton({ modalId, handleDelete }) {
+function DeleteButton({ modalId, onConfirm }) {
     return (
         <ThemeProvider theme={theme}>
-            <Button variant="contained" onClick={() => handleDelete(modalId)}>
+            <Button variant="contained" onClick={() => onConfirm(modalId)}>
                 삭제
             </Button>
         </ThemeProvider>
@@ -16,7 +16,7 @@ function DeleteButton({ modalId, handleDelete }) {
 
 DeleteButton.propTypes = {
     modalId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    handleDelete: PropTypes.func.isRequired
+    onConfirm: PropTypes.func.isRequired
 };
 
 export default DeleteButton;

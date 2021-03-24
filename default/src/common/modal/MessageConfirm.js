@@ -43,7 +43,7 @@ function ConfirmModal({ onClose, handleDelete }) {
                             취소
                         </IconButton>
                         <IconButton onClick={handleDelete}>
-                            <CheckOutlined />
+                            <CheckOutlined style={{ color: "#039BE5" }} />
                             확인
                         </IconButton>
                     </ThemeProvider>

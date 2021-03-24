@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ExampleTable(props) {
     const classes = useStyles();
     const { pageNumber, pageShow, sortNm, sortOrder } = useSelector(searchSelector);
-    const { menu, handleOneData, handleDetailData, handleChange, handleDelete, handleSelect, handleFilter, handleSearch, handleSort, handlePage, onOpen, onConfirm } = props;
+    const { menu, handleOneData, handleDetailData, handleChange, handleSelect, handleFilter, handleSearch, handleSort, handlePage, onOpen, onConfirm } = props;
 
     const ExampleData = ({ row, index }) => {
         return (
@@ -78,7 +78,7 @@ export default function ExampleTable(props) {
                 </TableCell>
                 <TableCell align="center" padding="none">
                     <EditButton modalId={row.key} handleOneData={handleOneData} />
-                    <DeleteButton modalId={row.key} handleDelete={handleDelete} />
+                    <DeleteButton modalId={row.key} onConfirm={onConfirm} />
                 </TableCell>
             </>
         );

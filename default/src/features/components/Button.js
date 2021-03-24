@@ -49,10 +49,10 @@ export default function Form() {
 
     return (
         <>
-            <MenuRedux menu="components" title="Form" num={6} />
+            <MenuRedux menu="components" title="Button" num={9} />
             <div className={classes.container}>
                 <ThemeProvider theme={theme}>
-                    <Typography className={classes.title} variant="h6" components="h3" color="inherit">
+                    <Typography className={classes.title} variant="h6" component="h3" color="inherit">
                         모달에서 사용하는 버튼
                     </Typography>
                     <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
@@ -69,7 +69,7 @@ export default function Form() {
                             <ModalCloseButton onClose={handleDemo} text="닫기" />
                         </Grid>
                     </Grid>
-                    <Typography className={classes.title} variant="h6" components="h3" color="inherit">
+                    <Typography className={classes.title} variant="h6" component="h3" color="inherit">
                         테이블 하단 버튼
                     </Typography>
                     <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
@@ -85,7 +85,7 @@ export default function Form() {
                             <ExcelExport />
                         </Grid>
                     </Grid>
-                    <Typography className={classes.title} variant="h6" components="h3" color="inherit">
+                    <Typography className={classes.title} variant="h6" component="h3" color="inherit">
                         테이블 버튼
                     </Typography>
                     <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">

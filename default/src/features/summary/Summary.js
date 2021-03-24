@@ -6,7 +6,7 @@ import { setClose, setMessage } from "slices/modalSlice";
 import MenuRedux from "common/menu/MenuRedux";
 
 import { ThemeProvider } from "@material-ui/core";
-import searchTheme from "styles/theme/search";
+import search from "styles/theme/search";
 
 import SummarySearch from "features/summary/components/Search";
 import SummaryTable from "features/summary/components/Table";
@@ -28,7 +28,7 @@ export default function Summary() {
     // 데이터 불러오기
     const handleData = useCallback(() => {
         console.log("데이터 불러오기...");
-        // dispatch(getList("/web/user"));
+        dispatch(getList("/web/user"));
     }, [dispatch]);
 
     useEffect(() => {
@@ -39,9 +39,9 @@ export default function Summary() {
     // 에러 메시지
     // -> 네트워크 오류입니다.
     // -> 다시 시도해주세요.
-    // useEffect(() => {
-    //     dispatch(setMessage({ open: hasErrors, message: errorMsg }));
-    // }, [dispatch, hasErrors, errorMsg]);
+    useEffect(() => {
+        dispatch(setMessage({ open: hasErrors, message: errorMsg }));
+    }, [dispatch, hasErrors, errorMsg]);
 
     // 검색 조건 변경하기
     const handleSearchFilter = (searchFilterItems) => {
@@ -87,7 +87,7 @@ export default function Summary() {
     return (
         <>
             <MenuRedux menu="summary" title="Summary" num={2} />
-            <ThemeProvider theme={searchTheme}>
+            <ThemeProvider theme={search}>
                 <SummarySearch menu={menu} keyword={keyword} setKeyword={setKeyword} handleSearchFilter={handleSearchFilter} handleSearch={handleSearch} />
             </ThemeProvider>
             <SummaryTable menu={menu} loading={isLoading} data={dataList ? dataList : []} handleSelect={handleSelect} handleSort={handleSort} handlePage={handlePage} handleSearch={handleSearch} />

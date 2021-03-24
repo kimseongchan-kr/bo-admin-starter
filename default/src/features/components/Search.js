@@ -46,13 +46,13 @@ export default function Search() {
             <MenuRedux menu="components" title="Search" num={4} />
             <div className={classes.container}>
                 <ThemeProvider theme={theme}>
-                    <Typography className={classes.title} variant="h6" components="h3" color="inherit">
+                    <Typography className={classes.title} variant="h6" component="h3" color="inherit">
                         Date Picker
                     </Typography>
                     <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
                         <DateSearchPicker classes={search} dateFormat="yyyy/MM/dd" term="일간" startDate="2021/03/23" endDate="2021/03/23" handleDate={handleDemo} />
                     </Grid>
-                    <Typography className={classes.title} variant="h6" components="h3" color="inherit">
+                    <Typography className={classes.title} variant="h6" component="h3" color="inherit">
                         Search Select
                     </Typography>
                     <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
@@ -69,7 +69,7 @@ export default function Search() {
                             handleChange={handleDemo}
                         />
                     </Grid>
-                    <Typography className={classes.title} variant="h6" components="h3" color="inherit">
+                    <Typography className={classes.title} variant="h6" component="h3" color="inherit">
                         Search Condition + Search Keyword
                     </Typography>
                     <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
@@ -87,7 +87,7 @@ export default function Search() {
                             handleKeyword={handleDemo}
                         />
                     </Grid>
-                    <Typography className={classes.title} variant="h6" components="h3" color="inherit">
+                    <Typography className={classes.title} variant="h6" component="h3" color="inherit">
                         Search Button
                     </Typography>
                     <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">

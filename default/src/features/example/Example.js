@@ -6,8 +6,8 @@ import { setClose, setDetail, setMessage, setModal, setMsgConfirm } from "slices
 import MenuRedux from "common/menu/MenuRedux";
 
 import { ThemeProvider } from "@material-ui/core";
-import SearchTheme from "styles/theme/search";
-import TableTheme from "styles/theme/form";
+import search from "styles/theme/search";
+import form from "styles/theme/form";
 
 import DateTermSearch from "common/search/DateTermSearch";
 import ExampleTable from "features/example/components/Table";
@@ -32,7 +32,7 @@ export default function Example() {
     // 데이터 불러오기
     const handleData = useCallback(() => {
         console.log("데이터 불러오기...");
-    }, [dispatch]);
+    }, []);
 
     useEffect(() => {
         handleData();
@@ -131,14 +131,13 @@ export default function Example() {
     return (
         <>
             <MenuRedux menu="example" title="Example" num={3} />
-            <ThemeProvider theme={SearchTheme}>
+            <ThemeProvider theme={search}>
                 <DateTermSearch handleSearchFilter={handleSearchFilter} handleSearch={handleSearch} />
             </ThemeProvider>
             <ExampleTable
                 menu={menu}
                 handleOneData={handleOneData}
                 handleDetailData={handleDetailData}
-                handleDelete={handleDelete}
                 handleSelect={handleSelect}
                 handleChange={handleChange}
                 handleSort={handleSort}
@@ -148,7 +147,7 @@ export default function Example() {
                 onOpen={onOpen}
                 onConfirm={onConfirm}
             />
-            <ThemeProvider theme={TableTheme}>
+            <ThemeProvider theme={form}>
                 <EditModal contents={contents} setContents={setContents} handleDataSubmit={handleSubmit} onClose={onClose} />
             </ThemeProvider>
             <DetailModal handleDetailData={handleDetailData} onClose={onClose} />

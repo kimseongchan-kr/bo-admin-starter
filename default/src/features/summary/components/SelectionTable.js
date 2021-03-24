@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SummarySelectionTable(props) {
     const classes = useStyles();
     const { pageNumber, pageShow, sortNm, sortOrder } = useSelector(searchSelector);
-    const { menu, loading, data, selected, setSelected, handleOneData, handleDetailData, handleChange, handleSelect, handleFilter, handleSearch, handleSort, handlePage, onOpen, onConfirm } = props;
+    const { menu, selected, setSelected, handleOneData, handleDetailData, handleChange, handleSelect, handleFilter, handleSearch, handleSort, handlePage, onOpen, onConfirm } = props;
 
     // Summary의 Dashboard 메뉴 table 데이터
     const DashboardData = ({ row }) => {
@@ -75,35 +75,6 @@ export default function SummarySelectionTable(props) {
                 </TableCell>
                 <TableCell width={80} align="center" padding="none">
                     <SortOrder handleChange={handleChange} sortOrder={row.sortOrder} />
-                </TableCell>
-            </>
-        );
-    };
-
-    // Summary의 Summary 메뉴 table 데이터
-    const SummaryData = ({ row }) => {
-        return (
-            <>
-                <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleOneData(row.key)}>
-                    {row.name}
-                </TableCell>
-                <TableCell className={classes.cursor} align="center" padding="none" onClick={() => handleDetailData(row.key)}>
-                    {row.calories}
-                </TableCell>
-                <TableCell align="center" padding="none">
-                    {row.fat}
-                </TableCell>
-                <TableCell align="center" padding="none">
-                    {row.carbs}
-                </TableCell>
-                <TableCell align="center" padding="none">
-                    {row.protein}
-                </TableCell>
-                <TableCell align="center" padding="none">
-                    <UseSelect useYn={row.useYn} handleSelect={handleSelect} />
-                </TableCell>
-                <TableCell align="center" padding="none">
-                    {row.regdate}
                 </TableCell>
             </>
         );
@@ -205,7 +176,6 @@ export default function SummarySelectionTable(props) {
                                             <Checkbox onClick={(event) => handleClick(event, row.key)} checked={isItemSelected} inputProps={{ "aria-labelledby": labelId }} />
                                         </TableCell>
                                         {menu === "Dashboard" && <DashboardData row={row} />}
-                                        {menu === "Summary" && <SummaryData row={row} />}
                                     </TableRow>
                                 );
                             })}

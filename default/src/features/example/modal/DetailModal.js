@@ -10,22 +10,29 @@ import { exampleHeadCell } from "features/example/Data";
 import { disableScroll, enableScroll } from "utils/CommonFunction";
 
 import Modal from "react-modal";
+import { Close } from "@material-ui/icons";
+
 Modal.defaultStyles.overlay.zIndex = 9999;
 Modal.defaultStyles.overlay.backgroundColor = "rgba(0, 0, 0, .45)";
 
 const useStyles = makeStyles((theme) => ({
     title: {
+        width: " 100%",
+        minWidth: 750,
+        position: "relative",
         fontWeight: 500,
         letterSpacing: "-1.44px",
-        marginBottom: 20
+        marginBottom: 20,
+        [theme.breakpoints.up("md")]: {
+            "& > svg": {
+                right: 0
+            }
+        }
     },
-    root: {
-        width: "100%",
-        marginBottom: 30
-    },
-    paper: {
-        width: "100%",
-        marginBottom: theme.spacing(2)
+    closeIcon: {
+        position: "absolute",
+        right: 30,
+        cursor: "pointer"
     },
     table: {
         minWidth: 750
@@ -34,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
         cursor: "pointer"
     },
     pagination: {
-        minWidth: "100%",
+        width: "100%",
+        minWidth: 750,
         marginTop: 27,
         display: "flex",
         justifyContent: "center",
@@ -60,6 +68,7 @@ export default function DetailModal({ handleDetailData, onClose }) {
                 <>
                     <Typography variant="h2" component="h2" color="inherit" className={classes.title}>
                         Summary 상세
+                        <Close className={classes.closeIcon} onClick={onClose} />
                     </Typography>
                     <Table className={classes.table} aria-labelledby="detailTable" size="medium" aria-label="detail table">
                         <TableHead>

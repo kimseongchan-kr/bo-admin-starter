@@ -57,7 +57,7 @@ export default function Form() {
             <div className={classes.container}>
                 <ThemeProvider theme={theme}>
                     <form onSubmit={handleSubmit(handleDemo)} noValidate autoComplete="off">
-                        <Typography className={classes.title} variant="h6" components="h3" color="inherit">
+                        <Typography className={classes.title} variant="h6" component="h3" color="inherit">
                             Checkbox
                         </Typography>
                         <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
@@ -72,7 +72,7 @@ export default function Form() {
                                 />
                             </Grid>
                         </Grid>
-                        <Typography className={classes.title} variant="h6" components="h3" color="inherit">
+                        <Typography className={classes.title} variant="h6" component="h3" color="inherit">
                             Radio Button
                         </Typography>
                         <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
@@ -89,7 +89,7 @@ export default function Form() {
                                 />
                             </Grid>
                         </Grid>
-                        <Typography className={classes.title} variant="h6" components="h3" color="inherit">
+                        <Typography className={classes.title} variant="h6" component="h3" color="inherit">
                             Select
                         </Typography>
                         <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
@@ -97,7 +97,7 @@ export default function Form() {
                                 <FormSelect name="dessert" defaultValue={options[0]} control={control} options={options} />
                             </Grid>
                         </Grid>
-                        <Typography className={classes.title} variant="h6" components="h3" color="inherit">
+                        <Typography className={classes.title} variant="h6" component="h3" color="inherit">
                             Input
                         </Typography>
                         <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">

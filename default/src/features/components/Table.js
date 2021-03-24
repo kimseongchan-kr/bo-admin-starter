@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import MenuRedux from "common/menu/MenuRedux";
 
-import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography } from "@material-ui/core";
+import { makeStyles, Grid, Typography } from "@material-ui/core";
+import Pagination from "@material-ui/lab/Pagination";
 
 import TextField from "common/table/TextField";
 import SortOrder from "common/table/SortOrder";
+
 import UseSelect from "common/table/UseSelect";
 import ViewSelect from "common/table/ViewSelect";
+
 import EditButton from "common/table/EditButton";
 import DeleteButton from "common/table/DeleteButton";
 
@@ -24,7 +26,6 @@ const useStyles = makeStyles(() => ({
     },
     componentContainer: {
         marginBottom: 40,
-
         "&:last-child": {
             marginBottom: 0
         }
@@ -44,11 +45,17 @@ export default function Table() {
         alert("Table Demo...");
     };
 
+    const [pageNumber, setPageNumber] = useState(1);
+
+    const handleChange = (event, value) => {
+        setPageNumber(value);
+    };
+
     return (
         <>
             <MenuRedux menu="components" title="Table" num={5} />
             <div className={classes.container}>
-                <Typography className={classes.title} variant="h6" components="h3" color="inherit">
+                <Typography className={classes.title} variant="h6" component="h3" color="inherit">
                     입력 Input / 노출 순서
                 </Typography>
                 <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
@@ -59,7 +66,7 @@ export default function Table() {
                         <SortOrder sortOrder={1} handleChange={handleDemo} />
                     </Grid>
                 </Grid>
-                <Typography className={classes.title} variant="h6" components="h3" color="inherit">
+                <Typography className={classes.title} variant="h6" component="h3" color="inherit">
                     사용여부 / 메인노출
                 </Typography>
                 <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
@@ -71,13 +78,33 @@ export default function Table() {
                         <ViewSelect viewYn="Y" handleSelect={handleDemo} />
                     </Grid>
                 </Grid>
-                <Typography className={classes.title} variant="h6" components="h3" color="inherit">
+                <Typography className={classes.title} variant="h6" component="h3" color="inherit">
                     수정 버튼 / 삭제 버튼
                 </Typography>
                 <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
                     <Grid item>
                         <EditButton modalId={1} handleOneData={handleDemo} />
                         <DeleteButton modalId={1} handleDelete={handleDemo} />
+                    </Grid>
+                </Grid>
+                <Typography className={classes.title} variant="h6" component="h3" color="inherit">
+                    Pagination
+                </Typography>
+                <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+                    <Grid item>
+                        <Pagination
+                            color="primary"
+                            count={10}
+                            defaultPage={1}
+                            siblingCount={0}
+                            boundaryCount={1}
+                            variant="outlined"
+                            shape="rounded"
+                            showFirstButton
+                            showLastButton
+                            page={pageNumber}
+                            onChange={handleChange}
+                        />
                     </Grid>
                 </Grid>
             </div>

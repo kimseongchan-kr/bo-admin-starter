@@ -5,8 +5,8 @@ import { setClose, setDetail, setMessage, setModal, setMsgConfirm } from "slices
 import MenuRedux from "common/menu/MenuRedux";
 
 import { ThemeProvider } from "@material-ui/core";
-import SearchTheme from "styles/theme/search";
-import TableTheme from "styles/theme/form";
+import search from "styles/theme/search";
+import form from "styles/theme/form";
 
 import DashboardSearch from "features/summary/components/Search";
 import DashboardTable from "features/summary/components/SelectionTable";
@@ -32,7 +32,7 @@ export default function Dashboard() {
     // 데이터 불러오기
     const handleData = useCallback(() => {
         console.log("데이터 불러오기...");
-    }, [dispatch]);
+    }, []);
 
     useEffect(() => {
         handleData();
@@ -132,7 +132,7 @@ export default function Dashboard() {
     return (
         <>
             <MenuRedux menu="summary" title="Dashboard" num={1} />
-            <ThemeProvider theme={SearchTheme}>
+            <ThemeProvider theme={search}>
                 <DashboardSearch menu={menu} keyword={keyword} setKeyword={setKeyword} handleSearchFilter={handleSearchFilter} handleSearch={handleSearch} />
             </ThemeProvider>
             <DashboardTable
@@ -150,7 +150,7 @@ export default function Dashboard() {
                 onOpen={onOpen}
                 onConfirm={onConfirm}
             />
-            <ThemeProvider theme={TableTheme}>
+            <ThemeProvider theme={form}>
                 <EditModal handleDataSubmit={handleSubmit} onClose={onClose} />
             </ThemeProvider>
             <DetailModal handleDetailData={handleDetailData} onClose={onClose} />
