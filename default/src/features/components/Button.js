@@ -64,7 +64,6 @@ export default function Form() {
                             <ModalEditButton text="수정" />
                         </Grid>
                         <div className={classes.spacer} />
-
                         <Grid item>
                             <ModalCloseButton onClose={handleDemo} text="닫기" />
                         </Grid>
