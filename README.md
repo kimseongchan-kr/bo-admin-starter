@@ -15,6 +15,7 @@
 
 ## Project Extra Features
 
+- **Date picker** : [material-ui pickers](https://material-ui-pickers.dev/demo/datepicker "material-ui pickers")
 -   **Editor** : [react-quill](https://github.com/zenoamaro/react-quill#api-reference "react-quill")
 -   **Excel** : [react-excel-workbook](https://github.com/ClearC2/react-excel-workbook#example "react-excel-workbook")
 -   **Modal** : [react-modal](https://github.com/reactjs/react-modal#react-modal "react-modal")
@@ -25,31 +26,42 @@
 - Header
 - Menu
 
+- 404
+
 - Login
 - ChangePassword
 - ChangeInfo
 
 - Summary
     - Dashboard
-        - 기간 검색 (DatePicker), 성별 검색 (SearchSelects), 조회조건+검색 input (SearchField), 조회 버튼
-        - Checkbox Table, Table Sort, Table Filter
+        - 기간 검색 (DatePicker), 성별 검색 (SearchSelect), 조회조건+검색 input (SearchField), 조회 버튼
+        - SelectionTable + Table Sort, Table Filter
         - 사용여부 (UseSelect), 메인노출(ViewSelect), 노출순서 (SortOrder)
         - Detail Modal, Edit Modal (+ react-hook-form)
         - Pagination, 추가 버튼, 삭제 버튼
         - Message Modal, Confirm Modal
     - Summary
+        - API 연결 Example
         - 조회조건 + 검색 input (SearchField), 조회버튼
         - Table
         - 사용여부 (UseSelect)
         - Pagination, 엑셀 다운로드 버튼
+        - Message Modal
 - Example
     - Example
-        - 기간단위 (SearchSelects), 기간 검색 (DatePicker), 조회버튼
-        - Table, Table Sort, Filter
+        - 기간단위 (SearchSelect), 기간 검색 (DatePicker), 조회버튼
+        - Table + Table Sort, Table Filter
         - 사용여부 (UseSelect), 메인 노출 (ViewSelect), Cell Edit (TextField), 수정버튼 (EditButton), 삭제버튼 (DeleteButton)
         - Detail Modal, Edit Modal (+ react-quill 에디터)
         - Pagination, 추가 버튼
-        - Message Modal
+        - Message Modal, Confirm Modal
+- Components
+    - Search
+    - Table
+    - Form
+    - Modal
+    - Typography
+    - Button
 
 [확인하기](https://github.com/BlockOdyssey/bo-admin-starter#project-structure "프로젝트 구조")
 
@@ -141,8 +153,8 @@ const summarySearchCaption = { gender: "성별" };
 //  SAMPLE CODE
 //  features/summary/components/Search.js 파일을 확인해주세요.
 
-import DateSearchPickers from "common/search/DatePicker";       // Date Picker
-import SearchSelects from "common/search/SearchSelect";         // 검색 Select
+import DateSearchPicker from "common/search/DatePicker";       // Date Picker
+import SearchSelect from "common/search/SearchSelect";         // 검색 Select
 import SearchField from "common/search/SearchField";            // 조회조건 + 검색어
 
 import { summarySearchComponents as componentExists, summarySearchType as searchCondition, summarySearchOptions as options, summarySearchCaption as caption } from "features/summary/Data";
@@ -151,12 +163,12 @@ export default function SummarySearch() {
     return (
         //  날짜 검색 있을 경우
         {componentExists[menu].date && (
-            <DateSearchPickers  />
+            <DateSearchPicker  />
         )}
 
         //  검색 조건 select (성별...)
         {componentExists[menu].selects && (
-            <SearchSelects />
+            <SearchSelect />
         )}
 
         //  조회조건 + 검색어
@@ -174,20 +186,31 @@ export default function SummarySearch() {
 
 ### Table (테이블)
 
-> 하나의 메뉴 - Selection Table(checkbox가 포함된 테이블) & Table(기본 테이블)   
-> 자세한 내용은 features/summary/components/Table.js 또는 features/summary/components/SelectionTable.js를 확인해주세요.
+> 하나의 메뉴 - Selection Table (checkbox가 포함된 테이블) & Table (기본 테이블)   
+> 자세한 내용은 features/summary/components/Table.js   
+> 또는 features/summary/components/SelectionTable.js를 확인해주세요.
 
 ```javascript
 //  Data.js
 
 //  **테이블 필터 설정하는 방법**
-//      테이블에서 필터가 필요한 컬럼의 필터 조건들
+//      컬럼마다 필요한 필터 작성
 //      hobby, music = 테이블 컬럼명
 
 const summaryFilter = {
     hobby: ["game", "book", "bicycle", "movie"],
     music: ["classic", "jazz", "pop", "rap"]
 };
+
+//  메뉴별 default 정렬
+//      있는 경우 -> 해당 컬럼명
+//      없는 경우 -> ""
+
+const summaryDefaultSort = {
+    Dashboard: "name",
+    Summary: ""
+};
+     
 
 //  **테이블의 THEAD 부분 설정**
 //      테이블 컬럼명 + 필터 설정 + 정렬 설정
@@ -217,8 +240,10 @@ const summaryHeadCell = {
 ## common 폴더 사용 방법
 
 > 자주 사용된 components   
+
 > props를 통해서 전달받아야 하는 값만 넘겨주면 추가적인 설정없이 사용 가능   
-> prop-types를 사용해서 전달받는 값의 타입을 작성
+> prop-types를 사용해서 전달받는 값의 타입을 작성   
+> 참고: https://ko.reactjs.org/docs/typechecking-with-proptypes.html
 
 -   button
 -   editor
@@ -232,7 +257,7 @@ const summaryHeadCell = {
 ### button 폴더
 
 > 테이블 하단에 있는 버튼 / 모달에서 사용되는 버튼   
-> styles/theme/button.js 파일에서 스타일링 확인
+> styles/theme/button.js 파일에서 스타일링 확인해주세요.
 
 -   AddButton.js
 -   CloseButton.js
@@ -240,162 +265,20 @@ const summaryHeadCell = {
 -   EditButton.js
 -   MsgConfirmButton.js
 
-```javascript
-// SAMPLE CODE
-
-// 새로운 데이터를 추가하는 모달을 띄어주는 추가 버튼
-// onOpen이라는 function이 필요
-function AddButton({ onOpen }) {
-    return (
-        // styles/theme/button.js 파일에서 버튼에 대한 style 확인 및 수정 가능
-        <ThemeProvider theme={theme}>
-            <IconButton onClick={onOpen}>
-                <CheckOutlined style={{ color: "#039BE5" }} />
-                추가
-            </IconButton>
-        </ThemeProvider>
-    );
-}
-
-// 전달받는 데이터의 유효성 검증
-// 참고: https://ko.reactjs.org/docs/typechecking-with-proptypes.html
-AddButton.propTypes = {
-    onOpen: PropTypes.func.isRequired
-};
-```
-
 ### editor 폴더
 
-> react-quill 에디터 사용방법 (+ 이미지 업로드)
-
-```javascript
-// SAMPLE CODE
-
-export default function Editor({ contents, setContents }) {
-    const quillRef = React.useRef(null);
-
-    // 에디터 내용 변경
-    const handleChange = (value) => {
-        setContents(value);
-    };
-
-    // 이미지 업로드
-    const imageCallBack = () => {
-        const input = document.createElement("input");
-        input.setAttribute("type", "file");
-        // 이미지만 선택할 수 있도록
-        input.setAttribute("accept", "image/*");
-        input.click();
-        input.onchange = async function () {
-            // 파일 체크
-            const file = input.files ? input.files[0] : null;
-            if (file) {
-                // 서버로 이미지를 업로드 Example
-                const formData = new FormData();
-                formData.append("files", file);
-
-                let headers = {
-                    Accept: "application/json",
-                    "Content-Type": "multipart/form-data"
-                };
-
-                // 서버로 이미지를 upload한 다음
-                // 이미지의 URL을 에디터에 삽입
-                await axios
-                    .post("http://localhost:3000/upload", formData, { headers })
-                    .then((res) => {
-                        let quill = quillRef.current.getEditor();
-                        const range = quill.getSelection(true);
-
-                        let path = res.data.result;
-                        let imageSrc = "http://localhost:3000/" + path; //이미지의 URL
-                        quill.insertEmbed(range.index, "image", imageSrc, "user");
-                    })
-                    .catch((err) => {
-                        alert("에러가 발생했습니다.");
-                        console.log("error:: ", err);
-                    });
-            } else {
-                alert("이미지를 선택해주세요.");
-                return;
-            }
-        };
-    };
-
-    // 에디터 toolbar 설정
-    const modules = useMemo(() => ({
-            toolbar: {
-                container: [
-                    ["bold", "italic", "underline", "strike", "blockquote"],
-                    [{ size: ["small", false, "large", "huge"] }, { color: [] }],
-                    [{ list: "ordered" }, { list: "bullet" }, { align: [] }],
-                    ["link", "image"],
-                    ["clean"]
-                ],
-                handlers: {
-                    image: imageCallBack
-                }
-            },
-            clipboard: { matchVisual: false }
-    }), [] );
-
-    const formats = ["bold", "italic", "underline", "strike", "blockquote", "size", "color", "list", "link", "image", "align"];
-
-    return <ReactQuill ref={quillRef} placeholder="내용을 입력해주세요." theme="snow" value={contents} onChange={handleChange} formats={formats} modules={modules} />;
-}
-```
+> react-quill 에디터 사용 (+ 이미지 업로드)   
+> 자세한 사용방법은 common/editor/index.js에서 확인해주세요.
 
 ### form 폴더
 
-> react-hook-form을 사용할 때
+> react-hook-form 사용
 > 자세한 사용방법은 features/summary/modal/DashboardEditModal.js를 확인해주세요.
 
 -   Checkbox
 -   RadioButton
 -   Select
 -   Input
-
-```javascript
-// SAMPLE CODE
-
-// input type="text" / input type="number"
-function Input({ name, defaultValue, control, classes, inputType }) {
-    return (
-        <Controller
-            name={name}
-            defaultValue={defaultValue}
-            control={control}
-            render={({ onChange, value }) => (
-                <TextField
-                    className={classes.textInput}
-                    id={`outline-${name}`}
-                    label=""
-                    variant="outlined"
-                    InputLabelProps={{
-                        shrink: true
-                    }}
-                    type={inputType}
-                    name={name}
-                    value={value}
-                    onChange={onChange}
-                />
-            )}
-        />
-    );
-}
-
-Input.propTypes = {
-    name: PropTypes.string.isRequired,
-    defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    control: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired,
-    inputType: PropTypes.string.isRequired
-};
-
-// DashboardEditModal.js
-<Input inputType="text" name="fat" defaultValue={form.fat} control={control} classes={classes} />
-
-```
 
 ### modal 폴더
 
@@ -405,59 +288,6 @@ Input.propTypes = {
 -   MessageConfirm
 -   MessageModal
 
-```javascript
-// SAMPLE CODE
-
-// window.confirm() 메서드처럼
-// 확인과 취소 버튼이 있고
-// 메세지를 보여줌
-function ConfirmModal({ onClose, handleDelete }) {
-    return (
-        <Modal isOpen={msgConfirmOpen} onRequestClose={onClose} style={modalStyles} contentLabel="Message Modal" onAfterOpen={disableScroll} onAfterClose={enableScroll}>
-            <Typography variant="body1" display="block" color="inherit" className={classes.message}>
-                {message}
-            </Typography>
-            <Grid container justify="center" alignItems="center">
-                <Grid item>
-                    <ThemeProvider theme={theme}>
-                        <IconButton onClick={onClose}>
-                            <Close style={{ color: "#DE5D5D" }} />
-                            취소
-                        </IconButton>
-                        <IconButton onClick={handleDelete}>
-                            <CheckOutlined />
-                            확인
-                        </IconButton>
-                    </ThemeProvider>
-                </Grid>
-            </Grid>
-        </Modal>
-    );
-}
-```
-
-```javascript
-// SAMPLE CODE
-
-// alert() 메서드처럼
-// 메세지를 보여주고
-// 닫기 버튼이 있음
-function MessageModal({ onClose }) {
-    return (
-        <Modal isOpen={msgOpen} onRequestClose={onClose} style={modalStyles} contentLabel="Message Modal" onAfterOpen={disableScroll} onAfterClose={enableScroll}>
-            <Typography variant="body1" display="block" color="inherit" className={classes.message}>
-                {message}
-            </Typography>
-            <Grid container justify="center" alignItems="center">
-                <Grid item>
-                    <CloseButton onClose={onClose} text="닫기" />
-                </Grid>
-            </Grid>
-        </Modal>
-    );
-}
-```
-
 ### search 폴더
 
 > 검색에서 사용되는 input, select, date picker
@@ -466,40 +296,19 @@ function MessageModal({ onClose }) {
 -   SearchField
 -   SearchSelect
 
-> 기간 검색 파일 (통계 페이지에서 사용)
+> 기간 검색 파일 (통계 페이지에서 사용)   
+> 자세한 내용은 common/search/DateTermSearch.js에서 확인해주세요.
 
 -   DateTermSearch
-
-```javascript
-//  SAMPLE CODE
-//  자세한 내용은 common/search/DateTermSearch.js에서 확인해주세요.
-
-import DateSearchPickers from "common/search/DatePicker";
-import SearchSelect from "common/search/SearchSelect";
-import { DateTermSearchOptions as options } from "common/search/Data";
-
-export default function DateTermSearch({  }) {
-    return (
-        // 검색 select
-        <SearchSelect />
-
-        // Date Picker
-        <DateSearchPickers />
-
-        // 조회 버튼
-        <Button variant="contained" onClick={handleSubmit}>
-            조회
-        </Button>
-    );
-}
-```
 
 ### table 폴더
 
 > 테이블에서 자주 사용되는 사용여부 select, 노출여부 select...   
 > 테이블 pagination   
 > 수정, 삭제 버튼   
-> 자세한 사용방법은 features/summary/components/SelectionTable.js 또는 features/summary/components/Table.js를 확인해주세요.
+
+> 자세한 사용방법은 features/summary/components/SelectionTable.js    
+> 또는 features/summary/components/Table.js를 확인해주세요.
 
 -   DeleteButton
 -   EditButton
@@ -636,6 +445,13 @@ function TablePaginationActions() {
     │   ├── admin                                   # 관리자
     │   │   ├── ChangeInfo.js                           # 관리자 정보 변경
     │   │   └── ChangePassword.js                       # 관리자 비밀번호 변경
+    │   ├── components                              # Components (common 폴더에 있는 components)
+    │   │   ├── Button.js                               # Buttons 페이지
+    │   │   ├── Form.js                                 # Form의 input 페이지
+    │   │   ├── Modal.js                                # Modal 페이지
+    │   │   ├── Search.js                               # 검색 페이지
+    │   │   ├── Table.js                                # 테이블 페이지
+    │   │   └── Typography.js                           # Typography 페이지
     │   ├── example                                 # Example
     │   │   ├── Data.js                                 # Example 폴더의 테이블과 검색 관련 설정 파일
     │   │   ├── Example.js                              # Example 메뉴 파일
@@ -688,8 +504,8 @@ function TablePaginationActions() {
     │   │   └── TableSelectStyles.js                        # react-select 테이블용 style
     │   └── theme                                       # ThemeProvider 
     │       ├── button.js                                   # 버튼
+    │       ├── form.js                                     # form
     │       ├── search.js                                   # 검색
-    │       ├── table.js                                    # 테이블
     │       ├── textfield.js                                # input
     │       ├── theme.js                                    # global theme 설정
     │       └── typography.js                               # font 관련 설정

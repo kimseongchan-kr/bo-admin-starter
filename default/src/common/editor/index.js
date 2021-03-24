@@ -29,6 +29,8 @@ export default function Editor({ contents, setContents }) {
     };
 
     const imageCallBack = () => {
+        // 이미지 업로드 참고: https://github.com/quilljs/quill/issues/1400
+
         const input = document.createElement("input");
         input.setAttribute("type", "file");
         input.setAttribute("accept", "image/*");
@@ -51,7 +53,7 @@ export default function Editor({ contents, setContents }) {
                 await axios
                     .post("http://localhost:3000/upload", formData, { headers })
                     .then((res) => {
-                        let quill = quillRef.current.getEditor();
+                        const quill = quillRef.current.getEditor();
                         const range = quill.getSelection(true);
                         let path = res.data.result;
                         let imageSrc = "http://localhost:3000/" + path; //이미지의 URL
