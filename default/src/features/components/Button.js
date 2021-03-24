@@ -27,7 +27,6 @@ const useStyles = makeStyles(() => ({
     },
     componentContainer: {
         marginBottom: 30,
-
         "&:last-child": {
             marginBottom: 0
         }

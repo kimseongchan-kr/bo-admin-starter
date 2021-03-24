@@ -268,7 +268,8 @@ const summaryHeadCell = {
 ### editor 폴더
 
 > react-quill 에디터 사용 (+ 이미지 업로드)   
-> 자세한 사용방법은 common/editor/index.js에서 확인해주세요.
+> 자세한 사용방법은 common/editor/index.js에서 확인해주세요.   
+> 이미지 업로드 참고: https://github.com/quilljs/quill/issues/1400
 
 ### form 폴더
 

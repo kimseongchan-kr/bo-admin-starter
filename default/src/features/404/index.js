@@ -41,11 +41,9 @@ const useStyles = makeStyles(() => ({
         background: "#333333",
         borderRadius: 4,
         opacity: 1,
-
         "&:hover": {
             background: "#333333"
         },
-
         "& span": {
             fontSize: 13,
             lineHeight: "17px",

@@ -9,7 +9,7 @@ import { ThemeProvider } from "@material-ui/core";
 import search from "styles/theme/search";
 import form from "styles/theme/form";
 
-import DateTermSearch from "common/search/DateTermSearch";
+import ExampleSearch from "common/search/DateTermSearch";
 import ExampleTable from "features/example/components/Table";
 
 import EditModal from "features/example/modal/EditModal";
@@ -132,7 +132,7 @@ export default function Example() {
         <>
             <MenuRedux menu="example" title="Example" num={3} />
             <ThemeProvider theme={search}>
-                <DateTermSearch handleSearchFilter={handleSearchFilter} handleSearch={handleSearch} />
+                <ExampleSearch handleSearchFilter={handleSearchFilter} handleSearch={handleSearch} />
             </ThemeProvider>
             <ExampleTable
                 menu={menu}
@@ -150,7 +150,7 @@ export default function Example() {
             <ThemeProvider theme={form}>
                 <EditModal contents={contents} setContents={setContents} handleDataSubmit={handleSubmit} onClose={onClose} />
             </ThemeProvider>
-            <DetailModal handleDetailData={handleDetailData} onClose={onClose} />
+            <DetailModal menu={menu} handleDetailData={handleDetailData} onClose={onClose} />
             <ConfirmModal onClose={onClose} handleDelete={handleDelete} />
             <MessageModal onClose={onClose} />
         </>

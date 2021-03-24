@@ -5,11 +5,11 @@ import { searchSelector } from "slices/searchSlice";
 import useStyles from "styles/customize/SearchStyles";
 import { Grid, Divider, Button } from "@material-ui/core";
 
-import DateSearchPickers from "common/search/DatePicker";
-import SearchSelects from "common/search/SearchSelect";
+import DateSearchPicker from "common/search/DatePicker";
+import SearchSelect from "common/search/SearchSelect";
 import SearchField from "common/search/SearchField";
 
-import { summarySearchComponents as componentExists, summarySearchType as searchCondition, summarySearchOptions as options, summarySearchCaption as caption } from "features/summary/Data";
+import { summarySearchComponent as component, summarySearchType as searchCondition, summarySearchOption as option, summarySearchCaption as caption } from "features/summary/Data";
 
 export default function SummarySearch({ menu, keyword, setKeyword, handleSearchFilter, handleSearch }) {
     const classes = useStyles();
@@ -40,7 +40,7 @@ export default function SummarySearch({ menu, keyword, setKeyword, handleSearchF
     return (
         <Grid container direction="row" justify="flex-start" alignItems="center" className={classes.root}>
             {/* 날짜 검색 있을 경우 */}
-            {componentExists[menu].date && (
+            {component[menu].date && (
                 <>
                     {/*
                         dateFormat: 일간이면 yyyy/MM/dd
@@ -51,20 +51,20 @@ export default function SummarySearch({ menu, keyword, setKeyword, handleSearchF
                         endDate:    종료일
                         handleDate: function
                     */}
-                    <DateSearchPickers classes={classes} dateFormat={dailyFormat} term="일간" startDate={startDate} endDate={endDate} handleDate={handleDate} />
+                    <DateSearchPicker classes={classes} dateFormat={dailyFormat} term="일간" startDate={startDate} endDate={endDate} handleDate={handleDate} />
                     <Divider orientation="vertical" flexItem classes={{ flexItem: classes.divider }} />
                 </>
             )}
 
             {/*  다양한 검색 조건 select (성별...) */}
-            {componentExists[menu].selects && (
+            {component[menu].selects && (
                 <>
                     {searchCondition[menu].map((type, index) => {
                         const selectLabel = type === "gender" ? gender : searchType;
                         const selectValue = type === "gender" ? gender : searchType;
 
                         return (
-                            <SearchSelects
+                            <SearchSelect
                                 key={index}
                                 index={index}
                                 type={type}
@@ -73,7 +73,7 @@ export default function SummarySearch({ menu, keyword, setKeyword, handleSearchF
                                     value: selectValue,
                                     label: selectLabel
                                 }}
-                                options={options[type]}
+                                options={option[type]}
                                 handleChange={handleChange}
                             />
                         );
@@ -83,8 +83,8 @@ export default function SummarySearch({ menu, keyword, setKeyword, handleSearchF
             )}
 
             {/* 조회조건 + 검색어 */}
-            {componentExists[menu].searchKeyword && (
-                <SearchField classes={classes} searchType={searchType} searchKeyword={keyword} options={options["searchType"]} handleChange={handleChange} handleKeyword={handleKeyword} />
+            {component[menu].searchKeyword && (
+                <SearchField classes={classes} searchType={searchType} searchKeyword={keyword} options={option["searchType"]} handleChange={handleChange} handleKeyword={handleKeyword} />
             )}
 
             {/* 검색 조회 버튼 */}

@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function DetailModal({ handleDetailData, onClose }) {
+export default function DetailModal({ menu, handleDetailData, onClose }) {
     const classes = useStyles();
     const { modalId, detailOpen, modalData } = useSelector(modalSelector);
 
@@ -62,12 +62,40 @@ export default function DetailModal({ handleDetailData, onClose }) {
         handleDetailData(modalId, value);
     };
 
+    const ExampleData = ({ row, index }) => {
+        return (
+            <>
+                <TableCell key={`td-name-${index}`} align="center" padding="none">
+                    {row.name}
+                </TableCell>
+                <TableCell key={`td-calories-${index}`} align="center" padding="none">
+                    {row.calories}
+                </TableCell>
+                <TableCell key={`td-fat-${index}`} align="center" padding="none">
+                    {row.fat}
+                </TableCell>
+                <TableCell key={`td-carbs-${index}`} align="center" padding="none">
+                    {row.carbs}
+                </TableCell>
+                <TableCell key={`td-protein-${index}`} align="center" padding="none">
+                    {row.protein}
+                </TableCell>
+                <TableCell key={`td-useYn-${index}`} align="center" padding="none">
+                    {row.useYn}
+                </TableCell>
+                <TableCell key={`td-viewYn-${index}`} align="center" padding="none">
+                    {row.viewYn}
+                </TableCell>
+            </>
+        );
+    };
+
     return (
         <Modal isOpen={detailOpen} onRequestClose={onClose} style={modalStyles} contentLabel="Detail Modal" onAfterOpen={disableScroll} onAfterClose={enableScroll}>
             {detailOpen && (
                 <>
                     <Typography variant="h2" component="h2" color="inherit" className={classes.title}>
-                        Summary 상세
+                        {menu} 상세
                         <Close className={classes.closeIcon} onClick={onClose} />
                     </Typography>
                     <Table className={classes.table} aria-labelledby="detailTable" size="medium" aria-label="detail table">
@@ -84,27 +112,7 @@ export default function DetailModal({ handleDetailData, onClose }) {
                             {modalData.map((row, index) => {
                                 return (
                                     <TableRow hover tabIndex={-1} key={index}>
-                                        <TableCell align="center" padding="none">
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.calories}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.fat}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.carbs}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.protein}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.useYn}
-                                        </TableCell>
-                                        <TableCell align="center" padding="none">
-                                            {row.viewYn}
-                                        </TableCell>
+                                        {menu === "Example" && <ExampleData key={index} row={row} index={index} />}
                                     </TableRow>
                                 );
                             })}

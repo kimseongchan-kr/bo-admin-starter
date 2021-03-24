@@ -1,10 +1,10 @@
-// 메뉴별 필요한 검색 Components
-// 필요한 경우 -> true
-// 사용하지 않는 경우 -> false
+//  메뉴별 필요한 검색 Components
+//      필요한 경우 -> true
+//      사용하지 않는 경우 -> false
 
-// 만약 date : true
-// 해당 메뉴에서 날짜 검색하는 Component가 필요하는 의미
-const summarySearchComponents = {
+//  만약 date : true
+//  해당 메뉴에서 날짜 검색하는 Date Picker 사용
+const summarySearchComponent = {
     Dashboard: {
         date: true,
         selects: true,
@@ -19,16 +19,16 @@ const summarySearchComponents = {
     }
 };
 
-// 메뉴별 검색 조건
-// Dashboard는 성별을 검색할 수 있는 Select가 필요
-// Summary는 추가적인 검색이 필요 없음
+//  메뉴별 검색 조건 설정
+//  Dashboard -> 성별을 검색할 수 있는 Select가 필요
+//  Summary -> 추가적인 검색이 필요 없음
 const summarySearchType = {
     Dashboard: ["gender"],
     Summary: []
 };
 
-// select별 Options
-const summarySearchOptions = {
+//  select별 Options
+const summarySearchOption = {
     gender: [
         { value: "전체", label: "전체" },
         { value: "M", label: "M" },
@@ -48,8 +48,8 @@ const summarySearchOptions = {
 
 const summarySearchCaption = { gender: "성별" };
 
-// 테이블에서 필터가 필요한 컬럼의 필터 조건들
-// calories, carbs = 테이블 컬럼명
+//  테이블 컬럼마다 필요한 필터 설정
+//  calories, carbs = 테이블 컬럼명
 const summaryFilter = {
     calories: ["cupcake", "cake", "cookie", "macaroon"],
     carbs: ["example1", "example2", "example3", "example4"]
@@ -63,12 +63,14 @@ const summaryDefaultSort = {
     Summary: ""
 };
 
-// 테이블 컬럼명 + 필터 설정 + 정렬 설정
-// 필터/정렬이 필요하면 -> true
-// 아니면 -> false
-// id는 DB에서 가져오는 데이터명과 같아야 함
-// label이 테이블 컬럼명
-// Dashboard, Summary, DashboardDetail은 메뉴 이름
+//  테이블 컬럼명 + 필터 설정 + 정렬 설정
+//      필터/정렬이 필요하면 -> true
+//      아니면 -> false
+
+//  id = DB에서 가져오는 데이터명
+//  label = 테이블 컬럼명
+
+//  Dashboard, Summary = 메뉴 이름
 const summaryHeadCell = {
     Dashboard: [
         { id: "name", numeric: false, disablePadding: true, sort: true, filter: false, label: "디저트" },
@@ -124,4 +126,4 @@ const sampleDetailData = [
     { key: 7, name: "Cupcake", calories: 305, fat: 3.7, carbs: 67, protein: 4.3, useYn: "사용", viewYn: "활성화" }
 ];
 
-export { summarySearchComponents, summarySearchType, summarySearchOptions, summarySearchCaption, summaryFilter, summaryDefaultSort, summaryHeadCell, sampleRowData, sampleDetailData };
+export { summarySearchComponent, summarySearchType, summarySearchOption, summarySearchCaption, summaryFilter, summaryDefaultSort, summaryHeadCell, sampleRowData, sampleDetailData };

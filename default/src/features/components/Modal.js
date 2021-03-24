@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import MenuRedux from "common/menu/MenuRedux";
 import { setClose, setDetail, setMessage, setModal, setMsgConfirm } from "slices/modalSlice";
+import MenuRedux from "common/menu/MenuRedux";
 
+import theme from "styles/theme/form";
 import { makeStyles, ThemeProvider, Grid, Typography } from "@material-ui/core";
-import form from "styles/theme/form";
 
 import EditModal from "features/summary/modal/DashboardEditModal";
 import DetailModal from "features/summary/modal/DetailModal";
@@ -33,7 +33,6 @@ const useStyles = makeStyles(() => ({
     },
     componentContainer: {
         marginBottom: 30,
-
         "&:last-child": {
             marginBottom: 0
         }
@@ -146,7 +145,7 @@ export default function Modal() {
                     </Grid>
                 </Grid>
             </div>
-            <ThemeProvider theme={form}>
+            <ThemeProvider theme={theme}>
                 <EditModal handleDataSubmit={handleSubmit} onClose={onClose} />
             </ThemeProvider>
             <DetailModal handleDetailData={handleDetailData} onClose={onClose} />

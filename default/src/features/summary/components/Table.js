@@ -2,8 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { searchSelector } from "slices/searchSlice";
 
-import { makeStyles } from "@material-ui/core/styles";
-import { TableContainer, Paper, Table, TableHead, TableSortLabel, TableBody, TableRow, TableCell, TablePagination } from "@material-ui/core";
+import { makeStyles, TableContainer, Paper, Table, TableHead, TableSortLabel, TableBody, TableRow, TableCell, TablePagination } from "@material-ui/core";
 
 import Filters from "features/summary/components/Filter";
 import UseSelect from "common/table/UseSelect";

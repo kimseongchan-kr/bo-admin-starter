@@ -153,7 +153,7 @@ export default function Dashboard() {
             <ThemeProvider theme={form}>
                 <EditModal handleDataSubmit={handleSubmit} onClose={onClose} />
             </ThemeProvider>
-            <DetailModal handleDetailData={handleDetailData} onClose={onClose} />
+            <DetailModal menu={menu} handleDetailData={handleDetailData} onClose={onClose} />
             <ConfirmModal onClose={onClose} handleDelete={handleDelete} />
             <MessageModal onClose={onClose} />
         </>

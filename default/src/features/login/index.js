@@ -94,11 +94,13 @@ export default function Login() {
     const [checked, setChecked] = useState(true);
     const [isFocused, setFocused] = useState(null);
 
+    // 로그인
     const handleSubmit = () => {
         dispatch(setMessage({ open: true, message: "로그인" }));
         dispatch(setMenu({ menu: "summary", title: "Dashboard", num: 1 }));
     };
 
+    // 모달 닫기
     const onClose = () => {
         dispatch(setClose());
     };

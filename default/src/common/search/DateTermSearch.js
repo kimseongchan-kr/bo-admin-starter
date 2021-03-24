@@ -5,10 +5,10 @@ import { searchSelector } from "slices/searchSlice";
 import useStyles from "styles/customize/SearchStyles";
 import { Grid, Button } from "@material-ui/core";
 
-import DateSearchPickers from "common/search/DatePicker";
+import DateSearchPicker from "common/search/DatePicker";
 import SearchSelect from "common/search/SearchSelect";
 
-import { DateTermSearchOptions as options } from "common/search/Data";
+import { dateTermSearchOption as option } from "common/search/Data";
 
 export default function DateTermSearch({ handleSearchFilter, handleSearch }) {
     const classes = useStyles();
@@ -42,10 +42,10 @@ export default function DateTermSearch({ handleSearchFilter, handleSearch }) {
                     value: term,
                     label: term
                 }}
-                options={options["term"]}
+                options={option["term"]}
                 handleChange={handleChange}
             />
-            <DateSearchPickers
+            <DateSearchPicker
                 classes={classes}
                 dateFormat={term === "일간" ? dailyFormat : monthlyFormat}
                 term={term}

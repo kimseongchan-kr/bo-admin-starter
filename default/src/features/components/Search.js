@@ -1,10 +1,9 @@
 import React from "react";
 import MenuRedux from "common/menu/MenuRedux";
 
-import searchStyles from "styles/customize/SearchStyles";
 import theme from "styles/theme/search";
-import { makeStyles } from "@material-ui/core/styles";
-import { ThemeProvider, Grid, Typography, Button } from "@material-ui/core";
+import searchStyles from "styles/customize/SearchStyles";
+import { makeStyles, ThemeProvider, Grid, Typography, Button } from "@material-ui/core";
 
 import DateSearchPicker from "common/search/DatePicker";
 import SearchSelect from "common/search/SearchSelect";
@@ -23,7 +22,6 @@ const useStyles = makeStyles(() => ({
     },
     componentContainer: {
         marginBottom: 30,
-
         "&:last-child": {
             marginBottom: 0
         }
