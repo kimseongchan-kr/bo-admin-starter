@@ -11,7 +11,8 @@
 -   **ROUTING AND NAVIGATION** : [react-router-dom](https://reactrouter.com/web/guides/quick-start "react-router-dom")
 -   **STATE MANAGEMENT** : [Redux Toolkit](https://redux-toolkit.js.org/ "redux-toolkit"), [redux-persist](https://github.com/rt2zz/redux-persist#basic-usage "redux-persist")
 -   **FORM** : [react-hook-form](https://react-hook-form.com/get-started "react-hook-form")
--   **Type Checking** : [prop-types](https://github.com/facebook/prop-types "prop-types")
+-   **FORM VALIDATION** : [yup](https://github.com/jquense/yup#usage "yup")
+-   **TYPE CHECK** : [prop-types](https://github.com/facebook/prop-types "prop-types")
 
 ## Project Extra Features
 
@@ -25,13 +26,10 @@
 ## 프로젝트 구조
 - Header
 - Menu
-
 - 404
-
 - Login
 - ChangePassword
 - ChangeInfo
-
 - Summary
     - Dashboard
         - 기간 검색 (DatePicker), 성별 검색 (SearchSelect), 조회조건+검색 input (SearchField), 조회 버튼
@@ -241,6 +239,7 @@ const summaryHeadCell = {
 
 > react-hook-form 사용
 > 자세한 사용방법은 features/summary/modal/DashboardEditModal.js를 확인해주세요.
+> 참고: https://github.com/react-hook-form/react-hook-form/blob/master/app/src/controller.tsx
 
 -   Checkbox
 -   RadioButton
@@ -286,6 +285,7 @@ const summaryHeadCell = {
 -   ViewSelect
 
 ```javascript
+//  자세한 내용은 common/table/Pagination.js를 확인해주세요.
 //  테이블 하단에 버튼을 추가하는 방법
 //      1. common/table/Data.js 생성
 //      2. 메뉴마다 필요한 버튼을 작성
@@ -295,25 +295,11 @@ const summaryHeadCell = {
 //      true -> 사용
 //      false -> 미사용
 
-const PerMenuButton = {
+const perMenuButton = {
     Dashboard: { add: true, delete: true, excel: false },
     Summary: { add: false, delete: false, excel: true },
     Example: { add: true, delete: false, excel: false }
 };
-
-//  common/table/Pagination.js 파일에서
-//  PerMenuButton을 import
-import { PerMenuButton as buttons } from "common/table/Data";
-
-function TablePaginationActions() {
-    return (
-        <div>
-            {buttons[menu].add && <AddButton onOpen={onOpen} />}
-            {buttons[menu].delete && <DeleteButton onConfirm={onConfirm} />}
-            {buttons[menu].excel && <ExcelExport />}
-        </div>
-    );
-}
 ```
 
 ## Project Flow

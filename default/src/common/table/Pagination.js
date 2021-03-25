@@ -8,7 +8,7 @@ import ExcelExport from "common/excel";
 import DeleteButton from "common/button/DeleteButton";
 import AddButton from "common/button/AddButton";
 
-import { PerMenuButton as buttons } from "common/table/Data";
+import { perMenuButton as buttons } from "common/table/Data";
 
 const useStyles = makeStyles(() => ({
     root: {

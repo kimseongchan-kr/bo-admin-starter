@@ -31,8 +31,8 @@ function SearchField({ classes, searchType, searchKeyword, options, handleChange
                     size="small"
                     variant="outlined"
                     type="search"
-                    onChange={(e) => handleKeyword(e.target.value)}
                     value={searchKeyword}
+                    onChange={(e) => handleKeyword(e.target.value)}
                 />
             </Grid>
         </>

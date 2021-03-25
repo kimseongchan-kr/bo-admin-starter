@@ -7,9 +7,9 @@ import { makeStyles, TableContainer, Paper, Table, TableHead, TableSortLabel, Ta
 import Filters from "features/example/components/Filter";
 import UseSelect from "common/table/UseSelect";
 import ViewSelect from "common/table/ViewSelect";
+import TextInput from "common/table/TextField";
 import EditButton from "common/table/EditButton";
 import DeleteButton from "common/table/DeleteButton";
-import TextInput from "common/table/TextField";
 import TablePaginationActions from "common/table/Pagination";
 
 import { exampleDefaultSort as defaultSort, exampleHeadCell as headCells, sampleRowData as rowData } from "features/example/Data";

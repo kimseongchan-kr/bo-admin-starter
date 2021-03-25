@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import theme from "styles/theme/button";
 import { ThemeProvider, Button } from "@material-ui/core";
 import { CheckOutlined } from "@material-ui/icons";
-
 function AddButton({ onOpen }) {
     return (
         <ThemeProvider theme={theme}>

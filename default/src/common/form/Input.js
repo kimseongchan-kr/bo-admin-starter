@@ -16,9 +16,7 @@ function Input({ name, defaultValue, control, classes, inputType }) {
                     id={`outline-${name}`}
                     label=""
                     variant="outlined"
-                    InputLabelProps={{
-                        shrink: true
-                    }}
+                    InputLabelProps={{ shrink: true }}
                     type={inputType}
                     name={name}
                     value={value}

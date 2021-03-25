@@ -24,7 +24,7 @@ export default function Filters({ filterType, handleFilter, handleSearch }) {
         <PopupState variant="popover" popupId="filter-popup-menu">
             {(popupState) => (
                 <React.Fragment>
-                    <IconButton {...bindTrigger(popupState)} className={classes.iconButton}>
+                    <IconButton {...bindTrigger(popupState)} className={classes.iconButton} aria-label="table filter">
                         <FilterList />
                     </IconButton>
                     <Menu

@@ -12,7 +12,19 @@ const options = [
 function ViewSelect({ viewYn, handleSelect }) {
     const label = viewYn === "Y" ? "활성화" : "비활성화";
 
-    return <Select isClearable={false} isSearchable={false} styles={styles} defaultValue={{ value: viewYn, label: label }} options={options} onChange={(e) => handleSelect("view", e.value)} />;
+    return (
+        <Select
+            isClearable={false}
+            isSearchable={false}
+            styles={styles}
+            options={options}
+            defaultValue={{
+                value: viewYn,
+                label: label
+            }}
+            onChange={(e) => handleSelect("view", e.value)}
+        />
+    );
 }
 
 ViewSelect.propTypes = {

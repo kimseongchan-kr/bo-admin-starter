@@ -8,8 +8,8 @@ import { Controller } from "react-hook-form";
 function FormSelect({ name, defaultValue, control, options }) {
     return (
         <Controller
-            defaultValue={defaultValue}
             name={name}
+            defaultValue={defaultValue}
             control={control}
             render={({ onChange }) => <Select isClearable={false} isSearchable={false} styles={customStyles} name={name} defaultValue={defaultValue} options={options} onChange={onChange} />}
         />

@@ -12,7 +12,19 @@ const options = [
 function UseSelect({ useYn, handleSelect }) {
     const label = useYn === "Y" ? "사용" : "미사용";
 
-    return <Select isClearable={false} isSearchable={false} styles={styles} defaultValue={{ value: useYn, label: label }} options={options} onChange={(e) => handleSelect("use", e.value)} />;
+    return (
+        <Select
+            isClearable={false}
+            isSearchable={false}
+            styles={styles}
+            options={options}
+            defaultValue={{
+                value: useYn,
+                label: label
+            }}
+            onChange={(e) => handleSelect("use", e.value)}
+        />
+    );
 }
 
 UseSelect.propTypes = {

@@ -11,8 +11,8 @@ function CheckBox({ options, control }) {
                 <Controller
                     key={`controller-${index}`}
                     name={checkbox.name}
-                    control={control}
                     defaultValue={checkbox.defaultValue}
+                    control={control}
                     render={({ onChange, value }) => (
                         <FormControlLabel
                             key={`checkbox-${index}`}

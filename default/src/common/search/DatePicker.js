@@ -18,17 +18,17 @@ function DateSearchPicker({ classes, dateFormat, term, views, startDate, endDate
                     </Typography>
                     <DatePicker
                         autoOk
+                        id="date-picker-inline-start"
                         variant="inline"
                         inputVariant="outlined"
+                        allowKeyboardControl={false}
                         format={dateFormat}
                         views={views ? views : ["date"]}
-                        id="date-picker-inline-start"
-                        value={startDate}
                         maxDate={endDate}
                         maxDateMessage="시작일을 다시 선택해주세요"
                         invalidDateMessage="시작일을 선택해주세요"
+                        value={startDate}
                         onChange={(e) => handleDate("startDate", format(term, e))}
-                        allowKeyboardControl={false}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
@@ -49,17 +49,17 @@ function DateSearchPicker({ classes, dateFormat, term, views, startDate, endDate
                     <div className={classes.spacer}></div>
                     <DatePicker
                         autoOk
+                        id="date-picker-inline-end"
                         variant="inline"
                         inputVariant="outlined"
+                        allowKeyboardControl={false}
                         format={dateFormat}
                         views={views ? views : ["date"]}
-                        id="date-picker-inline-end"
-                        value={endDate}
                         minDate={startDate}
                         minDateMessage="종료일을 다시 선택해주세요"
                         invalidDateMessage="종료일을 선택해주세요"
+                        value={endDate}
                         onChange={(e) => handleDate("endDate", format(term, e))}
-                        allowKeyboardControl={false}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">

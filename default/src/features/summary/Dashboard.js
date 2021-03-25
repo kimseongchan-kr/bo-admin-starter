@@ -68,7 +68,7 @@ export default function Dashboard() {
         dispatch(setFilter(filterItems));
     };
 
-    // 페이지 변경하기
+    // 테이블 페이지 변경하기
     const handlePage = (paging) => {
         console.log("페이지 변경하기...");
         dispatch(setPage(paging));

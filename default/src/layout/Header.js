@@ -29,7 +29,7 @@ const useStyles = makeStyles(() => ({
         top: 0,
         left: 240,
         zIndex: 10,
-        backgroundColor: "white",
+        backgroundColor: "#ffffff",
         color: "#333333"
     },
     title: {
