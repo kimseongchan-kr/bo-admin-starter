@@ -9,10 +9,11 @@ import summaryReducer from "slices/summarySlice";
 import exampleReducer from "slices/exampleSlice";
 
 const rootReducer = combineReducers({
+    login: loginReducer,
     menu: menuReducer,
     modal: modalReducer,
-    login: loginReducer,
     search: searchReducer,
+
     summary: summaryReducer,
     example: exampleReducer
 });

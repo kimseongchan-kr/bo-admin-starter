@@ -9,7 +9,7 @@ import { makeStyles, AppBar, Toolbar, Typography, List, ListItem, ListItemText, 
 import Popover from "material-ui-popup-state/HoverPopover";
 import PopupState, { bindHover, bindPopover } from "material-ui-popup-state";
 
-import user from "assets/Images/img_logout.png";
+import user from "assets/images/logout.png";
 
 const drawerWidth = 240;
 const useStyles = makeStyles(() => ({

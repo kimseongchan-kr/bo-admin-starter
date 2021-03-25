@@ -92,7 +92,7 @@ export default function SummaryTable(props) {
 
     return (
         <div className={classes.root}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} elevation={0}>
                 <TableContainer>
                     <Table className={classes.table} aria-labelledby="summaryTable" size="medium" aria-label="summary table">
                         <TableHead>

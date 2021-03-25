@@ -3,6 +3,7 @@ import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } fro
 import storage from "redux-persist/lib/storage";
 import rootReducer from "app/rootReducer";
 
+// 참고: https://github.com/rt2zz/redux-persist#blacklist--whitelist
 const persistConfig = {
     key: "root",
     storage,

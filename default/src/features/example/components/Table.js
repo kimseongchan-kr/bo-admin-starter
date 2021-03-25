@@ -101,7 +101,7 @@ export default function ExampleTable(props) {
 
     return (
         <div className={classes.root}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} elevation={0}>
                 <TableContainer>
                     <Table className={classes.table} aria-labelledby="exampleTable" size="medium" aria-label="example table">
                         <TableHead>
