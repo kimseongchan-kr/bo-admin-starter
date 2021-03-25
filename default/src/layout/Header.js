@@ -111,11 +111,11 @@ function Header(props) {
                                     disableRestoreFocus
                                 >
                                     <List component="nav" aria-label="admin menu">
-                                        <ListItem classes={{ root: classes.listItem }} button onClick={() => handlePageChange({ menu: null, title: "정보 변경", num: 0 }, "/info")}>
-                                            <ListItemText primary="정보수정" />
-                                        </ListItem>
                                         <ListItem classes={{ root: classes.listItem }} button onClick={() => handlePageChange({ menu: null, title: "비밀번호 변경", num: 0 }, "/password")}>
                                             <ListItemText primary="비밀번호 변경" />
+                                        </ListItem>
+                                        <ListItem classes={{ root: classes.listItem }} button onClick={() => handlePageChange({ menu: null, title: "정보 변경", num: 0 }, "/info")}>
+                                            <ListItemText primary="정보 변경" />
                                         </ListItem>
                                         <ListItem classes={{ root: classes.listItem }} button onClick={handleLogOut}>
                                             <ListItemText primary="로그아웃" />
