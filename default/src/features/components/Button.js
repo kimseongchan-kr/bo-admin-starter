@@ -2,7 +2,9 @@ import React from "react";
 import MenuRedux from "common/menu/MenuRedux";
 
 import theme from "styles/theme/button";
-import { makeStyles, ThemeProvider, Grid, Typography } from "@material-ui/core";
+import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 
 import ModalEditButton from "common/button/EditButton";
 import ModalCloseButton from "common/button/CloseButton";

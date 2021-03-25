@@ -4,7 +4,9 @@ import { useSelector } from "react-redux";
 import { modalSelector } from "slices/modalSlice";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+
 import CloseButton from "common/button/CloseButton";
 
 import Modal from "react-modal";

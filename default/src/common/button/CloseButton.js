@@ -2,8 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import theme from "styles/theme/button";
-import { ThemeProvider, Button } from "@material-ui/core";
-import { Close } from "@material-ui/icons";
+import { ThemeProvider } from "@material-ui/core/styles";
+
+import Button from "@material-ui/core/Button";
+import Close from "@material-ui/icons/Close";
 function CloseButton({ text, onClose }) {
     return (
         <ThemeProvider theme={theme}>

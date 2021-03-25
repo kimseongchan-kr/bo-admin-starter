@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import customStyles from "styles/customize/SearchSelectStyles";
-
 import Select from "react-select";
-import { Grid, Typography, TextField } from "@material-ui/core";
+import styles from "styles/customize/SearchSelectStyles";
+
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 
 function SearchField({ classes, searchType, searchKeyword, options, handleChange, handleKeyword }) {
     return (
@@ -14,7 +16,7 @@ function SearchField({ classes, searchType, searchKeyword, options, handleChange
                     조회조건
                 </Typography>
                 <Select
-                    styles={customStyles}
+                    styles={styles}
                     isClearable={false}
                     isSearchable={false}
                     defaultValue={{ value: searchType, label: searchType }}

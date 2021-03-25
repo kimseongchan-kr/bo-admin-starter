@@ -5,7 +5,7 @@ import { setClose, setDetail, setMessage, setModal, setMsgConfirm } from "slices
 
 import MenuRedux from "common/menu/MenuRedux";
 
-import { ThemeProvider } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core/styles";
 import search from "styles/theme/search";
 import form from "styles/theme/form";
 

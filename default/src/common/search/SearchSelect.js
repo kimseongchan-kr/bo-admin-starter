@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import Select from "react-select";
 import styles from "styles/customize/SearchSelectStyles";
 
-import Select from "react-select";
-import { Grid, Typography } from "@material-ui/core";
-
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 function SearchSelect({ index, type, caption, defaultValue, options, handleChange }) {
     return (
         <Grid key={`grid-${index}`} item>

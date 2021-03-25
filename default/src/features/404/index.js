@@ -2,7 +2,8 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setMenu } from "slices/menuSlice";
 
-import { Button, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(() => ({
     page404: {

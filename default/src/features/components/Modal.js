@@ -4,7 +4,9 @@ import { setClose, setDetail, setMessage, setModal, setMsgConfirm } from "slices
 import MenuRedux from "common/menu/MenuRedux";
 
 import theme from "styles/theme/form";
-import { makeStyles, ThemeProvider, Grid, Typography } from "@material-ui/core";
+import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 
 import EditModal from "features/summary/modal/DashboardEditModal";
 import DetailModal from "features/summary/modal/DetailModal";

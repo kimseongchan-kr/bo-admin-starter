@@ -5,7 +5,7 @@ import { summarySelector } from "slices/summarySlice";
 import { setClose, setMessage } from "slices/modalSlice";
 import MenuRedux from "common/menu/MenuRedux";
 
-import { ThemeProvider } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core/styles";
 import search from "styles/theme/search";
 
 import SummarySearch from "features/summary/components/Search";

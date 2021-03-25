@@ -3,7 +3,9 @@ import { useSelector } from "react-redux";
 import { searchSelector } from "slices/searchSlice";
 
 import useStyles from "styles/customize/SearchStyles";
-import { Grid, Button } from "@material-ui/core";
+
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 
 import DateSearchPicker from "common/search/DatePicker";
 import SearchSelect from "common/search/SearchSelect";

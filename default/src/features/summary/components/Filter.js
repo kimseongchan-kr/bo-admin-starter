@@ -5,7 +5,13 @@ import { searchSelector } from "slices/searchSlice";
 import filterStyles from "styles/customize/FilterStyles";
 
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
-import { Menu, MenuItem, IconButton, Typography, FormControlLabel, Checkbox } from "@material-ui/core";
+
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import FilterList from "@material-ui/icons/FilterList";

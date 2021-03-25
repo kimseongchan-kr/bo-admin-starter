@@ -4,10 +4,13 @@ import { useSelector } from "react-redux";
 import { modalSelector } from "slices/modalSlice";
 
 import theme from "styles/theme/button";
+import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
 
-import { makeStyles } from "@material-ui/core/styles";
-import { ThemeProvider, Typography, Grid, Button } from "@material-ui/core";
-import { CheckOutlined, Close } from "@material-ui/icons";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import CheckOutlined from "@material-ui/icons/CheckOutlined";
+import Close from "@material-ui/icons/Close";
 
 import Modal from "react-modal";
 import { disableScroll, enableScroll } from "utils/CommonFunction";

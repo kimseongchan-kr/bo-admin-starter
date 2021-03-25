@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import Workbook from "react-excel-workbook";
 import moment from "moment";
 
-import { ThemeProvider, makeStyles, Button } from "@material-ui/core";
+import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+
 import theme from "styles/theme/button";
 
 const useStyles = makeStyles(() => ({

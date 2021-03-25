@@ -2,7 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { Controller } from "react-hook-form";
-import { RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Radio from "@material-ui/core/Radio";
 
 function RadioButton({ name, defaultValue, control, options }) {
     return (

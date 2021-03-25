@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { Controller } from "react-hook-form";
 import Select from "react-select";
 import customStyles from "styles/customize/FormSelectStyles";
-import { Controller } from "react-hook-form";
 
 function FormSelect({ name, defaultValue, control, options }) {
     return (

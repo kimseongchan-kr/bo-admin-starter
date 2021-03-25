@@ -5,8 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { menuSelector, setMenu } from "slices/menuSlice";
 import { reset } from "slices/searchSlice";
 
-import { withStyles, makeStyles, Box, Drawer, Typography, Divider, ListItemIcon, List, ListItem } from "@material-ui/core";
-import { Mail as MailIcon, ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
+
+import Drawer from "@material-ui/core/Drawer";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Box from "@material-ui/core/Box";
+
+import MailIcon from "@material-ui/icons/Mail";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import MuiAccordion from "@material-ui/core/Accordion";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";

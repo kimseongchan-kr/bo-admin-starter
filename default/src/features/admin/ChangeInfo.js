@@ -8,7 +8,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import theme from "styles/theme/form";
-import { makeStyles, ThemeProvider, Grid, Typography } from "@material-ui/core";
+import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 
 import MessageModal from "common/modal/MessageModal";
 import EditButton from "common/button/EditButton";

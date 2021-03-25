@@ -3,7 +3,11 @@ import MenuRedux from "common/menu/MenuRedux";
 
 import theme from "styles/theme/search";
 import searchStyles from "styles/customize/SearchStyles";
-import { makeStyles, ThemeProvider, Grid, Typography, Button } from "@material-ui/core";
+import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
+
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 
 import DateSearchPicker from "common/search/DatePicker";
 import SearchSelect from "common/search/SearchSelect";

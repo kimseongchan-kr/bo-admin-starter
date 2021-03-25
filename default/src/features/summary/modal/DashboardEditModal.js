@@ -7,7 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import useStyles from "styles/customize/ModalFormStyles";
-import { Grid, Typography } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
 import FormSelect from "common/form/Select";
 import Input from "common/form/Input";

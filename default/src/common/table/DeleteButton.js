@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { ThemeProvider, Button } from "@material-ui/core";
 import theme from "styles/theme/button";
+import { ThemeProvider } from "@material-ui/core/styles";
+
+import Button from "@material-ui/core/Button";
 
 function DeleteButton({ modalId, onConfirm }) {
     return (

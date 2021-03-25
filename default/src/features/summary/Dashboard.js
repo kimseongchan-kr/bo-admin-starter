@@ -4,7 +4,7 @@ import { searchSelector, setFilter, setPage, setSearchFilter, setSort } from "sl
 import { setClose, setDetail, setMessage, setModal, setMsgConfirm } from "slices/modalSlice";
 import MenuRedux from "common/menu/MenuRedux";
 
-import { ThemeProvider } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core/styles";
 import search from "styles/theme/search";
 import form from "styles/theme/form";
 

@@ -2,7 +2,17 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { searchSelector } from "slices/searchSlice";
 
-import { makeStyles, TableContainer, Paper, Table, TableHead, TableSortLabel, TableBody, TableRow, TableCell, TablePagination, Checkbox } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import TableContainer from "@material-ui/core/TableContainer";
+import Paper from "@material-ui/core/Paper";
+import Table from "@material-ui/core/Table";
+import TableHead from "@material-ui/core/TableHead";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
+import TableBody from "@material-ui/core/TableBody";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import TablePagination from "@material-ui/core/TablePagination";
+import Checkbox from "@material-ui/core/Checkbox";
 
 import Filters from "features/summary/components/Filter";
 import UseSelect from "common/table/UseSelect";

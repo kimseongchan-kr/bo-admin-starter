@@ -2,8 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import theme from "styles/theme/button";
-import { ThemeProvider, Button } from "@material-ui/core";
-import { CheckOutlined } from "@material-ui/icons";
+import { ThemeProvider } from "@material-ui/core/styles";
+
+import Button from "@material-ui/core/Button";
+import CheckOutlined from "@material-ui/icons/CheckOutlined";
 function AddButton({ onOpen }) {
     return (
         <ThemeProvider theme={theme}>

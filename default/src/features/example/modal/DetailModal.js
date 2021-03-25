@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { modalSelector } from "slices/modalSlice";
 
-import { makeStyles, Table, TableHead, TableBody, TableRow, TableCell, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableHead from "@material-ui/core/TableHead";
+import TableBody from "@material-ui/core/TableBody";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import Typography from "@material-ui/core/Typography";
 import Pagination from "@material-ui/lab/Pagination";
 
 import { exampleHeadCell } from "features/example/Data";
 import { disableScroll, enableScroll } from "utils/CommonFunction";
 
 import Modal from "react-modal";
-import { Close } from "@material-ui/icons";
+import Close from "@material-ui/icons/Close";
 
 Modal.defaultStyles.overlay.zIndex = 9999;
 Modal.defaultStyles.overlay.backgroundColor = "rgba(0, 0, 0, .45)";
