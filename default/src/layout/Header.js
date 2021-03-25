@@ -10,6 +10,7 @@ import Popover from "material-ui-popup-state/HoverPopover";
 import PopupState, { bindHover, bindPopover } from "material-ui-popup-state";
 
 import user from "assets/images/logout.png";
+import { reset } from "slices/searchSlice";
 
 const drawerWidth = 240;
 const useStyles = makeStyles(() => ({
@@ -75,6 +76,9 @@ function Header(props) {
 
     const handleLogOut = () => {
         console.log("logout");
+        // localStorage에 있는 값들을 반드시 초기화
+        dispatch(reset());
+        dispatch(setMenu({ menu: "summary", menuTitle: "Dashboard", num: 1 }));
         dispatch(setLogOut());
     };
 

@@ -1,16 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getData } from "api/Api";
+import { createSlice } from "@reduxjs/toolkit";
 import { format } from "utils/CommonFunction";
-const today = format("일간", new Date());
 
-export const fetchSearchBox = createAsyncThunk("search/fetchSearchBox", async (url, thunkAPI) => {
-    try {
-        const response = await getData(url);
-        return response;
-    } catch (error) {
-        return error.data.payload;
-    }
-});
+const today = format("일간", new Date());
 
 export const initialState = {
     loading: false,
@@ -54,27 +45,22 @@ export const searchSlice = createSlice({
             state.pageNumber = payload.pageNumber;
             state.pageShow = payload.pageShow;
         },
-
         setSort: (state, { payload }) => {
             state.sortNm = payload.sortNm;
             state.sortOrder = payload.sortOrder;
         },
-
         setSearchFilter: (state, { payload }) => {
             state[payload.type] = payload.value;
         },
         setDate: (state, { payload }) => {
             state[payload.type] = payload.date;
         },
-
         setFilter: (state, { payload }) => {
             state[payload.name] = payload.checked;
         },
-
         setSearchBox: (state, { payload }) => {
             state.searchBox = payload;
         },
-
         reset: (state) => {
             state.gender = "전체";
             state.useYn = "전체";
@@ -91,20 +77,6 @@ export const searchSlice = createSlice({
             state.term = "일간";
             state.startDate = today;
             state.endDate = today;
-        }
-    },
-    extraReducers: {
-        [fetchSearchBox.pending]: (state) => {
-            state.loading = true;
-        },
-        [fetchSearchBox.fulfilled]: (state, { payload }) => {
-            state.searchBox = payload;
-            state.loading = false;
-            state.hasErrors = false;
-        },
-        [fetchSearchBox.rejected]: (state) => {
-            state.loading = false;
-            state.hasErrors = true;
         }
     }
 });

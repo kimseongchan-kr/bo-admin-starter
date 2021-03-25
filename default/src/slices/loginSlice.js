@@ -17,13 +17,12 @@ export const loginSlice = createSlice({
     initialState: {
         isLogin: true,
         hasErrors: false,
-
         userName: ""
     },
     reducers: {
         // Sample
         // Login API와 연결한 경우 삭제
-        // fetchLogin을 사용
+        // login을 사용
         setIsLogin: (state) => {
             state.isLogin = true;
         },
