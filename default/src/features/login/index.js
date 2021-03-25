@@ -7,6 +7,7 @@ import { makeStyles, Grid, FormControlLabel, Checkbox } from "@material-ui/core"
 
 import Modal from "react-modal";
 import MessageModal from "common/modal/MessageModal";
+import { setIsLogin } from "slices/loginSlice";
 
 Modal.setAppElement("body");
 
@@ -102,6 +103,7 @@ export default function Login() {
     // 모달 닫기
     const onClose = () => {
         dispatch(setClose());
+        dispatch(setIsLogin());
     };
 
     return (

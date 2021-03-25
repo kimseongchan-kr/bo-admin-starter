@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { searchSelector, setPage, setSearchFilter, setSort } from "slices/searchSlice";
-import { getList, summarySelector } from "slices/summarySlice";
+import { summarySelector } from "slices/summarySlice";
 import { setClose, setMessage } from "slices/modalSlice";
 import MenuRedux from "common/menu/MenuRedux";
 
@@ -26,21 +26,26 @@ export default function Summary() {
     const menu = "Summary";
 
     // 데이터 불러오기
-    const handleData = useCallback(() => {
-        console.log("데이터 불러오기...");
-        dispatch(getList("/web/user"));
-    }, [dispatch]);
+    const handleData = useCallback(
+        () => {
+            console.log("데이터 불러오기...");
+            // API 연결 SAMPLE CODE
+            // getList import 필요
+            // dispatch(getList("/web/user"));
+        },
+        [] // [dispatch]
+    );
 
     useEffect(() => {
         handleData();
     }, [handleData]);
 
-    // SAMPLE
+    // API 연결 SAMPLE CODE
     // 에러 메시지
     // -> 네트워크 오류입니다.
     // -> 다시 시도해주세요.
     useEffect(() => {
-        dispatch(setMessage({ open: hasErrors, message: errorMsg }));
+        dispatch(setMessage({ open: hasErrors, message: "api 연결 테스트:: " + errorMsg }));
     }, [dispatch, hasErrors, errorMsg]);
 
     // 검색 조건 변경하기

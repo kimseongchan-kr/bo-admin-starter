@@ -78,7 +78,7 @@ function Header(props) {
         console.log("logout");
         // localStorage에 있는 값들을 반드시 초기화
         dispatch(reset());
-        dispatch(setMenu({ menu: "summary", menuTitle: "Dashboard", num: 1 }));
+        dispatch(setMenu({ menu: "summary", title: "Dashboard", num: 1 }));
         dispatch(setLogOut());
     };
 

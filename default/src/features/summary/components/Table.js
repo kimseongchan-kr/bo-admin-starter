@@ -119,6 +119,10 @@ export default function SummaryTable(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
+                            {/*
+                                SAMPLE CODE
+                                API 연결 후 수정
+                            */}
                             {loading ? (
                                 <TableRow>
                                     <TableCell align="center" colSpan={7}>

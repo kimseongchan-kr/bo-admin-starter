@@ -128,6 +128,10 @@ export default function ExampleTable(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
+                            {/*
+                                SAMPLE CODE
+                                API 연결 후 수정
+                            */}
                             {rowData.map((row, index) => {
                                 return (
                                     <TableRow hover tabIndex={-1} key={index}>

@@ -165,10 +165,13 @@ export default function SummarySelectionTable(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
+                            {/*
+                                SAMPLE CODE
+                                API 연결 후 수정
+                            */}
                             {rowData.map((row, index) => {
                                 const isItemSelected = isSelected(row.key);
                                 const labelId = `enhanced-table-checkbox-${index}`;
-
                                 return (
                                     <TableRow hover role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={index} selected={isItemSelected}>
                                         <TableCell padding="checkbox">
