@@ -148,7 +148,7 @@ export default function Modal() {
             <ThemeProvider theme={theme}>
                 <EditModal handleDataSubmit={handleSubmit} onClose={onClose} />
             </ThemeProvider>
-            <DetailModal handleDetailData={handleDetailData} onClose={onClose} />
+            <DetailModal menu="Dashboard" handleDetailData={handleDetailData} onClose={onClose} />
             <ConfirmModal onClose={onClose} handleDelete={handleDelete} />
             <MessageModal onClose={onClose} />
         </>
