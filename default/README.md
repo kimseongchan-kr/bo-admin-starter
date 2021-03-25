@@ -1,6 +1,6 @@
 # bo-admin-starter
 
-:smiley: 블록오디세이를 위한 React 관리자 페이지 Boilerplate입니다. :smiley:   
+:smiley: 블록오디세이를 위한 React 관리자 Boilerplate입니다. :smiley:   
 :bangbang: [프로젝트 설치 방법](https://github.com/BlockOdyssey/bo-admin-starter#project-installation "project-installation") & [사용 설명서](https://github.com/BlockOdyssey/bo-admin-starter#사용방법 "usage") :bangbang:
 
 ## Project Main Features
@@ -97,7 +97,8 @@
 
 ```javascript
 //  Data.js
-//  자세한 사용방법은 features/summary/components/Search.js를 확인해주세요.
+//  자세한 사용방법: features/summary/components/Search.js
+
 //  **메뉴별 필요한 검색 Components**
 //      필요한 경우 -> true
 //      사용하지 않는 경우 -> false
@@ -151,8 +152,8 @@ const summarySearchCaption = { gender: "성별" };
 ### Table (테이블)
 
 > 하나의 메뉴 - Selection Table (checkbox가 포함된 테이블) & Table (기본 테이블)   
-> 자세한 사용방법은 features/summary/components/Table.js   
-> 또는 features/summary/components/SelectionTable.js를 확인해주세요.
+> 자세한 사용방법 : features/summary/components/Table.js   
+> 또는 features/summary/components/SelectionTable.js
 
 ```javascript
 //  Data.js
@@ -361,7 +362,7 @@ const perMenuButton = {
     │   │   ├── AddButton.js                            # 추가 모달 여는 버튼
     │   │   ├── CloseButton.js                          # 모달 닫기 버튼
     │   │   ├── DeleteButton.js                         # 삭제 버튼
-    │   │   ├── EditButton.js                           # 수정 모달 수정 버튼
+    │   │   ├── EditButton.js                           # 수정 모달 -> 수정 버튼
     │   │   └── MsgConfirmButton.js                     # 확인 버튼
     │   ├── editor                                  # 에디터
     │   │   └── index.js                                
@@ -380,18 +381,18 @@ const perMenuButton = {
     │   ├── search                                  # 검색
     │   │   ├── Data.js                                 # 검색 관련 설정 파일
     │   │   ├── DatePicker.js                           # Date Picker (시작일, 종료일)
-    │   │   ├── DateTermSearch.js                       # 기간 검색 (일간/월간, 시작일, 종료일, 조회버튼)
-    │   │   ├── SearchField.js                          # 조회조건 + 검색 input
+    │   │   ├── DateTermSearch.js                       # 기간 검색 (일간/월간, 시작일, 종료일, 조회 버튼)
+    │   │   ├── SearchField.js                          # 조회조건 + 키워드 검색
     │   │   └── SearchSelect.js                         # 검색 조건 select
     │   └── table                                   # table
     │       ├── Data.js                                 # 테이블 버튼 관련 설정 파일
     │       ├── DeleteButton.js                         # 삭제 버튼
     │       ├── EditButton.js                           # 수정 버튼
     │       ├── Pagination.js                           # Pagination + Button
-    │       ├── SortOrder.js                            # 노출순서 input
+    │       ├── SortOrder.js                            # 노출 순서 input
     │       ├── TextField.js                            # 사용자 입력 input
-    │       ├── UseSelect.js                            # 사용여부 select
-    │       └── ViewSelect.js                           # 노출여부 select
+    │       ├── UseSelect.js                            # 사용 여부 select
+    │       └── ViewSelect.js                           # 메인 노출 select
     ├── features
     │   ├── 404                                     # 404 Page
     │   │   └── index.js
@@ -410,7 +411,7 @@ const perMenuButton = {
     │   │   ├── Example.js                              # Example 메뉴 파일
     │   │   ├── components                              # Example에서 사용하는 Components
     │   │   │   ├── Filter.js                               # Table Filter
-    │   │   │   └── Table.js                                # Table (Checkbox없는 기본 테이블)
+    │   │   │   └── Table.js                                # Table (Checkbox 없는)
     │   │   └── modal                                   # Modal
     │   │       ├── DetailModal.js                          # 상세 모달
     │   │       └── EditModal.js                            # 추가/수정 모달
