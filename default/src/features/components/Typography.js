@@ -1,5 +1,6 @@
 import React from "react";
 import MenuRedux from "common/menu/MenuRedux";
+
 import { makeStyles, Grid, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({

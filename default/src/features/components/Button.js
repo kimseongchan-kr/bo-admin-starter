@@ -92,7 +92,7 @@ export default function Form() {
                         </Grid>
                         <div className={classes.spacer} />
                         <Grid item>
-                            <TableDeleteButton modalId={1} handleDelete={handleDemo} />
+                            <TableDeleteButton modalId={1} onConfirm={handleDemo} />
                         </Grid>
                     </Grid>
                 </ThemeProvider>

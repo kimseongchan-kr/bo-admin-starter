@@ -1,11 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { menuSelector, setMenu } from "slices/menuSlice";
 import { setLogOut } from "slices/loginSlice";
 
-import { makeStyles } from "@material-ui/core/styles";
-import { AppBar, Toolbar, IconButton, Typography, List, ListItem, ListItemText } from "@material-ui/core";
+import { makeStyles, AppBar, Toolbar, Typography, List, ListItem, ListItemText, Button } from "@material-ui/core";
 
 import Popover from "material-ui-popup-state/HoverPopover";
 import PopupState, { bindHover, bindPopover } from "material-ui-popup-state";
@@ -36,6 +35,16 @@ const useStyles = makeStyles(() => ({
     title: {
         flexGrow: 1
     },
+    userButton: {
+        border: "none",
+        boxShadow: "unset",
+        backgroundColor: "#ffffff",
+        "&:hover": {
+            border: "none",
+            boxShadow: "unset",
+            backgroundColor: "#ffffff"
+        }
+    },
     userImage: {
         marginRight: 9.5
     },
@@ -48,21 +57,21 @@ const useStyles = makeStyles(() => ({
         paddingleft: 0,
         textAlign: "right",
         borderBottom: "1px solid #3d39351a",
-
         "&:last-child": {
             borderBottom: "none"
         }
     }
 }));
 
-function ListItemLink(props) {
-    return <ListItem button component={Link} {...props} />;
-}
-
-export default function Dashboard() {
+function Header(props) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { menuTitle } = useSelector(menuSelector);
+
+    const handlePageChange = (menu, path) => {
+        dispatch(setMenu(menu));
+        props.history.push(path);
+    };
 
     const handleLogOut = () => {
         console.log("logout");
@@ -79,12 +88,12 @@ export default function Dashboard() {
                     <PopupState variant="popover" popupId="filterPopover">
                         {(popupState) => (
                             <div>
-                                <IconButton {...bindHover(popupState)} aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" color="inherit">
-                                    <img className={classes.userImage} src={user} alt="" width={30} height={30} />
+                                <Button {...bindHover(popupState)} variant="contained" className={classes.userButton}>
+                                    <img src={user} alt="login user" width={30} height={30} className={classes.userImage} />
                                     <Typography variant="button" display="block">
                                         블록오디세이님
                                     </Typography>
-                                </IconButton>
+                                </Button>
                                 <Popover
                                     {...bindPopover(popupState)}
                                     className={classes.popover}
@@ -102,12 +111,12 @@ export default function Dashboard() {
                                     disableRestoreFocus
                                 >
                                     <List component="nav" aria-label="admin menu">
-                                        <ListItemLink classes={{ root: classes.listItem }} to="/info" onClick={() => dispatch(setMenu({ menu: null, title: "정보 변경", num: 0 }))}>
+                                        <ListItem classes={{ root: classes.listItem }} button onClick={() => handlePageChange({ menu: null, title: "정보 변경", num: 0 }, "/info")}>
                                             <ListItemText primary="정보수정" />
-                                        </ListItemLink>
-                                        <ListItemLink classes={{ root: classes.listItem }} to="/password" onClick={() => dispatch(setMenu({ menu: null, title: "비밀번호 변경", num: 0 }))}>
+                                        </ListItem>
+                                        <ListItem classes={{ root: classes.listItem }} button onClick={() => handlePageChange({ menu: null, title: "비밀번호 변경", num: 0 }, "/password")}>
                                             <ListItemText primary="비밀번호 변경" />
-                                        </ListItemLink>
+                                        </ListItem>
                                         <ListItem classes={{ root: classes.listItem }} button onClick={handleLogOut}>
                                             <ListItemText primary="로그아웃" />
                                         </ListItem>
@@ -121,3 +130,5 @@ export default function Dashboard() {
         </AppBar>
     );
 }
+
+export default withRouter(Header);

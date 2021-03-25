@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
+
 import { useDispatch, useSelector } from "react-redux";
 import { menuSelector, setMenu } from "slices/menuSlice";
 import { reset } from "slices/searchSlice";
 
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-import { Box, Link, Drawer, Typography, Divider, ListItemIcon, List, ListItem } from "@material-ui/core";
+import { withStyles, makeStyles, Box, Drawer, Typography, Divider, ListItemIcon, List, ListItem } from "@material-ui/core";
 import { Mail as MailIcon, ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 
 import MuiAccordion from "@material-ui/core/Accordion";
@@ -81,25 +81,30 @@ const AccordionDetails = withStyles(() => ({
     root: {
         padding: 0,
         backgroundColor: "#222222",
-        "&:hover": {
-            backgroundColor: "#2d2d2d"
-        },
-        "& p": {
+        "& button": {
             width: "100%",
+            display: "inline-block",
+            padding: "10px 16px 10px 57px",
+            color: "#ffffff",
+            opacity: 0.8,
+
+            backgroundColor: "#222222",
+            border: "none",
+            cursor: "pointer",
+
             fontSize: 14,
             fontFamily: "Noto Sans KR",
             fontWeight: 400,
             lineHeight: "20px",
             letterSpacing: "-0.7px",
             textAlign: "left",
-            color: "#ffffff",
-            opacity: 0.8,
-            textDecoration: "none",
-            "& a": {
-                color: "#ffffff",
-                display: "inline-block",
-                width: "100%",
-                padding: "10px 16px 10px 57px"
+
+            "&:hover": {
+                backgroundColor: "#2d2d2d"
+            },
+            "&:focus": {
+                outline: "none",
+                border: "none"
             }
         }
     }
@@ -132,7 +137,8 @@ const useStyles = makeStyles(() => ({
         height: 30,
         marginLeft: 32,
         background: `transparent url("") 0% 0% no-repeat padding-box`,
-        backgroundSize: "95%"
+        backgroundSize: "95%",
+        cursor: "pointer"
     },
     ul: {
         height: "100vh",
@@ -156,17 +162,15 @@ const useStyles = makeStyles(() => ({
         }
     },
     active: {
-        background: "#2d2d2d",
-        "& p": {
+        "& button": {
+            fontWeight: 500,
+            backgroundColor: "#2d2d2d",
             opacity: 1
-        },
-        "& a": {
-            fontWeight: 500
         }
     }
 }));
 
-export default function Menubar() {
+function Menubar(props) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const menuList = useSelector(menuSelector);
@@ -174,13 +178,18 @@ export default function Menubar() {
 
     const [expanded, setExpanded] = useState(menu ? menu : false);
 
+    useEffect(() => {
+        setExpanded(menu ? menu : false);
+    }, [menu]);
+
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
 
-    const handlePageChange = (menu) => {
+    const handlePageChange = (menu, path) => {
         dispatch(setMenu(menu));
         dispatch(reset());
+        props.history.push(path);
     };
 
     return (
@@ -193,10 +202,8 @@ export default function Menubar() {
             }}
         >
             <Box className={classes.toolbar}>
-                <Typography variant="h1" component="h1">
-                    <Link component={RouterLink} className={classes.logo} to="/" onClick={() => handlePageChange({ menu: "summary", title: "Dashboard", num: 1 })}>
-                        LOGO
-                    </Link>
+                <Typography variant="h1" component="h1" className={classes.logo} onClick={() => handlePageChange({ menu: "summary", title: "Dashboard", num: 1 }, "/")}>
+                    LOGO
                 </Typography>
             </Box>
             <Divider />
@@ -210,17 +217,13 @@ export default function Menubar() {
                             <Typography>Summary</Typography>
                         </AccordionSummary>
                         <AccordionDetails className={menuNum === 1 ? classes.active : ""}>
-                            <Typography className="nav-link">
-                                <RouterLink to="/dashboard" onClick={() => handlePageChange({ menu: "summary", title: "Dashboard", num: 1 })}>
-                                    Dashboard
-                                </RouterLink>
+                            <Typography component="button" onClick={() => handlePageChange({ menu: "summary", title: "Dashboard", num: 1 }, "/dashboard")}>
+                                Dashboard
                             </Typography>
                         </AccordionDetails>
                         <AccordionDetails className={menuNum === 2 ? classes.active : ""}>
-                            <Typography className="nav-link">
-                                <RouterLink to="/summary" onClick={() => handlePageChange({ menu: "summary", title: "Summary", num: 2 })}>
-                                    Summary
-                                </RouterLink>
+                            <Typography component="button" onClick={() => handlePageChange({ menu: "summary", title: "Summary", num: 2 }, "/summary")}>
+                                Summary
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
@@ -234,10 +237,8 @@ export default function Menubar() {
                             <Typography>Example</Typography>
                         </AccordionSummary>
                         <AccordionDetails className={menuNum === 3 ? classes.active : ""}>
-                            <Typography className="nav-link">
-                                <RouterLink to="/example" onClick={() => handlePageChange({ menu: "example", title: "Example", num: 3 })}>
-                                    Example
-                                </RouterLink>
+                            <Typography component="button" onClick={() => handlePageChange({ menu: "example", title: "Example", num: 3 }, "/example")}>
+                                Example
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
@@ -251,45 +252,33 @@ export default function Menubar() {
                             <Typography>Components</Typography>
                         </AccordionSummary>
                         <AccordionDetails className={menuNum === 4 ? classes.active : ""}>
-                            <Typography className="nav-link">
-                                <RouterLink to="/search" onClick={() => handlePageChange({ menu: "components", title: "Search", num: 4 })}>
-                                    Search
-                                </RouterLink>
+                            <Typography component="button" onClick={() => handlePageChange({ menu: "components", title: "Search", num: 4 }, "/search")}>
+                                Search
                             </Typography>
                         </AccordionDetails>
                         <AccordionDetails className={menuNum === 5 ? classes.active : ""}>
-                            <Typography className="nav-link">
-                                <RouterLink to="/table" onClick={() => handlePageChange({ menu: "components", title: "Table", num: 5 })}>
-                                    Table
-                                </RouterLink>
+                            <Typography component="button" onClick={() => handlePageChange({ menu: "components", title: "Table", num: 5 }, "/table")}>
+                                Table
                             </Typography>
                         </AccordionDetails>
                         <AccordionDetails className={menuNum === 6 ? classes.active : ""}>
-                            <Typography className="nav-link">
-                                <RouterLink to="/form" onClick={() => handlePageChange({ menu: "components", title: "Form", num: 6 })}>
-                                    Form
-                                </RouterLink>
+                            <Typography component="button" onClick={() => handlePageChange({ menu: "components", title: "Form", num: 6 }, "/form")}>
+                                Form
                             </Typography>
                         </AccordionDetails>
                         <AccordionDetails className={menuNum === 7 ? classes.active : ""}>
-                            <Typography className="nav-link">
-                                <RouterLink to="/modal" onClick={() => handlePageChange({ menu: "components", title: "Modal", num: 7 })}>
-                                    Modal
-                                </RouterLink>
+                            <Typography component="button" onClick={() => handlePageChange({ menu: "components", title: "Modal", num: 7 }, "/modal")}>
+                                Modal
                             </Typography>
                         </AccordionDetails>
                         <AccordionDetails className={menuNum === 8 ? classes.active : ""}>
-                            <Typography className="nav-link">
-                                <RouterLink to="/typography" onClick={() => handlePageChange({ menu: "components", title: "Typography", num: 8 })}>
-                                    Typography
-                                </RouterLink>
+                            <Typography component="button" onClick={() => handlePageChange({ menu: "components", title: "Typography", num: 8 }, "/typography")}>
+                                Typography
                             </Typography>
                         </AccordionDetails>
                         <AccordionDetails className={menuNum === 9 ? classes.active : ""}>
-                            <Typography className="nav-link">
-                                <RouterLink to="/button" onClick={() => handlePageChange({ menu: "components", title: "Button", num: 9 })}>
-                                    Button
-                                </RouterLink>
+                            <Typography component="button" onClick={() => handlePageChange({ menu: "components", title: "Button", num: 9 }, "/button")}>
+                                Button
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
@@ -304,3 +293,5 @@ export default function Menubar() {
         </Drawer>
     );
 }
+
+export default withRouter(Menubar);

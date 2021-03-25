@@ -3,9 +3,8 @@ import ReactDOM from "react-dom";
 import App from "app/App";
 import store from "app/store";
 
-import { ThemeProvider } from "@material-ui/core";
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import theme from "styles/theme/theme";
-import DefaultStyles from "styles/customize/DefaultStyles";
 
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -20,7 +19,7 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
         <Provider store={store}>
             <PersistGate persistor={persistor}>
-                <DefaultStyles />
+                <CssBaseline />
                 <App />
             </PersistGate>
         </Provider>

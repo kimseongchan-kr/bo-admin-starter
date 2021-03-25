@@ -42,15 +42,6 @@ export default function SummarySearch({ menu, keyword, setKeyword, handleSearchF
             {/* 날짜 검색 있을 경우 */}
             {component[menu].date && (
                 <>
-                    {/*
-                        dateFormat: 일간이면 yyyy/MM/dd
-                                    월간이면 yyyy/MM
-                        term:       일간 / 월간
-                                    default 값은 항상 일간
-                        startDate:  시작일
-                        endDate:    종료일
-                        handleDate: function
-                    */}
                     <DateSearchPicker classes={classes} dateFormat={dailyFormat} term="일간" startDate={startDate} endDate={endDate} handleDate={handleDate} />
                     <Divider orientation="vertical" flexItem classes={{ flexItem: classes.divider }} />
                 </>

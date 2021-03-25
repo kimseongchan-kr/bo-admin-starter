@@ -2,8 +2,18 @@ import React, { useState } from "react";
 import Workbook from "react-excel-workbook";
 import moment from "moment";
 
-import { IconButton } from "@material-ui/core";
-import buttonStyles from "styles/customize/ButtonStyles";
+import { ThemeProvider, makeStyles, Button } from "@material-ui/core";
+import theme from "styles/theme/button";
+
+const useStyles = makeStyles(() => ({
+    excel: {
+        width: 120,
+        "& svg": {
+            width: 14,
+            height: 15
+        }
+    }
+}));
 
 const exampleData = [
     {
@@ -30,7 +40,7 @@ const exampleData = [
 ];
 
 export default function ExcelExport() {
-    const classes = buttonStyles();
+    const classes = useStyles();
     const [data, setData] = useState([]);
 
     const download = async () => {
@@ -45,9 +55,11 @@ export default function ExcelExport() {
 
     return (
         <>
-            <IconButton className={classes.excel} onClick={download}>
-                엑셀 다운로드
-            </IconButton>
+            <ThemeProvider theme={theme}>
+                <Button variant="outlined" className={classes.excel} onClick={download}>
+                    엑셀 다운로드
+                </Button>
+            </ThemeProvider>
 
             <Workbook filename={`${moment().format("YYYYMMDDhhmmss")}.xlsx`} element={<i className="file-download"></i>}>
                 <Workbook.Sheet data={data} name="Sheet1">

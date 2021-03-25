@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { modalSelector } from "slices/modalSlice";
 
-import { makeStyles } from "@material-ui/core/styles";
-import { Table, TableHead, TableBody, TableRow, TableCell, Typography } from "@material-ui/core";
+import { makeStyles, Table, TableHead, TableBody, TableRow, TableCell, Typography } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 
 import { exampleHeadCell } from "features/example/Data";

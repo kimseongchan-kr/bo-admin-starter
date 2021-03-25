@@ -21,6 +21,34 @@ const theme = createMuiTheme({
     },
     typography,
     overrides: {
+        MuiCssBaseline: {
+            "@global": {
+                "*": {
+                    boxSizing: "border-box",
+                    margin: 0,
+                    padding: 0
+                },
+                html: {
+                    "-webkit-font-smoothing": "antialiased",
+                    "-moz-osx-font-smoothing": "grayscale",
+                    height: "100%",
+                    width: "100%"
+                },
+                body: {
+                    backgroundColor: "#f3f3f3",
+                    height: "100%",
+                    width: "100%"
+                },
+                a: {
+                    textDecoration: "none",
+                    color: "#333333"
+                },
+                "#root": {
+                    height: "100%",
+                    width: "100%"
+                }
+            }
+        },
         MuiList: {
             padding: {
                 paddingTop: 0,
@@ -32,6 +60,21 @@ const theme = createMuiTheme({
                 "&:hover": {
                     backgroundColor: "#ffffff"
                 }
+            }
+        },
+        MuiOutlinedInput: {
+            root: {
+                "&&$focused fieldset": {
+                    borderColor: "#3D393534",
+                    borderWidth: "1px"
+                },
+                "&&:hover fieldset": {
+                    borderColor: "#3D393534",
+                    borderWidth: "1px"
+                }
+            },
+            notchedOutline: {
+                borderColor: "#3D393534"
             }
         },
         MuiTableContainer: {

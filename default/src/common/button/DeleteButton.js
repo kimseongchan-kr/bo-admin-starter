@@ -2,16 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import theme from "styles/theme/button";
-import { ThemeProvider, IconButton } from "@material-ui/core";
+import { ThemeProvider, Button } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 
 function DeleteButton({ onConfirm }) {
     return (
         <ThemeProvider theme={theme}>
-            <IconButton onClick={onConfirm}>
-                <Close style={{ color: "#DE5D5D" }} />
+            <Button variant="outlined" startIcon={<Close style={{ color: "#DE5D5D" }} />} onClick={onConfirm}>
                 삭제
-            </IconButton>
+            </Button>
         </ThemeProvider>
     );
 }

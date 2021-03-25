@@ -3,8 +3,7 @@ import { useDispatch } from "react-redux";
 import { setClose, setMessage } from "slices/modalSlice";
 import MenuRedux from "common/menu/MenuRedux";
 
-import { makeStyles } from "@material-ui/core/styles";
-import { TextField, Grid, Typography } from "@material-ui/core";
+import { makeStyles, TextField, Grid, Typography, Button } from "@material-ui/core";
 
 import MessageModal from "common/modal/MessageModal";
 
@@ -59,13 +58,18 @@ const useStyles = makeStyles((theme) => ({
         height: "100%",
         backgroundColor: theme.palette.primary.main,
         cursor: "pointer",
+        boxShadow: "unset",
         fontSize: 13,
         letterSpacing: "-0.26px",
         fontWeight: 500,
         color: "#ffffff",
         border: "none",
         borderRadius: 4,
-        outline: "none"
+        outline: "none",
+        "&:hover": {
+            boxShadow: "unset",
+            backgroundColor: theme.palette.primary.main
+        }
     }
 }));
 
@@ -140,9 +144,9 @@ export default function ChangePassword() {
                         />
                     </Grid>
                     <Grid item className={classes.submitContainer}>
-                        <button className={classes.submitButton} onClick={handleSubmit}>
+                        <Button variant="contained" className={classes.submitButton} onClick={handleSubmit}>
                             변경
-                        </button>
+                        </Button>
                     </Grid>
                 </Grid>
                 <MessageModal onClose={onClose} />

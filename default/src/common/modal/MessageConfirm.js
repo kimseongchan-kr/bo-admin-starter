@@ -6,7 +6,7 @@ import { modalSelector } from "slices/modalSlice";
 import theme from "styles/theme/button";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { ThemeProvider, IconButton, Typography, Grid } from "@material-ui/core";
+import { ThemeProvider, Typography, Grid, Button } from "@material-ui/core";
 import { CheckOutlined, Close } from "@material-ui/icons";
 
 import Modal from "react-modal";
@@ -38,14 +38,12 @@ function ConfirmModal({ onClose, handleDelete }) {
             <Grid container justify="center" alignItems="center">
                 <Grid item>
                     <ThemeProvider theme={theme}>
-                        <IconButton onClick={onClose}>
-                            <Close style={{ color: "#DE5D5D" }} />
+                        <Button variant="outlined" startIcon={<Close style={{ color: "#DE5D5D" }} />} onClick={onClose}>
                             취소
-                        </IconButton>
-                        <IconButton onClick={handleDelete}>
-                            <CheckOutlined style={{ color: "#039BE5" }} />
+                        </Button>
+                        <Button variant="outlined" startIcon={<CheckOutlined style={{ color: "#039BE5" }} />} onClick={handleDelete}>
                             확인
-                        </IconButton>
+                        </Button>
                     </ThemeProvider>
                 </Grid>
             </Grid>

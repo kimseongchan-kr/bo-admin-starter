@@ -4,7 +4,7 @@ import { typography } from "styles/theme/typography";
 const buttonTheme = createMuiTheme({
     typography,
     overrides: {
-        MuiIconButton: {
+        MuiButtonBase: {
             root: {
                 width: 100,
                 height: 40,
@@ -17,11 +17,7 @@ const buttonTheme = createMuiTheme({
                 fontSize: 13,
                 lineHeight: "17px",
                 fontWeight: 400,
-                letterSpacing: "0.52px",
-
-                "&:hover": {
-                    backgroundColor: "#ffffff"
-                }
+                letterSpacing: "0.52px"
             }
         },
         MuiSvgIcon: {
@@ -31,6 +27,26 @@ const buttonTheme = createMuiTheme({
             }
         },
         MuiButton: {
+            root: {
+                "&:hover": {
+                    backgroundColor: "#ffffff"
+                }
+            },
+            outlined: {
+                width: 100,
+                height: 40,
+                marginLeft: 5,
+                padding: 0,
+                color: "#333333",
+                backgroundColor: "#ffffff",
+                boxShadow: "unset",
+                border: "1px solid #00000033",
+                borderRadius: 4,
+                fontSize: 13,
+                lineHeight: "17px",
+                fontWeight: 400,
+                letterSpacing: "0.52px"
+            },
             contained: {
                 width: 48,
                 minWidth: 48,
@@ -44,13 +60,11 @@ const buttonTheme = createMuiTheme({
                 color: "#333333",
                 fontSize: 12,
                 letterSpacing: " -0.24px",
-
                 "&:hover": {
                     backgroundColor: "#FBFBFB",
                     border: "1px solid #3D393534",
                     boxShadow: "unset"
                 },
-
                 "&:last-child": {
                     marginRight: 0
                 }

@@ -84,7 +84,7 @@ export default function Table() {
                 <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
                     <Grid item>
                         <EditButton modalId={1} handleOneData={handleDemo} />
-                        <DeleteButton modalId={1} handleDelete={handleDemo} />
+                        <DeleteButton modalId={1} onConfirm={handleDemo} />
                     </Grid>
                 </Grid>
                 <Typography className={classes.title} variant="h6" component="h3" color="inherit">

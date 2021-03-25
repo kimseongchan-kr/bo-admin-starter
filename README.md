@@ -99,7 +99,7 @@
 
 ```javascript
 //  Data.js
-
+//  자세한 사용방법은 features/summary/components/Search.js를 확인해주세요.
 //  **메뉴별 필요한 검색 Components**
 //      필요한 경우 -> true
 //      사용하지 않는 경우 -> false
@@ -148,40 +148,6 @@ const summarySearchOptions = {
 };
 
 const summarySearchCaption = { gender: "성별" };
-
-//  Search.js
-//  SAMPLE CODE
-//  features/summary/components/Search.js 파일을 확인해주세요.
-
-import DateSearchPicker from "common/search/DatePicker";       // Date Picker
-import SearchSelect from "common/search/SearchSelect";         // 검색 Select
-import SearchField from "common/search/SearchField";            // 조회조건 + 검색어
-
-import { summarySearchComponents as componentExists, summarySearchType as searchCondition, summarySearchOptions as options, summarySearchCaption as caption } from "features/summary/Data";
-
-export default function SummarySearch() {
-    return (
-        //  날짜 검색 있을 경우
-        {componentExists[menu].date && (
-            <DateSearchPicker  />
-        )}
-
-        //  검색 조건 select (성별...)
-        {componentExists[menu].selects && (
-            <SearchSelect />
-        )}
-
-        //  조회조건 + 검색어
-        {componentExists[menu].searchKeyword && (
-            <SearchField  />
-        )}
-
-        //  검색 조회 버튼
-        <Button variant="contained" onClick={handleSubmit}>
-            조회
-        </Button>
-    );
-}
 ```
 
 ### Table (테이블)
@@ -320,14 +286,14 @@ const summaryHeadCell = {
 -   ViewSelect
 
 ```javascript
-// 테이블 하단에 버튼을 추가하는 방법
-// 1. common/table/Data.js 생성
-// 2. 메뉴마다 필요한 버튼을 작성
+//  테이블 하단에 버튼을 추가하는 방법
+//      1. common/table/Data.js 생성
+//      2. 메뉴마다 필요한 버튼을 작성
 
-// Dashboard, Summary, Example = 메뉴명
-// 메뉴별 필요한 버튼 이름과 사용여부를 작성
-// true -> 사용
-// false -> 미사용
+//  Dashboard, Summary, Example = 메뉴명
+//  메뉴별 필요한 버튼 이름과 사용여부를 작성
+//      true -> 사용
+//      false -> 미사용
 
 const PerMenuButton = {
     Dashboard: { add: true, delete: true, excel: false },
@@ -335,8 +301,8 @@ const PerMenuButton = {
     Example: { add: true, delete: false, excel: false }
 };
 
-// common/table/Pagination.js 파일에서
-// PerMenuButton을 import
+//  common/table/Pagination.js 파일에서
+//  PerMenuButton을 import
 import { PerMenuButton as buttons } from "common/table/Data";
 
 function TablePaginationActions() {
@@ -494,12 +460,10 @@ function TablePaginationActions() {
     │   └── summarySlice.js                             # Summary 폴더의 slice 파일
     ├── styles                                      # Styles
     │   ├── customize                                   # makeStyles / react-select 커스터마이징
-    │   │   ├── ButtonStyles.js                             # 엑셀 버튼
-    │   │   ├── DefaultStyles.js                            # html, body... 기본 style
     │   │   ├── FilterStyles.js                             # 테이블 필터
     │   │   ├── FormSelectStyles.js                         # react-select 모달창용 style
     │   │   ├── LayoutStyles.js                             # 레이아웃 style
-    │   │   ├── ModalFormStyles.js                          # 추가/수정 모달 style
+    │   │   ├── ModalFormStyles.js                          # 추가/수정 모달에서 사용된 form style
     │   │   ├── SearchSelectStyles.js                       # react-select 검색용 style
     │   │   ├── SearchStyles.js                             # 검색 style
     │   │   └── TableSelectStyles.js                        # react-select 테이블용 style

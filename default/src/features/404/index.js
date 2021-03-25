@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setMenu } from "slices/menuSlice";
 
@@ -54,21 +53,23 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function Page404() {
+export default function Page404(props) {
     const classes = useStyles();
     const dispatch = useDispatch();
+
+    const handlePageChange = (menu, path) => {
+        dispatch(setMenu(menu));
+        props.history.replace(path);
+    };
 
     return (
         <div className={classes.page404}>
             <div className={classes.content}>
                 <div className={classes.img}>404</div>
                 <h3 className={classes.text}>페이지를 찾을 수 없습니다.</h3>
-
-                <Link to="/" onClick={() => dispatch(setMenu({ menu: "summary", menuTitle: "dashboard", num: 1 }))}>
-                    <Button type="button" className={classes.button}>
-                        메인 페이지로 돌아가기
-                    </Button>
-                </Link>
+                <Button type="button" className={classes.button} onClick={() => handlePageChange({ menu: "summary", menuTitle: "dashboard", num: 1 }, "/")}>
+                    메인 페이지로 돌아가기
+                </Button>
             </div>
         </div>
     );

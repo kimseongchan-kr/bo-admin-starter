@@ -3,8 +3,7 @@ import { useDispatch } from "react-redux";
 import { setMenu } from "slices/menuSlice";
 import { setClose, setMessage } from "slices/modalSlice";
 
-import { makeStyles } from "@material-ui/core/styles";
-import { Grid, FormControlLabel, Checkbox } from "@material-ui/core";
+import { makeStyles, Grid, FormControlLabel, Checkbox } from "@material-ui/core";
 
 import Modal from "react-modal";
 import MessageModal from "common/modal/MessageModal";
