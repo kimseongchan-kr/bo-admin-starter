@@ -1,6 +1,6 @@
 # bo-admin-starter
 
-:smiley: 블록오디세이를 위한 React용 관리자 페이지 Boilerplate입니다. :smiley:   
+:smiley: 블록오디세이를 위한 React 관리자 페이지 Boilerplate입니다. :smiley:   
 :bangbang: [프로젝트 설치 방법](https://github.com/BlockOdyssey/bo-admin-starter#project-installation "project-installation") & [사용 설명서](https://github.com/BlockOdyssey/bo-admin-starter#사용방법 "usage") :bangbang:
 
 ## Project Main Features
