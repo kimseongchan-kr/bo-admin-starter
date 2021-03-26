@@ -7,8 +7,6 @@ export const initialState = {
     loading: false,
     hasErrors: false,
 
-    searchBox: [],
-
     useYn: "전체",
     gender: "전체",
 
@@ -30,7 +28,6 @@ export const initialState = {
     cake: true,
     cookie: true,
     macaroon: true,
-
     example1: false,
     example2: false,
     example3: true,

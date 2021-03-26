@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { modalSelector } from "slices/modalSlice";
 
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import useStyles from "styles/customize/ModalFormStyles";
 
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 
 import Editor from "common/editor";
@@ -19,10 +18,12 @@ import ModalCloseButton from "common/button/CloseButton";
 import ProgressButton from "common/button/ProgressButton";
 
 import { disableScroll, enableScroll } from "utils/CommonFunction";
+import Input from "common/form/Input";
 
 Modal.defaultStyles.overlay.zIndex = 9999;
 Modal.defaultStyles.overlay.backgroundColor = "rgba(0, 0, 0, .45)";
 
+// 참고: https://react-hook-form.com/get-started#SchemaValidation
 const schema = yup.object().shape({
     title: yup.string().required()
 });
@@ -72,26 +73,7 @@ export default function EditModal({ contents, setContents, onClose, handleDataSu
                                 <Typography variant="body2">제목</Typography>
                             </td>
                             <td>
-                                <Controller
-                                    name="title"
-                                    defaultValue={form.title}
-                                    control={control}
-                                    render={({ onChange, value }) => (
-                                        <TextField
-                                            className={classes.textInput}
-                                            id="outlined-title"
-                                            label=""
-                                            type="text"
-                                            InputLabelProps={{
-                                                shrink: true
-                                            }}
-                                            variant="outlined"
-                                            name="title"
-                                            value={value}
-                                            onChange={onChange}
-                                        />
-                                    )}
-                                />
+                                <Input inputType="text" name="title" defaultValue={form.title} control={control} classes={classes} />
                                 <Typography component="span" variant="body2" className={classes.errorMessage}>
                                     {errors.title && "제목을 입력해주세요."}
                                 </Typography>

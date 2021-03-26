@@ -365,7 +365,6 @@ const perMenuButton = {
     │   │   ├── EditButton.js                           # 수정 모달 -> 수정 버튼
     |   │   ├── MsgConfirmButton.js                     # 확인 버튼
     │   │   └── ProgressButton.js                       # 로딩 버튼
-
     │   ├── editor                                  # 에디터
     │   │   └── index.js                                
     │   ├── excel                                   # 엑셀
@@ -416,7 +415,7 @@ const perMenuButton = {
     │   │   │   └── Table.js                                # Table (Checkbox 없는)
     │   │   └── modal                                   # Modal
     │   │       ├── DetailModal.js                          # 상세 모달
-    │   │       └── EditModal.js                            # 추가/수정 모달
+    │   │       └── ExampleEditModal.js                     # Example 메뉴의 추가/수정 모달
     │   ├── login                                   # 로그인
     │   │   └── index.js
     │   └── summary                                 # Summary
@@ -431,7 +430,6 @@ const perMenuButton = {
     │       └── modal                                   # Modal
     │           ├── DashboardEditModal.js                   # Dashboard의 추가/수정 모달
     │           ├── DetailModal.js                          # 상세 모달
-    │           └── SummaryEditModal.js                     # Summary의 추가/수정 모달
     ├── hoc                                         # Base Container
     │   └── index.js            
     ├── index.js                                    # ThemeProvider, CssBaseline, Provider 설정

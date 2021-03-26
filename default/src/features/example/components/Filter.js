@@ -18,7 +18,7 @@ import FilterList from "@material-ui/icons/FilterList";
 
 import { exampleFilter as filter } from "features/example/Data";
 
-export default function Filters({ filterType, handleFilter, handleSearch }) {
+export default function Filter({ filterType, handleFilter, handleSearch }) {
     const classes = filterStyles();
     const filterList = useSelector(searchSelector);
 

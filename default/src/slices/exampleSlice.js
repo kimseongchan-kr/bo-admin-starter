@@ -38,7 +38,7 @@ export const exampleSlice = createSlice({
         },
         [getList.rejected]: (state, { payload }) => {
             state.hasErrors = true;
-            state.errorMsg = payload.message ? payload.message : "네트워크 에러";
+            state.errorMsg = payload && payload.message ? payload.message : "네트워크 에러";
         }
     }
 });

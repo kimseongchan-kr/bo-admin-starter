@@ -23,6 +23,7 @@ import { disableScroll, enableScroll } from "utils/CommonFunction";
 Modal.defaultStyles.overlay.zIndex = 9999;
 Modal.defaultStyles.overlay.backgroundColor = "rgba(0, 0, 0, .45)";
 
+// 참고: https://react-hook-form.com/get-started#SchemaValidation
 const schema = yup.object().shape({
     dessert: yup.object().required(),
     calories: yup.number().min(0).integer().required(),

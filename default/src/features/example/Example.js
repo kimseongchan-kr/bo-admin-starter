@@ -12,7 +12,7 @@ import form from "styles/theme/form";
 import ExampleSearch from "common/search/DateTermSearch";
 import ExampleTable from "features/example/components/Table";
 
-import EditModal from "features/example/modal/EditModal";
+import EditModal from "features/example/modal/ExampleEditModal";
 import DetailModal from "features/example/modal/DetailModal";
 
 import MessageModal from "common/modal/MessageModal";

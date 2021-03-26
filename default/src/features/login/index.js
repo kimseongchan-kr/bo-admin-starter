@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setMenu } from "slices/menuSlice";
 import { setClose, setMessage } from "slices/modalSlice";
+import { setIsLogin } from "slices/loginSlice";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -10,7 +11,6 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import Modal from "react-modal";
 import MessageModal from "common/modal/MessageModal";
-import { setIsLogin } from "slices/loginSlice";
 
 Modal.setAppElement("body");
 
