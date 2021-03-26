@@ -12,6 +12,7 @@ import ModalCloseButton from "common/button/CloseButton";
 import AddButton from "common/button/AddButton";
 import DeleteButton from "common/button/DeleteButton";
 import ExcelExport from "common/excel";
+import ProgressButton from "common/button/ProgressButton";
 
 import TableEditButton from "common/table/EditButton";
 import TableDeleteButton from "common/table/DeleteButton";
@@ -37,7 +38,8 @@ const useStyles = makeStyles(() => ({
         marginBottom: 20
     },
     spacer: {
-        marginRight: 20
+        marginRight: 20,
+        marginBottom: 20
     }
 }));
 
@@ -47,7 +49,6 @@ export default function Form() {
     const handleDemo = () => {
         alert("Button Demo");
     };
-
     return (
         <>
             <MenuRedux menu="components" title="Button" num={9} />
@@ -59,10 +60,14 @@ export default function Form() {
                     <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
                         <Grid item>
                             <ModalEditButton text="추가" />
+                            <div className={classes.spacer} />
+                            <ProgressButton text="추가" loading={true} />
                         </Grid>
                         <div className={classes.spacer} />
                         <Grid item>
                             <ModalEditButton text="수정" />
+                            <div className={classes.spacer} />
+                            <ProgressButton text="수정" loading={true} />
                         </Grid>
                         <div className={classes.spacer} />
                         <Grid item>

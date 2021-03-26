@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { postData } from "api/Api";
-
 export const login = createAsyncThunk("login/login", async (body, { rejectWithValue }) => {
     try {
         const response = await postData(body.url, null, { body });

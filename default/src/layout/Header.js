@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { menuSelector, setMenu } from "slices/menuSlice";
 import { setLogOut } from "slices/loginSlice";
+import { reset } from "slices/searchSlice";
 
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -17,7 +18,6 @@ import Popover from "material-ui-popup-state/HoverPopover";
 import PopupState, { bindHover, bindPopover } from "material-ui-popup-state";
 
 import user from "assets/images/logout.png";
-import { reset } from "slices/searchSlice";
 
 const drawerWidth = 240;
 const useStyles = makeStyles(() => ({

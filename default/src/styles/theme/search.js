@@ -1,3 +1,5 @@
+// 참고: https://material-ui.com/customization/theming/#createmuitheme-options-args-theme
+// 참고: https://material-ui.com/customization/globals/#css
 import { createMuiTheme } from "@material-ui/core";
 import { typography } from "styles/theme/typography";
 

@@ -52,7 +52,7 @@
         - 사용 여부 (UseSelect), 메인 노출 (ViewSelect), Cell Edit (TextField), 수정 버튼 (EditButton), 삭제 버튼 (DeleteButton)
         - Detail Modal, Edit Modal (+ react-quill 에디터)
         - Pagination, 추가 버튼
-        - Message Modal, Confirm Modal
+        - Message Modal, Confirm Modal (+ progress button)
 - Components
     - Search
     - Table
@@ -363,7 +363,9 @@ const perMenuButton = {
     │   │   ├── CloseButton.js                          # 모달 닫기 버튼
     │   │   ├── DeleteButton.js                         # 삭제 버튼
     │   │   ├── EditButton.js                           # 수정 모달 -> 수정 버튼
-    │   │   └── MsgConfirmButton.js                     # 확인 버튼
+    |   │   ├── MsgConfirmButton.js                     # 확인 버튼
+    │   │   └── ProgressButton.js                       # 로딩 버튼
+
     │   ├── editor                                  # 에디터
     │   │   └── index.js                                
     │   ├── excel                                   # 엑셀

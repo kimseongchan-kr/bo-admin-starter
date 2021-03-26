@@ -1,3 +1,4 @@
+// 참고: https://react-select.com/styles#style-object
 const customStyles = {
     option: (provided, state) => ({
         ...provided,

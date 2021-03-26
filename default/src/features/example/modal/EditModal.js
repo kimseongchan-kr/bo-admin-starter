@@ -16,14 +16,15 @@ import Editor from "common/editor";
 
 import Modal from "react-modal";
 import ModalCloseButton from "common/button/CloseButton";
-import ModalEditButton from "common/button/EditButton";
+import ProgressButton from "common/button/ProgressButton";
+
 import { disableScroll, enableScroll } from "utils/CommonFunction";
 
 Modal.defaultStyles.overlay.zIndex = 9999;
 Modal.defaultStyles.overlay.backgroundColor = "rgba(0, 0, 0, .45)";
 
 const schema = yup.object().shape({
-    title: yup.object().required()
+    title: yup.string().required()
 });
 
 export default function EditModal({ contents, setContents, onClose, handleDataSubmit }) {
@@ -37,9 +38,12 @@ export default function EditModal({ contents, setContents, onClose, handleDataSu
         title: ""
     });
 
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         clearErrors();
         setContents("");
+        setLoading(false);
 
         if (modalStatus === "modify") {
             reset({ title: "에디터 테스트" });
@@ -51,6 +55,7 @@ export default function EditModal({ contents, setContents, onClose, handleDataSu
     }, [modalStatus, clearErrors, reset, setContents, modalData]);
 
     const onSubmit = (data) => {
+        setLoading(true);
         handleDataSubmit(data, modalId);
     };
 
@@ -87,7 +92,9 @@ export default function EditModal({ contents, setContents, onClose, handleDataSu
                                         />
                                     )}
                                 />
-                                <span style={{ color: "red" }}>{errors.calories && "제목을 입력해주세요."}</span>
+                                <Typography component="span" variant="body2" className={classes.errorMessage}>
+                                    {errors.title && "제목을 입력해주세요."}
+                                </Typography>
                             </td>
                         </tr>
                     </tbody>
@@ -111,7 +118,7 @@ export default function EditModal({ contents, setContents, onClose, handleDataSu
                         <ModalCloseButton onClose={onClose} text="닫기" />
                     </Grid>
                     <Grid item>
-                        <ModalEditButton text={modalStatus === "modify" ? "수정" : "추가"} />
+                        <ProgressButton text={modalStatus === "modify" ? "수정" : "추가"} loading={loading} />
                     </Grid>
                 </Grid>
             </form>
