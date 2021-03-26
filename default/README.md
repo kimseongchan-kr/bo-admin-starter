@@ -239,7 +239,7 @@ const summaryHeadCell = {
 ### form 폴더
 
 > react-hook-form 사용
-> 자세한 사용방법 : features/summary/modal/DashboardEditModal.js
+> 자세한 사용방법 : features/summary/modal/DashboardEditModal.js   
 > 참고: https://github.com/react-hook-form/react-hook-form/blob/master/app/src/controller.tsx
 
 -   Checkbox
@@ -325,7 +325,7 @@ const perMenuButton = {
 
 ### 테이블을 추가할 때
 
-> features/summary/components/Table.js / SelectTable.js와 features/summary/Dashboard.js 파일 확인하기
+> features/summary/components/Table.js 또는 SelectTable.js와 features/summary/Dashboard.js 파일 확인하기
 
 | 순서 |         파일 / 폴더          |                                                      기능                                                                                  |
 | :--: | :--------------------------: | :------------------------------------------------------------------------------------------------------------------------------------: |
