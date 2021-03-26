@@ -24,7 +24,6 @@ const useStyles = makeStyles(() => ({
         letterSpacing: "-0.26px"
     }
 }));
-
 function MessageModal({ onClose }) {
     const classes = useStyles();
     const { msgOpen, message } = useSelector(modalSelector);

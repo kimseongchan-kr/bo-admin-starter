@@ -8,7 +8,6 @@ const options = [
     { value: "Y", label: "활성화" },
     { value: "N", label: "비활성화" }
 ];
-
 function ViewSelect({ viewYn, handleSelect }) {
     const label = viewYn === "Y" ? "활성화" : "비활성화";
 

@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import Workbook from "react-excel-workbook";
 import moment from "moment";
 
+import theme from "styles/theme/button";
 import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-
-import theme from "styles/theme/button";
 
 const useStyles = makeStyles(() => ({
     excel: {
@@ -47,7 +46,7 @@ export default function ExcelExport() {
 
     const download = async () => {
         console.log("downloading excel file...");
-        // fetch data
+        // API 호출
         setData(exampleData);
 
         let e = document.createEvent("MouseEvents");

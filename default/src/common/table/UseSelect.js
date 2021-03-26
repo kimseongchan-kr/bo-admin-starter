@@ -8,7 +8,6 @@ const options = [
     { value: "Y", label: "사용" },
     { value: "N", label: "미사용" }
 ];
-
 function UseSelect({ useYn, handleSelect }) {
     const label = useYn === "Y" ? "사용" : "미사용";
 

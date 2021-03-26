@@ -33,7 +33,6 @@ const useStyles = makeStyles(() => ({
         marginRight: 16
     }
 }));
-
 function TablePaginationActions(props) {
     const classes = useStyles();
     const { count, page, rowsPerPage, onChangePage, menu, onOpen, onConfirm } = props;

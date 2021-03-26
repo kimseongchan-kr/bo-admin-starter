@@ -27,8 +27,6 @@ const useStyles = makeStyles(() => ({
         letterSpacing: "-0.26px"
     }
 }));
-
-// 삭제 확인 모달
 function ConfirmModal({ onClose, handleDelete }) {
     const classes = useStyles();
     const { msgConfirmOpen, message } = useSelector(modalSelector);

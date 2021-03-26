@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { Controller } from "react-hook-form";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-
 function CheckBox({ options, control }) {
     return (
         <>

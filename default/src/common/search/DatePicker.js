@@ -11,7 +11,6 @@ import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import InsertInvitationIcon from "@material-ui/icons/InsertInvitation";
-
 function DateSearchPicker({ classes, dateFormat, term, views, startDate, endDate, handleDate }) {
     return (
         <>

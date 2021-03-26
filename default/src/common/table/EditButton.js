@@ -5,7 +5,6 @@ import theme from "styles/theme/button";
 import { ThemeProvider } from "@material-ui/core/styles";
 
 import Button from "@material-ui/core/Button";
-
 function EditButton({ modalId, handleOneData }) {
     return (
         <ThemeProvider theme={theme}>

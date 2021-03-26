@@ -1,9 +1,7 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
-
 // 참고: https://github.com/rt2zz/redux-persist#storage-engines
-// localStorage
-import storage from "redux-persist/lib/storage";
+import storage from "redux-persist/lib/storage"; // localStorage
 // sessionStorage
 // import storageSession from 'redux-persist/lib/storage/session'
 import rootReducer from "app/rootReducer";
