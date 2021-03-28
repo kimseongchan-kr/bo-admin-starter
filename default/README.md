@@ -229,6 +229,7 @@ const summaryHeadCell = {
 -   DeleteButton.js
 -   EditButton.js
 -   MsgConfirmButton.js
+-   ProgressButton.js
 
 ### editor 폴더
 
@@ -238,7 +239,7 @@ const summaryHeadCell = {
 
 ### form 폴더
 
-> react-hook-form 사용
+> react-hook-form 사용   
 > 자세한 사용방법 : features/summary/modal/DashboardEditModal.js   
 > 참고: https://github.com/react-hook-form/react-hook-form/blob/master/app/src/controller.tsx
 
@@ -263,14 +264,14 @@ const summaryHeadCell = {
 -   SearchField
 -   SearchSelect
 
-> 기간 검색 파일 (통계 페이지에서 사용)   
+> 기간 검색 (통계 페이지에서 사용)   
 > 자세한 사용방법 : common/search/DateTermSearch.js
 
 -   DateTermSearch
 
 ### table 폴더
 
-> 테이블에서 자주 사용되는 사용여부 select, 노출여부 select...   
+> 테이블에서 자주 사용되는 select/input   
 > 테이블 pagination   
 > 수정, 삭제 버튼   
 
@@ -319,19 +320,19 @@ const perMenuButton = {
 
 | 순서 | 파일 / 폴더 |                                                       기능                                                                                  |
 | :--: | :---------: | :-------------------------------------------------------------------------------------------------------------------------------------: |
-|  1   |   Data.js   | Data.js 파일 생성하고 [프로젝트 사용방법](https://github.com/BlockOdyssey/bo-admin-starter#사용방법 "프로젝트 사용방법")에서 Search 부분 보면서 파일 작성하기 |
+|  1   |   Data.js   | Data.js 파일 생성하고 [프로젝트 사용방법](https://github.com/BlockOdyssey/bo-admin-starter#search-%EA%B2%80%EC%83%89 "프로젝트 사용방법")에서 Search 부분 보면서 파일 작성하기 |
 |  2   | components  | features > 내가 생성한 폴더 > components 폴더 생성 |
 |  3   |  Search.js  | Search.js 파일 생성 |
 
 ### 테이블을 추가할 때
 
-> features/summary/components/Table.js 또는 SelectTable.js와 features/summary/Dashboard.js 파일 확인하기
+> features/summary/components/Table.js 또는 SelectionTable.js와 features/summary/Dashboard.js 파일 확인하기
 
 | 순서 |         파일 / 폴더          |                                                      기능                                                                                  |
 | :--: | :--------------------------: | :------------------------------------------------------------------------------------------------------------------------------------: |
-|  1   |           Data.js            | Data.js 파일 생성하고 [프로젝트 사용방법](https://github.com/BlockOdyssey/bo-admin-starter#사용방법 "프로젝트 사용방법")에서 Table 부분 보면서 파일 작성하기 |
+|  1   |           Data.js            | Data.js 파일 생성하고 [프로젝트 사용방법](https://github.com/BlockOdyssey/bo-admin-starter#table-%ED%85%8C%EC%9D%B4%EB%B8%94 "프로젝트 사용방법")에서 Table 부분 보면서 파일 작성하기 |
 |  2   |          components          | features > 내가 생성한 폴더 > components 폴더 생성 |
-|  3   | SelectionTable.js / Table.js | Checkbox가 필요하다면 SelectTable.js, 기본 테이블이 필요하다면 Table.js 생성 |
+|  3   | SelectionTable.js / Table.js | Checkbox가 필요하다면 SelectionTable.js, 기본 테이블이 필요하다면 Table.js 생성 |
 |  4   |          Filter.js           | 테이블 필터가 필요하다면 Filter.js 파일 생성 |
 
 ***
@@ -458,7 +459,7 @@ const perMenuButton = {
     │       ├── button.js                                   # 버튼
     │       ├── form.js                                     # form
     │       ├── search.js                                   # 검색
-    │       ├── textfield.js                                # 테이블에서 사용된 TextField (common/table/SortOrder.js, common/table/TextField.js)
+    │       ├── textfield.js                                # 테이블에서 사용된 TextField (SortOrder.js, TextField.js)
     │       ├── theme.js                                    # global theme, CssBaseline 설정
     │       └── typography.js                               # font 관련 설정
     └── utils                                       # Utils
