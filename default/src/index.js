@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import App from "app/App";
 import store from "app/store";
 
-import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "styles/theme/theme";
 
 import { Provider } from "react-redux";
