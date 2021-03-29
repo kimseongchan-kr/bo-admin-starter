@@ -1,15 +1,10 @@
 // 참고: https://material-ui.com/customization/theming/#createmuitheme-options-args-theme
 // 참고: https://material-ui.com/customization/globals/#css
-import { createMuiTheme, colors } from "@material-ui/core";
+import { createMuiTheme } from "@material-ui/core";
 import { typography } from "styles/theme/typography";
 
 const theme = createMuiTheme({
     palette: {
-        background: {
-            dark: "#F4F6F8",
-            default: colors.common.white,
-            paper: colors.common.white
-        },
         primary: {
             main: "#039BE5"
         },

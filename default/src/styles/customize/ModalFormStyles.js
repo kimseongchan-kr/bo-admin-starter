@@ -12,7 +12,6 @@ const useStyles = makeStyles(() => ({
         borderCollapse: "collapse",
         borderTop: " 1px solid #3d35951a",
         borderBottom: " 1px solid #3d35951a",
-
         "& td": {
             paddingLeft: 20
         }

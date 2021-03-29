@@ -23,7 +23,6 @@ const useStyles = makeStyles(() => ({
         marginBottom: 30,
         textAlign: "center",
         fontSize: 13,
-        fontWeight: 400,
         letterSpacing: "-0.26px"
     }
 }));

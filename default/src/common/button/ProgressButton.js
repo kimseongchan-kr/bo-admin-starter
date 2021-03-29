@@ -16,12 +16,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "rgba(0,0,0,0.12)"
     },
     buttonProgress: {
-        color: theme.palette.primary,
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        marginTop: -12,
-        marginLeft: -12
+        color: theme.palette.primary.main
     }
 }));
 
@@ -31,10 +26,16 @@ function ProgressButton({ text, loading }) {
     return (
         <div className={classes.wrapper}>
             <ThemeProvider theme={theme}>
-                <Button className={loading ? classes.button : ""} type="submit" variant="outlined" startIcon={<CheckOutlined style={{ color: "#039BE5" }} />} disabled={loading && true}>
+                <Button
+                    className={loading ? classes.button : ""}
+                    type="submit"
+                    variant="outlined"
+                    startIcon={loading ? <CircularProgress size={12} className={classes.buttonProgress} /> : <CheckOutlined style={{ color: "#039BE5" }} />}
+                    disabled={loading && true}
+                >
                     {text}
                 </Button>
-                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                {/* {loading && <CircularProgress size={24} className={classes.buttonProgress} />} */}
             </ThemeProvider>
         </div>
     );
