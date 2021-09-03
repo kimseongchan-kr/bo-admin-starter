@@ -1,26 +1,17 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
-// 참고: https://github.com/rt2zz/redux-persist#storage-engines
-import storage from "redux-persist/lib/storage"; // localStorage
-// sessionStorage
-// import storageSession from 'redux-persist/lib/storage/session'
+import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "app/rootReducer";
 
-// 참고: https://github.com/rt2zz/redux-persist#blacklist--whitelist
-const persistConfig = {
-    key: "root",
-    storage,
-    whitelist: ["menu", "login", "search"]
+const reducer = (state, action) => {
+    // 로그아웃할 때 모든 state 초기화하기
+    if (action.type === "login/setLogOut") {
+        state = undefined;
+    }
+
+    return rootReducer(state, action);
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 export default configureStore({
-    reducer: persistedReducer,
-    middleware: getDefaultMiddleware({
-        serializableCheck: {
-            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-        }
-    }),
+    reducer: reducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
     devTools: process.env.NODE_ENV !== "production"
 });

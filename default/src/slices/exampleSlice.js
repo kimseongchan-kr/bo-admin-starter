@@ -1,49 +1,65 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getData } from "api/Api";
 
-export const getList = createAsyncThunk("example/getExampleList", async (url, { rejectWithValue }) => {
+export const getExampleList = createAsyncThunk("example/getExampleList", async (body, { rejectWithValue }) => {
     try {
-        const response = await getData(url);
-        console.log("api::", response);
+        const response = await getData(body.url, body.params);
         return response.data;
     } catch (error) {
-        console.log("error::", error);
-        return rejectWithValue(error.response.data);
+        return rejectWithValue({ statusCode: error.response.status, ...error.response.data });
     }
 });
 
+const initialState = {
+    status: "idle",
+    statusCode: "",
+    errorMsg: "",
+    dataList: [],
+    total: 0,
+    data: null,
+    images: []
+};
+
+// Slice 작성 예제
 export const exampleSlice = createSlice({
     name: "example",
-    initialState: {
-        examle: "slice 기본 세팅",
-        isLoading: false,
-        hasErrors: false,
-        errorMsg: "",
-        dataList: []
-    },
+    initialState,
     reducers: {
-        setExample: (state, { payload }) => {
-            state.example = payload;
+        clearError: (state) => {
+            state.status = "finished";
+            state.statusCode = "";
+            state.errorMsg = "";
+        },
+        resetStates: () => initialState,
+        setDataList: (state, { payload }) => {
+            state.dataList = payload.dataList;
+        },
+        setData: (state, { payload }) => {
+            state.data = payload.data;
+        },
+        setImages: (state, { payload }) => {
+            state.images = payload.images;
         }
     },
     extraReducers: {
-        [getList.pending]: (state) => {
-            state.isLoading = true;
-            state.hasErrors = false;
+        [getExampleList.pending]: (state) => {
+            state.status = "loading";
+            state.statusCode = "";
             state.errorMsg = "";
         },
-        [getList.fulfilled]: (state, { payload }) => {
-            state.isLoading = true;
+        [getExampleList.fulfilled]: (state, { payload }) => {
+            state.status = "succeeded";
             state.dataList = payload.data;
         },
-        [getList.rejected]: (state, { payload }) => {
-            state.hasErrors = true;
+        [getExampleList.rejected]: (state, { payload }) => {
+            state.status = "failed";
+            state.statusCode = payload && payload.statusCode ? payload.statusCode : "";
             state.errorMsg = payload && payload.message ? payload.message : "네트워크 에러";
         }
     }
 });
 
-export const { setMenu } = exampleSlice.actions;
+export const { setExample } = exampleSlice.actions;
 
 export const exampleSelector = (state) => state.example;
 

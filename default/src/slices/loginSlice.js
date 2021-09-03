@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { postData } from "api/Api";
+
 export const login = createAsyncThunk("login/login", async (body, { rejectWithValue }) => {
     try {
         const response = await postData(body.url, null, { body });
@@ -16,7 +17,7 @@ export const loginSlice = createSlice({
     initialState: {
         isLogin: true,
         hasErrors: false,
-        userName: ""
+        data: ""
     },
     reducers: {
         // Sample
@@ -34,6 +35,7 @@ export const loginSlice = createSlice({
     extraReducers: {
         [login.fulfilled]: (state, { payload }) => {
             state.isLogin = true;
+            state.data = payload;
         },
         [login.rejected]: (state) => {
             state.hasErrors = true;

@@ -5,6 +5,7 @@ import menuReducer from "slices/menuSlice";
 import modalReducer from "slices/modalSlice";
 import searchReducer from "slices/searchSlice";
 
+import commonReducer from "slices/commonSlice";
 import summaryReducer from "slices/summarySlice";
 import exampleReducer from "slices/exampleSlice";
 
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     modal: modalReducer,
     search: searchReducer,
 
+    common: commonReducer,
     summary: summaryReducer,
     example: exampleReducer
 });

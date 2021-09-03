@@ -1,48 +1,44 @@
 import axios from "axios";
 import { ApiURL as api } from "api/Url";
 
-const token = localStorage.getItem("token");
+axios.defaults.baseURL = `${api}`;
+axios.defaults.headers.common["Accept"] = "application/json";
+axios.defaults.headers.common["Content-Type"] = "application/json; charset=UTF-8;";
 
-export const getData = async (url) => {
-    let headers = {
-        Accept: "application/json",
-        "Content-Type": "application/json; charset=UTF-8"
-    };
+export const getData = async (url, params) => {
+    const instance = axios.create({
+        baseURL: `${api}`,
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json; charset=UTF-8;",
+            token: JSON.parse(localStorage.getItem("token"))
+        },
+        params: params ? params : {}
+    });
 
-    return await axios.get(`${api}${url}`, { headers, token });
+    return await instance.get(`${url}`);
 };
 
 export const postData = async (url, file_yn, body) => {
-    let headers = {
-        Accept: "application/json"
-    };
+    axios.defaults.headers.common["token"] = JSON.parse(localStorage.getItem("token"));
+    if (file_yn) {
+        axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
+    }
 
-    if (!file_yn) headers["Content-Type"] = "application/json; charset=UTF-8";
-    else headers["Content-Type"] = "multipart/form-data";
-
-    body = JSON.stringify(body);
-
-    return await axios.post(`${api}${url}`, body, { headers, token });
+    return await axios.post(`${url}`, body);
 };
 
 export const putData = async (url, file_yn, body) => {
-    let headers = {
-        Accept: "application/json"
-    };
+    axios.defaults.headers.common["token"] = JSON.parse(localStorage.getItem("token"));
+    if (file_yn) {
+        axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
+    }
 
-    if (!file_yn) headers["Content-Type"] = "application/json; charset=UTF-8";
-    else headers["Content-Type"] = "multipart/form-data";
-
-    body = JSON.stringify(body);
-
-    return await axios.post(`${api}${url}`, body, { headers, token });
+    return await axios.put(`${url}`, body);
 };
 
 export const deleteData = async (url, body) => {
-    let headers = {
-        Accept: "application/json",
-        "Content-Type": "application/json; charset=UTF-8"
-    };
+    axios.defaults.headers.common["token"] = JSON.parse(localStorage.getItem("token"));
 
-    return await axios.delete(`${api}${url}`, { data: body, headers });
+    return await axios.delete(`${url}`, { data: body });
 };

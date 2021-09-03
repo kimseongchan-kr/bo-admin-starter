@@ -1,3 +1,5 @@
-export const ApiURL = "http://localhost:3000";
+export const api = "http://localhost:3000";
+// export const api = "http://dev.sample.com";
+// export const api = "http://api.sample.com";
 
-export const SampleUrl = "/sample/get"; // 폴더이름 / api 주소
+export const ApiURL = `${api}/`;
