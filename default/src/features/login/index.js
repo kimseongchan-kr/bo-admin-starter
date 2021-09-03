@@ -26,9 +26,6 @@ const useStyles = makeStyles((theme) => ({
         bottom: 0,
         backgroundColor: "#ffffff"
     },
-    grid: {
-        height: "100%"
-    },
     halfContainer: {
         width: "50%",
         height: "100%",
@@ -55,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 13,
         lineHeight: "56px",
         border: "none",
-        borderBottom: "1px solid #3c383433",
+        borderBottom: `1px solid ${theme.palette.border["opacity0.2"]}`,
         outline: "none"
     },
     checkbox: {
@@ -110,49 +107,47 @@ export default function Login() {
     };
 
     return (
-        <div className={classes.loginContainer}>
-            <Grid container justify="center" alignItems="center" direction="row" className={classes.grid}>
-                <Grid item className={classes.halfContainer}>
-                    Img
-                </Grid>
-                <Grid item className={classes.halfContainer}>
-                    <div className={classes.contents}>
-                        <div className={classes.text}>
-                            LOGO
-                            <div>bo-admin-starter</div>
-                        </div>
-                        <input
-                            className={classes.input}
-                            type="text"
-                            size="30"
-                            placeholder="이메일 입력"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            onFocus={() => setFocused("email")}
-                            onBlur={() => setFocused(null)}
-                            style={isFocused === "email" ? { borderBottom: "2px solid #039BE5" } : null}
-                        />
-                        <input
-                            className={classes.input}
-                            type="password"
-                            size="30"
-                            placeholder="비밀번호 입력"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            onFocus={() => setFocused("password")}
-                            onBlur={() => setFocused(null)}
-                            style={isFocused === "password" ? { borderBottom: "2px solid #039BE5" } : null}
-                        />
-                        <FormControlLabel className={classes.checkbox} control={<Checkbox checked={checked} name="checked" onChange={(e) => setChecked(e.target.checked)} />} label="자동 로그인" />
-                        <div>
-                            <button type="button" className={classes.loginButton} onClick={handleSubmit}>
-                                로그인
-                            </button>
-                        </div>
-                        <MessageModal onClose={onClose} />
-                    </div>
-                </Grid>
+        <Grid container justify="center" alignItems="center" direction="row" className={classes.loginContainer}>
+            <Grid item className={classes.halfContainer}>
+                Img
             </Grid>
-        </div>
+            <Grid item className={classes.halfContainer}>
+                <div className={classes.contents}>
+                    <div className={classes.text}>
+                        BLOCKODYSSEY
+                        <div>bo-admin-starter</div>
+                    </div>
+                    <input
+                        className={classes.input}
+                        type="text"
+                        size="30"
+                        placeholder="이메일 입력"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        onFocus={() => setFocused("email")}
+                        onBlur={() => setFocused(null)}
+                        style={isFocused === "email" ? { borderBottom: "2px solid #039BE5" } : null}
+                    />
+                    <input
+                        className={classes.input}
+                        type="password"
+                        size="30"
+                        placeholder="비밀번호 입력"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        onFocus={() => setFocused("password")}
+                        onBlur={() => setFocused(null)}
+                        style={isFocused === "password" ? { borderBottom: "2px solid #039BE5" } : null}
+                    />
+                    <FormControlLabel className={classes.checkbox} control={<Checkbox checked={checked} name="checked" onChange={(e) => setChecked(e.target.checked)} />} label="자동 로그인" />
+                    <div>
+                        <button type="button" className={classes.loginButton} onClick={handleSubmit}>
+                            로그인
+                        </button>
+                    </div>
+                    <MessageModal onClose={onClose} />
+                </div>
+            </Grid>
+        </Grid>
     );
 }

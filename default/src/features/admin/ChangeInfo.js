@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import useMenu from "hooks/useMenu";
+
 import { setClose, setMessage } from "slices/modalSlice";
-import MenuRedux from "common/menu/MenuRedux";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,9 +13,9 @@ import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
-import MessageModal from "common/modal/MessageModal";
-import EditButton from "common/button/EditButton";
 import Input from "common/form/Input";
+import SubmitButton from "common/button/SubmitButton";
+import MessageModal from "common/modal/MessageModal";
 
 const schema = yup.object().shape({
     name: yup.string().required(),
@@ -82,6 +83,8 @@ export default function ChangeInfo() {
         resolver: yupResolver(schema)
     });
 
+    useMenu({ page: "Change Info", menu: null, title: "정보 변경", num: 0 });
+
     useEffect(() => {
         clearErrors();
         // 회원정보 불러오기
@@ -104,68 +107,65 @@ export default function ChangeInfo() {
     };
 
     return (
-        <>
-            <MenuRedux menu={null} title="정보 변경" num={0} />
-            <div className={classes.container}>
-                <ThemeProvider theme={theme}>
-                    <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
-                        <table className={classes.table}>
-                            <tbody>
-                                <tr className={classes.row}>
-                                    <td className={classes.label}>
-                                        <Typography variant="body2">이름</Typography>
-                                    </td>
-                                    <td>
-                                        <Input name="name" defaultValue="이름" control={control} inputType="text" classes={classes} />
-                                        <Typography component="span" variant="body2" className={classes.errorMessage}>
-                                            {errors.name && "이름을 입력해주세요."}
-                                        </Typography>
-                                    </td>
-                                </tr>
-                                <tr className={classes.row}>
-                                    <td className={classes.label}>
-                                        <Typography variant="body2">이메일</Typography>
-                                    </td>
-                                    <td>
-                                        <Input name="email" defaultValue="이메일" control={control} inputType="text" classes={classes} />
-                                        <Typography component="span" variant="body2" style={{ color: "red", marginLeft: 10 }}>
-                                            {errors.email && "이메일을 입력해주세요."}
-                                        </Typography>
-                                    </td>
-                                </tr>
-                                <tr className={classes.row}>
-                                    <td className={classes.label}>
-                                        <Typography variant="body2">전화번호</Typography>
-                                    </td>
-                                    <td>
-                                        <Input name="phone" defaultValue="전화번호" control={control} inputType="phone" classes={classes} />
-                                        <Typography component="span" variant="body2" style={{ color: "red", marginLeft: 10 }}>
-                                            {errors.phone && "전화번호를 입력해주세요."}
-                                        </Typography>
-                                    </td>
-                                </tr>
-                                <tr className={classes.row}>
-                                    <td className={classes.label}>
-                                        <Typography variant="body2">이미지</Typography>
-                                    </td>
-                                    <td>
-                                        <input name="image" type="file" ref={register} />
-                                        <Typography component="span" variant="body2" style={{ color: "red", marginLeft: 10 }}>
-                                            {errors.image && "이미지를 선택해주세요."}
-                                        </Typography>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <Grid container direction="row" justify="flex-end" alignItems="center">
-                            <Grid item className={classes.paddingRight}>
-                                <EditButton text="변경" />
-                            </Grid>
+        <div className={classes.container}>
+            <ThemeProvider theme={theme}>
+                <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
+                    <table className={classes.table}>
+                        <tbody>
+                            <tr className={classes.row}>
+                                <td className={classes.label}>
+                                    <Typography variant="body2">이름</Typography>
+                                </td>
+                                <td>
+                                    <Input name="name" defaultValue="이름" control={control} inputType="text" classes={classes} />
+                                    <Typography component="span" variant="body2" className={classes.errorMessage}>
+                                        {errors.name && "이름을 입력해주세요."}
+                                    </Typography>
+                                </td>
+                            </tr>
+                            <tr className={classes.row}>
+                                <td className={classes.label}>
+                                    <Typography variant="body2">이메일</Typography>
+                                </td>
+                                <td>
+                                    <Input name="email" defaultValue="이메일" control={control} inputType="text" classes={classes} />
+                                    <Typography component="span" variant="body2" style={{ color: "red", marginLeft: 10 }}>
+                                        {errors.email && "이메일을 입력해주세요."}
+                                    </Typography>
+                                </td>
+                            </tr>
+                            <tr className={classes.row}>
+                                <td className={classes.label}>
+                                    <Typography variant="body2">전화번호</Typography>
+                                </td>
+                                <td>
+                                    <Input name="phone" defaultValue="전화번호" control={control} inputType="phone" classes={classes} />
+                                    <Typography component="span" variant="body2" style={{ color: "red", marginLeft: 10 }}>
+                                        {errors.phone && "전화번호를 입력해주세요."}
+                                    </Typography>
+                                </td>
+                            </tr>
+                            <tr className={classes.row}>
+                                <td className={classes.label}>
+                                    <Typography variant="body2">이미지</Typography>
+                                </td>
+                                <td>
+                                    <input name="image" type="file" ref={register} />
+                                    <Typography component="span" variant="body2" style={{ color: "red", marginLeft: 10 }}>
+                                        {errors.image && "이미지를 선택해주세요."}
+                                    </Typography>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <Grid container direction="row" justify="flex-end" alignItems="center">
+                        <Grid item className={classes.paddingRight}>
+                            <SubmitButton type="submit" text="변경" />
                         </Grid>
-                    </form>
-                </ThemeProvider>
-                <MessageModal onClose={onClose} />
-            </div>
-        </>
+                    </Grid>
+                </form>
+            </ThemeProvider>
+            <MessageModal onClose={onClose} />
+        </div>
     );
 }

@@ -1,28 +1,18 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setClose, setDetail, setMessage, setModal, setMsgConfirm } from "slices/modalSlice";
-import MenuRedux from "common/menu/MenuRedux";
+import useMenu from "hooks/useMenu";
 
-import theme from "styles/theme/form";
-import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
+import { setMessage, setMsgConfirm, setDetail, setClose } from "slices/modalSlice";
+
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
-import EditModal from "features/summary/modal/DashboardEditModal";
-import DetailModal from "features/summary/modal/DetailModal";
-
+import DetailModal from "common/modal/DetailModal";
 import MessageModal from "common/modal/MessageModal";
-import ConfirmModal from "common/modal/MessageConfirm";
+import ConfirmModal from "common/modal/ConfirmModal";
 
-import AddButton from "common/button/AddButton";
-import DeleteButton from "common/button/DeleteButton";
-
-import TableEditButton from "common/table/EditButton";
-import TableDeleteButton from "common/table/DeleteButton";
-
-import { sampleDetailData } from "features/summary/Data";
-
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     container: {
         width: "100%",
         margin: "0 auto",
@@ -48,6 +38,46 @@ const useStyles = makeStyles(() => ({
     cursor: {
         cursor: "pointer",
         textDecoration: "underline"
+    },
+    background: {
+        width: "100%",
+        marginBottom: 50,
+        fontSize: 16,
+        fontWeight: 600,
+        lineHeight: "24px",
+        color: "black"
+    },
+    table: {
+        width: "100%",
+        marginBottom: 80,
+        color: "black",
+        borderCollapse: "collapse",
+        "& thead": {
+            color: theme.palette.primary.main,
+            "& th": {
+                height: 40
+            }
+        },
+        "& th": {
+            fontWeight: 600,
+            padding: "5px 20px",
+            borderBottom: `1px solid ${theme.palette.border["opacity0.2"]}`
+        },
+        "& td": {
+            height: 45,
+            padding: "5px 20px",
+            borderBottom: `1px solid ${theme.palette.border["opacity0.2"]}`,
+            textAlign: "center"
+        },
+        "& tbody th": {
+            width: "20%"
+        },
+        "& td:first-child": {
+            width: "20%"
+        },
+        "& td:last-child": {
+            width: "60%"
+        }
     }
 }));
 
@@ -55,42 +85,27 @@ export default function Modal() {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    // 수정할 데이터 불러오고 modal 띄우기
-    const handleOneData = (modalId) => {
-        // 데이터를 불러오고
-        // 함께 데이터 넘겨주기
-        dispatch(setModal({ open: true, modalStatus: "modify", modalId: modalId, modalData: { dessert: "Cupcake", fat: "3.7", calories: 305 } }));
-    };
-
-    // 상세 데이터 불러오고 modal 띄우기
-    const handleDetailData = (modalId, pageNumber) => {
-        pageNumber = pageNumber ? pageNumber : 1;
-        console.log(modalId, pageNumber);
-        // 데이터를 불러오고
-        // 함께 데이터 넘겨주기
-        dispatch(setDetail({ open: true, modalId: modalId, modalData: sampleDetailData }));
-    };
-
-    // 데이터 추가하기/수정하기
-    const handleSubmit = (data, modalId) => {
-        alert("form data::", data, "data id::", modalId);
-    };
+    // 페이지(메뉴) 설정하기
+    useMenu({ page: "Modal Component Demo", menu: "components", title: "Modal", num: 7 });
 
     // 선택한 데이터 삭제하기
     const handleDelete = () => {
         dispatch(setClose());
-        console.log("삭제되었습니다...");
         dispatch(setMessage({ open: true, message: "삭제되었습니다." }));
     };
 
-    // 추가 모달 열기
-    const onOpen = () => {
-        dispatch(setModal({ open: true, modalId: "", modalStatus: "add" }));
+    // 메시지 모달 데모
+    const onMessage = () => {
+        dispatch(setMessage({ open: true, message: "Alert!" }));
     };
 
-    // 삭제 확인 모달 열기
-    const onConfirm = () => {
-        dispatch(setMsgConfirm({ open: true, message: "해당 디저트를 삭제하시겠습니까?" }));
+    // 확인 모달 데모
+    const onConfirmMsg = () => {
+        dispatch(setMsgConfirm({ open: true, message: "Confirm Message?" }));
+    };
+
+    const onDetail = () => {
+        dispatch(setDetail({ open: true, data: { title: "Detail Modal Demo", type: "quantity", quantity: 7777777 } }));
     };
 
     // 모달 닫기
@@ -99,60 +114,104 @@ export default function Modal() {
     };
 
     return (
-        <>
-            <MenuRedux menu="components" title="Modal" num={7} />
-            <div className={classes.container}>
-                <Typography className={classes.title} variant="h6" component="h3" color="inherit">
-                    상세 모달
-                </Typography>
-                <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
-                    <Grid item>
-                        <Typography className={classes.cursor} variant="body2" color="inherit" onClick={() => handleDetailData(1)}>
-                            Cupcake
-                        </Typography>
-                    </Grid>
+        <div className={classes.container}>
+            <Typography className={classes.title} variant="h3" component="h3" color="inherit">
+                메시지 모달
+            </Typography>
+            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+                <Grid item>
+                    <Typography className={classes.cursor} variant="body2" color="inherit" onClick={onMessage}>
+                        Message
+                    </Typography>
                 </Grid>
-                <Typography className={classes.title} variant="h6" component="h3" color="inherit">
-                    추가 모달
-                </Typography>
-                <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
-                    <Grid item>
-                        <AddButton onOpen={onOpen} />
-                    </Grid>
+            </Grid>
+            <Typography className={classes.title} variant="h3" component="h3" color="inherit">
+                Confirm 모달
+            </Typography>
+            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+                <Grid item>
+                    <Typography className={classes.cursor} variant="body2" color="inherit" onClick={onConfirmMsg}>
+                        Confirm
+                    </Typography>
                 </Grid>
-                <Typography className={classes.title} variant="h6" component="h3" color="inherit">
-                    수정 모달
-                </Typography>
-                <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
-                    <Grid item>
-                        <Typography className={classes.cursor} variant="body2" color="inherit" onClick={() => handleOneData(1)}>
-                            Cupcake
-                        </Typography>
-                    </Grid>
-                    <div className={classes.spacer} />
-                    <Grid item>
-                        <TableEditButton modalId={1} handleOneData={handleOneData} />
-                    </Grid>
+            </Grid>
+            <Typography className={classes.title} variant="h3" component="h3" color="inherit">
+                상세 모달
+            </Typography>
+            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+                <Grid item>
+                    <Typography className={classes.cursor} variant="body2" color="inherit" onClick={() => onDetail("quantity")}>
+                        상세 조회
+                    </Typography>
                 </Grid>
-                <Typography className={classes.title} variant="h6" component="h3" color="inherit">
-                    삭제하기
-                </Typography>
-                <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
-                    <Grid item>
-                        <DeleteButton onConfirm={onConfirm} />
-                    </Grid>
-                    <div className={classes.spacer} />
-                    <Grid item>
-                        <TableDeleteButton modalId={1} onConfirm={onConfirm} />
-                    </Grid>
-                </Grid>
-            </div>
-            <ThemeProvider theme={theme}>
-                <EditModal handleDataSubmit={handleSubmit} onClose={onClose} />
-            </ThemeProvider>
-            <DetailModal menu="Dashboard" handleDetailData={handleDetailData} onClose={onClose} />
-            <ConfirmModal onClose={onClose} handleDelete={handleDelete} />
+            </Grid>
+            <Typography className={classes.title} variant="h3" component="h3" color="inherit">
+                Modal Props Guide
+            </Typography>
+            <code className={classes.background}>
+                import MessageModal from "common/modal/MessageModal"; <br />
+                <br />
+                <table className={classes.table}>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>onClose</th>
+                            <td>function</td>
+                            <td>{`() => console.log("close modal")`}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                import ConfirmModal from "common/modal/ConfirmModal"; <br />
+                <br />
+                <table className={classes.table}>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>handleConfirm</th>
+                            <td>function</td>
+                            <td>{`() => console.log("deleting dessert")`}</td>
+                        </tr>
+                        <tr>
+                            <th>onClose</th>
+                            <td>function</td>
+                            <td>{`() => console.log("closing modal")`}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                import DetailModal from "common/modal/DetailModal";
+                <br />
+                <table className={classes.table}>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>onClose</th>
+                            <td>function</td>
+                            <td>{`() => console.log("closing modal")`}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </code>
             <MessageModal onClose={onClose} />
-        </>
+            <ConfirmModal handleConfirm={handleDelete} onClose={onClose} />
+            <DetailModal onClose={onClose} />
+        </div>
     );
 }

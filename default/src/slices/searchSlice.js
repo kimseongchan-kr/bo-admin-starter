@@ -13,17 +13,7 @@ const initialState = {
 
     term: "daily",
     startDate: null,
-    endDate: null,
-
-    //filter
-    cupcake: true,
-    cake: true,
-    cookie: true,
-    macaroon: true,
-    example1: false,
-    example2: false,
-    example3: true,
-    example4: false
+    endDate: null
 };
 
 export const searchSlice = createSlice({
@@ -31,7 +21,7 @@ export const searchSlice = createSlice({
     initialState,
     reducers: {
         setPage: (state, { payload }) => {
-            state.pageNumber = payload.pageNumber;
+            state.pageNumber = payload.page;
             state.pageShow = payload.pageShow;
         },
         setSearchFilter: (state, { payload }) => {

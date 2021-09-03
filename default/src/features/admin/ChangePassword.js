@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setClose, setMessage } from "slices/modalSlice";
-import MenuRedux from "common/menu/MenuRedux";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -10,6 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 import MessageModal from "common/modal/MessageModal";
+import useMenu from "hooks/useMenu";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -85,6 +85,8 @@ export default function ChangePassword() {
     const [newPw, setNewPw] = useState("");
     const [pwCheck, setPwCheck] = useState("");
 
+    useMenu({ page: "Change Password", menu: null, title: "비밀번호 변경", num: 0 });
+
     const handleSubmit = () => {
         console.log(pw, pwCheck, newPw);
         dispatch(setMessage({ open: true, message: "비밀번호가 변경되었습니다." }));
@@ -98,63 +100,60 @@ export default function ChangePassword() {
     };
 
     return (
-        <>
-            <MenuRedux menu={null} title="비밀번호 변경" num={0} />
-            <div className={classes.container}>
-                <Grid container justify="center" alignItems="center" direction="column" className={classes.grid}>
-                    <Grid item>
-                        <Typography variant="h3" component="h3" className={classes.title}>
-                            주기적인 <span style={{ fontWeight: 500 }}>비밀번호 변경</span>으로 <br />
-                            안전하게 <span style={{ fontWeight: 500 }}>정보</span>를 <span style={{ fontWeight: 500 }}>보호</span>하세요
-                        </Typography>
-                    </Grid>
-                    <Grid item className={classes.curPassword}>
-                        <TextField
-                            className={classes.input}
-                            id="outlined-pw"
-                            label=""
-                            size="small"
-                            type="password"
-                            placeholder="현재 비밀번호"
-                            onChange={(e) => setPw(e.target.value)}
-                            value={pw}
-                            variant="outlined"
-                        />
-                    </Grid>
-                    <Grid item className={classes.newPassword}>
-                        <TextField
-                            className={classes.input}
-                            id="outlined-new-pw"
-                            label=""
-                            size="small"
-                            type="password"
-                            placeholder="새 비밀번호"
-                            value={newPw}
-                            onChange={(e) => setNewPw(e.target.value)}
-                            variant="outlined"
-                        />
-                    </Grid>
-                    <Grid item className={classes.pwCheck}>
-                        <TextField
-                            className={classes.input}
-                            id="outlined-pw-check"
-                            label=""
-                            size="small"
-                            type="password"
-                            placeholder="새 비밀번호 확인"
-                            value={pwCheck}
-                            onChange={(e) => setPwCheck(e.target.value)}
-                            variant="outlined"
-                        />
-                    </Grid>
-                    <Grid item className={classes.submitContainer}>
-                        <Button variant="contained" className={classes.submitButton} onClick={handleSubmit}>
-                            변경
-                        </Button>
-                    </Grid>
+        <div className={classes.container}>
+            <Grid container justify="center" alignItems="center" direction="column" className={classes.grid}>
+                <Grid item>
+                    <Typography variant="h3" component="h3" className={classes.title}>
+                        주기적인 <span style={{ fontWeight: 500 }}>비밀번호 변경</span>으로 <br />
+                        안전하게 <span style={{ fontWeight: 500 }}>정보</span>를 <span style={{ fontWeight: 500 }}>보호</span>하세요
+                    </Typography>
                 </Grid>
-                <MessageModal onClose={onClose} />
-            </div>
-        </>
+                <Grid item className={classes.curPassword}>
+                    <TextField
+                        className={classes.input}
+                        id="outlined-pw"
+                        label=""
+                        size="small"
+                        type="password"
+                        placeholder="현재 비밀번호"
+                        onChange={(e) => setPw(e.target.value)}
+                        value={pw}
+                        variant="outlined"
+                    />
+                </Grid>
+                <Grid item className={classes.newPassword}>
+                    <TextField
+                        className={classes.input}
+                        id="outlined-new-pw"
+                        label=""
+                        size="small"
+                        type="password"
+                        placeholder="새 비밀번호"
+                        value={newPw}
+                        onChange={(e) => setNewPw(e.target.value)}
+                        variant="outlined"
+                    />
+                </Grid>
+                <Grid item className={classes.pwCheck}>
+                    <TextField
+                        className={classes.input}
+                        id="outlined-pw-check"
+                        label=""
+                        size="small"
+                        type="password"
+                        placeholder="새 비밀번호 확인"
+                        value={pwCheck}
+                        onChange={(e) => setPwCheck(e.target.value)}
+                        variant="outlined"
+                    />
+                </Grid>
+                <Grid item className={classes.submitContainer}>
+                    <Button variant="contained" className={classes.submitButton} onClick={handleSubmit}>
+                        변경
+                    </Button>
+                </Grid>
+            </Grid>
+            <MessageModal onClose={onClose} />
+        </div>
     );
 }
