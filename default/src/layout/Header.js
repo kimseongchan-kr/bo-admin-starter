@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { menuSelector, setMenu } from "slices/menuSlice";
 import { setLogOut } from "slices/loginSlice";
-import { reset } from "slices/searchSlice";
 
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -78,14 +77,10 @@ function Header(props) {
 
     const handlePageChange = (menu, path) => {
         dispatch(setMenu(menu));
-        props.history.push(path);
+        return props.history.push(path);
     };
 
     const handleLogOut = () => {
-        console.log("logout");
-        // localStorage에 있는 값들을 반드시 초기화
-        dispatch(reset());
-        dispatch(setMenu({ menu: "summary", title: "Dashboard", num: 1 }));
         dispatch(setLogOut());
     };
 
@@ -119,8 +114,7 @@ function Header(props) {
                                         vertical: "top",
                                         horizontal: "center"
                                     }}
-                                    disableRestoreFocus
-                                >
+                                    disableRestoreFocus>
                                     <List component="nav" aria-label="admin menu">
                                         <ListItem classes={{ root: classes.listItem }} button onClick={() => handlePageChange({ menu: null, title: "비밀번호 변경", num: 0 }, "/password")}>
                                             <ListItemText primary="비밀번호 변경" />

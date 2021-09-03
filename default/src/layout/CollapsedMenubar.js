@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { menuSelector, setMenu } from "slices/menuSlice";
+import { menuSelector } from "slices/menuSlice";
 import { reset } from "slices/searchSlice";
 
 import { withStyles, makeStyles } from "@material-ui/core/styles";
@@ -146,8 +146,6 @@ const useStyles = makeStyles(() => ({
         width: 87,
         height: 30,
         marginLeft: 32,
-        background: `transparent url("") 0% 0% no-repeat padding-box`,
-        backgroundSize: "95%",
         cursor: "pointer"
     },
     ul: {
@@ -183,9 +181,8 @@ const useStyles = makeStyles(() => ({
 function Menubar(props) {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const menuList = useSelector(menuSelector);
-    const { menu, menuNum } = menuList;
 
+    const { menu, menuNum } = useSelector(menuSelector);
     const [expanded, setExpanded] = useState(menu ? menu : false);
 
     useEffect(() => {
@@ -196,10 +193,9 @@ function Menubar(props) {
         setExpanded(isExpanded ? panel : false);
     };
 
-    const handlePageChange = (menu, path) => {
-        dispatch(setMenu(menu));
+    const handlePageChange = (path) => {
         dispatch(reset());
-        props.history.push(path);
+        return props.history.push(path);
     };
 
     return (
@@ -209,11 +205,10 @@ function Menubar(props) {
             className={classes.drawer}
             classes={{
                 paper: classes.drawerPaper
-            }}
-        >
+            }}>
             <Box className={classes.toolbar}>
-                <Typography variant="h1" component="h1" className={classes.logo} onClick={() => handlePageChange({ menu: "summary", title: "Dashboard", num: 1 }, "/")}>
-                    LOGO
+                <Typography variant="h1" component="h1" className={classes.logo} onClick={() => handlePageChange("/")}>
+                    ADMIN
                 </Typography>
             </Box>
             <Divider />
@@ -227,13 +222,8 @@ function Menubar(props) {
                             <Typography>Summary</Typography>
                         </AccordionSummary>
                         <AccordionDetails className={menuNum === 1 ? classes.active : ""}>
-                            <Typography component="button" onClick={() => handlePageChange({ menu: "summary", title: "Dashboard", num: 1 }, "/dashboard")}>
+                            <Typography component="button" onClick={() => handlePageChange("/dashboard")}>
                                 Dashboard
-                            </Typography>
-                        </AccordionDetails>
-                        <AccordionDetails className={menuNum === 2 ? classes.active : ""}>
-                            <Typography component="button" onClick={() => handlePageChange({ menu: "summary", title: "Summary", num: 2 }, "/summary")}>
-                                Summary
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
@@ -247,7 +237,7 @@ function Menubar(props) {
                             <Typography>Example</Typography>
                         </AccordionSummary>
                         <AccordionDetails className={menuNum === 3 ? classes.active : ""}>
-                            <Typography component="button" onClick={() => handlePageChange({ menu: "example", title: "Example", num: 3 }, "/example")}>
+                            <Typography component="button" onClick={() => handlePageChange("/example")}>
                                 Example
                             </Typography>
                         </AccordionDetails>
@@ -262,32 +252,32 @@ function Menubar(props) {
                             <Typography>Components</Typography>
                         </AccordionSummary>
                         <AccordionDetails className={menuNum === 4 ? classes.active : ""}>
-                            <Typography component="button" onClick={() => handlePageChange({ menu: "components", title: "Search", num: 4 }, "/search")}>
+                            <Typography component="button" onClick={() => handlePageChange("/search")}>
                                 Search
                             </Typography>
                         </AccordionDetails>
                         <AccordionDetails className={menuNum === 5 ? classes.active : ""}>
-                            <Typography component="button" onClick={() => handlePageChange({ menu: "components", title: "Table", num: 5 }, "/table")}>
+                            <Typography component="button" onClick={() => handlePageChange("/table")}>
                                 Table
                             </Typography>
                         </AccordionDetails>
                         <AccordionDetails className={menuNum === 6 ? classes.active : ""}>
-                            <Typography component="button" onClick={() => handlePageChange({ menu: "components", title: "Form", num: 6 }, "/form")}>
+                            <Typography component="button" onClick={() => handlePageChange("/form")}>
                                 Form
                             </Typography>
                         </AccordionDetails>
                         <AccordionDetails className={menuNum === 7 ? classes.active : ""}>
-                            <Typography component="button" onClick={() => handlePageChange({ menu: "components", title: "Modal", num: 7 }, "/modal")}>
+                            <Typography component="button" onClick={() => handlePageChange("/modal")}>
                                 Modal
                             </Typography>
                         </AccordionDetails>
                         <AccordionDetails className={menuNum === 8 ? classes.active : ""}>
-                            <Typography component="button" onClick={() => handlePageChange({ menu: "components", title: "Typography", num: 8 }, "/typography")}>
+                            <Typography component="button" onClick={() => handlePageChange("/typography")}>
                                 Typography
                             </Typography>
                         </AccordionDetails>
                         <AccordionDetails className={menuNum === 9 ? classes.active : ""}>
-                            <Typography component="button" onClick={() => handlePageChange({ menu: "components", title: "Button", num: 9 }, "/button")}>
+                            <Typography component="button" onClick={() => handlePageChange("/button")}>
                                 Button
                             </Typography>
                         </AccordionDetails>
