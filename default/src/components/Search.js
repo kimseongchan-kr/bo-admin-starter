@@ -50,6 +50,7 @@ export default function Search(props) {
         if (name === "reset") {
             handleSearchFilter({ type: "startDate", value: null });
             handleSearchFilter({ type: "endDate", value: null });
+            handleSearchFilter({ type: "pageNumber", value: 1 });
             handleSearch({ startDate: null, endDate: null });
         } else {
             handleSearchFilter({ type: "startDate", value: obj.startDate });
@@ -62,11 +63,17 @@ export default function Search(props) {
     // 검색 조건 (select) 변경
     const handleChange = (e) => {
         handleSearchFilter({ type: e.target.name, value: e.target.value });
+
+        if (e.target.name === "useYn") {
+            handleSearchFilter({ type: "pageNumber", value: 1 });
+            handleSearch({ [e.target.name]: e.target.value });
+        }
     };
 
     // 검색 조건 (radio) 변경
     const handleRadioChange = (e) => {
         handleSearchFilter({ type: e.target.name, value: e.target.value });
+        handleSearchFilter({ type: "pageNumber", value: 1 });
         handleSearch({ [e.target.name]: e.target.value });
     };
 

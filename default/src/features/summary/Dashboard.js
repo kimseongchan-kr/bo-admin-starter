@@ -1,125 +1,194 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { searchSelector, setFilter, setPage, setSearchFilter, setSort } from "slices/searchSlice";
-import { setClose, setDetail, setMessage, setModal, setMsgConfirm } from "slices/modalSlice";
-import MenuRedux from "common/menu/MenuRedux";
+import { useHistory, useLocation } from "react-router";
+import useMenu from "hooks/useMenu";
+import useSearchParams from "hooks/useSearchParams";
+import useErrorMsg from "hooks/useErrorMsg";
 
-import { ThemeProvider } from "@material-ui/core/styles";
-import search from "styles/theme/search";
-import form from "styles/theme/form";
+import { queryToString } from "utils/common";
 
-import DashboardSearch from "features/summary/components/Search";
-import DashboardTable from "features/summary/components/SelectionTable";
+import { summarySelector, getSummaryList, updateSummaryInfo, deleteSummaryInfo, clearError } from "slices/summarySlice";
+import { commonSelector, getExcelList, clearExcelData } from "slices/commonSlice";
+import { searchSelector, setPage, setSearchFilter } from "slices/searchSlice";
+import { setClose, setMessage, setMsgConfirm, setMsgConfirmClose } from "slices/modalSlice";
 
-import EditModal from "features/summary/modal/DashboardEditModal";
-import DetailModal from "features/summary/modal/DetailModal";
-
+import DashboardSearch from "components/Search";
+import DashboardTable from "components/SelectionTable";
 import MessageModal from "common/modal/MessageModal";
-import ConfirmModal from "common/modal/MessageConfirm";
+import ConfirmModal from "common/modal/ConfirmModal";
 
-import { sampleDetailData } from "features/summary/Data";
+import { searchParams, sampleRowData } from "components/Data";
 
 export default function Dashboard() {
     const dispatch = useDispatch();
+    const history = useHistory();
+    const location = useLocation();
 
-    const searchList = useSelector(searchSelector);
-    const { startDate, endDate, gender, searchType, searchKeyword, sortNm, sortOrder, pageNumber, pageShow } = searchList;
+    const { dataList, total, status, errorMsg, statusCode } = useSelector(summarySelector);
+    const { excelList } = useSelector(commonSelector);
+    const { startDate, endDate, gender, searchType, searchKeyword, sort, pageNumber, pageShow } = useSelector(searchSelector);
 
     const [selected, setSelected] = useState([]);
-    const [keyword, setKeyword] = useState(searchKeyword ? searchKeyword : "");
-    const menu = "Dashboard";
+    const [buttonLoading, setButtonLoading] = useState(false);
+    const [urlParams, setUrlParams] = useState({
+        startDate,
+        endDate,
+        gender,
+        searchType,
+        searchKeyword,
+        sort,
+        pageNumber,
+        pageShow
+    });
+
+    // 페이지/메뉴 설정하기
+    const menu = useMenu({ page: "Dashboard", menu: "summary", title: "Dashboard", num: 1 });
+
+    // search params 설정하기
+    const params = useSearchParams(searchParams[menu], urlParams);
 
     // 데이터 불러오기
     const handleData = useCallback(() => {
-        console.log("데이터 불러오기...");
-    }, []);
+        const dataParams = params ? params : { sort: "latest" };
+        // dispatch(getSummaryList({ url: "/web/dashboard", params: dataParams }));
+    }, [dispatch, params]);
 
     useEffect(() => {
         handleData();
     }, [handleData]);
 
+    // 에러 메시지 노출하기
+    useErrorMsg(status, statusCode, errorMsg);
+
     // 검색 조건 변경하기
     const handleSearchFilter = (searchFilterItems) => {
-        console.log("검색 조건 변경하기");
         dispatch(setSearchFilter(searchFilterItems));
     };
 
     // 검색하기
     const handleSearch = (searchItems) => {
-        console.log("데이터 검색하기...");
-        let search = { startDate, endDate, gender, searchType, keyword, sortNm, sortOrder, pageNumber, pageShow };
+        let search = { startDate, endDate, gender, searchType, searchKeyword, sort, pageNumber, pageShow };
 
         if (searchItems) {
             search = { ...search, ...searchItems };
         }
-        console.log(search);
+
+        setUrlParams(search);
+        const params = queryToString(search);
+        return history.push({ pathname: "/", search: params });
     };
 
     // 테이블 데이터 정렬하기
-    const handleSort = (sortItems) => {
-        console.log("데이터 정렬하기...");
-        dispatch(setSort(sortItems));
-        handleSearch(sortItems);
-    };
-
-    // 테이블 데이터 필터하기
-    const handleFilter = (filterItems) => {
-        console.log("데이터 필터링...");
-        dispatch(setFilter(filterItems));
+    const handleSort = (e) => {
+        dispatch(setSearchFilter({ type: e.target.name, value: e.target.value }));
+        handleSearch({ sort: e.target.value });
     };
 
     // 테이블 페이지 변경하기
     const handlePage = (paging) => {
-        console.log("페이지 변경하기...");
         dispatch(setPage(paging));
         handleSearch(paging);
     };
 
-    // 수정할 데이터 불러오고 modal 띄우기
-    const handleOneData = (modalId) => {
-        // 데이터를 불러오고
-        // 함께 데이터 넘겨주기
-        dispatch(setModal({ open: true, modalStatus: "modify", modalId: modalId, modalData: { dessert: "Cupcake", fat: "3.7", calories: 305 } }));
-    };
-
-    // 상세 데이터 불러오고 modal 띄우기
-    const handleDetailData = (modalId, pageNumber) => {
-        pageNumber = pageNumber ? pageNumber : 1;
-        console.log(modalId, pageNumber);
-        // 데이터를 불러오고
-        // 함께 데이터 넘겨주기
-        dispatch(setDetail({ open: true, modalId: modalId, modalData: sampleDetailData }));
-    };
-
-    // 데이터 추가하기/수정하기
-    const handleSubmit = (data, modalId) => {
-        console.log(data, modalId);
-    };
-
-    // 선택한 데이터 삭제하기
-    const handleDelete = () => {
-        dispatch(setClose());
-        console.log(selected);
-        console.log("삭제되었습니다...");
-        dispatch(setMessage({ open: true, message: "삭제되었습니다." }));
-    };
-
     // 사용여부/노출여부 등 select 데이터 수정하기
-    const handleSelect = (type, value) => {
-        console.log("changing status...", type, value);
+    const handleSelect = async (name, value, rowIndex) => {
+        console.log("changing status...", name, value, rowIndex);
+
+        const resultAction = await dispatch(updateSummaryInfo({ url: "/web/example", fileYn: false, data: { example: "test" } }));
+        if (updateSummaryInfo.fulfilled.match(resultAction)) {
+            // 성공
+        } else {
+            if (resultAction.payload) {
+                dispatch(setMessage({ open: true, message: resultAction.payload.message }));
+            } else {
+                dispatch(setMessage({ open: true, message: "네트워크 에러" }));
+            }
+        }
     };
 
     // 노출순서 등 input 데이터 수정하기
-    const handleChange = (value) => {
+    const handleChange = async (value) => {
         console.log("changing input value...", value);
+
+        const resultAction = await dispatch(updateSummaryInfo({ url: "/web/example", fileYn: false, data: { example: "test" } }));
+        if (updateSummaryInfo.fulfilled.match(resultAction)) {
+            // 성공
+        } else {
+            if (resultAction.payload) {
+                dispatch(setMessage({ open: true, message: resultAction.payload.message }));
+            } else {
+                dispatch(setMessage({ open: true, message: "네트워크 에러" }));
+            }
+        }
     };
 
-    // 추가 모달 열기
-    const onOpen = () => {
-        dispatch(setModal({ open: true, modalId: "", modalStatus: "add" }));
+    // 선택한 데이터 삭제하기
+    const handleDelete = async () => {
+        dispatch(setMsgConfirmClose());
+        // 삭제 API 호출
+        const resultAction = await dispatch(deleteSummaryInfo({ url: "/web/example", data: { example: "test" } }));
+        if (deleteSummaryInfo.fulfilled.match(resultAction)) {
+            // 삭제 성공
+            dispatch(setMessage({ open: true, message: "삭제되었습니다." }));
+        } else {
+            if (resultAction.payload) {
+                dispatch(setMessage({ open: true, message: resultAction.payload.message }));
+            } else {
+                dispatch(setMessage({ open: true, message: "네트워크 에러" }));
+            }
+        }
     };
 
-    // 삭제 확인 모달 열기
+    // 상세 페이지로 이동하기
+    const handleOneData = (index) => {
+        return history.push({
+            pathname: `/dashboard/detail/${index}`,
+            search: location.search
+        });
+    };
+
+    // 업로드 페이지로 이동하기
+    const handleNewData = () => {
+        return history.push({
+            pathname: "/dashboard/upload",
+            search: location.search
+        });
+    };
+
+    // 수정 페이지로 이동하기
+    const handleEditData = (idx) => {
+        return history.push({
+            pathname: `/dashboard/edit/${idx}`,
+            search: location.search
+        });
+    };
+
+    // 엑셀 다운로드 데이터 불러오기
+    const onDownloadButtonClick = async () => {
+        setButtonLoading(true);
+        const resultAction = await dispatch(getExcelList({ url: "/web/excel-example", params: urlParams }));
+        if (getExcelList.fulfilled.match(resultAction)) {
+            setButtonLoading(false);
+        } else {
+            if (resultAction.payload) {
+                dispatch(setMessage({ open: true, message: resultAction.payload.message }));
+            } else {
+                dispatch(setMessage({ open: true, message: "네트워크 에러" }));
+            }
+        }
+    };
+
+    // 엑셀 다운로드하기
+    useEffect(() => {
+        if (excelList && excelList.length > 0) {
+            let e = document.createEvent("MouseEvents");
+            e.initEvent("click", true, true);
+            document.querySelector(".file-download").dispatchEvent(e);
+            dispatch(clearExcelData());
+        }
+    }, [excelList, dispatch]);
+
+    // 삭제 확인 모달 띄우기
     const onConfirm = () => {
         dispatch(setMsgConfirm({ open: true, message: "해당 디저트를 삭제하시겠습니까?" }));
     };
@@ -127,35 +196,42 @@ export default function Dashboard() {
     // 모달 닫기
     const onClose = () => {
         dispatch(setClose());
+        dispatch(clearError());
     };
 
     return (
         <>
-            <MenuRedux menu="summary" title="Dashboard" num={1} />
-            <ThemeProvider theme={search}>
-                <DashboardSearch menu={menu} keyword={keyword} setKeyword={setKeyword} handleSearchFilter={handleSearchFilter} handleSearch={handleSearch} />
-            </ThemeProvider>
+            <DashboardSearch
+                heading="Dashboard 검색"
+                menu={menu}
+                // total={total}
+                total={sampleRowData.length}
+                handleSearchFilter={handleSearchFilter}
+                handleSearch={handleSearch}
+                handleSort={handleSort}
+                onAddButtonClick={handleNewData}
+            />
             <DashboardTable
                 menu={menu}
+                loading={status === "loading" ? true : false}
+                buttonLoading={buttonLoading}
+                // data={dataList}
+                data={sampleRowData}
+                // total={total}
+                total={sampleRowData.length}
+                excelData={excelList}
                 selected={selected}
                 setSelected={setSelected}
-                handleOneData={handleOneData}
-                handleDetailData={handleDetailData}
                 handleSelect={handleSelect}
                 handleChange={handleChange}
-                handleSort={handleSort}
                 handlePage={handlePage}
-                handleFilter={handleFilter}
-                handleSearch={handleSearch}
-                onOpen={onOpen}
-                onConfirm={onConfirm}
+                handleOneData={handleOneData}
+                handleEditData={handleEditData}
+                onDelete={onConfirm}
+                onExcel={onDownloadButtonClick}
             />
-            <ThemeProvider theme={form}>
-                <EditModal handleDataSubmit={handleSubmit} onClose={onClose} />
-            </ThemeProvider>
-            <DetailModal menu={menu} handleDetailData={handleDetailData} onClose={onClose} />
-            <ConfirmModal onClose={onClose} handleDelete={handleDelete} />
             <MessageModal onClose={onClose} />
+            <ConfirmModal handleConfirm={handleDelete} onClose={onClose} />
         </>
     );
 }

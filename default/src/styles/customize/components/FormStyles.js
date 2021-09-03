@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
         border: `1px solid ${theme.palette.border["main"]}`
     },
     errorMessage: {
-        marginLeft: 10,
         lineHeight: "32px",
         color: theme.palette.error["main"]
     },
