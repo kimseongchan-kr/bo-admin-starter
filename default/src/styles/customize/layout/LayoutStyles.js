@@ -1,7 +1,7 @@
 // 참고: https://material-ui.com/styles/basics/#hook-api
 import { makeStyles } from "@material-ui/core/styles";
 
-const layoutStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
         minHeight: "100%"
@@ -10,12 +10,17 @@ const layoutStyles = makeStyles((theme) => ({
         width: "calc(100% - 240px)"
     },
     appBarSpacer: {
-        minHeight: 130
+        minHeight: 110
     },
     main: {
         flexGrow: 1,
         height: "calc(100vh - 80px)",
-        width: "100%"
+        width: "100%",
+        "& h4": {
+            "& span": {
+                fontWeight: 600
+            }
+        }
     },
     container: {
         paddingTop: 0,
@@ -40,4 +45,4 @@ const layoutStyles = makeStyles((theme) => ({
     }
 }));
 
-export default layoutStyles;
+export default useStyles;

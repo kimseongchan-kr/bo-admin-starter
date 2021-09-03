@@ -19,6 +19,18 @@ const useStyles = makeStyles(() => ({
     row: {
         borderBottom: " 1px solid #3d35951a"
     },
+    selectContent: {
+        height: 48,
+        padding: "7px 0 7px 20px",
+        "& > div": {
+            width: "calc(100% - 20px)",
+            textAlign: "center",
+            margin: 0,
+            "& > div > div > div": {
+                width: "100%"
+            }
+        }
+    },
     editorRow: {
         height: 400,
         "&& td": {
@@ -37,11 +49,6 @@ const useStyles = makeStyles(() => ({
     textInput: {
         width: 320,
         height: 32
-    },
-    errorMessage: {
-        lineHeight: "32px",
-        color: "red",
-        marginLeft: 10
     }
 }));
 

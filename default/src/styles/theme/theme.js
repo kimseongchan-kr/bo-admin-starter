@@ -2,149 +2,153 @@
 // 참고: https://material-ui.com/customization/globals/#css
 import { createMuiTheme } from "@material-ui/core";
 import { typography } from "styles/theme/typography";
+import { palette } from "styles/theme/palette";
+import { koKR } from "@material-ui/core/locale";
 
-const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: "#039BE5"
-        },
-        secondary: {
-            main: "#039BE5"
-        },
-        text: {
-            primary: "#333333",
-            secondary: "#333333"
+const theme = createMuiTheme(
+    {
+        palette,
+        typography,
+        overrides: {
+            MuiCssBaseline: {
+                "@global": {
+                    "*": {
+                        boxSizing: "border-box",
+                        margin: 0,
+                        padding: 0
+                    },
+                    html: {
+                        "-webkit-font-smoothing": "antialiased",
+                        "-moz-osx-font-smoothing": "grayscale",
+                        height: "100%",
+                        width: "100%"
+                    },
+                    body: {
+                        backgroundColor: palette.background["main"],
+                        height: "100%",
+                        width: "100%"
+                    },
+                    a: {
+                        textDecoration: "none",
+                        color: "inherit"
+                    },
+                    "#root": {
+                        height: "100%",
+                        width: "100%"
+                    }
+                }
+            },
+            MuiList: {
+                padding: {
+                    paddingTop: 0,
+                    paddingBottom: 0
+                }
+            },
+            MuiIconButton: {
+                root: {
+                    "&:hover": {
+                        backgroundColor: palette.neutral["white"]
+                    }
+                }
+            },
+            MuiOutlinedInput: {
+                root: {
+                    "&&$focused fieldset": {
+                        borderColor: palette.border["main"],
+                        borderWidth: 1
+                    },
+                    "&&:hover fieldset": {
+                        borderColor: palette.border["main"],
+                        borderWidth: 1
+                    }
+                },
+                notchedOutline: {
+                    borderColor: palette.border["main"]
+                }
+            },
+            MuiTableContainer: {
+                root: {
+                    overflowX: "unset"
+                }
+            },
+            MuiTableRow: {
+                root: {
+                    height: 46
+                },
+                hover: {
+                    "&&:hover": {
+                        backgroundColor: palette.primary["light"]
+                    }
+                }
+            },
+            MuiTableHead: {
+                root: {
+                    height: 52,
+                    fontSize: 12,
+                    background: palette.background["light"],
+                    borderBottom: `2px solid ${palette.border["dark"]}`
+                }
+            },
+            MuiTableCell: {
+                root: {
+                    padding: 10,
+                    cursor: "context-menu"
+                },
+                head: {
+                    height: 52,
+                    opacity: 0.7
+                }
+            },
+            MuiTablePagination: {
+                root: {
+                    height: 80,
+                    fontSize: 12,
+                    overflow: "unset"
+                },
+                toolbar: {
+                    height: 80,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center"
+                },
+                spacer: {
+                    flex: 0
+                },
+                input: {
+                    lineHeight: "18px"
+                },
+                caption: {
+                    "&:first-of-type": {
+                        marginLeft: "auto"
+                    }
+                }
+            },
+            MuiPagination: {
+                root: {
+                    marginRight: "auto"
+                }
+            },
+            MuiPaginationItem: {
+                outlinedPrimary: {
+                    "&$selected": {
+                        backgroundColor: palette.neutral["white"]
+                    }
+                }
+            },
+            MuiSvgIcon: {
+                root: {
+                    width: 20,
+                    height: 20
+                }
+            },
+            MuiSelect: {
+                icon: {
+                    top: "unset"
+                }
+            }
         }
     },
-    typography,
-    overrides: {
-        MuiCssBaseline: {
-            "@global": {
-                "*": {
-                    boxSizing: "border-box",
-                    margin: 0,
-                    padding: 0
-                },
-                html: {
-                    "-webkit-font-smoothing": "antialiased",
-                    "-moz-osx-font-smoothing": "grayscale",
-                    height: "100%",
-                    width: "100%"
-                },
-                body: {
-                    backgroundColor: "#f3f3f3",
-                    height: "100%",
-                    width: "100%"
-                },
-                a: {
-                    textDecoration: "none",
-                    color: "#333333"
-                },
-                "#root": {
-                    height: "100%",
-                    width: "100%"
-                }
-            }
-        },
-        MuiList: {
-            padding: {
-                paddingTop: 0,
-                paddingBottom: 0
-            }
-        },
-        MuiIconButton: {
-            root: {
-                "&:hover": {
-                    backgroundColor: "#ffffff"
-                }
-            }
-        },
-        MuiOutlinedInput: {
-            root: {
-                "&&$focused fieldset": {
-                    borderColor: "#3D393534",
-                    borderWidth: "1px"
-                },
-                "&&:hover fieldset": {
-                    borderColor: "#3D393534",
-                    borderWidth: "1px"
-                }
-            },
-            notchedOutline: {
-                borderColor: "#3D393534"
-            }
-        },
-        MuiTableContainer: {
-            root: {
-                overflowX: "unset"
-            }
-        },
-        MuiTableRow: {
-            root: {
-                height: 40
-            },
-            hover: {
-                "&&:hover": {
-                    backgroundColor: "#039be508"
-                }
-            }
-        },
-        MuiTableHead: {
-            root: {
-                height: 48,
-                fontSize: 12,
-                background: "#FBFBFB",
-                borderBottom: "2px solid #3D3935"
-            }
-        },
-        MuiTableCell: {
-            root: {
-                padding: 0
-            },
-            head: {
-                opacity: 0.7,
-                lineHeight: "40px"
-            }
-        },
-        MuiTablePagination: {
-            root: {
-                height: 80,
-                fontSize: 12,
-                overflow: "unset",
-                "& p.MuiTablePagination-caption:nth-child(4)": {
-                    position: "absolute",
-                    left: 20
-                }
-            },
-            toolbar: {
-                height: 80,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center"
-            },
-            input: {
-                lineHeight: "18px"
-            }
-        },
-        MuiPaginationItem: {
-            outlinedPrimary: {
-                "&$selected": {
-                    backgroundColor: "white"
-                }
-            }
-        },
-        MuiSvgIcon: {
-            root: {
-                width: 20,
-                height: 20
-            }
-        },
-        MuiSelect: {
-            icon: {
-                top: "unset"
-            }
-        }
-    }
-});
+    koKR
+);
 
 export default theme;

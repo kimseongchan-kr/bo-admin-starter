@@ -2,24 +2,26 @@
 // 참고: https://material-ui.com/customization/globals/#css
 import { createMuiTheme } from "@material-ui/core";
 import { typography } from "styles/theme/typography";
+import { palette } from "styles/theme/palette";
 
 const buttonTheme = createMuiTheme({
+    palette,
     typography,
     overrides: {
         MuiButtonBase: {
             root: {
-                width: 100,
+                width: "auto",
                 height: 40,
                 marginLeft: 5,
-                color: "#333333",
-                backgroundColor: "#ffffff",
                 boxShadow: "unset",
-                border: "1px solid #00000033",
                 borderRadius: 4,
+                border: `1px solid ${palette.border["light"]}`,
                 fontSize: 13,
-                lineHeight: "17px",
                 fontWeight: 400,
-                letterSpacing: "0.52px"
+                lineHeight: "17px",
+                letterSpacing: "0.52px",
+                color: palette.text["primary"],
+                backgroundColor: palette.neutral["white"]
             }
         },
         MuiSvgIcon: {
@@ -31,7 +33,7 @@ const buttonTheme = createMuiTheme({
         MuiButton: {
             root: {
                 "&:hover": {
-                    backgroundColor: "#ffffff"
+                    backgroundColor: palette.neutral["white"]
                 }
             },
             outlined: {
@@ -39,32 +41,31 @@ const buttonTheme = createMuiTheme({
                 height: 40,
                 marginLeft: 5,
                 padding: 0,
-                color: "#333333",
-                backgroundColor: "#ffffff",
                 boxShadow: "unset",
-                border: "1px solid #00000033",
                 borderRadius: 4,
+                border: `1px solid ${palette.border["light"]}`,
                 fontSize: 13,
-                lineHeight: "17px",
                 fontWeight: 400,
-                letterSpacing: "0.52px"
+                lineHeight: "17px",
+                letterSpacing: "0.52px",
+                color: palette.text["primary"],
+                backgroundColor: palette.neutral["white"]
             },
             contained: {
-                width: 48,
                 minWidth: 48,
                 height: 32,
                 marginRight: 4,
                 padding: 6,
-                border: "1px solid #3D393534",
                 boxShadow: "unset",
                 borderRadius: 4,
-                backgroundColor: "#FBFBFB",
-                color: "#333333",
+                border: `1px solid ${palette.border["main"]}`,
                 fontSize: 12,
                 letterSpacing: " -0.24px",
+                color: palette.text["primary"],
+                backgroundColor: palette.background["light"],
                 "&:hover": {
-                    backgroundColor: "#FBFBFB",
-                    border: "1px solid #3D393534",
+                    backgroundColor: palette.background["light"],
+                    border: `1px solid ${palette.border["main"]}`,
                     boxShadow: "unset"
                 },
                 "&:last-child": {

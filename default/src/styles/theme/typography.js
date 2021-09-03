@@ -15,14 +15,16 @@ export const typography = {
         letterSpacing: "-1.26px"
     },
     h3: {
-        fontWeight: 500,
-        fontSize: 24,
-        letterSpacing: "-0.06px"
+        fontWeight: 600,
+        fontSize: 15,
+        lineHeight: "27px",
+        letterSpacing: "-1.26px"
     },
     h4: {
-        fontWeight: 500,
-        fontSize: 20,
-        letterSpacing: "-0.06px"
+        fontWeight: 400,
+        fontSize: 12,
+        lineHeight: "27px",
+        letterSpacing: 0
     },
     h5: {
         fontWeight: 500,

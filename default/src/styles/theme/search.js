@@ -2,8 +2,10 @@
 // 참고: https://material-ui.com/customization/globals/#css
 import { createMuiTheme } from "@material-ui/core";
 import { typography } from "styles/theme/typography";
+import { palette } from "styles/theme/palette";
 
-const searchTheme = createMuiTheme({
+const theme = createMuiTheme({
+    palette,
     typography,
     overrides: {
         MuiGrid: {
@@ -11,10 +13,25 @@ const searchTheme = createMuiTheme({
                 margin: "0 10px 0 0"
             }
         },
+        MuiFormGroup: {
+            root: {
+                flexDirection: "row"
+            }
+        },
         MuiTextField: {
             root: {
                 width: 120,
                 height: 40
+            }
+        },
+        MuiInput: {
+            underline: {
+                "&&&:before": {
+                    borderBottom: "none"
+                },
+                "&&&:after": {
+                    borderBottom: "none"
+                }
             }
         },
         MuiInputBase: {
@@ -28,12 +45,12 @@ const searchTheme = createMuiTheme({
             root: {
                 height: "100%",
                 "&&$focused fieldset": {
-                    borderColor: "#3D393534",
-                    borderWidth: "1px"
+                    borderColor: palette.border["main"],
+                    borderWidth: 1
                 },
                 "&&:hover fieldset": {
-                    borderColor: "#3D393534",
-                    borderWidth: "1px"
+                    borderColor: palette.border["main"],
+                    borderWidth: 1
                 }
             },
             input: {
@@ -43,12 +60,20 @@ const searchTheme = createMuiTheme({
                 paddingRight: 8
             },
             notchedOutline: {
-                borderColor: "#3D393534"
+                borderColor: palette.border["main"]
+            }
+        },
+        MuiRadio: {
+            root: {
+                color: palette.neutral["dark"]
             }
         },
         MuiIconButton: {
             root: {
                 padding: 0
+            },
+            colorPrimary: {
+                color: palette.primary["main"]
             }
         },
         MuiButton: {
@@ -58,11 +83,12 @@ const searchTheme = createMuiTheme({
             contained: {
                 width: 64,
                 height: 40,
-                backgroundColor: "#3d3935",
+                backgroundColor: palette.neutral["dark"],
                 boxShadow: "unset",
-                color: "white",
+                color: palette.neutral["white"],
+                fontWeight: 500,
                 "&:hover": {
-                    backgroundColor: "#3d3935",
+                    backgroundColor: palette.neutral["dark"],
                     boxShadow: "unset"
                 },
                 "&:active": {
@@ -72,15 +98,62 @@ const searchTheme = createMuiTheme({
         },
         MuiFormHelperText: {
             root: {
-                fontSize: 10,
-                width: "100%"
+                width: "100%",
+                fontSize: 10
             },
             contained: {
                 marginLeft: 3,
                 marginRight: 0
             }
+        },
+        MuiSelect: {
+            select: {
+                minWidth: 84,
+                padding: 10,
+                backgroundColor: palette.neutral["white"],
+                border: `1px solid ${palette.border["main"]}`,
+                borderRadius: 4,
+                "&:focus": {
+                    borderRadius: 4,
+                    backgroundColor: palette.neutral["white"]
+                }
+            },
+            icon: {
+                top: "calc(50% - 8px)",
+                right: 4,
+                width: 20,
+                height: 20,
+                color: "#cccccc"
+            }
+        },
+        MuiMenuItem: {
+            root: {
+                paddingTop: 10,
+                paddingBottom: 10
+            }
+        },
+        MuiList: {
+            padding: {
+                paddingTop: 0,
+                paddingBottom: 0
+            }
+        },
+        MuiListItem: {
+            root: {
+                "&$selected": {
+                    backgroundColor: palette.primary["opacity0.2"]
+                },
+                "&$selected:hover": {
+                    backgroundColor: palette.primary["opacity0.2"]
+                }
+            },
+            button: {
+                "&:hover": {
+                    backgroundColor: palette.primary["light"]
+                }
+            }
         }
     }
 });
 
-export default searchTheme;
+export default theme;
