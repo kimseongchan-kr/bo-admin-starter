@@ -11,8 +11,8 @@ import TableCell from "@material-ui/core/TableCell";
 import Typography from "@material-ui/core/Typography";
 import Pagination from "@material-ui/lab/Pagination";
 
-import { exampleHeadCell } from "features/example/Data";
-import { disableScroll, enableScroll } from "utils/CommonFunction";
+import { headCell } from "components/Data";
+import { disableScroll, enableScroll } from "utils/common";
 
 import Modal from "react-modal";
 import Close from "@material-ui/icons/Close";
@@ -51,46 +51,36 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 27,
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        "& > nav": {
+            marginRight: "auto",
+            marginLeft: "auto"
+        }
     }
 }));
 
-export default function DetailModal({ menu, handleDetailData, onClose }) {
+export default function DetailModal({ menu, title, handleDetailData, onClose }) {
     const classes = useStyles();
-    const { modalId, detailOpen, modalData } = useSelector(modalSelector);
+    const { detailOpen, detailData } = useSelector(modalSelector);
 
     const [pageNumber, setPageNumber] = useState(1);
-    const totalCount = detailOpen ? Math.ceil(modalData.length / 15) : 0; // total data
+    const totalCount = detailOpen ? Math.ceil(detailData.length / 15) : 0; // total data
 
     const handleChange = (event, value) => {
         setPageNumber(value);
-        handleDetailData(modalId, value);
+        handleDetailData(detailData.index, value);
     };
 
-    const ExampleData = ({ row, index }) => {
+    const ExampleData = ({ row }) => {
         return (
             <>
-                <TableCell key={`td-name-${index}`} align="center" padding="none">
-                    {row.name}
-                </TableCell>
-                <TableCell key={`td-calories-${index}`} align="center" padding="none">
-                    {row.calories}
-                </TableCell>
-                <TableCell key={`td-fat-${index}`} align="center" padding="none">
-                    {row.fat}
-                </TableCell>
-                <TableCell key={`td-carbs-${index}`} align="center" padding="none">
-                    {row.carbs}
-                </TableCell>
-                <TableCell key={`td-protein-${index}`} align="center" padding="none">
-                    {row.protein}
-                </TableCell>
-                <TableCell key={`td-useYn-${index}`} align="center" padding="none">
-                    {row.useYn}
-                </TableCell>
-                <TableCell key={`td-viewYn-${index}`} align="center" padding="none">
-                    {row.viewYn}
-                </TableCell>
+                <TableCell align="center">{row.name}</TableCell>
+                <TableCell align="center">{row.calories}</TableCell>
+                <TableCell align="center">{row.fat}</TableCell>
+                <TableCell align="center">{row.carbs}</TableCell>
+                <TableCell align="center">{row.protein}</TableCell>
+                <TableCell align="center">{row.useYn}</TableCell>
+                <TableCell align="center">{row.viewYn}</TableCell>
             </>
         );
     };
@@ -100,33 +90,34 @@ export default function DetailModal({ menu, handleDetailData, onClose }) {
             {detailOpen && (
                 <>
                     <Typography variant="h2" component="h2" color="inherit" className={classes.title}>
-                        {menu} 상세
+                        {title}
                         <Close className={classes.closeIcon} onClick={onClose} />
                     </Typography>
                     <Table className={classes.table} aria-labelledby="detailTable" size="medium" aria-label="detail table">
                         <TableHead>
                             <TableRow>
-                                {exampleHeadCell["ExampleDetail"].map((headCell) => (
-                                    <TableCell key={headCell.id} align="center" padding={headCell.disablePadding ? "none" : "default"}>
-                                        {headCell.label}
+                                {headCell["ExampleDetail"].map((cell) => (
+                                    <TableCell key={cell.id} align="center">
+                                        {cell.label}
                                     </TableCell>
                                 ))}
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {modalData.map((row, index) => {
-                                return (
-                                    <TableRow hover tabIndex={-1} key={index}>
-                                        {menu === "Example" && <ExampleData key={index} row={row} index={index} />}
-                                    </TableRow>
-                                );
-                            })}
-                            {modalData === 0 && (
+                            {detailData.length === 0 ? (
                                 <TableRow>
                                     <TableCell align="center" colSpan={6}>
                                         No Data
                                     </TableCell>
                                 </TableRow>
+                            ) : (
+                                detailData.map((row, index) => {
+                                    return (
+                                        <TableRow hover tabIndex={-1} key={index}>
+                                            {menu === "Example" && <ExampleData row={row} />}
+                                        </TableRow>
+                                    );
+                                })
                             )}
                         </TableBody>
                     </Table>

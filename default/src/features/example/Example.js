@@ -1,111 +1,120 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { searchSelector, setFilter, setPage, setSearchFilter, setSort } from "slices/searchSlice";
-import { setClose, setDetail, setMessage, setModal, setMsgConfirm } from "slices/modalSlice";
+import { useHistory } from "react-router-dom";
+import useMenu from "hooks/useMenu";
+import useSearchParams from "hooks/useSearchParams";
 
-import MenuRedux from "common/menu/MenuRedux";
+import { queryToString } from "utils/common";
 
-import { ThemeProvider } from "@material-ui/core/styles";
-import search from "styles/theme/search";
-import form from "styles/theme/form";
+import { exampleSelector, getExampleList } from "slices/exampleSlice";
+import { searchSelector, setSearchFilter, setPage } from "slices/searchSlice";
+import { setDetail, setMessage, setMsgConfirm, setClose, setEdit, setEditClose, modalSelector } from "slices/modalSlice";
 
-import ExampleSearch from "common/search/DateTermSearch";
-import ExampleTable from "features/example/components/Table";
-
-import EditModal from "features/example/modal/ExampleEditModal";
-import DetailModal from "features/example/modal/DetailModal";
-
+import ExampleSearch from "components/DateTermSearch";
+import ExampleTable from "components/Table";
+import UploadModal from "features/example/ExampleUploadModal";
+import DetailModal from "features/example/ExampleDetailModal";
 import MessageModal from "common/modal/MessageModal";
-import ConfirmModal from "common/modal/MessageConfirm";
+import ConfirmModal from "common/modal/ConfirmModal";
 
-import { sampleDetailData } from "features/example/Data";
+import { searchParams, sampleRowData, sampleDetailData } from "components/Data";
+import useErrorMsg from "hooks/useErrorMsg";
 
 export default function Example() {
     const dispatch = useDispatch();
+    const history = useHistory();
 
-    const searchList = useSelector(searchSelector);
-    const { term, startDate, endDate, sortNm, sortOrder, pageNumber, pageShow } = searchList;
+    const { dataList, total, status, errorMsg, statusCode } = useSelector(exampleSelector);
+    const { editData } = useSelector(modalSelector);
+    const { startDate, endDate, pageNumber, pageShow } = useSelector(searchSelector);
 
-    const [contents, setContents] = useState("hello");
-    const menu = "Example";
+    const [urlParams, setUrlParams] = useState({
+        startDate,
+        endDate,
+        pageNumber,
+        pageShow
+    });
+    const [reset, setReset] = useState(false);
+
+    // 페이지/메뉴 설정하기
+    const menu = useMenu({ page: "Example", menu: "example", title: "Example", num: 3 });
+
+    // search params 설정하기
+    const params = useSearchParams(searchParams[menu], urlParams);
 
     // 데이터 불러오기
     const handleData = useCallback(() => {
-        console.log("데이터 불러오기...");
-    }, []);
+        const dataParams = params ? params : { sort: "latest" };
+        // dispatch(getExampleList({ url: "/web/example", params: dataParams }));
+    }, [dispatch, params]);
 
     useEffect(() => {
         handleData();
     }, [handleData]);
 
+    // 에러 메시지
+    useErrorMsg(status, statusCode, errorMsg);
+
     // 검색 조건 변경하기
     const handleSearchFilter = (searchFilterItems) => {
-        console.log("검색 조건 변경하기");
         dispatch(setSearchFilter(searchFilterItems));
     };
 
     // 검색하기
     const handleSearch = (searchItems) => {
-        console.log("데이터 검색하기...");
-        let search = { term, startDate, endDate, sortNm, sortOrder, pageNumber, pageShow };
+        let search = { startDate, endDate, pageNumber, pageShow };
 
         if (searchItems) {
             search = { ...search, ...searchItems };
         }
-        console.log(search);
+
+        setUrlParams(search);
+        const params = queryToString(search);
+        return history.push({ pathname: "/example", search: params });
     };
 
     // 테이블 데이터 정렬하기
-    const handleSort = (sortItems) => {
-        console.log("데이터 정렬하기...");
-        dispatch(setSort(sortItems));
-        handleSearch(sortItems);
-    };
-
-    // 테이블 데이터 필터하기
-    const handleFilter = (filterItems) => {
-        console.log("데이터 필터링...");
-        dispatch(setFilter(filterItems));
+    const handleSort = (e) => {
+        dispatch(setSearchFilter({ type: e.target.name, value: e.target.value }));
+        handleSearch({ sort: e.target.value });
     };
 
     // 페이지 변경하기
     const handlePage = (paging) => {
-        console.log("페이지 변경하기...");
         dispatch(setPage(paging));
         handleSearch(paging);
     };
 
-    // 수정할 데이터 불러오고 modal 띄우기
-    const handleOneData = (modalId) => {
+    // 상세 데이터 불러오고 modal 띄우기
+    const handleDetailData = (index, pageNumber) => {
+        pageNumber = pageNumber ? pageNumber : 1;
+        console.log(index, pageNumber);
         // 데이터를 불러오고
         // 함께 데이터 넘겨주기
-        dispatch(setModal({ open: true, modalStatus: "modify", modalId: modalId, modalData: { title: "Editor 제목" } }));
+        dispatch(setDetail({ open: true, data: sampleDetailData }));
     };
 
-    // 상세 데이터 불러오고 modal 띄우기
-    const handleDetailData = (modalId, pageNumber) => {
-        pageNumber = pageNumber ? pageNumber : 1;
-        console.log(modalId, pageNumber);
+    // 수정할 데이터 불러오고 modal 띄우기
+    const handleOneData = (index, data) => {
         // 데이터를 불러오고
         // 함께 데이터 넘겨주기
-        dispatch(setDetail({ open: true, modalId: modalId, modalData: sampleDetailData }));
+        dispatch(setEdit({ open: true, data: { index, modalStatus: "modify", contents: "hello", ...data, category: { value: data.category, label: data.category } } }));
     };
 
     // 데이터 추가하기/수정하기
-    const handleSubmit = (data, modalId) => {
-        console.log(data, modalId);
+    const handleSubmit = () => {
+        alert(JSON.stringify(editData, null, 2));
     };
 
     // 데이터 삭제하기
     const handleDelete = () => {
         dispatch(setClose());
-        console.log("삭제되었습니다...");
         dispatch(setMessage({ open: true, message: "삭제되었습니다." }));
     };
 
     // 사용여부/노출여부 등 select 데이터 수정하기
-    const handleSelect = (type, value) => {
-        console.log("changing status...", type, value);
+    const handleSelect = (name, value, rowIndex) => {
+        console.log("changing status...", name, value, rowIndex);
     };
 
     // 노출순서 등 input 데이터 수정하기
@@ -114,8 +123,9 @@ export default function Example() {
     };
 
     // 추가 모달 열기
-    const onOpen = () => {
-        dispatch(setModal({ open: true, modalId: "", modalStatus: "add" }));
+    const onAdd = () => {
+        setReset(false);
+        dispatch(setEdit({ open: true }));
     };
 
     // 삭제 확인 모달 열기
@@ -128,31 +138,34 @@ export default function Example() {
         dispatch(setClose());
     };
 
+    // 추가/수정 모달 닫기
+    const onEditClose = () => {
+        setReset(true);
+        dispatch(setEditClose());
+    };
+
     return (
         <>
-            <MenuRedux menu="example" title="Example" num={3} />
-            <ThemeProvider theme={search}>
-                <ExampleSearch handleSearchFilter={handleSearchFilter} handleSearch={handleSearch} />
-            </ThemeProvider>
+            {/* total={total} */}
+            <ExampleSearch menu={menu} total={sampleRowData.length} handleSearchFilter={handleSearchFilter} handleSort={handleSort} handleSearch={handleSearch} />
             <ExampleTable
                 menu={menu}
+                // data={dataList}
+                data={sampleRowData}
+                // total={total}
+                total={sampleRowData.length}
                 handleOneData={handleOneData}
                 handleDetailData={handleDetailData}
                 handleSelect={handleSelect}
                 handleChange={handleChange}
-                handleSort={handleSort}
                 handlePage={handlePage}
-                handleFilter={handleFilter}
-                handleSearch={handleSearch}
-                onOpen={onOpen}
+                onAdd={onAdd}
                 onConfirm={onConfirm}
             />
-            <ThemeProvider theme={form}>
-                <EditModal contents={contents} setContents={setContents} handleDataSubmit={handleSubmit} onClose={onClose} />
-            </ThemeProvider>
-            <DetailModal menu={menu} handleDetailData={handleDetailData} onClose={onClose} />
-            <ConfirmModal onClose={onClose} handleDelete={handleDelete} />
             <MessageModal onClose={onClose} />
+            <ConfirmModal onClose={onClose} handleConfirm={handleDelete} />
+            <DetailModal menu={menu} title="Example 상세 조회" handleDetailData={handleDetailData} onClose={onClose} />
+            <UploadModal reset={reset} handleDataSubmit={handleSubmit} onClose={onEditClose} />
         </>
     );
 }
