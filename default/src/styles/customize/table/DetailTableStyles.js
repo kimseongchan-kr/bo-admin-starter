@@ -275,6 +275,29 @@ const useStyles = makeStyles((theme) => ({
             background: "none"
         }
     },
+    button: {
+        width: "auto",
+        height: 30,
+        marginTop: 5,
+        marginBottom: 5,
+        padding: 5,
+        fontSize: 12,
+        lineHeight: "12px",
+        color: theme.palette.primary.main,
+        border: `1px solid ${theme.palette.primary.main}`,
+        backgroundColor: theme.palette.neutral["white"],
+        "&:hover": {
+            color: theme.palette.primary.main,
+            border: `1px solid ${theme.palette.primary.main}`,
+            backgroundColor: theme.palette.neutral["white"]
+        },
+        "&:active": {
+            transition: "none",
+            color: theme.palette.primary.main,
+            border: `1px solid ${theme.palette.primary.main}`,
+            backgroundColor: theme.palette.neutral["white"]
+        }
+    },
     buttonContent: {
         display: "flex",
         alignItem: "center",
