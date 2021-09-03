@@ -24,7 +24,7 @@ export default function SelectionTable(props) {
     const classes = useStyles();
 
     const { page, pageShow } = useSelector(searchSelector);
-    const { menu, loading, buttonLoading, submitLoading, data, total, excelData, selected, setSelected, handleChange, handleSelect, handlePage, handleOneData, handleNewData, onDelete, onExcel } =
+    const { menu, loading, buttonLoading, submitLoading, data, total, excelData, selected, setSelected, handleChange, handleSelect, handlePage, handleOneData, handleEditData, onDelete, onExcel } =
         props;
 
     const DashboardData = ({ row, index }) => {
@@ -47,7 +47,7 @@ export default function SelectionTable(props) {
                     <TextInput index={index} name="sortOrder" value={row.sortOrder} handleChange={handleChange} />
                 </TableCell>
                 <TableCell width={150} align="center">
-                    <TableButton text="수정" rowIndex={index} data={row} onClick={() => handleNewData(row.idx)} />
+                    <TableButton text="수정" rowIndex={index} data={row} onClick={() => handleEditData(row.idx)} />
                     <TableButton text="삭제" rowIndex={index} data={row} onClick={onDelete} />
                 </TableCell>
             </>
