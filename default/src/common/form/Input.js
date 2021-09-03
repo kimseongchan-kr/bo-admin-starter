@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 
 import { Controller } from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
-function Input({ name, defaultValue, control, classes, inputType }) {
+
+function Input({ inputType, name, defaultValue, control, classes }) {
     return (
         <Controller
             name={name}
@@ -12,7 +13,7 @@ function Input({ name, defaultValue, control, classes, inputType }) {
             render={({ onChange, value }) => (
                 <TextField
                     className={classes.textInput}
-                    id={`outline-${name}`}
+                    id={`outlined-${name}`}
                     label=""
                     variant="outlined"
                     InputLabelProps={{ shrink: true }}
@@ -27,11 +28,11 @@ function Input({ name, defaultValue, control, classes, inputType }) {
 }
 
 Input.propTypes = {
+    inputType: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     control: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired,
-    inputType: PropTypes.string.isRequired
+    classes: PropTypes.object.isRequired
 };
 
 export default Input;

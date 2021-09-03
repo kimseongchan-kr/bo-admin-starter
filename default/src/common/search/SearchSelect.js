@@ -1,27 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Select from "react-select";
-import styles from "styles/customize/SearchSelectStyles";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-function SearchSelect({ index, type, caption, defaultValue, options, handleChange }) {
+function SearchSelect({ name, value, options, handleChange }) {
     return (
-        <Grid key={`grid-${index}`} item>
-            <Typography key={`caption-${index}`} variant="caption" display="block">
-                {caption}
-            </Typography>
-            <Select key={index} styles={styles} isClearable={false} isSearchable={false} defaultValue={defaultValue} options={options} onChange={(e) => handleChange(e, type)} />
-        </Grid>
+        <Select IconComponent={KeyboardArrowDownIcon} displayEmpty name={name} value={value} onChange={handleChange}>
+            {options &&
+                options.map((list) => (
+                    <MenuItem key={`key-${list.label}`} value={list.value}>
+                        {list.label}
+                    </MenuItem>
+                ))}
+        </Select>
     );
 }
 
 SearchSelect.propTypes = {
-    index: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
-    caption: PropTypes.string.isRequired,
-    defaultValue: PropTypes.object.isRequired,
+    name: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     options: PropTypes.array.isRequired,
     handleChange: PropTypes.func.isRequired
 };

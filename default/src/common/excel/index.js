@@ -1,76 +1,69 @@
-import React, { useState } from "react";
+import React from "react";
 import Workbook from "react-excel-workbook";
-import moment from "moment";
+import { format } from "utils/common";
 
 import theme from "styles/theme/button";
 import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     excel: {
         width: 120,
-        "& svg": {
-            width: 14,
-            height: 15
+        color: theme.palette.primary.main,
+        border: `1px solid ${theme.palette.primary.main}`,
+        "&:hover": {
+            color: theme.palette.primary.main,
+            border: `1px solid ${theme.palette.primary.main}`
+        },
+        "&:active": {
+            color: theme.palette.primary.main,
+            border: `1px solid ${theme.palette.primary.main}`
         }
+    },
+    buttonProgress: {
+        color: theme.palette.primary.main
     }
 }));
 
-const exampleData = [
-    {
-        No: 123,
-        "Column 1": 456,
-        "Column 2": 456,
-        "Column 3": 456,
-        "Column 4": 456
-    },
-    {
-        No: 123,
-        "Column 1": 456,
-        "Column 2": 456,
-        "Column 3": 456,
-        "Column 4": 456
-    },
-    {
-        No: 123,
-        "Column 1": 456,
-        "Column 2": 456,
-        "Column 3": 456,
-        "Column 4": 456
-    }
-];
-
-export default function ExcelExport() {
+export default function ExcelExport({ menu, loading, excelData, onExcelClick }) {
     const classes = useStyles();
-    const [data, setData] = useState([]);
+    const today = new Date();
 
-    const download = async () => {
-        console.log("downloading excel file...");
-        // API 호출
-        setData(exampleData);
+    const DashboardExcel = () => (
+        <Workbook filename={`${format("excel", today)}.xlsx`} element={<i className="file-download"></i>}>
+            <Workbook.Sheet data={excelData} name="Sheet1">
+                <Workbook.Column label="No" value={(row) => row["idx"]} />
+                <Workbook.Column label="Carbs" value={(row) => row["carbs"]} />
+                <Workbook.Column label="Protein" value={(row) => row["protein"]} />
+            </Workbook.Sheet>
+        </Workbook>
+    );
 
-        let e = document.createEvent("MouseEvents");
-        e.initEvent("click", true, true);
-        document.querySelector(".file-download").dispatchEvent(e);
-    };
+    const ExampleExcel = () => (
+        <Workbook filename={`${format("excel", today)}.xlsx`} element={<i className="file-download"></i>}>
+            <Workbook.Sheet data={excelData} name="Sheet1">
+                <Workbook.Column label="No" value={(row) => row["idx"]} />
+                <Workbook.Column label="Carbs" value={(row) => row["carbs"]} />
+                <Workbook.Column label="Protein" value={(row) => row["protein"]} />
+            </Workbook.Sheet>
+        </Workbook>
+    );
 
     return (
         <>
             <ThemeProvider theme={theme}>
-                <Button variant="outlined" className={classes.excel} onClick={download}>
+                <Button
+                    disabled={loading}
+                    variant="outlined"
+                    startIcon={loading ? <CircularProgress size={12} className={classes.buttonProgress} /> : <></>}
+                    className={classes.excel}
+                    onClick={onExcelClick}>
                     엑셀 다운로드
                 </Button>
             </ThemeProvider>
-
-            <Workbook filename={`${moment().format("YYYYMMDDhhmmss")}.xlsx`} element={<i className="file-download"></i>}>
-                <Workbook.Sheet data={data} name="Sheet1">
-                    <Workbook.Column label="No" value={(row) => row["No"]} />
-                    <Workbook.Column label="Column 1" value={(row) => row["Column 1"]} />
-                    <Workbook.Column label="Column 2" value={(row) => row["Column 2"]} />
-                    <Workbook.Column label="Column 3" value={(row) => row["Column 3"]} />
-                    <Workbook.Column label="Column 4" value={(row) => row["Column 4"]} />
-                </Workbook.Sheet>
-            </Workbook>
+            {menu === "Dashboard" && <DashboardExcel />}
+            {menu === "Example" && <ExampleExcel />}
         </>
     );
 }

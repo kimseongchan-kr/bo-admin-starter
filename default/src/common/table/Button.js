@@ -3,22 +3,24 @@ import PropTypes from "prop-types";
 
 import theme from "styles/theme/button";
 import { ThemeProvider } from "@material-ui/core/styles";
-
 import Button from "@material-ui/core/Button";
-import Close from "@material-ui/icons/Close";
-function CloseButton({ text, onClose }) {
+
+function TableButton({ disabled = false, text, rowIndex, data, onClick }) {
     return (
         <ThemeProvider theme={theme}>
-            <Button variant="outlined" startIcon={<Close style={{ color: "#DE5D5D" }} />} onClick={onClose}>
+            <Button variant="contained" disabled={disabled} onClick={() => onClick(rowIndex, data)}>
                 {text}
             </Button>
         </ThemeProvider>
     );
 }
 
-CloseButton.propTypes = {
+TableButton.propTypes = {
+    disabled: PropTypes.bool,
     text: PropTypes.string.isRequired,
-    onClose: PropTypes.func.isRequired
+    rowIndex: PropTypes.number.isRequired,
+    data: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired
 };
 
-export default CloseButton;
+export default TableButton;

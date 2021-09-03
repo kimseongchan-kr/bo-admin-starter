@@ -3,16 +3,10 @@ import PropTypes from "prop-types";
 
 import { Controller } from "react-hook-form";
 import Select from "react-select";
-import styles from "styles/customize/FormSelectStyles";
+import styles from "styles/customize/select/FormSelectStyles";
+
 function FormSelect({ name, defaultValue, control, options }) {
-    return (
-        <Controller
-            name={name}
-            defaultValue={defaultValue}
-            control={control}
-            render={({ onChange }) => <Select isClearable={false} isSearchable={false} styles={styles} name={name} defaultValue={defaultValue} options={options} onChange={onChange} />}
-        />
-    );
+    return <Controller name={name} defaultValue={defaultValue} options={options} control={control} as={<Select isClearable={false} isSearchable={false} styles={styles} />} />;
 }
 
 FormSelect.propTypes = {

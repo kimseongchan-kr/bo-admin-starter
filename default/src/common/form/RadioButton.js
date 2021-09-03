@@ -5,6 +5,7 @@ import { Controller } from "react-hook-form";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
+
 function RadioButton({ name, defaultValue, control, options }) {
     return (
         <Controller
@@ -24,7 +25,7 @@ function RadioButton({ name, defaultValue, control, options }) {
 
 RadioButton.propTypes = {
     name: PropTypes.string.isRequired,
-    defaultValue: PropTypes.string.isRequired,
+    defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     control: PropTypes.object.isRequired,
     options: PropTypes.array.isRequired
 };

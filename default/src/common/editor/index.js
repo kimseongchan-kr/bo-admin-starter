@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
         "& .ql-toolbar.ql-snow + .ql-container.ql-snow": {
             height: 400
         },
-        " & .ql-snow .ql-tooltip": {
+        "& .ql-snow .ql-tooltip": {
             zIndex: 9999,
             transform: "translate(100px, 10px)"
         }
