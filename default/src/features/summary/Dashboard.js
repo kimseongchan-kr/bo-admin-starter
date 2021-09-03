@@ -7,7 +7,7 @@ import useErrorMsg from "hooks/useErrorMsg";
 
 import { queryToString } from "utils/common";
 
-import { summarySelector, getSummaryList, updateSummaryInfo, deleteSummaryInfo, clearError } from "slices/summarySlice";
+import { summarySelector, getSummaryList, updateSummaryInfo, deleteSummaryInfo, clearError, resetStates } from "slices/summarySlice";
 import { commonSelector, getExcelList, clearExcelData } from "slices/commonSlice";
 import { searchSelector, setPage, setSearchFilter } from "slices/searchSlice";
 import { setClose, setMessage, setMsgConfirm, setMsgConfirmClose } from "slices/modalSlice";
@@ -141,6 +141,7 @@ export default function Dashboard() {
 
     // 상세 페이지로 이동하기
     const handleOneData = (index) => {
+        dispatch(resetStates());
         return history.push({
             pathname: `/dashboard/detail/${index}`,
             search: location.search
@@ -149,6 +150,7 @@ export default function Dashboard() {
 
     // 업로드 페이지로 이동하기
     const handleNewData = () => {
+        dispatch(resetStates());
         return history.push({
             pathname: "/dashboard/upload",
             search: location.search
@@ -157,6 +159,7 @@ export default function Dashboard() {
 
     // 수정 페이지로 이동하기
     const handleEditData = (idx) => {
+        dispatch(resetStates());
         return history.push({
             pathname: `/dashboard/edit/${idx}`,
             search: location.search
