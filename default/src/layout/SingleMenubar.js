@@ -182,15 +182,15 @@ function Menubar(props) {
 
     const { menu, menuNum } = useSelector(menuSelector);
     const [expanded, setExpanded] = useState(menu ? menu : false);
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(menu === "components" ? true : false);
 
     useEffect(() => {
-        setExpanded((prev) => (prev !== menu ? menu : prev));
+        setExpanded(menu ? menu : false);
         setOpen(menu === "components" ? true : false);
     }, [menu]);
 
     const handleChange = (panel) => {
-        setExpanded(panel);
+        setExpanded(open && panel ? false : panel);
         setOpen(!open);
     };
 
@@ -232,9 +232,9 @@ function Menubar(props) {
                         <SettingsIcon />
                     </ListItemIcon>
                     <ListItemText primary="Components" />
-                    {open ? <ExpandLess /> : <ExpandMore />}
+                    {open || expanded === "components" ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
-                <Collapse in={menu === "components" || expanded === "components" ? true : false} timeout="auto" unmountOnExit>
+                <Collapse in={open || expanded === "components" ? true : false} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         <ListItem button selected={menuNum === 4} className={menuNum === 4 ? classes.nestedActive : classes.nested} onClick={() => handlePageChange("/search")}>
                             <ListItemText primary="Search" />
