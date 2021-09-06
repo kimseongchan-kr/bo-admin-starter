@@ -55,16 +55,16 @@ export default function DashboardDetail() {
         }
 
         // 예제
-        const resultAction = await dispatch(updateSummaryInfo({ url: "/web/change-status", data: { idx, [type]: value } }));
-        if (updateSummaryInfo.fulfilled.match(resultAction)) {
-            // 성공
-        } else {
-            if (resultAction.payload) {
-                dispatch(setMessage({ open: true, message: resultAction.payload.message }));
-            } else {
-                dispatch(setMessage({ open: true, message: "Error" }));
-            }
-        }
+        // const resultAction = await dispatch(updateSummaryInfo({ url: "/web/change-status", data: { idx, [type]: value } }));
+        // if (updateSummaryInfo.fulfilled.match(resultAction)) {
+        //     // 성공
+        // } else {
+        //     if (resultAction.payload) {
+        //         dispatch(setMessage({ open: true, message: resultAction.payload.message }));
+        //     } else {
+        //         dispatch(setMessage({ open: true, message: "Error" }));
+        //     }
+        // }
     };
 
     // 페이지 이동하기

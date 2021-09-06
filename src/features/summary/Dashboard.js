@@ -94,32 +94,32 @@ export default function Dashboard() {
     const handleSelect = async (name, value, rowIndex) => {
         console.log("changing status...", name, value, rowIndex);
 
-        const resultAction = await dispatch(updateSummaryInfo({ url: "/web/example", fileYn: false, data: { example: "test" } }));
-        if (updateSummaryInfo.fulfilled.match(resultAction)) {
-            // 성공
-        } else {
-            if (resultAction.payload) {
-                dispatch(setMessage({ open: true, message: resultAction.payload.message }));
-            } else {
-                dispatch(setMessage({ open: true, message: "네트워크 에러" }));
-            }
-        }
+        // const resultAction = await dispatch(updateSummaryInfo({ url: "/web/example", fileYn: false, data: { example: "test" } }));
+        // if (updateSummaryInfo.fulfilled.match(resultAction)) {
+        //     // 성공
+        // } else {
+        //     if (resultAction.payload) {
+        //         dispatch(setMessage({ open: true, message: resultAction.payload.message }));
+        //     } else {
+        //         dispatch(setMessage({ open: true, message: "네트워크 에러" }));
+        //     }
+        // }
     };
 
     // 노출순서 등 input 데이터 수정하기
-    const handleChange = async (value) => {
-        console.log("changing input value...", value);
+    const handleChange = async (e, rowIndex) => {
+        console.log("changing input value...", e.target.name, e.target.value, rowIndex);
 
-        const resultAction = await dispatch(updateSummaryInfo({ url: "/web/example", fileYn: false, data: { example: "test" } }));
-        if (updateSummaryInfo.fulfilled.match(resultAction)) {
-            // 성공
-        } else {
-            if (resultAction.payload) {
-                dispatch(setMessage({ open: true, message: resultAction.payload.message }));
-            } else {
-                dispatch(setMessage({ open: true, message: "네트워크 에러" }));
-            }
-        }
+        // const resultAction = await dispatch(updateSummaryInfo({ url: "/web/example", fileYn: false, data: { example: "test" } }));
+        // if (updateSummaryInfo.fulfilled.match(resultAction)) {
+        //     // 성공
+        // } else {
+        //     if (resultAction.payload) {
+        //         dispatch(setMessage({ open: true, message: resultAction.payload.message }));
+        //     } else {
+        //         dispatch(setMessage({ open: true, message: "네트워크 에러" }));
+        //     }
+        // }
     };
 
     // 선택한 데이터 삭제하기

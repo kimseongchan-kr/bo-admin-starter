@@ -7,6 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import Pagination from "@material-ui/lab/Pagination";
 import Button from "common/table/Button";
 
+import SingleTextField from "common/table/SingleTextField";
 import TextField from "common/table/TextField";
 import Select from "common/table/Select";
 import SingleSelect from "common/table/SingleSelect";
@@ -102,14 +103,22 @@ export default function Table() {
     return (
         <div className={classes.container}>
             <Typography className={classes.title} variant="h3" component="h3" color="inherit">
-                Table Text Input
+                Table Text Input (검색 결과 테이블)
             </Typography>
             <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
                 <Grid item>
-                    <TextField name="textfield" value="Example..." handleChange={handleDemo} />
+                    <TextField index={0} inputType="number" name="sortOrder" value={1} handleChange={handleDemo} />
+                </Grid>
+            </Grid>
+            <Typography className={classes.title} variant="h3" component="h3" color="inherit">
+                Table Text Input (상세 / 모달)
+            </Typography>
+            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
+                <Grid item>
+                    <SingleTextField inputType="text" name="textfield" value="Example..." handleChange={handleDemo} />
                 </Grid>
                 <Grid item>
-                    <TextField name="sortOrder" value={1} handleChange={handleDemo} />
+                    <SingleTextField inputType="number" name="sortOrder" value={1} handleChange={handleDemo} />
                 </Grid>
             </Grid>
             <Typography className={classes.title} variant="h3" component="h3" color="inherit">
@@ -211,6 +220,49 @@ export default function Table() {
                             <td>0</td>
                             <td>index number</td>
                         </tr>
+                        <tr>
+                            <th>inputType</th>
+                            <td>string</td>
+                            <td>No</td>
+                            <td>"text"</td>
+                            <td>"text" / "number" / "tel" ...</td>
+                        </tr>
+                        <tr>
+                            <th>name</th>
+                            <td>string</td>
+                            <td>Yes</td>
+                            <td></td>
+                            <td>"name" / "quantity" / "calories" ...</td>
+                        </tr>
+                        <tr>
+                            <th>value</th>
+                            <td>string || number</td>
+                            <td>Yes</td>
+                            <td></td>
+                            <td>"Strawberry Chocolate Cupcake" / 8.9 ...."</td>
+                        </tr>
+                        <tr>
+                            <th>handleChange</th>
+                            <td>function</td>
+                            <td>Yes</td>
+                            <td></td>
+                            <td>{`() => console.log("change value")`}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                import TextField from "common/table/SingleTextField";
+                <br />
+                <table className={classes.table}>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>isRequired</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         <tr>
                             <th>inputType</th>
                             <td>string</td>
