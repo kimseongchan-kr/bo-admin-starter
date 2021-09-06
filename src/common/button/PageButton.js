@@ -2,10 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import theme from "styles/theme/button";
-import { ThemeProvider } from "@material-ui/core/styles";
-import useStyles from "styles/customize/components/ButtonStyles";
+import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
+
 import Button from "@material-ui/core/Button";
 
+const useStyles = makeStyles((theme) => ({
+    pageButton: {
+        width: "auto",
+        padding: 10,
+        fontWeight: 600,
+        color: theme.palette.primary["main"],
+        borderColor: theme.palette.primary["main"]
+    }
+}));
 function PageButton({ disabled = false, text, pageType = "search", onClick }) {
     const classes = useStyles();
 
