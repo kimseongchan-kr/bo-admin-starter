@@ -10,13 +10,13 @@ export default function App() {
     const { isLogin } = useSelector(loginSelector);
 
     const PrivateRoutes = () => (
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Router />
         </BrowserRouter>
     );
 
     const PublicRoutes = () => (
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Switch>
                 <Route exact path="/login">
                     <Login />
