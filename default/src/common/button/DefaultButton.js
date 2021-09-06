@@ -2,13 +2,44 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import theme from "styles/theme/button";
-import { ThemeProvider } from "@material-ui/core/styles";
-import useStyles from "styles/customize/components/ButtonStyles";
+import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import CheckOutlined from "@material-ui/icons/CheckOutlined";
 import CreateIcon from "@material-ui/icons/Create";
 import Close from "@material-ui/icons/Close";
 
+const useStyles = makeStyles((theme) => ({
+    check: {
+        minWidth: 100,
+        width: "auto",
+        padding: 10,
+        color: theme.palette.primary.main,
+        border: `1px solid ${theme.palette.primary.main}`,
+        "&:hover": {
+            color: theme.palette.primary.main,
+            border: `1px solid ${theme.palette.primary.main}`
+        },
+        "&:active": {
+            color: theme.palette.primary.main,
+            border: `1px solid ${theme.palette.primary.main}`
+        }
+    },
+    cancel: {
+        minWidth: 100,
+        width: "auto",
+        padding: 10,
+        color: theme.palette.primary.red,
+        border: `1px solid ${theme.palette.primary.red}`,
+        "&:hover": {
+            color: theme.palette.primary.red,
+            border: `1px solid ${theme.palette.primary.red}`
+        },
+        "&:active": {
+            color: theme.palette.primary.red,
+            border: `1px solid ${theme.palette.primary.red}`
+        }
+    }
+}));
 function DefaultButton({ icon = "check", disabled = false, text, onClick }) {
     const classes = useStyles();
 

@@ -2,12 +2,37 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import theme from "styles/theme/button";
-import { ThemeProvider } from "@material-ui/core/styles";
-import useStyles from "styles/customize/components/ButtonStyles";
-
+import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import CheckOutlined from "@material-ui/icons/CheckOutlined";
 import CircularProgress from "@material-ui/core/CircularProgress";
+
+const useStyles = makeStyles((theme) => ({
+    progressIcon: {
+        color: theme.palette.primary.main
+    },
+    disabled: {
+        minWidth: 100,
+        width: "auto",
+        padding: 10,
+        backgroundColor: "rgba(0,0,0,0.12)"
+    },
+    check: {
+        minWidth: 100,
+        width: "auto",
+        padding: 10,
+        color: theme.palette.primary.main,
+        border: `1px solid ${theme.palette.primary.main}`,
+        "&:hover": {
+            color: theme.palette.primary.main,
+            border: `1px solid ${theme.palette.primary.main}`
+        },
+        "&:active": {
+            color: theme.palette.primary.main,
+            border: `1px solid ${theme.palette.primary.main}`
+        }
+    }
+}));
 
 function SubmitButton({ type = "button", loading = false, disabled = false, text, onClick }) {
     const classes = useStyles();
