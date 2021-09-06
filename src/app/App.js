@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { loginSelector } from "slices/loginSlice";
 
@@ -10,20 +10,20 @@ export default function App() {
     const { isLogin } = useSelector(loginSelector);
 
     const PrivateRoutes = () => (
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <HashRouter>
             <Router />
-        </BrowserRouter>
+        </HashRouter>
     );
 
     const PublicRoutes = () => (
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <HashRouter>
             <Switch>
                 <Route exact path="/login">
                     <Login />
                 </Route>
                 <Redirect path="*" to="/login" />
             </Switch>
-        </BrowserRouter>
+        </HashRouter>
     );
 
     return isLogin ? <PrivateRoutes /> : <PublicRoutes />;
