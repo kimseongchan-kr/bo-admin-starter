@@ -111,7 +111,7 @@ export default function Table() {
                 </Grid>
             </Grid>
             <Typography className={classes.title} variant="h3" component="h3" color="inherit">
-                Table Text Input (상세 / 모달)
+                Table Text Input (페이지 / 모달)
             </Typography>
             <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
                 <Grid item>
