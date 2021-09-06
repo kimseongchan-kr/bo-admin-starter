@@ -94,6 +94,7 @@ export default function Dashboard() {
     const handleSelect = async (name, value, rowIndex) => {
         console.log("changing status...", name, value, rowIndex);
 
+        // 수정 API
         const resultAction = await dispatch(updateSummaryInfo({ url: "/web/example", fileYn: false, data: { example: "test" } }));
         if (updateSummaryInfo.fulfilled.match(resultAction)) {
             // 성공
@@ -107,9 +108,10 @@ export default function Dashboard() {
     };
 
     // 노출순서 등 input 데이터 수정하기
-    const handleChange = async (value) => {
-        console.log("changing input value...", value);
+    const handleChange = async (e, rowIndex) => {
+        console.log("changing input value...", e.target.name, e.target.value, rowIndex);
 
+        // 수정 API
         const resultAction = await dispatch(updateSummaryInfo({ url: "/web/example", fileYn: false, data: { example: "test" } }));
         if (updateSummaryInfo.fulfilled.match(resultAction)) {
             // 성공
@@ -125,7 +127,8 @@ export default function Dashboard() {
     // 선택한 데이터 삭제하기
     const handleDelete = async () => {
         dispatch(setMsgConfirmClose());
-        // 삭제 API 호출
+
+        // 삭제 API
         const resultAction = await dispatch(deleteSummaryInfo({ url: "/web/example", data: { example: "test" } }));
         if (deleteSummaryInfo.fulfilled.match(resultAction)) {
             // 삭제 성공

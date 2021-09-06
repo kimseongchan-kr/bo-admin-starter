@@ -10,7 +10,7 @@ import useStyles from "styles/customize/components/ModalFormStyles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-import Input from "common/table/TextField";
+import SingleTextField from "common/table/SingleTextField";
 import Select from "common/table/SingleSelect";
 import RadioButton from "common/table/RadioButton";
 import CheckBox from "common/table/CheckBox";
@@ -105,7 +105,7 @@ export default function ExampleUploadModal({ loading, reset, handleDataSubmit, o
                                     <Typography variant="body2">디저트명</Typography>
                                 </td>
                                 <td>
-                                    <Input inputType="text" name="name" value={newData.name} handleChange={handleChange} />
+                                    <SingleTextField inputType="text" name="name" value={newData.name} handleChange={handleChange} />
                                 </td>
                             </tr>
                             <tr className={classes.row}>
@@ -121,7 +121,7 @@ export default function ExampleUploadModal({ loading, reset, handleDataSubmit, o
                                     <Typography variant="body2">칼로리</Typography>
                                 </td>
                                 <td>
-                                    <Input inputType="number" name="calories" value={newData.calories} handleChange={handleChange} />
+                                    <SingleTextField inputType="number" name="calories" value={newData.calories} handleChange={handleChange} />
                                 </td>
                             </tr>
                             <tr className={classes.row}>

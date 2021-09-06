@@ -187,7 +187,7 @@ export default function DashboardUpload() {
         dispatch(setMsgConfirmClose());
         const { imageIndex } = deleteImage;
 
-        // 이미지 삭제 API 예제
+        // 이미지 삭제 API
         const resultAction = await dispatch(deleteSummaryInfo({ url: "/web/example", data: { imageIndex } }));
         if (deleteSummaryInfo.fulfilled.match(resultAction)) {
             // 삭제 성공
@@ -285,7 +285,7 @@ export default function DashboardUpload() {
             setSubmitLoading(true);
         }
 
-        // 수정하기
+        // 수정 API
         if (idx) {
             const resultAction = await dispatch(updateSummaryInfo({ url: "/web/example", data: formData }));
             if (updateSummaryInfo.fulfilled.match(resultAction)) {
@@ -297,7 +297,7 @@ export default function DashboardUpload() {
                     dispatch(setMessage({ open: true, message: "네트워크 에러" }));
                 }
             }
-            // 등록하기
+            // 등록 API
         } else {
             const resultAction = await dispatch(createSummaryInfo({ url: "/web/example", data: formData }));
             if (createSummaryInfo.fulfilled.match(resultAction)) {

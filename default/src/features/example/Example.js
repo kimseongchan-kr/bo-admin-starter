@@ -118,8 +118,8 @@ export default function Example() {
     };
 
     // 노출순서 등 input 데이터 수정하기
-    const handleChange = (value) => {
-        console.log("changing input...", value);
+    const handleChange = async (e, rowIndex) => {
+        console.log("changing input value...", e.target.name, e.target.value, rowIndex);
     };
 
     // 추가 모달 열기

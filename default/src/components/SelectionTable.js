@@ -15,7 +15,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 
 import TableButton from "common/table/Button";
 import TableSelect from "common/table/Select";
-import TextInput from "common/table/TextField";
+import TableTextField from "common/table/TextField";
 import TablePaginationActions from "common/table/Pagination";
 
 import { headCell, tableSelectOptions } from "components/Data";
@@ -44,7 +44,7 @@ export default function SelectionTable(props) {
                     <TableSelect rowIndex={index} name="viewYn" options={tableSelectOptions["viewYn"]} value={row.viewYn} label={row.viewYnText} handleSelect={handleSelect} />
                 </TableCell>
                 <TableCell width={100} align="center">
-                    <TextInput index={index} name="sortOrder" value={row.sortOrder} handleChange={handleChange} />
+                    <TableTextField index={index} name="sortOrder" value={row.sortOrder} handleChange={handleChange} />
                 </TableCell>
                 <TableCell width={150} align="center">
                     <TableButton text="수정" rowIndex={index} data={row} onClick={() => handleEditData(row.idx)} />

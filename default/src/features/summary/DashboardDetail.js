@@ -54,7 +54,7 @@ export default function DashboardDetail() {
             return dispatch(setMessage({ open: true, message: "Error" }));
         }
 
-        // 예제
+        // 수정 API
         const resultAction = await dispatch(updateSummaryInfo({ url: "/web/change-status", data: { idx, [type]: value } }));
         if (updateSummaryInfo.fulfilled.match(resultAction)) {
             // 성공
