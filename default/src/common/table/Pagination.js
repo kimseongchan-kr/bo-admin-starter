@@ -41,7 +41,7 @@ function TablePaginationActions(props) {
                 onChange={handleChange}
             />
             <div className={classes.buttonContainer}>
-                {buttons[menu].addBottom && <AddButton icon="check" disabled={disabled} text="등록 모달" onClick={onAddClick} />}
+                {buttons[menu].add && <AddButton icon="check" disabled={disabled} text="등록 모달" onClick={onAddClick} />}
                 {buttons[menu].delete && <DeleteButton icon="cancel" disabled={disabled} text="삭제" onClick={onDeleteClick} />}
                 {buttons[menu].excel && <ExcelExport menu={menu} loading={loading} excelData={excelData} onClick={onExcelClick} />}
             </div>
