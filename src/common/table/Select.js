@@ -7,7 +7,7 @@ import styles from "styles/customize/select/TableSelectStyles";
 function TableSelect({ name, rowIndex, value, label, options, handleSelect }) {
     return (
         <Select
-            aria-label={`${name}`}
+            aria-label={`select ${name}`}
             isClearable={false}
             isSearchable={false}
             styles={styles}
