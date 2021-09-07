@@ -11,7 +11,11 @@ import { searchOption as option } from "components/Data";
 function DateTermButton({ classes, dateSelect = false, dateType, handleChange, dateFormat, term, startDate, endDate, handleDate, handleClick }) {
     return (
         <>
-            {dateSelect && <SearchSelect name="dateType" value={dateType} options={option["dateType"]} handleChange={handleChange} />}
+            {dateSelect && (
+                <Grid item>
+                    <SearchSelect name="dateType" value={dateType} options={option["dateType"]} handleChange={handleChange} />
+                </Grid>
+            )}
             <DateSearchPicker classes={classes} dateFormat={dateFormat} term={term} views={["date"]} startDate={startDate} endDate={endDate} handleDate={handleDate} />
             <Grid item>
                 <div className={classes.btnContainer}>
