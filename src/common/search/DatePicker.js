@@ -37,11 +37,14 @@ function DateSearchPicker({ classes, caption = false, dateFormat, term, views, s
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
-                                <IconButton>
+                                <IconButton aria-label="calendar">
                                     <InsertInvitationIcon />
                                 </IconButton>
                             </InputAdornment>
                         )
+                    }}
+                    inputProps={{
+                        "aria-label": "select start date"
                     }}
                 />
             </Grid>
@@ -71,11 +74,14 @@ function DateSearchPicker({ classes, caption = false, dateFormat, term, views, s
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
-                                <IconButton>
+                                <IconButton aria-label="calendar">
                                     <InsertInvitationIcon />
                                 </IconButton>
                             </InputAdornment>
                         )
+                    }}
+                    inputProps={{
+                        "aria-label": "select end date"
                     }}
                 />
             </Grid>

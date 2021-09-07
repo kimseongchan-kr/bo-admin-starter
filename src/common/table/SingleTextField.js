@@ -8,7 +8,17 @@ import TextField from "@material-ui/core/TextField";
 function SingleTextField({ inputType = "text", name, value, handleChange }) {
     return (
         <ThemeProvider theme={theme}>
-            <TextField id={`outlined-${name}`} label="" size="small" variant="outlined" type={inputType} name={name} value={value} onChange={handleChange} />
+            <TextField
+                id={`outlined-${name}`}
+                inputProps={{ "aria-label": `type ${name}` }}
+                label=""
+                size="small"
+                variant="outlined"
+                type={inputType}
+                name={name}
+                value={value}
+                onChange={handleChange}
+            />
         </ThemeProvider>
     );
 }

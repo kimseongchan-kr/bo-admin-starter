@@ -8,7 +8,17 @@ import TextField from "@material-ui/core/TextField";
 function TextInput({ index = 0, inputType = "text", name, value, handleChange }) {
     return (
         <ThemeProvider theme={theme}>
-            <TextField id={`outlined-${name}-${index}`} label="" size="small" variant="outlined" type={inputType} name={name} defaultValue={value} onChange={(e) => handleChange(e, index)} />
+            <TextField
+                id={`outlined-${name}-${index}`}
+                inputProps={{ "aria-label": `type ${name}` }}
+                label=""
+                size="small"
+                variant="outlined"
+                type={inputType}
+                name={name}
+                defaultValue={value}
+                onChange={(e) => handleChange(e, index)}
+            />
         </ThemeProvider>
     );
 }

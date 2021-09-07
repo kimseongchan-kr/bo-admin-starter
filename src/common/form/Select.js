@@ -6,7 +6,15 @@ import Select from "react-select";
 import styles from "styles/customize/select/FormSelectStyles";
 
 function FormSelect({ name, defaultValue, control, options }) {
-    return <Controller name={name} defaultValue={defaultValue} options={options} control={control} as={<Select isClearable={false} isSearchable={false} styles={styles} />} />;
+    return (
+        <Controller
+            name={name}
+            defaultValue={defaultValue}
+            options={options}
+            control={control}
+            as={<Select aria-label={`select ${name}`} isClearable={false} isSearchable={false} styles={styles} />}
+        />
+    );
 }
 
 FormSelect.propTypes = {

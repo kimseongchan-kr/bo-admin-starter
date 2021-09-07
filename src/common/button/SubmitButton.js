@@ -44,7 +44,7 @@ function SubmitButton({ type = "button", loading = false, disabled = false, text
                     className={loading ? classes.disabled : classes.check}
                     type={type}
                     variant="outlined"
-                    startIcon={loading ? <CircularProgress size={12} className={classes.progressIcon} /> : <CheckOutlined style={{ color: "#039BE5" }} />}
+                    startIcon={loading ? <CircularProgress aria-label="loading submit" size={12} className={classes.progressIcon} /> : <CheckOutlined style={{ color: "#039BE5" }} />}
                     disabled={(loading || disabled) && true}>
                     {text}
                 </Button>
@@ -53,7 +53,7 @@ function SubmitButton({ type = "button", loading = false, disabled = false, text
                     className={loading ? classes.disabled : classes.check}
                     type={type}
                     variant="outlined"
-                    startIcon={loading ? <CircularProgress size={12} className={classes.progressIcon} /> : <CheckOutlined style={{ color: "#039BE5" }} />}
+                    startIcon={loading ? <CircularProgress aria-label="loading submit" size={12} className={classes.progressIcon} /> : <CheckOutlined style={{ color: "#039BE5" }} />}
                     disabled={(loading || disabled) && true}
                     onClick={onClick}>
                     {text}

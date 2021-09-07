@@ -56,7 +56,7 @@ export default function ExcelExport({ menu, loading, excelData, onExcelClick }) 
                 <Button
                     disabled={loading}
                     variant="outlined"
-                    startIcon={loading ? <CircularProgress size={12} className={classes.buttonProgress} /> : <></>}
+                    startIcon={loading ? <CircularProgress aria-label="loading excel download" size={12} className={classes.buttonProgress} /> : <></>}
                     className={classes.excel}
                     onClick={onExcelClick}>
                     엑셀 다운로드
