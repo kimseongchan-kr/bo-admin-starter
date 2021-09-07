@@ -17,6 +17,7 @@ function Input({ inputType, name, defaultValue, control, classes }) {
                     label=""
                     variant="outlined"
                     InputLabelProps={{ shrink: true }}
+                    inputProps={{ "aria-label": `type ${name}` }}
                     type={inputType}
                     name={name}
                     value={value}

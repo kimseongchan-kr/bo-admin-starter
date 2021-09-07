@@ -535,6 +535,7 @@ export default function DashboardUpload() {
                                             <th className={classes.label}>디저트 소개</th>
                                             <td className={classes.content}>
                                                 <textarea
+                                                    aria-label="type description"
                                                     className={formClasses.textarea}
                                                     rows="10"
                                                     cols=""

@@ -5,7 +5,7 @@ import Select from "react-select";
 import styles from "styles/customize/select/TableSelectStyles";
 
 function SingleSelect({ name, value, options, handleSelect }) {
-    return <Select isClearable={false} isSearchable={false} styles={styles} options={options} name={name} defaultValue={value} onChange={handleSelect} />;
+    return <Select aria-label={`select ${name}`} isClearable={false} isSearchable={false} styles={styles} options={options} name={name} defaultValue={value} onChange={handleSelect} />;
 }
 
 SingleSelect.propTypes = {

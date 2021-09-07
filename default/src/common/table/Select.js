@@ -5,7 +5,18 @@ import Select from "react-select";
 import styles from "styles/customize/select/TableSelectStyles";
 
 function TableSelect({ name, rowIndex, value, label, options, handleSelect }) {
-    return <Select isClearable={false} isSearchable={false} styles={styles} options={options} name={name} defaultValue={{ value, label }} onChange={(e) => handleSelect(name, e.value, rowIndex)} />;
+    return (
+        <Select
+            aria-label={`select ${name}`}
+            isClearable={false}
+            isSearchable={false}
+            styles={styles}
+            options={options}
+            name={name}
+            defaultValue={{ value, label }}
+            onChange={(e) => handleSelect(name, e.value, rowIndex)}
+        />
+    );
 }
 
 TableSelect.propTypes = {
