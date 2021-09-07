@@ -16,43 +16,24 @@
 -   **DEVELOPMENT** : [redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension#13-use-redux-devtools-extension-package-from-npm "redux-devtools-extension")
 ## Project Extra Features
 
--   **Date picker** : [material-ui pickers](https://material-ui-pickers.dev/demo/datepicker "material-ui pickers")
+-   **Date Picker** : [material-ui pickers](https://material-ui-pickers.dev/demo/datepicker "material-ui pickers")
 -   **Editor** : [react-quill](https://github.com/zenoamaro/react-quill#api-reference "react-quill")
 -   **Excel** : [react-excel-workbook](https://github.com/ClearC2/react-excel-workbook#example "react-excel-workbook")
 -   **Modal** : [react-modal](https://github.com/reactjs/react-modal#react-modal "react-modal")
 -   **PopupState** : [material-ui-popup-state](https://github.com/jcoreio/material-ui-popup-state#material-ui-popup-state, "material-ui-popup-state")
 -   **Select** : [react-select](https://react-select.com/home "react-select")
 
-## 프로젝트 구조
-- Header
-- Menu
+## Menu / Page
 - 404
 - Login
-- ChangePassword
-- ChangeInfo
-- Summary
-    - Dashboard
-        - 기간 검색 (DatePicker), select 검색 (SearchSelect), 조회조건 + 키워드 검색 (SearchField), 조회 버튼
-        - SelectionTable + Table Sort, Table Filter
-        - 사용 여부 (UseSelect), 메인 노출 (ViewSelect), 노출 순서 (SortOrder)
-        - Detail Modal, Edit Modal (+ react-hook-form)
-        - Pagination, 추가 버튼, 삭제 버튼
-        - Message Modal, Confirm Modal
-    - Summary
-        - API 연결 Example
-        - 조회조건 + 키워드 검색 (SearchField), 조회 버튼
-        - Table
-        - 사용 여부 (UseSelect)
-        - Pagination, 엑셀 다운로드 버튼
-        - Message Modal
-- Example
-    - Example
-        - 기간단위 (SearchSelect), 기간 검색 (DatePicker), 조회 버튼
-        - Table + Table Sort, Table Filter
-        - 사용 여부 (UseSelect), 메인 노출 (ViewSelect), Cell Edit (TextField), 수정 버튼 (EditButton), 삭제 버튼 (DeleteButton)
-        - Detail Modal, Edit Modal (+ react-quill 에디터)
-        - Pagination, 추가 버튼
-        - Message Modal, Confirm Modal (+ progress button)
+- Change Password
+- Change Info
+- Dashboard (Example Menu 1)
+    - Dashboard Upload
+    - Dashboard Detail
+- Example (Example Menu 2)
+    - Example Upload Modal
+    - Example Detail Modal
 - Components
     - Search
     - Table
@@ -61,7 +42,7 @@
     - Typography
     - Button
 
-[확인하기](https://github.com/BlockOdyssey/bo-admin-starter#project-structure "프로젝트 구조")
+[데모 확인하기](https://blockodyssey.github.io/bo-admin-starter "프로젝트 데모 웹페이지")
 
 ---
 
@@ -88,44 +69,63 @@
 
 ## 사용방법
 
-> Data.js 파일 작성 방법   
-> Data.js 적용 방법
+### Data.js 파일 작성 방법
 
-### Search (검색)
-
-> 하나의 메뉴 - 하나의 검색 파일 (Search.js)
-
+#### Search (검색)
 ```javascript
-//  Data.js
 //  자세한 사용방법: components/Search.js
+
+//  Data.js
 
 //  **메뉴별 필요한 검색 Components**
 //      필요한 경우 -> true
 //      사용하지 않는 경우 -> false
 
-//  Summary = 폴더명
 //  Dashboard, Summary = 파일명/메뉴명
 const summarySearchComponents = {
     Dashboard: {
         date: true,             //  Date Picker 사용
+        radio: true,            //  검색 radio button 사용
         selects: true,          //  검색 select 사용
         searchType: true,       //  조회조건 select 사용
         searchKeyword: true     //  키워드 검색 사용
     },
     Summary: {
         date: false,            //  Date Picker 미사용
+        radio: true,            //  검색 radio button 사용
         selects: false,         //  검색 select 미사용
         searchType: true,       //  조회조건 select 사용
         searchKeyword: true     //  키워드 검색 사용
-    }
+    },
+    Example: {
+        date: false,            //  Date Picker 미사용
+        radio: true,            //  검색 radio button 사용
+        selects: false,         //  검색 select 미사용
+        searchType: true,       //  조회조건 select 사용
+        searchKeyword: true     //  키워드 검색 사용
+    },
 };
 
-const summarySearchCaption = { gender: "성별" };
+//  메뉴별 검색 조건 설정
+const searchCaption = { gender: "성별", useYn: "판매여부" };
 
-//  메뉴별 검색 조건
-const summarySearchType = {
-    Dashboard: ["gender"],      //  Dashboard는 검색 select가 필요
-    Summary: []                 //  Summary는 추가 검색 없음
+//  메뉴별 검색 조건 설정
+//  Dashboard -> 성별, 사용여부를 검색할 수 있는 Select가 필요
+const searchType = {
+    Dashboard: ["gender", "useYn"]
+};
+
+//  [["gender", "useYn"]] 
+//      -> "gender" 와 "userYn" => 1 row
+//  [["gender"], ["useYn"]] 
+//      -> gender => 1 row
+//      -> useYn => 1 row
+const searchRadioRow = {
+    Dashboard: [["gender", "useYn"], ["useYn"]]
+};
+
+const searchSelect = {
+    Dashboard: [["gender", "useYn"], ["gender"]]
 };
 
 //  Select별 options
@@ -147,24 +147,43 @@ const summarySearchOptions = {
     ]
 };
 
+// location.search을 위한 설정
+// useSearchParams에서 사용
+const searchParams = {
+    Dashboard: {
+        startDate: "startDate",
+        endDate: "endDate",
+        gender: "gender",
+        useYn: "useYn",
+        searchType: "searchType",
+        searchKeyword: "searchKeyword",
+        sort: "sort",
+        pageNumber: "pageNumber",
+        pageShow: "pageShow"
+    },
+    Example: {
+        startDate: "startDate",
+        endDate: "endDate",
+        pageNumber: "pageNumber",
+        pageShow: "pageShow"
+    }
+};
 ```
 
-### Table (테이블)
-
-> 하나의 메뉴 - Selection Table (checkbox가 포함된 테이블) & Table (기본 테이블)   
-> 자세한 사용방법 : components/Table.js   
-> 또는 components/SelectionTable.js
+#### Table (테이블)
 
 ```javascript
-//  Data.js
+//  자세한 사용방법 : components/Table.js   
+//  또는 components/SelectionTable.js
 
-//  **테이블의 THEAD 부분 설정**
-//  id = DB에서 가져오는 데이터명과 동일
-//  label = 테이블 컬럼명
+//  Data.js
 
 //  Dashboard, Summary = 파일명/메뉴명
 //  DashboardDetail = Dashboard + DetailModal
 
+//  **테이블의 THEAD 부분 설정**
+//  id = 컬럼 아이디
+//  label = 컬럼명
 const summaryHeadCell = {
     Dashboard: [
         { id: "name", label: "이름" }
@@ -176,13 +195,26 @@ const summaryHeadCell = {
         { id: "name", label: "이름" }
     ]
 };
+
+// 검색 결과 테이블 (리스트)에서 사용하는 Select component의 options   
+const tableSelectOptions = {
+    viewYn: [
+        { label: "노출", value: "Y" },
+        { label: "미노출", value: "N" }
+    ],
+    useYn: [
+        { label: "사용", value: "Y" },
+        { label: "미사용", value: "N" }
+    ]
+};
 ```
 
-## common 폴더 사용 방법
+### common 폴더 사용 방법
 
-> 자주 사용하는 components   
+#### 재사용할 수 있는 components   
 
 > prop-types를 사용해서 전달받는 값의 타입을 작성   
+>   
 > 참고: https://ko.reactjs.org/docs/typechecking-with-proptypes.html
 
 -   button
@@ -194,25 +226,30 @@ const summaryHeadCell = {
 -   search
 -   table
 
-### button 폴더
+#### button 폴더
 
-> 테이블 하단에 있는 버튼 / 모달에서 사용하는 버튼   
-> styles/theme/button.js / styles/customize/components/ButtonStyles.js 파일에서 스타일을 확인해주세요.
+> 테이블 하단/상단에 있는 버튼 / 모달에서 사용하는 버튼   
+> 업로드 페이지에서 사용하는 submit 버튼   
+> 페이지 이동 버튼   
+>    
+> styles/theme/button.js 파일에서 스타일을 확인해주세요.
 
 -   DefaultButton.js
 -   PageButton.js
 -   SubmitButton.js
 
-### editor 폴더
+#### editor 폴더
 
 > react-quill 에디터 사용 (+ 이미지 업로드)   
 > 자세한 사용방법 : common/editor/index.js   
+>    
 > 이미지 업로드 참고: https://github.com/quilljs/quill/issues/1400
 
-### form 폴더
+#### form 폴더
 
 > react-hook-form 사용   
 > 자세한 사용방법 : features/summary/DashboardUpload.js   
+>    
 > 참고: https://github.com/react-hook-form/react-hook-form/blob/master/app/src/controller.tsx
 
 -   CheckBox
@@ -220,17 +257,18 @@ const summaryHeadCell = {
 -   Select
 -   Input
 
-### modal 폴더
+#### modal 폴더
 
-> Alert / Confirm을 대신하는 모달   
+> Alert / Confirm을 대신하는 모달  
+> 상세 조회 모달    
 
 -   ConfirmModal
 -   DetailModal
 -   MessageModal
 
-### search 폴더
+#### search 폴더
 
-> 검색에서 사용되는 input, select, date picker
+> 검색에서 사용되는 button, textfield, select, radio button, date picker
 
 -   DatePicker
 -   DateTermButton
@@ -238,16 +276,13 @@ const summaryHeadCell = {
 -   SearchRadio
 -   SearchSelect
 
-> 기간 검색 (통계 페이지에서 사용)   
-> 자세한 사용방법 : components/DateTermSearch.js
+#### table 폴더
 
--   DateTermSearch
-
-### table 폴더
-
-> 검색 결과 테이블에서 자주 사용되는 select/input
+> 검색 결과 테이블에서 자주 사용되는 select / textfield   
+>   
 > 상세 페이지 / 모달에서 사용할 수 있는 singleSelect / textfield / checkbox / radio button   
-> 테이블 pagination 
+>   
+> 테이블 pagination   
 > 수정, 삭제 버튼   
 
 > 자세한 사용방법 : components/SelectionTable.js    
@@ -259,10 +294,14 @@ const summaryHeadCell = {
 -   RadioButton
 -   Select
 -   SingleSelect
+-   SingleTextField
 -   TextField
 
 ```javascript
 //  자세한 사용방법 : common/table/Pagination.js
+
+// Data.js
+
 //  테이블 하단에 버튼을 추가하는 방법
 //      1. components/Data.js에 추가
 //      2. 메뉴마다 필요한 버튼 작성
@@ -270,12 +309,14 @@ const summaryHeadCell = {
 //  메뉴(페이지)별 필요한 버튼
 //      true -> 필요
 //      false -> 사용안함
-//      만약 검색 테이블 위에 생성하고 싶으면 [buttonName]Bottom / [buttonName]Top 이렇게 추가하고
-//      common/table/Pagination.js 또는 components/Search.js 파일에 버튼 추가
+
+//  만약 검색 위에 생성하고 싶으면 [buttonName]Top 이렇게 설정 추가
+//  그리고 components/Search.js 파일에 버튼 import
 const buttons = {
-    Dashboard: { addBottom: false, addTop: true, delete: true, excel: true },
+    Dashboard: { add: false, addTop: true, delete: true, excel: true },
     Example: { add: true, delete: false, excel: false }
 };
+
 ```
 
 ## Project Flow
@@ -289,25 +330,6 @@ const buttons = {
 |  3   |     app     | rootReducer.js 파일에 새로 생성한 reducer 추가 |
 |  4   | components  | Data.js파일에 검색, 테이블에 대한 설정 추가 |
 
-### 검색 파일 생성
-
-> components/Search.js 와 features/summary/Dashboard.js 파일 확인하기
-
-| 순서 | 파일 / 폴더 |                                                       기능                                                                                  |
-| :--: | :---------: | :-------------------------------------------------------------------------------------------------------------------------------------: |
-|  1   |   Data.js   | [프로젝트 사용방법](https://github.com/BlockOdyssey/bo-admin-starter#search-%EA%B2%80%EC%83%89 "프로젝트 사용방법")에서 Search 부분 보면서 Data.js 파일에 추가하는 메뉴에 대한 검색 설정하기 |
-|  2   |  Search.js  | Search.js 파일 import 하기 |
-
-### 테이블을 추가할 때
-
-> components/Table.js 또는 SelectionTable.js와 features/summary/Dashboard.js 파일 확인하기
-
-| 순서 |         파일 / 폴더          |                                                      기능                                                                                  |
-| :--: | :--------------------------: | :------------------------------------------------------------------------------------------------------------------------------------: |
-|  1   |           Data.js            | [프로젝트 사용방법](https://github.com/BlockOdyssey/bo-admin-starter#table-%ED%85%8C%EC%9D%B4%EB%B8%94 "프로젝트 사용방법")에서 Table 부분 보면서 Data.js 파일에 추가하는 메뉴에 대한 테이블 설정하기 |
-|  2   | SelectionTable.js / Table.js | Checkbox가 필요하다면 SelectionTable.js, 기본 테이블이 필요하다면 Table.js 생성 |
-|  3   | Table.js / SelectionTable.js에 테이블 추가하기 |
-|  4   | Table / Selection Table import 하기 |
 
 ***
 ## Project Structure

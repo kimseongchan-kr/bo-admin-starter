@@ -24,13 +24,14 @@ const searchComponent = {
 //  메뉴별 검색 조건 설정
 const searchCaption = { gender: "성별", useYn: "판매여부" };
 
+//  메뉴별 검색 조건 설정
 //  Dashboard -> 성별을 검색할 수 있는 Select가 필요
-// [["gender", "useYn"]] -> "gender" 와 "userYn" : 1 row
-// [["gender"], ["useYn"]] -> gender : 1 row, useYn: 1 row
 const searchType = {
     Dashboard: ["gender", "useYn"]
 };
 
+// [["gender", "useYn"]] -> "gender" 와 "userYn" = 1 row
+// [["gender"], ["useYn"]] -> gender = 1 row, useYn = 1 row
 const searchRadioRow = {
     Dashboard: [["gender", "useYn"], ["useYn"]]
 };
@@ -72,6 +73,7 @@ const searchOption = {
 };
 
 // location.search을 위한 설정
+// useSearchParams에서 사용
 const searchParams = {
     Dashboard: {
         startDate: "startDate",
@@ -143,10 +145,11 @@ const tableSelectOptions = {
 //  메뉴(페이지)별 필요한 버튼
 //      true -> 필요
 //      false -> 사용안함
-//      만약 검색 테이블 위에 생성하고 싶으면 [buttonName]Bottom / [buttonName]Top 이렇게 추가하고
-//      common/table/Pagination.js 또는 components/Search.js 파일에 버튼 추가
+
+//  만약 검색 위에 생성하고 싶으면 [buttonName]Top 이렇게 설정 추가
+//  그리고 components/Search.js 파일에 버튼 import
 const buttons = {
-    Dashboard: { addBottom: false, addTop: true, delete: true, excel: true },
+    Dashboard: { add: false, addTop: true, delete: true, excel: true },
     Example: { add: true, delete: false, excel: false }
 };
 
