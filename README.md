@@ -82,7 +82,7 @@
 //      사용하지 않는 경우 -> false
 
 //  Dashboard, Summary = 파일명/메뉴명
-const summarySearchComponents = {
+const searchComponents = {
     Dashboard: {
         date: true,             //  Date Picker 사용
         radio: true,            //  검색 radio button 사용
@@ -129,7 +129,7 @@ const searchSelect = {
 };
 
 //  Select별 options
-const summarySearchOptions = {
+const searchOptions = {
     gender: [
         { value: "전체", label: "전체" },
         { value: "M", label: "M" },
@@ -184,7 +184,7 @@ const searchParams = {
 //  **테이블의 THEAD 부분 설정**
 //  id = 컬럼 아이디
 //  label = 컬럼명
-const summaryHeadCell = {
+const headCell = {
     Dashboard: [
         { id: "name", label: "이름" }
     ],
