@@ -57,7 +57,7 @@ export default function SelectionTable(props) {
     // all rows selection
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = data.map((n) => n.key);
+            const newSelecteds = data.map((n) => n.idx);
             setSelected(newSelecteds);
             return;
         }
@@ -65,12 +65,12 @@ export default function SelectionTable(props) {
     };
 
     // one row selection
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
+    const handleClick = (event, index) => {
+        const selectedIndex = selected.indexOf(index);
         let newSelected = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
+            newSelected = newSelected.concat(selected, index);
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
@@ -92,7 +92,7 @@ export default function SelectionTable(props) {
         handlePage({ page: 1, pageShow: parseInt(event.target.value, 10) });
     };
 
-    const isSelected = (name) => (selected ? selected.indexOf(name) !== -1 : false);
+    const isSelected = (index) => (selected ? selected.indexOf(index) !== -1 : false);
     const numSelected = selected ? selected.length : 0;
     const rowCount = data.length;
 
@@ -136,14 +136,14 @@ export default function SelectionTable(props) {
                             ) : (
                                 data.map((row, index) => {
                                     const labelId = `${menu.toLowerCase()}-table-checkbox-${index}`;
-                                    const isItemSelected = isSelected(row.key);
+                                    const isItemSelected = isSelected(row.idx);
 
                                     return (
                                         <React.Fragment key={index}>
                                             {menu === "Dashboard" && (
                                                 <TableRow hover role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={index} selected={isItemSelected}>
                                                     <TableCell padding="checkbox">
-                                                        <Checkbox onClick={(event) => handleClick(event, row.key)} checked={isItemSelected} inputProps={{ "aria-labelledby": labelId }} />
+                                                        <Checkbox onClick={(event) => handleClick(event, row.idx)} checked={isItemSelected} inputProps={{ "aria-labelledby": labelId }} />
                                                     </TableCell>
                                                     <DashboardData row={row} index={index} />
                                                 </TableRow>
