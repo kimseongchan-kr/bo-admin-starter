@@ -116,7 +116,7 @@ const searchType = {
 };
 
 //  [["gender", "useYn"]] 
-//      -> "gender" 와 "userYn" => 1 row
+//      -> "gender" 와 "useYn" => 1 row
 //  [["gender"], ["useYn"]] 
 //      -> gender => 1 row
 //      -> useYn => 1 row
@@ -153,8 +153,8 @@ const searchOptions = {
     ]
 };
 
-// location.search을 위한 설정
-// useSearchParams에서 사용
+//  location.search을 위한 설정
+//  useSearchParams에서 사용
 const searchParams = {
     Dashboard: {
         startDate: "startDate",
@@ -334,7 +334,7 @@ const buttons = {
 |  1   |  features   |        폴더 생성 -> 매뉴명.js 파일 생성        |
 |  2   |   slices    |          메뉴이름+Slices.js 파일 생성          |
 |  3   |     app     | rootReducer.js 파일에 새로 생성한 reducer 추가 |
-|  4   | components  | Data.js파일에 검색, 테이블에 대한 설정 추가 |
+|  4   | components  | Data.js파일에 검색, 테이블 설정 추가 |
 
 
 ***
