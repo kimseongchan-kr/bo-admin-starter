@@ -109,7 +109,6 @@ const searchComponents = {
 //  메뉴별 검색 조건 설정
 const searchCaption = { gender: "성별", useYn: "판매여부" };
 
-//  메뉴별 검색 조건 설정
 //  사용할 검색 조건 추가
 const searchType = {
     Dashboard: ["gender", "useYn"],
@@ -127,7 +126,7 @@ const searchRadioRow = {
 };
 
 const searchSelect = {
-    Dashboard: [["gender", "useYn"], ["gender"]]
+    Dashboard: [["gender"], ["gender", "useYn"]]
 };
 
 //  Select별 options
