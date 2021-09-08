@@ -136,7 +136,7 @@ const searchOptions = {
         { value: "M", label: "M" },
         { value: "F", label: "F" }
     ],
-    gender: [
+    useYn: [
         { value: "", label: "전체" },
         { value: "Y", label: "사용" },
         { value: "N", label: "미사용" }
