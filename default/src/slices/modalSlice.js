@@ -5,7 +5,7 @@ const initialState = {
     open: false,
     message: "",
 
-    // Confirm/Alert 모달
+    // Confirm 모달
     msgConfirmOpen: false,
     msgOpen: false,
 
@@ -25,7 +25,7 @@ export const modalSlice = createSlice({
         open: false,
         message: "",
 
-        // Confirm/Alert 모달
+        // Confirm 모달
         msgConfirmOpen: false,
         msgOpen: false,
 

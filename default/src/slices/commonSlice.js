@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getData } from "api/Api";
 
-export const getExcelList = createAsyncThunk("common/getExcelList", async (data, { rejectWithValue }) => {
+export const getExcelList = createAsyncThunk("common/getExcelList", async (body, { rejectWithValue }) => {
     try {
-        const response = await getData(data.url, data.params);
+        const response = await getData(body.url, body.params);
         return response.data;
     } catch (error) {
         return rejectWithValue({ statusCode: error.response.status, ...error.response.data });

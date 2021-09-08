@@ -4,7 +4,7 @@ import { createMuiTheme } from "@material-ui/core";
 import { typography } from "styles/theme/typography";
 import { palette } from "styles/theme/palette";
 
-const buttonTheme = createMuiTheme({
+const theme = createMuiTheme({
     palette,
     typography,
     overrides: {
@@ -76,4 +76,4 @@ const buttonTheme = createMuiTheme({
     }
 });
 
-export default buttonTheme;
+export default theme;

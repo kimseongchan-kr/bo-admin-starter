@@ -1,9 +1,5 @@
-//  메뉴별 필요한 검색 Components
-//      필요한 경우 -> true
-//      사용하지 않는 경우 -> false
+// README.MD 확인하기
 
-//  만약 date : true
-//  해당 메뉴에서 날짜 검색하는 Date Picker 사용
 const searchComponent = {
     Dashboard: {
         date: true,
@@ -21,17 +17,12 @@ const searchComponent = {
     }
 };
 
-//  메뉴별 검색 조건 설정
 const searchCaption = { gender: "성별", useYn: "판매여부" };
 
-//  메뉴별 검색 조건 설정
-//  Dashboard -> 성별을 검색할 수 있는 Select가 필요
 const searchType = {
     Dashboard: ["gender", "useYn"]
 };
 
-// [["gender", "useYn"]] -> "gender" 와 "userYn" = 1 row
-// [["gender"], ["useYn"]] -> gender = 1 row, useYn = 1 row
 const searchRadioRow = {
     Dashboard: [["gender", "useYn"], ["useYn"]]
 };
@@ -40,7 +31,6 @@ const searchSelect = {
     Dashboard: [["gender", "useYn"], ["gender"]]
 };
 
-//  select별 Options
 const searchOption = {
     gender: [
         { value: "", label: "전체" },
@@ -72,8 +62,6 @@ const searchOption = {
     ]
 };
 
-// location.search을 위한 설정
-// useSearchParams에서 사용
 const searchParams = {
     Dashboard: {
         startDate: "startDate",
@@ -94,9 +82,6 @@ const searchParams = {
     }
 };
 
-//  id = 컬럼 아이디
-//  label = 컬럼명
-//  Dashboard, Example = 메뉴(페이지) 이름
 const headCell = {
     Dashboard: [
         { id: "name", label: "디저트" },
@@ -130,7 +115,6 @@ const headCell = {
     ]
 };
 
-// 검색 결과 테이블 (리스트)에서 사용되는 Select component의 options
 const tableSelectOptions = {
     viewYn: [
         { label: "노출", value: "Y" },
@@ -142,12 +126,6 @@ const tableSelectOptions = {
     ]
 };
 
-//  메뉴(페이지)별 필요한 버튼
-//      true -> 필요
-//      false -> 사용안함
-
-//  만약 검색 위에 생성하고 싶으면 [buttonName]Top 이렇게 설정 추가
-//  그리고 components/Search.js 파일에 버튼 import
 const buttons = {
     Dashboard: { add: false, addTop: true, delete: true, excel: true },
     Example: { add: true, delete: false, excel: false }

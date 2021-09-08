@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function DetailModal({ menu, title, handleDetailData, onClose }) {
+export default function ExampleDetailModal({ menu, title, handleDetailData, onClose }) {
     const classes = useStyles();
     const { detailOpen, detailData } = useSelector(modalSelector);
 
