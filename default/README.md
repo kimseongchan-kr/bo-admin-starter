@@ -109,10 +109,10 @@ const searchComponents = {
 //  메뉴별 검색 조건 설정
 const searchCaption = { gender: "성별", useYn: "판매여부" };
 
-//  메뉴별 검색 조건 설정
-//  Dashboard -> 성별, 사용여부를 검색할 수 있는 Select가 필요
+//  사용할 검색 조건 추가
 const searchType = {
-    Dashboard: ["gender", "useYn"]
+    Dashboard: ["gender", "useYn"],
+    Summary: ["useYn"]
 };
 
 //  [["gender", "useYn"]] 
@@ -121,29 +121,35 @@ const searchType = {
 //      -> gender => 1 row
 //      -> useYn => 1 row
 const searchRadioRow = {
-    Dashboard: [["gender", "useYn"], ["useYn"]]
+    Dashboard: [["gender", "useYn"], ["useYn"]],
+    Summary: [["useYn"]]
 };
 
 const searchSelect = {
-    Dashboard: [["gender", "useYn"], ["gender"]]
+    Dashboard: [["gender"], ["gender", "useYn"]]
 };
 
 //  Select별 options
 const searchOptions = {
     gender: [
-        { value: "전체", label: "전체" },
+        { value: "", label: "전체" },
         { value: "M", label: "M" },
         { value: "F", label: "F" }
     ],
+    useYn: [
+        { value: "", label: "전체" },
+        { value: "Y", label: "사용" },
+        { value: "N", label: "미사용" }
+    ],
     searchType: [
-        { value: "전체", label: "전체" },
-        { value: "아이디", label: "아이디" },
-        { value: "이름", label: "이름" },
-        { value: "연락처", label: "연락처" }
+        { value: "", label: "전체" },
+        { value: "id", label: "아이디" },
+        { value: "name", label: "이름" },
+        { value: "tel", label: "연락처" }
     ],
     term: [
-        { value: "일간", label: "일간" },
-        { value: "월간", label: "월간" }
+        { value: "daily", label: "일간" },
+        { value: "monthly", label: "월간" }
     ]
 };
 
