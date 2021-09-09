@@ -51,6 +51,7 @@ export default function ExampleUploadModal({ loading, reset, handleDataSubmit, o
     useEffect(() => {
         // 데이터 초기화
         if (reset) {
+            setCategory({ value: "", label: "카테고리를 선택해주세요" });
             setNewData({
                 name: "",
                 calories: 0,
@@ -87,7 +88,7 @@ export default function ExampleUploadModal({ loading, reset, handleDataSubmit, o
     const handleIngredients = (e) => setIngredients((prev) => ({ ...prev, [e.target.name]: e.target.checked }));
 
     const handleBeforeSubmit = async () => {
-        await dispatch(setEdit({ open: true, data: { ...data, contents, category, ...newData } }));
+        await dispatch(setEdit({ open: true, data: { ...editData, contents, category, ...newData } }));
         await handleDataSubmit();
     };
 
