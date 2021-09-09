@@ -51,6 +51,7 @@ export default function ExampleUploadModal({ loading, reset, handleDataSubmit, o
     useEffect(() => {
         // 데이터 초기화
         if (reset) {
+            setCategory({ value: "", label: "카테고리를 선택해주세요" });
             setNewData({
                 name: "",
                 calories: 0,

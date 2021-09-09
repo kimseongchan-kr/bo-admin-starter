@@ -124,7 +124,7 @@ export default function Example() {
 
     // 추가 모달 열기
     const onAdd = () => {
-        setReset(false);
+        setReset(true);
         dispatch(setEdit({ open: true }));
     };
 
@@ -140,7 +140,7 @@ export default function Example() {
 
     // 추가/수정 모달 닫기
     const onEditClose = () => {
-        setReset(true);
+        setReset(false);
         dispatch(setEditClose());
     };
 
