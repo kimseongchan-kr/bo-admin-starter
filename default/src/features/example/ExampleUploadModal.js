@@ -33,7 +33,7 @@ export default function ExampleUploadModal({ loading, reset, handleDataSubmit, o
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const { editOpen, data } = useSelector(modalSelector);
+    const { editOpen, editData } = useSelector(modalSelector);
 
     const [category, setCategory] = useState({ value: "", label: "카테고리를 선택해주세요" });
     const [newData, setNewData] = useState({
@@ -64,21 +64,21 @@ export default function ExampleUploadModal({ loading, reset, handleDataSubmit, o
             setContents("");
         }
 
-        if (data) {
-            setCategory(data.category);
+        if (editData) {
+            setCategory(editData.category);
             setNewData({
-                name: data.name,
-                calories: data.calories,
-                useYn: data.useYn
+                name: editData.name,
+                calories: editData.calories,
+                useYn: editData.useYn
             });
             setIngredients({
                 ingredients1: true,
                 ingredients2: true,
                 ingredients3: false
             });
-            setContents(data.contents);
+            setContents(editData.contents);
         }
-    }, [data, reset]);
+    }, [editData, reset]);
 
     const handleChange = (e) => setNewData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
 
@@ -96,7 +96,7 @@ export default function ExampleUploadModal({ loading, reset, handleDataSubmit, o
             {editOpen && (
                 <ThemeProvider theme={theme}>
                     <Typography variant="h2" component="h2" color="inherit" className={classes.title}>
-                        Summary {data && data.modalStatus === "modify" ? "수정" : "추가"}
+                        Summary {editData && editData.modalStatus === "modify" ? "수정" : "추가"}
                     </Typography>
                     <table className={classes.table}>
                         <tbody>
