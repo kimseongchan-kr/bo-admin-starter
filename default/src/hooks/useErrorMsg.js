@@ -7,7 +7,6 @@ import { setMessage } from "slices/modalSlice";
 const useErrorMsg = (status, statusCode, errorMsg) => {
     const dispatch = useDispatch();
 
-    // 에러 메시지 노출하기
     useEffect(() => {
         if (status === "failed" && errorMsg) {
             dispatch(setMessage({ open: status === "failed", message: errorMsg }));
