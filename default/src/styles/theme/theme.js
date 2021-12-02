@@ -1,25 +1,23 @@
 // 참고: https://material-ui.com/customization/theming/#createmuitheme-options-args-theme
 // 참고: https://material-ui.com/customization/globals/#css
-import { createMuiTheme } from "@material-ui/core";
+import { createTheme } from "@mui/material/styles";
 import { typography } from "styles/theme/typography";
 import { palette } from "styles/theme/palette";
-import { koKR } from "@material-ui/core/locale";
+import { koKR } from "@mui/material/locale";
 
-const theme = createMuiTheme(
+const theme = createTheme(
     {
         palette,
         typography,
-        overrides: {
+        components: {
             MuiCssBaseline: {
-                "@global": {
+                styleOverrides: {
                     "*": {
                         boxSizing: "border-box",
                         margin: 0,
                         padding: 0
                     },
                     html: {
-                        "-webkit-font-smoothing": "antialiased",
-                        "-moz-osx-font-smoothing": "grayscale",
                         height: "100%",
                         width: "100%"
                     },
@@ -35,115 +33,141 @@ const theme = createMuiTheme(
                     "#root": {
                         height: "100%",
                         width: "100%"
+                    },
+                    table: {
+                        width: "100%",
+                        borderCollapse: "collapse",
+                        backgroundColor: palette.neutral["white"],
+                        "& th": {
+                            height: 48,
+                            padding: "0 20px"
+                        },
+                        "& td": {
+                            height: 48,
+                            padding: "0 20px"
+                        }
                     }
                 }
             },
             MuiList: {
-                padding: {
-                    paddingTop: 0,
-                    paddingBottom: 0
+                styleOverrides: {
+                    padding: {
+                        paddingTop: 0,
+                        paddingBottom: 0
+                    }
+                }
+            },
+            MuiButton: {
+                styleOverrides: {
+                    sizeSmall: {
+                        padding: 5
+                    },
+                    sizeMedium: {
+                        height: 30,
+                        padding: 10,
+                        fontSize: 12
+                    },
+                    sizeLarge: {
+                        minWidth: 100,
+                        width: "auto",
+                        padding: 10
+                    }
                 }
             },
             MuiIconButton: {
-                root: {
-                    "&:hover": {
-                        backgroundColor: palette.neutral["white"]
+                styleOverrides: {
+                    root: {
+                        "&:hover": {
+                            backgroundColor: palette.neutral["white"]
+                        }
                     }
                 }
             },
             MuiOutlinedInput: {
-                root: {
-                    "&&$focused fieldset": {
-                        borderColor: palette.border["main"],
-                        borderWidth: 1
+                styleOverrides: {
+                    root: {
+                        "&&$focused fieldset": {
+                            borderColor: palette.border["main"],
+                            borderWidth: 1
+                        },
+                        "&&:hover fieldset": {
+                            borderColor: palette.border["main"],
+                            borderWidth: 1
+                        }
                     },
-                    "&&:hover fieldset": {
-                        borderColor: palette.border["main"],
-                        borderWidth: 1
+                    notchedOutline: {
+                        borderColor: palette.border["main"]
                     }
-                },
-                notchedOutline: {
-                    borderColor: palette.border["main"]
                 }
             },
             MuiTableContainer: {
-                root: {
-                    overflowX: "unset"
+                styleOverrides: {
+                    root: {
+                        overflowX: "unset"
+                    }
                 }
             },
             MuiTableRow: {
-                root: {
-                    height: 46
-                },
-                hover: {
-                    "&&:hover": {
-                        backgroundColor: palette.primary["light"]
+                styleOverrides: {
+                    root: {
+                        height: 46
+                    },
+                    hover: {
+                        "&&:hover": {
+                            backgroundColor: palette.primary["light"]
+                        }
                     }
                 }
             },
             MuiTableHead: {
-                root: {
-                    height: 52,
-                    fontSize: 12,
-                    background: palette.background["light"],
-                    borderBottom: `2px solid ${palette.border["dark"]}`
-                }
-            },
-            MuiTableCell: {
-                root: {
-                    padding: 10,
-                    cursor: "context-menu"
-                },
-                head: {
-                    height: 52,
-                    opacity: 0.7
-                }
-            },
-            MuiTablePagination: {
-                root: {
-                    height: 80,
-                    fontSize: 12,
-                    overflow: "unset"
-                },
-                toolbar: {
-                    height: 80,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                },
-                spacer: {
-                    flex: 0
-                },
-                input: {
-                    lineHeight: "18px"
-                },
-                caption: {
-                    "&:first-of-type": {
-                        marginLeft: "auto"
+                styleOverrides: {
+                    root: {
+                        height: 70,
+                        fontSize: 12,
+                        fontWeight: 500,
+                        borderBottom: `1px solid ${palette.border["light"]}`
                     }
                 }
             },
-            MuiPagination: {
-                root: {
-                    marginRight: "auto"
+            MuiTableCell: {
+                styleOverrides: {
+                    root: {
+                        padding: 10,
+                        cursor: "context-menu",
+                        backgroundColor: palette.neutral["white"]
+                    },
+                    head: {
+                        height: 70
+                    }
                 }
             },
-            MuiPaginationItem: {
-                outlinedPrimary: {
-                    "&$selected": {
-                        backgroundColor: palette.neutral["white"]
+            MuiTablePagination: {
+                styleOverrides: {
+                    root: {
+                        margin: "0 20px",
+                        borderRadius: 4,
+                        "&:last-child": {
+                            padding: "20px 0"
+                        }
+                    },
+                    spacer: {
+                        flex: "1 1 100%"
                     }
                 }
             },
             MuiSvgIcon: {
-                root: {
-                    width: 20,
-                    height: 20
+                styleOverrides: {
+                    root: {
+                        width: 20,
+                        height: 20
+                    }
                 }
             },
             MuiSelect: {
-                icon: {
-                    top: "unset"
+                styleOverrides: {
+                    icon: {
+                        top: "unset"
+                    }
                 }
             }
         }

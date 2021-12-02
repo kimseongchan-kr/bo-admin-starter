@@ -14,10 +14,11 @@ const customStyles = {
     }),
     container: (provided) => ({
         ...provided,
-        width: 120,
+        width: "100%",
         height: 32,
         display: "inline-block",
-        fontSize: 12
+        fontSize: 12,
+        textAlign: "center"
     }),
     control: (provided) => ({
         ...provided,

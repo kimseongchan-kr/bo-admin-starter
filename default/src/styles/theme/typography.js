@@ -39,6 +39,9 @@ export const typography = {
     overline: {
         fontWeight: 500
     },
+    caption: {
+        fontWeight: 500
+    },
     button: {
         fontWeight: 400,
         fontSize: 13,

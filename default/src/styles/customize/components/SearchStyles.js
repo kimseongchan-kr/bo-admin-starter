@@ -1,79 +1,59 @@
 // 참고: https://material-ui.com/styles/basics/#hook-api
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ palette }) => ({
     root: {
         width: "100%",
-        marginTop: 15,
         marginBottom: 20,
-        padding: "0 200px 20px 20px",
-        backgroundColor: theme.palette.neutral["white"],
-        boxShadow: "0px 2px 5px #E8E8E888",
-        "& hr": {
-            margin: "39px 10px 0 0"
-        }
+        backgroundColor: palette.neutral["white"],
+        boxShadow: `0px 2px 5px ${palette.shadow["primary"]}`,
+        borderRadius: 4
     },
     termSearchRoot: {
         width: "100%",
-        marginTop: 15,
-        marginBottom: 20,
-        padding: "20px 200px 20px 20px",
-        backgroundColor: theme.palette.neutral["white"],
-        boxShadow: "0px 2px 5px #E8E8E888",
-        "& hr": {
-            margin: "39px 10px 0 0"
-        }
+        margin: "0 auto 20px",
+        paddingBottom: 20,
+        borderRadius: 4,
+        backgroundColor: palette.neutral["white"],
+        boxShadow: `0px 2px 5px ${palette.shadow["primary"]}`
     },
     table: {
-        width: "100%",
-        marginTop: 15,
-        marginBottom: 20,
-        backgroundColor: theme.palette.neutral["white"],
-        borderCollapse: "collapse",
-        borderTop: `2px solid ${theme.palette.border["dark"]}`,
-        borderBottom: `1px solid ${theme.palette.border["opacity0.1"]}`,
+        borderRadius: 4,
+        "& tr": {
+            borderTop: `1px solid ${palette.border["opacity0.1"]}`,
+            borderBottom: `1px solid ${palette.border["opacity0.1"]}`
+        },
         "& th": {
-            paddingLeft: 20
+            width: 160,
+            fontWeight: 500,
+            lineHeight: "48px",
+            textAlign: "left",
+            color: palette.text["primary"]
         },
         "& td": {
-            paddingLeft: 20
+            padding: 7
         }
     },
-    row: {
-        borderBottom: `1px solid ${theme.palette.border["opacity0.1"]}`
-    },
-    label: {
-        width: 160,
-        height: 48,
-        lineHeight: "48px",
-        textAlign: "left",
-        color: theme.palette.text["primary"],
-        background: theme.palette.background["light"],
-        "& p": {
-            fontWeight: 500
-        }
-    },
-    content: {
-        padding: "7px"
-    },
-    divider: {
-        height: 40,
-        alignSelf: "center"
+    searchSelect: {
+        minWidth: 120,
+        maxWidth: 150,
+        backgroundColor: palette.neutral["white"]
     },
     searchTextField: {
-        width: 160
+        minWidth: 160,
+        width: 300
     },
     spacer: {
         height: 19
     },
     dash: {
-        display: "block",
         height: 40,
-        textAlign: "center",
+        display: "block",
         fontSize: 12,
-        lineHeight: "40px",
         fontWeight: 400,
-        letterSpacing: 0
+        letterSpacing: 0,
+        lineHeight: "40px",
+        textAlign: "center"
     },
     btnContainer: {
         "& button": {

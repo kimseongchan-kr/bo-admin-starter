@@ -51,6 +51,10 @@ const customStyles = {
     indicatorSeparator: (provided) => ({
         ...provided,
         alignSelf: "unset"
+    }),
+    menuList: (provided) => ({
+        ...provided,
+        padding: 0
     })
 };
 

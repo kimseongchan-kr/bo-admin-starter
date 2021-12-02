@@ -1,76 +1,71 @@
 // 참고: https://material-ui.com/styles/basics/#hook-api
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: "100%",
-        paddingBottom: 30
-    },
+const useStyles = makeStyles(({ palette }) => ({
     paper: {
         width: "100%",
-        marginBottom: theme.spacing(2),
-        backgroundColor: theme.palette.background["main"]
+        height: "100%",
+        paddingBottom: 30,
+        backgroundColor: palette.neutral["white"]
     },
-    detailPaper: {
-        width: "100%",
-        marginBottom: theme.spacing(2)
-    },
-    heading: {
-        marginBottom: 20,
-        paddingBottom: 10,
+    header: {
+        height: 70,
+        padding: 20,
+        borderBottom: `2px solid ${palette.background["main"]}`,
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-start",
-        borderBottom: `2px solid ${theme.palette.neutral["dark"]}`,
         "& svg": {
             marginRight: 20,
             cursor: "pointer"
         }
     },
-    mb20: {
-        marginBottom: 20,
-        fontWeight: 600
+    heading: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-start"
     },
     contentContainer: {
         display: "flex",
         alignItems: "flex-start",
-        backgroundColor: theme.palette.neutral["white"],
-        paddingTop: 30,
-        marginBottom: 30
+        backgroundColor: palette.neutral["white"],
+        padding: 30
     },
     contentImage: {
-        width: 560,
+        flex: "50%",
         paddingBottom: 30,
-        "& > * ": {
+        "& h4": {
+            marginBottom: 15
+        },
+        "& h4 + div": {
             width: 500,
             margin: "0 auto"
-        },
-        "& h4:first-child": {
-            marginBottom: 33
-        },
-        "& h4:not(:first-child)": {
-            marginBottom: 20
         },
         "& input[type='file']": {
             display: "none"
         }
     },
     uploadContainer: {
+        width: 500,
+        margin: "20px auto 0",
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-start",
         flexWrap: "wrap",
-        gap: 15
+        "& > label": {
+            marginBottom: 15
+        }
     },
     uploadPreviewContainer: {
+        position: "relative",
+        width: 70,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        position: "relative",
-        width: 70,
+        margin: "0 15px 15px 0",
         "& img": {
-            border: `1px solid ${theme.palette.neutral.dark}`,
-            borderRadius: 5
+            border: `1px solid ${palette.neutral.dark}`,
+            borderRadius: 4
         },
         "& > button": {
             position: "absolute",
@@ -94,12 +89,12 @@ const useStyles = makeStyles((theme) => ({
     uploadButton: {
         width: 70,
         height: 70,
-        border: `1px solid ${theme.palette.neutral.dark}`,
-        borderRadius: 5,
+        borderRadius: 4,
+        border: `1px solid ${palette.neutral.dark}`,
         "& svg": {
             width: 32,
             height: 32,
-            color: theme.palette.neutral.dark
+            color: palette.neutral.dark
         },
         "&:hover": {
             backgroundColor: "white"
@@ -110,219 +105,38 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     tableContainer: {
-        flex: 1,
-        paddingRight: 30,
-        "& hr": {
-            marginBottom: 20
-        }
+        flex: "50%"
     },
     table: {
-        width: "100%",
         marginTop: 15,
         marginBottom: 20,
-        borderCollapse: "collapse",
-        backgroundColor: theme.palette.neutral["white"],
-        borderTop: `2px solid ${theme.palette.border["dark"]}`,
-        borderBottom: `1px solid ${theme.palette.border["opacity0.1"]}`,
-        "& th": {
-            paddingLeft: 20
-        },
-        "& td": {
-            paddingLeft: 20,
-            paddingRight: 20
+        "& tr": {
+            border: `1px solid ${palette.border["opacity0.1"]}`
         }
     },
-    noBorderTable: {
-        width: "100%",
-        marginTop: 15,
-        marginBottom: 20,
-        borderCollapse: "collapse",
-        backgroundColor: theme.palette.neutral["white"],
-        "& th": {
-            paddingLeft: 20
-        },
-        "& td": {
-            paddingLeft: 20,
-            paddingRight: 20
+    detailTable: {
+        borderTop: `2px solid ${palette.border["dark"]}`,
+        "& tr": {
+            border: `1px solid ${palette.border["opacity0.1"]}`
         }
-    },
-    noMarginTable: {
-        width: "100%",
-        borderCollapse: "collapse",
-        backgroundColor: theme.palette.neutral["white"],
-        "& th": {
-            paddingLeft: 20
-        },
-        "& td": {
-            paddingLeft: 20,
-            paddingRight: 20
-        }
-    },
-    row: {
-        border: `1px solid ${theme.palette.border["opacity0.1"]}`
-    },
-    tableHead: {
-        minWidth: 160,
-        height: 48,
-        paddingRight: 20,
-        fontWeight: 600,
-        lineHeight: "48px",
-        color: theme.palette.text["primary"],
-        background: theme.palette.background["light"]
     },
     label: {
-        width: 160,
-        height: 48,
+        minWidth: 100,
         fontWeight: 600,
         textAlign: "left",
-        color: theme.palette.text["primary"],
-        background: theme.palette.background["light"]
-    },
-    content: {
-        height: 48,
-        padding: "7px"
-    },
-    textContentContainer: {
-        height: 48,
-        padding: "7px",
-        "& > div": {
-            width: "100%"
-        }
+        color: palette.text["label"],
+        background: palette.background["light"],
+        borderRight: `1px solid ${palette.border["opacity0.1"]}`
     },
     selectContainer: {
         "& > div": {
             margin: 0
         }
     },
-    selectContent: {
-        height: 48,
-        padding: "7px",
-        "& > div": {
-            width: "100%",
-            textAlign: "center",
-            "& > div > div > div": {
-                width: "100%"
-            }
-        }
-    },
     statusText: {
         marginLeft: 10,
         fontSize: 10,
         fontWeight: 500
-    },
-    imageContainer: {
-        position: "relative",
-        width: 500,
-        margin: "0 auto",
-        "& img": {
-            margin: "0 auto"
-        }
-    },
-    imagePreviewContainer: {
-        width: 500,
-        margin: "10px auto 30px",
-        "& img": {
-            margin: "0 5px 0 0",
-            cursor: "pointer"
-        },
-        "& img:last-child": {
-            margin: 0
-        }
-    },
-    noImage: {
-        width: 500,
-        height: 500,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontWeight: 500
-    },
-    imageButtonContainer: {
-        position: "absolute",
-        width: 500,
-        height: 500
-    },
-    imageButton: {
-        width: 40,
-        height: 40,
-        minWidth: 0,
-        margin: 0,
-        padding: 0,
-        boxShadow: "unset",
-        border: "none",
-        fontWeight: 600,
-        fontSize: 12,
-        color: theme.palette.neutral["dark"],
-        background: "none",
-        "& > span > span": {
-            marginLeft: 0,
-            marginRight: 0
-        },
-        "& svg": {
-            width: 40,
-            height: 40,
-            background: "#fbfbfb80"
-        },
-        "&:hover": {
-            boxShadow: "unset",
-            color: theme.palette.neutral["dark"],
-            background: "none",
-            border: "none"
-        },
-        "&:active": {
-            boxShadow: "unset",
-            transition: "none",
-            background: "none"
-        }
-    },
-    button: {
-        width: "auto",
-        height: 30,
-        marginTop: 5,
-        marginBottom: 5,
-        padding: 5,
-        fontSize: 12,
-        lineHeight: "12px",
-        color: theme.palette.primary.main,
-        border: `1px solid ${theme.palette.primary.main}`,
-        backgroundColor: theme.palette.neutral["white"],
-        "&:hover": {
-            color: theme.palette.primary.main,
-            border: `1px solid ${theme.palette.primary.main}`,
-            backgroundColor: theme.palette.neutral["white"]
-        },
-        "&:active": {
-            transition: "none",
-            color: theme.palette.primary.main,
-            border: `1px solid ${theme.palette.primary.main}`,
-            backgroundColor: theme.palette.neutral["white"]
-        }
-    },
-    buttonContent: {
-        display: "flex",
-        alignItem: "center",
-        justifyContent: "flex-start"
-    },
-    buttonContentText: {
-        flex: 1,
-        height: 30,
-        lineHeight: "30px",
-        marginTop: 5,
-        marginBottom: 5
-    },
-    buttonsContainer: {
-        display: "flex",
-        alignItems: "center",
-        "&:first-child": {
-            marginRight: "auto"
-        },
-        "&:nth-child(2)": {
-            marginLeft: "auto"
-        }
-    },
-    marginAuto: {
-        marginLeft: "auto",
-        marginRight: "auto"
     }
 }));
 
