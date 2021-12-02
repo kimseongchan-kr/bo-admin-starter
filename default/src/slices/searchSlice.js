@@ -24,18 +24,17 @@ export const searchSlice = createSlice({
     name: "search",
     initialState,
     reducers: {
-        setPage: (state, { payload }) => {
-            state.pageNumber = payload.page;
-            state.pageShow = payload.pageShow;
-        },
         setSearchFilter: (state, { payload }) => {
             state[payload.type] = payload.value;
+        },
+        setSearchFilters: (state, { payload }) => {
+            return { ...state, ...payload };
         },
         reset: () => initialState
     }
 });
 
-export const { setPage, setSearchFilter, reset } = searchSlice.actions;
+export const { setSearchFilter, setSearchFilters, reset } = searchSlice.actions;
 
 export const searchSelector = (state) => state.search;
 

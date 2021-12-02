@@ -1,8 +1,12 @@
 // README.MD 확인하기
 
+const dailyFormat = "yyyy/MM/dd";
+const monthlyFormat = "yyyy/MM";
+
 const searchComponent = {
     Dashboard: {
         date: true,
+        daetSelect: false,
         radio: true,
         selects: true,
         searchType: true,
@@ -17,18 +21,18 @@ const searchComponent = {
     }
 };
 
-const searchCaption = { gender: "성별", useYn: "판매여부" };
+const searchCaption = { gender: "성별", useYn: "판매여부", dessert: "디저트", sweets: "캔디", food: "음식", drink: "음료" };
 
 const searchType = {
-    Dashboard: ["gender", "useYn"]
+    Dashboard: ["gender", "useYn", "dessert", "sweets", "food", "drink"]
 };
 
 const searchRadioRow = {
-    Dashboard: [["gender", "useYn"], ["useYn"]]
+    Dashboard: [["sweets", "food"], ["drink"]]
 };
 
 const searchSelect = {
-    Dashboard: [["gender", "useYn"], ["gender"]]
+    Dashboard: [["gender", "useYn"], ["dessert"]]
 };
 
 const searchOption = {
@@ -42,8 +46,28 @@ const searchOption = {
         { label: "판매", value: "Y" },
         { label: "미판매", value: "N" }
     ],
-    searchType: [
+    dessert: [
         { value: "", label: "전체" },
+        { value: "cupcake", label: "컵케이크" },
+        { value: "cake", label: "케이크" }
+    ],
+    sweets: [
+        { value: "", label: "전체" },
+        { value: "candy", label: "캔디" },
+        { value: "chocolate", label: "초콜릿" }
+    ],
+    food: [
+        { value: "", label: "전체" },
+        { value: "hamburger", label: "햄버거" },
+        { value: "fried chicken", label: "치킨" }
+    ],
+    drink: [
+        { value: "", label: "전체" },
+        { value: "tea", label: "티" },
+        { value: "water", label: "물" }
+    ],
+    searchType: [
+        { value: "all", label: "전체" },
         { value: "id", label: "아이디" },
         { value: "name", label: "이름" },
         { value: "tel", label: "연락처" }
@@ -57,8 +81,8 @@ const searchOption = {
         { value: "monthly", label: "월간" }
     ],
     dateType: [
-        { value: "reg_dt", label: "등록일" },
-        { value: "mod_dt", label: "수정일" }
+        { value: "regDate", label: "등록일" },
+        { value: "modDate", label: "수정일" }
     ]
 };
 
@@ -68,6 +92,10 @@ const searchParams = {
         endDate: "endDate",
         gender: "gender",
         useYn: "useYn",
+        dessert: "dessert",
+        food: "food",
+        sweets: "sweets",
+        drink: "drink",
         searchType: "searchType",
         searchKeyword: "searchKeyword",
         sort: "sort",
@@ -75,6 +103,7 @@ const searchParams = {
         pageShow: "pageShow"
     },
     Example: {
+        term: "term",
         startDate: "startDate",
         endDate: "endDate",
         pageNumber: "pageNumber",
@@ -127,8 +156,10 @@ const tableSelectOptions = {
 };
 
 const buttons = {
-    Dashboard: { add: false, addTop: true, delete: true, excel: true },
-    Example: { add: true, delete: false, excel: false }
+    addButton: { Dashboard: false, Example: true },
+    addTopButton: { Dashboard: true, Example: false },
+    deleteButton: { Dashboard: true, Example: false },
+    excelButton: { Dashboard: true, Example: false }
 };
 
 // 샘플 데이터
@@ -172,4 +203,20 @@ const sampleData = {
     regDate: "2021-08-31"
 };
 
-export { searchParams, tableSelectOptions, searchComponent, searchRadioRow, searchSelect, searchType, searchOption, searchCaption, buttons, headCell, sampleRowData, sampleDetailData, sampleData };
+export {
+    dailyFormat,
+    monthlyFormat,
+    searchParams,
+    tableSelectOptions,
+    searchComponent,
+    searchRadioRow,
+    searchSelect,
+    searchType,
+    searchOption,
+    searchCaption,
+    buttons,
+    headCell,
+    sampleRowData,
+    sampleDetailData,
+    sampleData
+};

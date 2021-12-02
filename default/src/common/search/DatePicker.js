@@ -23,9 +23,10 @@ function DateSearchPicker({ caption = false, term, dates, handleDate }) {
                     </Typography>
                 )}
                 <DatePicker
-                    disableFuture
+                    disableCloseOnSelect={false}
                     mask={term === "daily" ? "____/__/__" : "____/__"}
-                    views={term === "monthly" ? ["year", "month"] : ["day"]}
+                    views={term === "monthly" ? ["month", "year"] : ["day"]}
+                    maxDate={new Date()}
                     inputFormat={term === "daily" ? dailyFormat : monthlyFormat}
                     inputProps={{ "aria-label": "start date", placeholder: "" }}
                     value={dates["startDate"] || null}
@@ -46,10 +47,10 @@ function DateSearchPicker({ caption = false, term, dates, handleDate }) {
                 <DatePicker
                     disableCloseOnSelect={false}
                     mask={term === "daily" ? "____/__/__" : "____/__"}
-                    views={term === "monthly" ? ["year", "month"] : ["day"]}
+                    views={term === "monthly" ? ["month", "year"] : ["day"]}
+                    minDate={dates["startDate"] ? new Date(dates["startDate"]) : new Date("1900", "01", "01")}
                     inputFormat={term === "daily" ? dailyFormat : monthlyFormat}
                     inputProps={{ "aria-label": "end date", placeholder: "" }}
-                    minDate={dates["startDate"] ? new Date(dates["startDate"]) : new Date("1900", "01", "01")}
                     value={dates["endDate"] || null}
                     onChange={(e) => handleDate("endDate", format(term, e))}
                     renderInput={(props) => <TextField size="small" {...props} />}

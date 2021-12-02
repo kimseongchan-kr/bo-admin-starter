@@ -1,51 +1,69 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { searchSelector } from "slices/searchSlice";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { searchSelector, setSearchFilters } from "slices/searchSlice";
 
-import useStyles from "styles/customize/components/SearchStyles";
-import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "styles/theme/search";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
-import Button from "@material-ui/core/Button";
+import { ThemeProvider } from "@mui/material/styles";
+import useStyles from "styles/customize/components/SearchStyles";
+
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import Button from "@mui/material/Button";
 
 import DateSearchPicker from "common/search/DatePicker";
+import SearchSelect from "common/search/SearchSelect";
 
 import { searchOption as option } from "components/Data";
 
-export default function DateTermSearch({ handleSearchFilter, handleSearch }) {
-    const classes = useStyles();
-    const { term, startDate, endDate } = useSelector(searchSelector);
+export default function DateTermSearch(props) {
+    const { total, handleSearch } = props;
 
-    const dailyFormat = "yyyy/MM/dd";
-    const monthlyFormat = "yyyy/MM";
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    const searchState = useSelector(searchSelector);
+
+    const [term, setTerm] = useState("daily");
+    const [dates, setDates] = useState({ starDate: null, endDate: null });
+
+    useEffect(() => {
+        setTerm(searchState["term"] || "daily");
+        setDates((prev) => ({ ...prev, startDate: searchState["startDate"] || null, endDate: searchState["endDate"] || null }));
+    }, [searchState]);
 
     // 검색 조건 (select) 변경
-    const handleChange = (e) => {
-        handleSearchFilter({ type: e.target.name, value: e.target.value });
-    };
+    const handleChange = (e) => setTerm(e.target.value);
 
     // 검색 기간 변경
-    const handleDate = (type, date) => {
-        handleSearchFilter({ type: type, value: date });
-    };
+    const handleDate = (type, date) => setDates((prev) => ({ ...prev, [type]: date }));
+
+    // 조회 버튼 클릭
+    const handleSubmit = () => handleSearchFilter({ ...dates, term });
+
+    // 테이블 데이터 정렬하기
+    const handleSort = (e) => handleSearchFilter({ [e.target.name]: e.target.value });
 
     // 검색하기
-    const handleSubmit = () => {
-        handleSearch();
+    const handleSearchFilter = (obj) => {
+        // 새로 검색할 경우 페이지 번호 초기화하기
+        if (parseInt(searchState["pageNumber"]) > 1) {
+            Object.assign(obj, { pageNumber: 1 });
+        }
+
+        dispatch(setSearchFilters(obj));
+        handleSearch(obj);
     };
 
     return (
         <ThemeProvider theme={theme}>
-            <Grid container direction="row" justify="flex-start" alignItems="center" className={classes.termSearchRoot}>
+            <Grid className={classes.termSearchRoot} container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
                 <Grid item>
                     <Typography variant="caption" display="block">
                         기간
                     </Typography>
-                    <Select IconComponent={KeyboardArrowDownIcon} displayEmpty name="term" value={term} onChange={handleChange}>
+                    <Select className={classes.searchSelect} IconComponent={KeyboardArrowDownIcon} displayEmpty size="small" name="term" value={term} onChange={handleChange}>
                         {option["term"] &&
                             option["term"].map((list, index) => (
                                 <MenuItem key={index} value={list.value}>
@@ -54,22 +72,19 @@ export default function DateTermSearch({ handleSearchFilter, handleSearch }) {
                             ))}
                     </Select>
                 </Grid>
-                <DateSearchPicker
-                    caption={true}
-                    classes={classes}
-                    dateFormat={term === "일간" ? dailyFormat : monthlyFormat}
-                    term={term}
-                    views={term === "월간" ? ["year", "month"] : ["date"]}
-                    startDate={startDate}
-                    endDate={endDate}
-                    handleDate={handleDate}
-                />
+                <DateSearchPicker caption={true} term={term} dates={dates} handleDate={handleDate} />
                 <Grid item>
                     <div className={classes.spacer}></div>
                     <Button variant="contained" onClick={handleSubmit}>
                         조회
                     </Button>
                 </Grid>
+            </Grid>
+            <Grid sx={{ mb: 2.5 }} container justifyContent="space-between" alignItems="center">
+                <Typography variant="h4" component="h4">
+                    검색된 데이터 : <span>{total || 0}</span>건
+                </Typography>
+                <SearchSelect name="sort" value={searchState["sort"]} options={option["sort"]} handleChange={handleSort} />
             </Grid>
         </ThemeProvider>
     );
