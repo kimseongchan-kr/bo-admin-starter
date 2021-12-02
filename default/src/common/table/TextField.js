@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import theme from "styles/theme/textfield";
-import { ThemeProvider } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import { ThemeProvider } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
 
 function TextInput({ index = 0, inputType = "text", name, value, handleChange }) {
     return (

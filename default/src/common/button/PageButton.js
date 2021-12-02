@@ -1,36 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import theme from "styles/theme/button";
-import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 
-const useStyles = makeStyles((theme) => ({
-    pageButton: {
-        width: "auto",
-        padding: 10,
-        fontWeight: 600,
-        color: theme.palette.primary["main"],
-        borderColor: theme.palette.primary["main"]
-    }
-}));
-
-function PageButton({ disabled = false, text, pageType = "search", onClick }) {
-    const classes = useStyles();
-
+function PageButton({ color = "primary", disabled = false, pageType = "search", text, onClick }) {
     return (
-        <ThemeProvider theme={theme}>
-            <Button variant="outlined" disabled={disabled} className={classes.pageButton} onClick={() => onClick(pageType)}>
-                {text}
-            </Button>
-        </ThemeProvider>
+        <Button size="large" color={color} variant="outlined" disabled={disabled} onClick={() => onClick(pageType)}>
+            {text}
+        </Button>
     );
 }
 
 PageButton.propTypes = {
+    color: PropTypes.string,
     disabled: PropTypes.bool,
-    text: PropTypes.string.isRequired,
     pageType: PropTypes.string,
+    text: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired
 };
 

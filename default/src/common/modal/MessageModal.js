@@ -1,53 +1,52 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
-import { modalSelector } from "slices/modalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { modalSelector, setClose } from "slices/modalSlice";
 
-import useStyles from "styles/customize/components/ModalStyles";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Typography from "@mui/material/Typography";
+// import Button from "@mui/material/Button";
+
 import Button from "common/button/DefaultButton";
 
-import Modal from "react-modal";
-import { disableScroll, enableScroll } from "utils/common";
+function MessageModal({ handleConfirm }) {
+    const dispatch = useDispatch();
+    const { msgOpen, messageType, message } = useSelector(modalSelector);
 
-Modal.defaultStyles.overlay.zIndex = 9999;
-Modal.defaultStyles.overlay.backgroundColor = "rgba(0, 0, 0, .45)";
-
-function MessageModal({ onClose }) {
-    const classes = useStyles();
-    const { msgOpen, message } = useSelector(modalSelector);
+    // 모달 닫기
+    const onClose = () => dispatch(setClose());
 
     return (
-        <Modal isOpen={msgOpen} onRequestClose={onClose} style={modalStyles} contentLabel="Message Modal" onAfterOpen={disableScroll} onAfterClose={enableScroll}>
-            <Typography variant="body1" display="block" color="inherit" className={classes.message}>
-                {message}
-            </Typography>
-            <Grid container justify="center" alignItems="center">
-                <Grid item>
-                    <Button icon="cancel" onClick={onClose} text="닫기" />
-                </Grid>
-            </Grid>
-        </Modal>
+        <>
+            {msgOpen && (
+                <Dialog open={msgOpen} onClose={onClose} sx={{ p: 10 }}>
+                    <DialogTitle>{messageType === "message" ? "알림" : "확인"}</DialogTitle>
+                    <DialogContent>
+                        <Typography variant="body2" style={{ minWidth: 320 }}>
+                            {message}
+                        </Typography>
+                    </DialogContent>
+                    {messageType === "message" ? (
+                        <DialogActions sx={{ py: 2, px: 2.5 }}>
+                            <Button size="small" text="확인" onClick={onClose} />
+                        </DialogActions>
+                    ) : (
+                        <DialogActions sx={{ py: 2, px: 2.5 }}>
+                            <Button size="small" text="확인" onClick={handleConfirm} />
+                            <Button size="small" color="error" text="취소" onClick={onClose} />
+                        </DialogActions>
+                    )}
+                </Dialog>
+            )}
+        </>
     );
 }
 
-const modalStyles = {
-    content: {
-        minWidth: 360,
-        padding: 30,
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-50%, -50%)",
-        maxHeight: "80%"
-    }
-};
-
 MessageModal.propTypes = {
-    onClose: PropTypes.func.isRequired
+    handleConfirm: PropTypes.func
 };
 
 export default MessageModal;

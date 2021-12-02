@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { Controller } from "react-hook-form";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 function CheckBox({ options, control }) {
     return (
@@ -18,7 +18,7 @@ function CheckBox({ options, control }) {
                         <FormControlLabel
                             key={`checkbox-${index}`}
                             label={checkbox.label}
-                            control={<Checkbox onChange={(e) => onChange(e.target.checked)} checked={value} name={checkbox.name} color="primary" />}
+                            control={<Checkbox color="primary" name={checkbox.name} checked={value} onChange={(e) => onChange(e.target.checked)} />}
                         />
                     )}
                 />

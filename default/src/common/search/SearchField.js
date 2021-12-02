@@ -1,15 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import SearchSelect from "./SearchSelect";
+import useStyles from "styles/customize/components/SearchStyles";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import SearchSelect from "common/search/SearchSelect";
 
-function SearchField({ classes, searchType, options, handleChange, searchKeyword, handleKeyword }) {
+function SearchField({ searchType, dataList, handleChange, searchKeyword, handleKeyword }) {
+    const classes = useStyles();
+
     return (
         <>
             <Grid item>
-                <SearchSelect name="searchType" value={searchType} options={options} handleChange={handleChange} />
+                <SearchSelect name="searchType" value={searchType} dataList={dataList} handleChange={handleChange} />
             </Grid>
             <Grid item>
                 <TextField
@@ -21,7 +24,8 @@ function SearchField({ classes, searchType, options, handleChange, searchKeyword
                     variant="outlined"
                     type="search"
                     value={searchKeyword}
-                    onChange={(e) => handleKeyword(e.target.value)}
+                    onChange={handleKeyword}
+                    onKeyDown={handleKeyword}
                 />
             </Grid>
         </>
@@ -29,9 +33,7 @@ function SearchField({ classes, searchType, options, handleChange, searchKeyword
 }
 
 SearchField.propTypes = {
-    classes: PropTypes.object.isRequired,
     searchType: PropTypes.string.isRequired,
-    options: PropTypes.array.isRequired,
     handleChange: PropTypes.func.isRequired,
     searchKeyword: PropTypes.string.isRequired,
     handleKeyword: PropTypes.func.isRequired

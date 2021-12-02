@@ -1,65 +1,47 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import theme from "styles/theme/button";
-import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 
-import Button from "@material-ui/core/Button";
-import CheckOutlined from "@material-ui/icons/CheckOutlined";
-import CircularProgress from "@material-ui/core/CircularProgress";
-
-const useStyles = makeStyles((theme) => ({
-    progressIcon: {
-        color: theme.palette.primary.main
-    },
+const useStyles = makeStyles(({ palette }) => ({
     disabled: {
-        minWidth: 100,
-        width: "auto",
-        padding: 10,
-        backgroundColor: "rgba(0,0,0,0.12)"
-    },
-    check: {
-        minWidth: 100,
-        width: "auto",
-        padding: 10,
-        color: theme.palette.primary.main,
-        border: `1px solid ${theme.palette.primary.main}`,
-        "&:hover": {
-            color: theme.palette.primary.main,
-            border: `1px solid ${theme.palette.primary.main}`
-        },
-        "&:active": {
-            color: theme.palette.primary.main,
-            border: `1px solid ${theme.palette.primary.main}`
-        }
+        border: `1px solid ${palette.border["dark"]}`,
+        backgroundColor: palette.neutral["white"]
     }
 }));
-function SubmitButton({ type = "button", loading = false, disabled = false, text, onClick }) {
+
+function SubmitButton({ color = "secondary", type = "button", loading = false, disabled = false, text, onClick }) {
     const classes = useStyles();
 
     return (
-        <ThemeProvider theme={theme}>
+        <>
             {type === "submit" ? (
                 <Button
-                    className={loading ? classes.disabled : classes.check}
                     type={type}
+                    size="large"
+                    color={color}
                     variant="outlined"
-                    startIcon={loading ? <CircularProgress aria-label="loading submit" size={12} className={classes.progressIcon} /> : <CheckOutlined style={{ color: "#039BE5" }} />}
-                    disabled={(loading || disabled) && true}>
+                    className={loading ? classes.disabled : ""}
+                    startIcon={loading ? <CircularProgress color="primary" aria-label="loading submit" size={12} /> : <></>}
+                    disabled={loading || disabled ? true : false}>
                     {text}
                 </Button>
             ) : (
                 <Button
-                    className={loading ? classes.disabled : classes.check}
                     type={type}
+                    size="large"
+                    color={color}
                     variant="outlined"
-                    startIcon={loading ? <CircularProgress aria-label="loading submit" size={12} className={classes.progressIcon} /> : <CheckOutlined style={{ color: "#039BE5" }} />}
-                    disabled={(loading || disabled) && true}
+                    className={loading ? classes.disabled : ""}
+                    startIcon={loading ? <CircularProgress color="primary" aria-label="loading submit" size={12} /> : <></>}
+                    disabled={loading || disabled ? true : false}
                     onClick={onClick}>
                     {text}
                 </Button>
             )}
-        </ThemeProvider>
+        </>
     );
 }
 

@@ -2,32 +2,10 @@ import React from "react";
 import Workbook from "react-excel-workbook";
 import { format } from "utils/common";
 
-import theme from "styles/theme/button";
-import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 
-const useStyles = makeStyles((theme) => ({
-    excel: {
-        width: 120,
-        color: theme.palette.primary.main,
-        border: `1px solid ${theme.palette.primary.main}`,
-        "&:hover": {
-            color: theme.palette.primary.main,
-            border: `1px solid ${theme.palette.primary.main}`
-        },
-        "&:active": {
-            color: theme.palette.primary.main,
-            border: `1px solid ${theme.palette.primary.main}`
-        }
-    },
-    buttonProgress: {
-        color: theme.palette.primary.main
-    }
-}));
-
-export default function ExcelExport({ menu, loading, excelData, onExcelClick }) {
-    const classes = useStyles();
+export default function ExcelExport({ menu, loading, disabled, excelData, onExcelClick }) {
     const today = new Date();
 
     const DashboardExcel = () => (
@@ -51,17 +29,18 @@ export default function ExcelExport({ menu, loading, excelData, onExcelClick }) 
     );
 
     return (
-        <ThemeProvider theme={theme}>
+        <>
             <Button
-                disabled={loading}
+                size="large"
+                color="primary"
                 variant="outlined"
-                startIcon={loading ? <CircularProgress aria-label="loading excel download" size={12} className={classes.buttonProgress} /> : <></>}
-                className={classes.excel}
+                disabled={loading || disabled}
+                startIcon={loading ? <CircularProgress color="primary" aria-label="loading excel download" size={12} /> : <></>}
                 onClick={onExcelClick}>
                 엑셀 다운로드
             </Button>
             {menu === "Dashboard" && <DashboardExcel />}
             {menu === "Example" && <ExampleExcel />}
-        </ThemeProvider>
+        </>
     );
 }
