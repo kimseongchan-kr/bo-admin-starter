@@ -2,16 +2,17 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import useMenu from "hooks/useMenu";
 
-import { setClose, setMessage } from "slices/modalSlice";
+import { setMessage } from "slices/modalSlice";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import theme from "styles/theme/form";
-import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@mui/styles";
+import { ThemeProvider } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 
 import Input from "common/form/Input";
 import SubmitButton from "common/button/SubmitButton";
@@ -29,50 +30,30 @@ const schema = yup.object().shape({
         })
 });
 
-const useStyles = makeStyles(() => ({
-    container: {
-        width: "100%",
-        margin: "0 auto",
-        background: "#ffffff",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "flex-start"
-    },
+const useStyles = makeStyles(({ palette }) => ({
     form: {
         width: "100%",
-        paddingBottom: 30
+        margin: "0 auto",
+        padding: 20,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        flexDirection: "column",
+        background: palette.neutral["white"]
     },
     table: {
-        width: "100%",
-        borderCollapse: "collapse",
-        borderTop: " 1px solid #3d35951a",
-        borderBottom: " 1px solid #3d35951a",
-        "& td": {
-            paddingLeft: 20
+        borderRadius: 4,
+        "& tr": {
+            border: `1px solid ${palette.border["opacity0.1"]}`
+        },
+        "& th": {
+            minWidth: 100,
+            fontWeight: 600,
+            textAlign: "left",
+            color: palette.text["label"],
+            background: palette.background["light"],
+            borderRight: `1px solid ${palette.border["opacity0.1"]}`
         }
-    },
-    row: {
-        borderBottom: " 1px solid #3d35951a"
-    },
-    label: {
-        width: 160,
-        height: 48,
-        background: "#fbfbfb",
-        textAlign: "left",
-        lineHeight: "48px",
-        color: "#333333b3"
-    },
-    textInput: {
-        width: 320,
-        height: 32
-    },
-    errorMessage: {
-        lineHeight: "32px",
-        color: "red",
-        marginLeft: 10
-    },
-    paddingRight: {
-        paddingRight: 16
     }
 }));
 
@@ -83,7 +64,7 @@ export default function ChangeInfo() {
         resolver: yupResolver(schema)
     });
 
-    useMenu({ page: "Change Info", menu: null, title: "정보 변경", num: 0 });
+    useMenu({ page: "Change Info", menu: null, menuTitle: "정보 변경", menuNum: null });
 
     useEffect(() => {
         clearErrors();
@@ -98,74 +79,77 @@ export default function ChangeInfo() {
     // 데이터 수정하기
     const onSubmit = (data) => {
         console.log(data);
-        dispatch(setMessage({ open: true, message: "수정되었습니다." }));
-    };
-
-    // 모달 닫기
-    const onClose = () => {
-        dispatch(setClose());
+        dispatch(setMessage({ open: true, type: "message", message: "수정되었습니다." }));
     };
 
     return (
-        <div className={classes.container}>
-            <ThemeProvider theme={theme}>
-                <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
-                    <table className={classes.table}>
-                        <tbody>
-                            <tr className={classes.row}>
-                                <td className={classes.label}>
-                                    <Typography variant="body2">이름</Typography>
-                                </td>
-                                <td>
-                                    <Input name="name" defaultValue="이름" control={control} inputType="text" classes={classes} />
-                                    <Typography component="span" variant="body2" className={classes.errorMessage}>
-                                        {errors.name && "이름을 입력해주세요."}
+        <ThemeProvider theme={theme}>
+            <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
+                <table className={classes.table}>
+                    <colgroup>
+                        <col width="12%" />
+                        <col width="88%" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>
+                                <Typography variant="body2">이름</Typography>
+                            </th>
+                            <td>
+                                <Input name="name" defaultValue="이름" inputType="text" control={control} classes={classes} />
+                                {errors.name && (
+                                    <Typography component="p" variant="body2" className={classes.errorMessage}>
+                                        이름을 입력해주세요.
                                     </Typography>
-                                </td>
-                            </tr>
-                            <tr className={classes.row}>
-                                <td className={classes.label}>
-                                    <Typography variant="body2">이메일</Typography>
-                                </td>
-                                <td>
-                                    <Input name="email" defaultValue="이메일" control={control} inputType="text" classes={classes} />
-                                    <Typography component="span" variant="body2" style={{ color: "red", marginLeft: 10 }}>
-                                        {errors.email && "이메일을 입력해주세요."}
+                                )}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <Typography variant="body2">이메일</Typography>
+                            </th>
+                            <td>
+                                <Input name="email" defaultValue="이메일" inputType="text" control={control} classes={classes} />
+                                {errors.email && (
+                                    <Typography component="p" variant="body2" style={{ color: "red", marginLeft: 10 }}>
+                                        이메일을 입력해주세요.
                                     </Typography>
-                                </td>
-                            </tr>
-                            <tr className={classes.row}>
-                                <td className={classes.label}>
-                                    <Typography variant="body2">전화번호</Typography>
-                                </td>
-                                <td>
-                                    <Input name="phone" defaultValue="전화번호" control={control} inputType="phone" classes={classes} />
-                                    <Typography component="span" variant="body2" style={{ color: "red", marginLeft: 10 }}>
-                                        {errors.phone && "전화번호를 입력해주세요."}
+                                )}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <Typography variant="body2">전화번호</Typography>
+                            </th>
+                            <td>
+                                <Input name="phone" defaultValue="전화번호" inputType="phone" control={control} classes={classes} />
+                                {errors.phone && (
+                                    <Typography component="p" variant="body2" style={{ color: "red", marginLeft: 10 }}>
+                                        전화번호를 입력해주세요.
                                     </Typography>
-                                </td>
-                            </tr>
-                            <tr className={classes.row}>
-                                <td className={classes.label}>
-                                    <Typography variant="body2">이미지</Typography>
-                                </td>
-                                <td>
-                                    <input name="image" type="file" ref={register} />
-                                    <Typography component="span" variant="body2" style={{ color: "red", marginLeft: 10 }}>
-                                        {errors.image && "이미지를 선택해주세요."}
+                                )}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <Typography variant="body2">이미지</Typography>
+                            </th>
+                            <td>
+                                <input name="image" type="file" ref={register} />
+                                {errors.image && (
+                                    <Typography component="p" variant="body2" style={{ color: "red", marginLeft: 10 }}>
+                                        이미지를 선택해주세요.
                                     </Typography>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <Grid container direction="row" justify="flex-end" alignItems="center">
-                        <Grid item className={classes.paddingRight}>
-                            <SubmitButton type="submit" text="변경" />
-                        </Grid>
-                    </Grid>
-                </form>
-            </ThemeProvider>
-            <MessageModal onClose={onClose} />
-        </div>
+                                )}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <Grid sx={{ py: 2.5 }} container direction="row" justifyContent="flex-end" alignItems="center">
+                    <SubmitButton type="submit" text="변경" />
+                </Grid>
+            </form>
+            <MessageModal />
+        </ThemeProvider>
     );
 }
