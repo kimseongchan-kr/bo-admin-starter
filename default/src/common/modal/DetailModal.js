@@ -20,7 +20,7 @@ function DetailModal() {
 
     const QuantityTable = () => (
         <tbody>
-            <tr className={classes.row}>
+            <tr>
                 <th align="center" width={150} className={classes.label}>
                     판매량
                 </th>

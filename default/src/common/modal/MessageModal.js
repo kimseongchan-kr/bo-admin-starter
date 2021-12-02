@@ -8,9 +8,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Typography from "@mui/material/Typography";
-// import Button from "@mui/material/Button";
 
-import Button from "common/button/DefaultButton";
+import ModalButton from "common/button/DefaultButton";
 
 function MessageModal({ handleConfirm }) {
     const dispatch = useDispatch();
@@ -31,12 +30,12 @@ function MessageModal({ handleConfirm }) {
                     </DialogContent>
                     {messageType === "message" ? (
                         <DialogActions sx={{ py: 2, px: 2.5 }}>
-                            <Button size="small" text="확인" onClick={onClose} />
+                            <ModalButton size="small" text="확인" onClick={onClose} />
                         </DialogActions>
                     ) : (
                         <DialogActions sx={{ py: 2, px: 2.5 }}>
-                            <Button size="small" text="확인" onClick={handleConfirm} />
-                            <Button size="small" color="error" text="취소" onClick={onClose} />
+                            <ModalButton size="small" text="확인" onClick={handleConfirm} />
+                            <ModalButton size="small" color="error" text="취소" onClick={onClose} />
                         </DialogActions>
                     )}
                 </Dialog>
