@@ -3,15 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 export const menuSlice = createSlice({
     name: "menu",
     initialState: {
-        menu: "summary",
-        menuTitle: "Dashboard",
+        menu: "",
+        menuTitle: "",
         menuNum: 1
     },
     reducers: {
         setMenu: (state, { payload }) => {
             state.menu = payload.menu;
-            state.menuTitle = payload.title;
-            state.menuNum = payload.num;
+            state.menuTitle = payload.menuTitle;
+            state.menuNum = payload.menuNum;
         }
     }
 });

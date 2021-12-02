@@ -3,6 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     useYn: "",
     gender: "",
+    dessert: "",
+    sweets: "",
+    food: "",
+    drink: "",
 
     searchType: "",
     searchKeyword: "",

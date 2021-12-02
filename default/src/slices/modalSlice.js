@@ -4,6 +4,7 @@ const initialState = {
     //메시지 모달
     open: false,
     message: "",
+    messageType: "",
 
     // Confirm 모달
     msgConfirmOpen: false,
@@ -21,30 +22,16 @@ const initialState = {
 export const modalSlice = createSlice({
     name: "modal",
     initialState: {
-        //메시지 모달
-        open: false,
-        message: "",
-
-        // Confirm 모달
-        msgConfirmOpen: false,
-        msgOpen: false,
-
+        ...initialState,
         // 추가/수정 모달
         editOpen: false,
-        editData: null,
-
-        // 상세 모달
-        detailOpen: false,
-        detailData: null,
-
-        // 이미지 모달
-        imgOpen: false,
-        imgData: null
+        editData: null
     },
     reducers: {
         // 메시지 모달 띄우기
         setMessage: (state, { payload }) => {
             state.msgOpen = payload.open;
+            state.messageType = payload.type;
             state.message = payload.message;
         },
         // Confirm 모달 띄우기
@@ -71,9 +58,6 @@ export const modalSlice = createSlice({
         setClose: (state) => {
             return { ...state, ...initialState };
         },
-        setMsgConfirmClose: (state, { payload }) => {
-            state.msgConfirmOpen = false;
-        },
         // 추가/수정 모달 닫기
         setEditClose: (state, { payload }) => {
             state.editOpen = false;
@@ -82,7 +66,7 @@ export const modalSlice = createSlice({
     }
 });
 
-export const { setMessage, setMsgConfirm, setDetail, setImage, setEdit, setClose, setMsgConfirmClose, setEditClose } = modalSlice.actions;
+export const { setMessage, setMsgConfirm, setDetail, setImage, setEdit, setClose, setEditClose } = modalSlice.actions;
 
 export const modalSelector = (state) => state.modal;
 
