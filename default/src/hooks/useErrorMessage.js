@@ -10,11 +10,12 @@ const useErrorMsg = (status, statusCode, errorMsg) => {
     // 에러 메시지 노출하기
     useEffect(() => {
         if (status === "failed" && errorMsg) {
-            dispatch(setMessage({ open: status === "failed", message: errorMsg }));
+            dispatch(setMessage({ open: true, type: "message", message: errorMsg }));
         }
 
         if (parseInt(statusCode) === 401) {
             dispatch(setLogOut());
+            window.location.reload();
         }
     }, [dispatch, status, statusCode, errorMsg]);
 };

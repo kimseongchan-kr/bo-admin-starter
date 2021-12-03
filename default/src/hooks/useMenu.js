@@ -1,14 +1,18 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { menuSelector, setMenu } from "slices/menuSlice";
 
-import { setMenu } from "slices/menuSlice";
+import _ from "lodash";
 
-const useMenu = ({ page, menu, title, num }) => {
+const useMenu = ({ page, menu, menuTitle, menuNum }) => {
     const dispatch = useDispatch();
+    const menuState = useSelector(menuSelector);
 
     useEffect(() => {
-        dispatch(setMenu({ menu, title, num }));
-    }, [dispatch, menu, num, title]);
+        if (!_.isEqual(menuState, { menu, menuTitle, menuNum })) {
+            dispatch(setMenu({ menu, menuTitle, menuNum }));
+        }
+    }, [dispatch, menuState, menu, menuTitle, menuNum]);
 
     return page;
 };
