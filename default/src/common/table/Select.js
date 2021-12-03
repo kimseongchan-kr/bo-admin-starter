@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import styles from "styles/customize/select/TableSelectStyles";
 
-function TableSelect({ name, rowIndex, value, label, options, handleSelect }) {
+function TableSelect({ rowIndex, name, value, label, options, handleSelect }) {
     return (
         <Select
             aria-label={`select ${name}`}
@@ -20,8 +20,8 @@ function TableSelect({ name, rowIndex, value, label, options, handleSelect }) {
 }
 
 TableSelect.propTypes = {
-    name: PropTypes.string.isRequired,
     rowIndex: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     options: PropTypes.array.isRequired,

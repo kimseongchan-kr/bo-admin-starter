@@ -221,8 +221,8 @@ export default function ButtonComponent() {
             </Typography>
             <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                 <Grid item>
-                    <TableButton disabled={false} text="수정" pageType="edit" rowIndex={0} onClick={handleDemo} />
-                    <TableButton disabled={true} text="수정" pageType="edit" rowIndex={0} onClick={handleDemo} />
+                    <TableButton disabled={false} pageType="edit" text="수정" rowIndex={0} onClick={handleDemo} />
+                    <TableButton disabled={true} pageType="edit" text="수정" rowIndex={0} onClick={handleDemo} />
                 </Grid>
                 <div className={classes.spacer} />
                 <Grid item>
@@ -467,21 +467,21 @@ export default function ButtonComponent() {
                             <th>text</th>
                             <td>string</td>
                             <td>Yes</td>
-                            <td></td>
+                            <td>-</td>
                             <td>"수정" / "삭제" ...</td>
                         </tr>
                         <tr>
                             <th>rowIndex</th>
                             <td>number</td>
                             <td>Yes</td>
-                            <td></td>
+                            <td>-</td>
                             <td>row index</td>
                         </tr>
                         <tr>
                             <th>onClick</th>
                             <td>function</td>
                             <td>Yes</td>
-                            <td></td>
+                            <td>-</td>
                             <td>{`() => console.log("clicked button inside table")`}</td>
                         </tr>
                     </tbody>
