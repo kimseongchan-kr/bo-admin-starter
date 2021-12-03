@@ -1,9 +1,9 @@
 import React from "react";
 import useMenu from "hooks/useMenu";
 
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@mui/styles";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -38,14 +38,14 @@ const useStyles = makeStyles(() => ({
 export default function TypographyComponent() {
     const classes = useStyles();
 
-    useMenu({ page: "Typography Component Demo", menu: "components", title: "Typography", num: 8 });
+    useMenu({ page: "Typography Component Demo", menu: "components", menuTitle: "Typography", menuNum: 6 });
 
     return (
         <div className={classes.container}>
             <Typography className={classes.title} variant="h5" component="h3" color="inherit">
                 Typography variant h1
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+            <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                 <Grid item>
                     <Typography variant="h1" component="h1">
                         LOGO
@@ -58,7 +58,7 @@ export default function TypographyComponent() {
                     Header
                 </Typography>
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+            <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                 <Grid item>
                     <Typography variant="h2" component="h2">
                         Dashboard
@@ -75,7 +75,7 @@ export default function TypographyComponent() {
                     MessageModal, MsgConfirmModal
                 </Typography>
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+            <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                 <Grid item>
                     <Typography variant="body1" display="block">
                         해당 디저트를 삭제하시겠습니까?
@@ -92,7 +92,7 @@ export default function TypographyComponent() {
                     ChangeInfo, EditModal
                 </Typography>
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+            <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                 <Grid item>
                     <Typography variant="body2" display="block">
                         이름
@@ -117,7 +117,7 @@ export default function TypographyComponent() {
                     로그인한 유저명, Filter의 확인 버튼
                 </Typography>
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+            <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                 <Grid item>
                     <Typography variant="button">블록오디세이님</Typography>
                     <div className={classes.spacer} />
@@ -130,7 +130,7 @@ export default function TypographyComponent() {
                     검색
                 </Typography>
             </Typography>
-            <Grid className={classes.componentContainer} container direction="row" alignItems="center" justify="flex-start">
+            <Grid className={classes.componentContainer} container direction="row" alignItems="center" justifyContent="flex-start">
                 <Grid item>
                     <Typography variant="caption">기간</Typography>
                     <div className={classes.spacer} />

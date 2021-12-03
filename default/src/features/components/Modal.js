@@ -2,15 +2,14 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import useMenu from "hooks/useMenu";
 
-import { setMessage, setMsgConfirm, setDetail, setClose } from "slices/modalSlice";
+import { setMessage, setDetail, setClose } from "slices/modalSlice";
 
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@mui/styles";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 
 import DetailModal from "common/modal/DetailModal";
 import MessageModal from "common/modal/MessageModal";
-import ConfirmModal from "common/modal/ConfirmModal";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -86,7 +85,7 @@ export default function Modal() {
     const dispatch = useDispatch();
 
     // 페이지(메뉴) 설정하기
-    useMenu({ page: "Modal Component Demo", menu: "components", title: "Modal", num: 7 });
+    useMenu({ page: "Modal Component Demo", menu: "components", menuTitle: "Modal", menuNum: 5 });
 
     // 선택한 데이터 삭제하기
     const handleDelete = () => {
@@ -95,30 +94,19 @@ export default function Modal() {
     };
 
     // 메시지 모달 데모
-    const onMessage = () => {
-        dispatch(setMessage({ open: true, message: "Alert!" }));
-    };
+    const onMessage = () => dispatch(setMessage({ open: true, message: "Alert!" }));
 
     // 확인 모달 데모
-    const onConfirmMsg = () => {
-        dispatch(setMsgConfirm({ open: true, message: "Confirm Message?" }));
-    };
+    const onConfirmMsg = () => dispatch(setMessage({ open: true, type: "confirm", message: "Confirm Message?" }));
 
-    const onDetail = () => {
-        dispatch(setDetail({ open: true, data: { title: "Detail Modal Demo", type: "quantity", quantity: 7777777 } }));
-    };
-
-    // 모달 닫기
-    const onClose = () => {
-        dispatch(setClose());
-    };
+    const onDetail = () => dispatch(setDetail({ open: true, data: { title: "Detail Modal Demo", type: "quantity", quantity: 7777777 } }));
 
     return (
         <div className={classes.container}>
             <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                 메시지 모달
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+            <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                 <Grid item>
                     <Typography className={classes.cursor} variant="body2" color="inherit" onClick={onMessage}>
                         Message
@@ -128,7 +116,7 @@ export default function Modal() {
             <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                 Confirm 모달
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+            <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                 <Grid item>
                     <Typography className={classes.cursor} variant="body2" color="inherit" onClick={onConfirmMsg}>
                         Confirm
@@ -138,7 +126,7 @@ export default function Modal() {
             <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                 상세 모달
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+            <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                 <Grid item>
                     <Typography className={classes.cursor} variant="body2" color="inherit" onClick={() => onDetail("quantity")}>
                         상세 조회
@@ -150,24 +138,7 @@ export default function Modal() {
             </Typography>
             <code className={classes.background}>
                 import MessageModal from "common/modal/MessageModal"; <br />
-                <br />
-                <table className={classes.table}>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>onClose</th>
-                            <td>function</td>
-                            <td>{`() => console.log("close modal")`}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                import ConfirmModal from "common/modal/ConfirmModal"; <br />
+                {`const { msgOpen, messageType, message } = useSelector(modalSelector);`}
                 <br />
                 <table className={classes.table}>
                     <thead>
@@ -183,14 +154,10 @@ export default function Modal() {
                             <td>function</td>
                             <td>{`() => console.log("deleting dessert")`}</td>
                         </tr>
-                        <tr>
-                            <th>onClose</th>
-                            <td>function</td>
-                            <td>{`() => console.log("closing modal")`}</td>
-                        </tr>
                     </tbody>
                 </table>
-                import DetailModal from "common/modal/DetailModal";
+                import DetailModal from "common/modal/DetailModal"; <br />
+                {`const { detailOpen, detailData } = useSelector(modalSelector);`}
                 <br />
                 <table className={classes.table}>
                     <thead>
@@ -202,16 +169,15 @@ export default function Modal() {
                     </thead>
                     <tbody>
                         <tr>
-                            <th>onClose</th>
-                            <td>function</td>
-                            <td>{`() => console.log("closing modal")`}</td>
+                            <th>-</th>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
                     </tbody>
                 </table>
             </code>
-            <MessageModal onClose={onClose} />
-            <ConfirmModal handleConfirm={handleDelete} onClose={onClose} />
-            <DetailModal onClose={onClose} />
+            <DetailModal />
+            <MessageModal handleConfirm={handleDelete} />
         </div>
     );
 }
