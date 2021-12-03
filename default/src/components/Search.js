@@ -40,8 +40,8 @@ export default function Search(props) {
 
     // 기간 검색 버튼
     const handleClick = (name, months) => {
-        const dates = handleDateClick(name, months);
-        handleSearchFilter(dates); // dates: {startDate, endDate}
+        const dates = handleDateClick(name, months); // dates: {startDate, endDate}
+        handleSearchFilter(dates);
     };
 
     // 검색 조건 (select) 변경

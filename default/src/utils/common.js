@@ -1,3 +1,5 @@
+import { saveAs } from "file-saver";
+
 export const queryToString = (query) => {
     const keys = Object.keys(query);
 
@@ -29,8 +31,10 @@ export const queryToObject = (search) => {
     return params;
 };
 
+// 날짜 형식 변환
 export const format = (type, date) => {
-    let datefm = new Date(date);
+    const datefm = new Date(date);
+    let formattedDate = "";
 
     let day = "" + datefm.getDate();
     let month = "" + (datefm.getMonth() + 1);
@@ -47,22 +51,20 @@ export const format = (type, date) => {
     if (minutes.length < 2) minutes = "0" + minutes;
     if (seconds.length < 2) seconds = "0" + seconds;
 
-    if (type === "월간") {
-        return [year, month].join("-");
+    if (type === "monthly") {
+        formattedDate = [year, month].join("-");
+    } else if (type === "time") {
+        formattedDate = [year, month, day].join("-") + " " + [hour, minutes, seconds].join(":");
+    } else if (type === "excel") {
+        formattedDate = [year, month, day, hour, minutes, seconds].join("");
+    } else {
+        formattedDate = [year, month, day].join("-");
     }
 
-    if (type === "time") {
-        let date = [year, month, day].join("-");
-        return date + " " + [hour, minutes, seconds].join(":");
-    }
-
-    if (type === "excel") {
-        return [year, month, day, hour, minutes, seconds].join("");
-    }
-
-    return [year, month, day].join("-");
+    return formattedDate;
 };
 
+// 날짜 계산
 export const calculateDate = (today, month) => {
     let caltoday = new Date(today);
     caltoday.setMonth(caltoday.getMonth() - month);
@@ -74,15 +76,15 @@ export const calculateDate = (today, month) => {
     return caltoday;
 };
 
+// 기간 검색 버튼 클릭 (오늘, 1주일, 1개월, 3개월, 6개월, 기간 초기화)
 export const handleDateClick = (name, months) => {
     const curDate = new Date();
     let prevDate = "";
-    let dateObj = {};
+    let dateObj = { startDate: null, endDate: null };
 
     if (name === "today") {
-        dateObj.startDate = format("일간", curDate);
-        dateObj.endDate = format("일간", curDate);
-        return dateObj;
+        dateObj.startDate = format("daily", curDate);
+        dateObj.endDate = format("daily", curDate);
     } else if (name === "week") {
         prevDate = new Date(curDate).setDate(curDate.getDate() - 7);
     } else if (name === "month") {
@@ -90,18 +92,15 @@ export const handleDateClick = (name, months) => {
     } else if (name === "reset") {
         dateObj.startDate = null;
         dateObj.endDate = null;
-        return dateObj;
     }
 
-    if (name !== "today" && name !== "reset") {
-        dateObj.startDate = format("일간", prevDate);
-        dateObj.endDate = format("일간", curDate);
-        return dateObj;
+    if (name === "week" && name === "month") {
+        dateObj.startDate = format("daily", prevDate);
+        dateObj.endDate = format("daily", curDate);
     }
+
+    return dateObj;
 };
-
-export const enableScroll = () => (document.body.style.overflowY = "auto");
-export const disableScroll = () => (document.body.style.overflowY = "hidden");
 
 export const isEmpty = (value) => {
     if (
@@ -118,4 +117,78 @@ export const isEmpty = (value) => {
     } else {
         return false;
     }
+};
+
+// Form 에서 사용하는 메시지들
+export const getMessageText = (type) => {
+    let message = "";
+    if (type === "delete") {
+        message = "이미지를 삭제하시겠습니까?";
+    } else if (type === "editCancel") {
+        message = "목록으로 돌아가시겠습니까? 입력된 정보는 수정되지 않습니다.";
+    } else if (type === "uploadCancel") {
+        message = "목록으로 돌아가시겠습니까? 입력된 정보는 저장되지 않습니다.";
+    } else if (type === "reset") {
+        message = "입력한 내용을 삭제하시겠습니까?";
+    }
+
+    return message;
+};
+
+// 이미지 URL로부터 이미지 파일을 가지고 와서 Base 64 String으로 변환하기
+const getBase64Image = (imgUrl) => {
+    return new Promise((resolve, reject) => {
+        let img = new Image();
+
+        img.onload = () => {
+            let canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            canvas.getContext("2d").drawImage(img, 0, 0, img.width, img.height);
+
+            let dataURL = canvas.toDataURL("image/jpeg").replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+            resolve(dataURL); // return the base64 string
+        };
+        img.onerror = () => reject(imgUrl);
+
+        img.setAttribute("crossOrigin", "anonymous");
+        img.src = imgUrl;
+    });
+};
+
+// 이미지 Zip File 다운로드하기
+export const handleZipDownload = async (images) => {
+    let zip = require("jszip")();
+    let message = "";
+
+    for (let i in images) {
+        let errorMessage = "";
+        if (images[i]) {
+            // File Extension 확인 (.jpg, .png)
+            let extension = ".jpg";
+            if (images[i].img_detail.endsWith(".jpg")) {
+                extension = ".jpg";
+            } else if (images[i].img_detail.endsWith(".png")) {
+                extension = ".png";
+            }
+
+            // 이미지 주소를 넘기고 base 64 string 값을 zip 파일에 추가하기
+            await getBase64Image(images[i].img_detail)
+                .then((imgData) => {
+                    zip.file(`사진_${parseInt(i) + 1}${extension}`, imgData, { base64: true });
+                })
+                .catch((err) => {
+                    console.log("Error Downloading the File:: ", err);
+                    errorMessage = `${parseInt(i) + 1}번째 사진 다운로드에 실패하였습니다.`;
+                });
+            message += errorMessage;
+        }
+    }
+
+    // 생성한 Zip 파일 다운로드
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+        saveAs(content, "이미지_파일.zip");
+    });
+
+    return message;
 };
