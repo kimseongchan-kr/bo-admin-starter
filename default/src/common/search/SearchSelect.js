@@ -12,11 +12,13 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import { searchOption as option } from "components/Data";
 
-function SearchSelect({ name, value, dataList, handleChange }) {
+function SearchSelect({ menu, name, value, dataList, handleChange }) {
     const classes = useStyles();
     const searchState = useSelector(searchSelector);
 
-    const selectOptions = dataList?.[name]?.length > 0 ? [...option[name], ...dataList[name]] : option[name] ? option[name] : [];
+    const options = name === "searchType" ? option[name][menu] : option[name];
+
+    const selectOptions = dataList?.[name]?.length > 0 ? [...options, ...dataList[name]] : options ? options : [];
 
     return (
         <Grid item>
@@ -40,8 +42,9 @@ function SearchSelect({ name, value, dataList, handleChange }) {
 }
 
 SearchSelect.propTypes = {
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    menu: PropTypes.string,
     dataList: PropTypes.array,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     name: PropTypes.string.isRequired,
     handleChange: PropTypes.func.isRequired
 };

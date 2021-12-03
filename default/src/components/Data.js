@@ -6,7 +6,7 @@ const monthlyFormat = "yyyy/MM";
 const searchComponent = {
     Dashboard: {
         date: true,
-        daetSelect: false,
+        dateSelect: false,
         radio: true,
         selects: true,
         searchType: true,
@@ -16,6 +16,14 @@ const searchComponent = {
         date: false,
         radio: false,
         selects: false,
+        searchType: true,
+        searchKeyword: true
+    },
+    SearchComponent: {
+        date: true,
+        dateSelect: true,
+        radio: true,
+        selects: true,
         searchType: true,
         searchKeyword: true
     }
@@ -66,12 +74,20 @@ const searchOption = {
         { value: "tea", label: "티" },
         { value: "water", label: "물" }
     ],
-    searchType: [
-        { value: "all", label: "전체" },
-        { value: "id", label: "아이디" },
-        { value: "name", label: "이름" },
-        { value: "tel", label: "연락처" }
-    ],
+    searchType: {
+        Dashboard: [
+            { value: "all", label: "전체" },
+            { value: "id", label: "아이디" },
+            { value: "name", label: "이름" },
+            { value: "tel", label: "연락처" }
+        ],
+        SearchComponent: [
+            { value: "all", label: "전체" },
+            { value: "id", label: "아이디" },
+            { value: "name", label: "이름" },
+            { value: "tel", label: "연락처" }
+        ]
+    },
     sort: [
         { value: "latest", label: "최신 등록순" },
         { value: "oldest", label: "오래된 등록순" }

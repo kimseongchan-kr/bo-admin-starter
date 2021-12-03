@@ -11,14 +11,11 @@ import { dailyFormat, searchComponent, searchOption as option } from "components
 
 function DateTermButton({ menu, handleChange, dates, handleDate, handleClick }) {
     const classes = useStyles();
+    const { dateSelect } = searchComponent[menu];
 
     return (
         <>
-            {searchComponent[menu].dateSelect && (
-                <Grid item>
-                    <SearchSelect name="dateType" options={option["dateType"]} handleChange={handleChange} />
-                </Grid>
-            )}
+            {dateSelect && <SearchSelect name="dateType" options={option["dateType"]} handleChange={handleChange} />}
             <DateSearchPicker dateFormat={dailyFormat} term="daily" dates={dates} handleDate={handleDate} />
             <Grid item>
                 <div className={classes.btnContainer}>

@@ -15,6 +15,7 @@ const initialState = {
     pageNumber: 1,
     pageShow: 10,
 
+    dateType: "regDate",
     term: "daily",
     startDate: null,
     endDate: null

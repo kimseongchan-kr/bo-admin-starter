@@ -165,7 +165,9 @@ export default function Search(props) {
                             <th>검색</th>
                             <td colSpan={3}>
                                 <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-                                    {searchKeyword && <SearchField searchType={searchType} searchKeyword={keyword} handleChange={handleChange} handleKeyword={handleKeyword} />}
+                                    {searchKeyword && (
+                                        <SearchField menu={menu} searchType={searchType} searchKeyword={keyword} dataList={dataList} handleChange={handleChange} handleKeyword={handleKeyword} />
+                                    )}
                                     <Grid item>
                                         <Button variant="contained" onClick={handleSubmit}>
                                             조회

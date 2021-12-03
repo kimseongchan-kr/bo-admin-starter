@@ -6,13 +6,13 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import SearchSelect from "common/search/SearchSelect";
 
-function SearchField({ searchType, dataList, handleChange, searchKeyword, handleKeyword }) {
+function SearchField({ menu, searchType, dataList, handleChange, searchKeyword, handleKeyword }) {
     const classes = useStyles();
 
     return (
         <>
             <Grid item>
-                <SearchSelect name="searchType" value={searchType} dataList={dataList} handleChange={handleChange} />
+                <SearchSelect menu={menu} name="searchType" value={searchType} dataList={dataList} handleChange={handleChange} />
             </Grid>
             <Grid item>
                 <TextField
@@ -33,6 +33,8 @@ function SearchField({ searchType, dataList, handleChange, searchKeyword, handle
 }
 
 SearchField.propTypes = {
+    dataList: PropTypes.array,
+    menu: PropTypes.string.isRequired,
     searchType: PropTypes.string.isRequired,
     handleChange: PropTypes.func.isRequired,
     searchKeyword: PropTypes.string.isRequired,
