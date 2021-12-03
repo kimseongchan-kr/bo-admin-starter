@@ -123,7 +123,7 @@ export default function Search() {
                 <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                     Search Condition + Search Keyword
                 </Typography>
-                <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
+                <Grid className={classes.componentContainer} container spacing={2} alignItems="center" justifyContent="flex-start">
                     <SearchField menu="SearchComponent" searchType="all" searchKeyword="EXAMPLE..." handleChange={handleDemo} handleKeyword={handleDemo} />
                 </Grid>
                 <Typography className={classes.title} variant="h3" component="h3" color="inherit">
