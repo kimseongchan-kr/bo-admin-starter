@@ -60,6 +60,13 @@ const theme = createTheme({
                     padding: 10
                 }
             }
+        },
+        MuiIconButton: {
+            styleOverrides: {
+                root: {
+                    marginRight: 0
+                }
+            }
         }
     }
 });

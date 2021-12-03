@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Controller } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 
-function Input({ name, defaultValue, fullWidth = true, multiline = false, rows = 0, inputType = "text", control }) {
+function Input({ fullWidth = true, multiline = false, rows = 0, inputType = "text", name, defaultValue, control }) {
     return (
         <Controller
             name={name}

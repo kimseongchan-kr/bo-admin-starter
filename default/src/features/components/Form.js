@@ -4,14 +4,17 @@ import useMenu from "hooks/useMenu";
 import { useForm } from "react-hook-form";
 
 import theme from "styles/theme/form";
-import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@mui/styles";
+import { ThemeProvider } from "@mui/material/styles";
+
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 
 import CheckBox from "common/form/CheckBox";
+import DatePicker from "common/form/DatePicker";
+import Input from "common/form/Input";
 import RadioButton from "common/form/RadioButton";
 import FormSelect from "common/form/Select";
-import Input from "common/form/Input";
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -92,7 +95,7 @@ export default function Form() {
     const classes = useStyles();
     const { control, handleSubmit } = useForm();
 
-    useMenu({ page: "Form Component Demo", menu: "components", title: "Form", num: 6 });
+    useMenu({ page: "Form Component Demo", menu: "components", menuTitle: "Form", menuNum: 4 });
 
     const handleDemo = () => {
         alert("Form Demo");
@@ -105,7 +108,7 @@ export default function Form() {
                     <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                         Checkbox
                     </Typography>
-                    <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
+                    <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start" direction="row">
                         <CheckBox
                             options={[
                                 { name: "checkbox1", defaultValue: true, label: "1" },
@@ -116,9 +119,15 @@ export default function Form() {
                         />
                     </Grid>
                     <Typography className={classes.title} variant="h3" component="h3" color="inherit">
+                        Date Picker
+                    </Typography>
+                    <Grid className={classes.componentContainer}>
+                        <DatePicker name="startDate" value={new Date()} handleDate={handleDemo} />
+                    </Grid>
+                    <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                         Radio Button
                     </Typography>
-                    <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+                    <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                         <RadioButton
                             name="radio"
                             defaultValue={1}
@@ -133,16 +142,19 @@ export default function Form() {
                     <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                         Select
                     </Typography>
-                    <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+                    <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                         <FormSelect name="dessert" defaultValue={options[0]} control={control} options={options} />
                     </Grid>
                     <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                         Input
                     </Typography>
-                    <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
-                        <Input inputType="text" name="fat" defaultValue="10.5" control={control} classes={classes} />
-                        <div className={classes.spacer} />
-                        <Input inputType="number" name="calories" defaultValue={12} control={control} classes={classes} />
+                    <Grid className={classes.componentContainer} spacing={2} direction="column" container alignItems="center" justifyContent="flex-start">
+                        <Grid item>
+                            <Input inputType="text" name="fat" defaultValue="10.5" control={control} classes={classes} />
+                        </Grid>
+                        <Grid item>
+                            <Input inputType="number" name="calories" defaultValue={12} control={control} classes={classes} />
+                        </Grid>
                     </Grid>
                 </form>
             </ThemeProvider>
@@ -177,6 +189,34 @@ export default function Form() {
                         </tr>
                     </tbody>
                 </table>
+                import DatePicker from "common/form/DatePicker";
+                <br />
+                <table className={classes.table}>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>value</th>
+                            <td>new Date()</td>
+                            <td>"2021-12-03"</td>
+                        </tr>
+                        <tr>
+                            <th>name</th>
+                            <td>string</td>
+                            <td>"startDate" / "endDate" ...</td>
+                        </tr>
+                        <tr>
+                            <th>handleDate</th>
+                            <td>function</td>
+                            <td>{`(e) => handleDate(name, e)`}</td>
+                        </tr>
+                    </tbody>
+                </table>
                 import RadioButton from "common/form/RadioButton";
                 <br />
                 <table className={classes.table}>
@@ -199,11 +239,6 @@ export default function Form() {
                             <td>1 / "Y" ...</td>
                         </tr>
                         <tr>
-                            <th>control</th>
-                            <td>object</td>
-                            <td>react-hook-form control</td>
-                        </tr>
-                        <tr>
                             <th>options</th>
                             <td>array</td>
                             <td>
@@ -215,6 +250,11 @@ export default function Form() {
                                     ]
                                 `}
                             </td>
+                        </tr>
+                        <tr>
+                            <th>control</th>
+                            <td>object</td>
+                            <td>react-hook-form control</td>
                         </tr>
                     </tbody>
                 </table>
@@ -230,6 +270,16 @@ export default function Form() {
                     </thead>
                     <tbody>
                         <tr>
+                            <th>isClearable</th>
+                            <td>boolean</td>
+                            <td>false || true</td>
+                        </tr>
+                        <tr>
+                            <th>isSearchable</th>
+                            <td>boolean</td>
+                            <td>false || true</td>
+                        </tr>
+                        <tr>
                             <th>name</th>
                             <td>string</td>
                             <td>"useYn" / "viewYn" ...</td>
@@ -238,11 +288,6 @@ export default function Form() {
                             <th>defaultValue</th>
                             <td>object</td>
                             <td>{`{ value: 1, label: "1" }`}</td>
-                        </tr>
-                        <tr>
-                            <th>control</th>
-                            <td>object</td>
-                            <td>react-hook-form control</td>
                         </tr>
                         <tr>
                             <th>options</th>
@@ -257,6 +302,11 @@ export default function Form() {
                                 `}
                             </td>
                         </tr>
+                        <tr>
+                            <th>control</th>
+                            <td>object</td>
+                            <td>react-hook-form control</td>
+                        </tr>
                     </tbody>
                 </table>
                 import Input from "common/form/Input"; <br />
@@ -269,6 +319,21 @@ export default function Form() {
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <th>fullWidth</th>
+                            <td>boolean</td>
+                            <td>false || true</td>
+                        </tr>
+                        <tr>
+                            <th>multiline</th>
+                            <td>boolean</td>
+                            <td>false || true</td>
+                        </tr>
+                        <tr>
+                            <th>rows</th>
+                            <td>number</td>
+                            <td>0 ~ </td>
+                        </tr>
                         <tr>
                             <th>inputType</th>
                             <td>string</td>
@@ -288,11 +353,6 @@ export default function Form() {
                             <th>control</th>
                             <td>object</td>
                             <td>react-hook-form control</td>
-                        </tr>
-                        <tr>
-                            <th>classes</th>
-                            <td>object</td>
-                            <td>styling object</td>
                         </tr>
                     </tbody>
                 </table>
