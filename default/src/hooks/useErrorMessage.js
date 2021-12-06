@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setLogOut } from "slices/loginSlice";
 import { setMessage } from "slices/modalSlice";
 
-const useErrorMsg = (status, statusCode, errorMsg) => {
+const useErrorMsg = ({ status, statusCode, errorMsg }) => {
     const dispatch = useDispatch();
 
     // 에러 메시지 노출하기

@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = `${process.env.REACT_APP_BASE_URL}/`;
+const BASE_URL = `${process.env.REACT_APP_BASE_URL}`;
 
 axios.defaults.baseURL = `${BASE_URL}`;
 axios.defaults.headers.common["Accept"] = "application/json";
@@ -7,7 +7,7 @@ axios.defaults.headers.common["Content-Type"] = "application/json; charset=UTF-8
 
 const returnData = (res) => res.data;
 
-const catchError = (err) => Promise.reject({ statusCode: err.response?.status || 500, errorMsg: err.response?.status ? err.message : "네트워크 에러" });
+const catchError = (err) => Promise.reject({ status: "failed", statusCode: err.response?.status || 500, errorMsg: err.response?.status ? err.message : "네트워크 에러" });
 
 export const getData = async (url, params) => {
     const instance = axios.create({

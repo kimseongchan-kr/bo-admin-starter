@@ -17,7 +17,9 @@ const customStyles = {
         width: 80,
         height: 32,
         fontSize: 12,
-        margin: "0 auto"
+        margin: "0 auto",
+        display: "inline-block",
+        textAlign: "center"
     }),
     control: (provided) => ({
         ...provided,
