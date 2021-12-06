@@ -2,12 +2,6 @@
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles(({ palette }) => ({
-    paper: {
-        width: "100%",
-        height: "100%",
-        paddingBottom: 30,
-        backgroundColor: palette.neutral["white"]
-    },
     header: {
         height: 70,
         padding: 20,
@@ -112,21 +106,29 @@ const useStyles = makeStyles(({ palette }) => ({
         marginBottom: 20,
         "& tr": {
             border: `1px solid ${palette.border["opacity0.1"]}`
+        },
+        "& th": {
+            minWidth: 100,
+            fontWeight: 600,
+            textAlign: "left",
+            color: palette.text["label"],
+            background: palette.background["light"],
+            borderRight: `1px solid ${palette.border["opacity0.1"]}`
         }
     },
     detailTable: {
         borderTop: `2px solid ${palette.border["dark"]}`,
         "& tr": {
             border: `1px solid ${palette.border["opacity0.1"]}`
+        },
+        "& th": {
+            minWidth: 100,
+            fontWeight: 600,
+            textAlign: "left",
+            color: palette.text["label"],
+            background: palette.background["light"],
+            borderRight: `1px solid ${palette.border["opacity0.1"]}`
         }
-    },
-    label: {
-        minWidth: 100,
-        fontWeight: 600,
-        textAlign: "left",
-        color: palette.text["label"],
-        background: palette.background["light"],
-        borderRight: `1px solid ${palette.border["opacity0.1"]}`
     },
     selectContainer: {
         "& > div": {

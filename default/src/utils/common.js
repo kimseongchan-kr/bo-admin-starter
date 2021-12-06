@@ -31,6 +31,23 @@ export const queryToObject = (search) => {
     return params;
 };
 
+// 현재 메뉴에서 사용되는 검색 필터 리스트 구하기
+// searchStates : 현재 searchSlice에 있는 모든 값
+// searchParams : 현재 메뉴에서 사용할 검색 필터 이름들
+export const getCurrentSearchParams = (searchStates, searchParams) => {
+    let currentList = {};
+
+    Object.keys(searchStates).map((key) => {
+        if (searchParams[key]) {
+            currentList[key] = searchStates[key];
+        }
+        return currentList;
+    });
+
+    // 현재 메뉴에서 사용할 검색 필터 object
+    return currentList;
+};
+
 // 날짜 형식 변환
 export const format = (type, date) => {
     const datefm = new Date(date);
@@ -130,6 +147,16 @@ export const getMessageText = (type) => {
         message = "목록으로 돌아가시겠습니까? 입력된 정보는 저장되지 않습니다.";
     } else if (type === "reset") {
         message = "입력한 내용을 삭제하시겠습니까?";
+    } else if (type === "image download" || type === "excel download") {
+        message = "파일 다운로드 요청 중 문제가 발생하였습니다. 잠시 후 다시 시도해주세요.";
+    } else if (type === "fail") {
+        message = "잘못된 요청입니다.";
+    } else if (type === "submit") {
+        message = "입력한 정보를 등록하시겠습니까?";
+    } else if (type === "editSubmit") {
+        message = "정보를 수정하시겠습니까?";
+    } else if (type === "no image") {
+        message = "하나 이상의 이미지 파일을 선택해주세요";
     }
 
     return message;

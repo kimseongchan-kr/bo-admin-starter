@@ -1,7 +1,8 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
-import withContainer from "layout/Container";
+import withContainer from "layout/Container/Container";
+import withPageContainer from "layout/Container/PageContainer";
 
 import Dashboard from "features/summary/Dashboard";
 import DashboardDetail from "features/summary/DashboardDetail";
@@ -25,10 +26,9 @@ export default function Router() {
     return (
         <Switch>
             <Route path="/" exact component={withContainer(Dashboard)} />
-            <Route path="/dashboard" exact component={withContainer(Dashboard)} />
-            <Route path="/dashboard/detail/:idx" exact component={withContainer(DashboardDetail)} />
-            <Route path="/dashboard/upload" exact component={withContainer(DashboardUpload)} />
-            <Route path="/dashboard/edit/:idx" exact component={withContainer(DashboardUpload)} />
+            <Route path="/upload" exact component={withPageContainer(DashboardUpload)} />
+            <Route path="/edit/:idx" exact component={withPageContainer(DashboardUpload)} />
+            <Route path="/detail/:idx" exact component={withPageContainer(DashboardDetail)} />
 
             <Route path="/example" exact component={withContainer(Example)} />
 

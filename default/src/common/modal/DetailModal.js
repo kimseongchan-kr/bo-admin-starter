@@ -25,7 +25,7 @@ function DetailModal() {
                     판매량
                 </th>
                 <td align="center" width={350}>
-                    {detailData && detailData.quantity ? `${detailData.quantity.toLocaleString()}` : ""}
+                    {detailData?.quantity ? `${detailData.quantity.toLocaleString()}` : ""}
                 </td>
             </tr>
         </tbody>
@@ -37,7 +37,7 @@ function DetailModal() {
                 <Dialog open={detailOpen} onClose={onClose} sx={{ p: 10 }}>
                     <DialogTitle>{detailData && detailData.title}</DialogTitle>
                     <DialogContent>
-                        <table>{detailData && detailData.type === "quantity" && <QuantityTable />}</table>
+                        <table className={classes.detailTable}>{detailData && detailData.type === "quantity" && <QuantityTable />}</table>
                     </DialogContent>
                     <DialogActions sx={{ py: 2, px: 2.5 }}>
                         <CloseButton size="small" text="닫기" onClick={onClose} />

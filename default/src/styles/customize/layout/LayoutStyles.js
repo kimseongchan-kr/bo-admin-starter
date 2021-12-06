@@ -1,7 +1,7 @@
 // 참고: https://material-ui.com/styles/basics/#hook-api
 import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ palette }) => ({
     root: {
         minHeight: "100%",
         display: "flex"
@@ -18,6 +18,12 @@ const useStyles = makeStyles((theme) => ({
         margin: 20,
         padding: "0 0 20px",
         borderRadius: 4
+    },
+    paper: {
+        width: "100%",
+        height: "100%",
+        paddingBottom: 30,
+        backgroundColor: palette.neutral["white"]
     }
 }));
 

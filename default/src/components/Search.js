@@ -123,7 +123,7 @@ export default function Search(props) {
                                                     <React.Fragment key={`search-select-${index}`}>
                                                         <th>{caption[type]}</th>
                                                         <td>
-                                                            <SearchSelect name={type} dataList={dataList} handleChange={handleChange} />
+                                                            <SearchSelect name={type} dataList={dataList[type]} handleChange={handleChange} />
                                                         </td>
                                                     </React.Fragment>
                                                 );
@@ -132,7 +132,7 @@ export default function Search(props) {
                                             <>
                                                 <th>{caption[row[0]]}</th>
                                                 <td colSpan={3}>
-                                                    <SearchSelect name={row[0]} dataList={dataList} handleChange={handleChange} />
+                                                    <SearchSelect name={row[0]} dataList={dataList[row[0]]} handleChange={handleChange} />
                                                 </td>
                                             </>
                                         )}
@@ -147,7 +147,7 @@ export default function Search(props) {
                                             <React.Fragment key={`search-radio-${index}`}>
                                                 <th>{caption[type]}</th>
                                                 <td>
-                                                    <SearchRadio name={type} dataList={dataList} handleChange={handleRadioChange} />
+                                                    <SearchRadio name={type} dataList={dataList[type]} handleChange={handleRadioChange} />
                                                 </td>
                                             </React.Fragment>
                                         ))
@@ -155,7 +155,7 @@ export default function Search(props) {
                                         <>
                                             <th>{caption[row[0]]}</th>
                                             <td colSpan={3}>
-                                                <SearchRadio name={row[0]} dataList={dataList} handleChange={handleRadioChange} />
+                                                <SearchRadio name={row[0]} dataList={dataList[row[0]]} handleChange={handleRadioChange} />
                                             </td>
                                         </>
                                     )}
@@ -166,7 +166,14 @@ export default function Search(props) {
                             <td colSpan={3}>
                                 <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
                                     {searchKeyword && (
-                                        <SearchField menu={menu} searchType={searchType} searchKeyword={keyword} dataList={dataList} handleChange={handleChange} handleKeyword={handleKeyword} />
+                                        <SearchField
+                                            menu={menu}
+                                            searchType={searchType}
+                                            searchKeyword={keyword}
+                                            dataList={dataList["searchType"]}
+                                            handleChange={handleChange}
+                                            handleKeyword={handleKeyword}
+                                        />
                                     )}
                                     <Grid item>
                                         <Button variant="contained" onClick={handleSubmit}>
@@ -181,7 +188,7 @@ export default function Search(props) {
             </form>
             <Grid sx={{ pb: 2.5 }} container justifyContent="space-between" alignItems="center">
                 <Typography variant="h4" component="h4">
-                    검색된 데이터 : <span>{total ? total : 0}</span>건
+                    검색된 데이터 : <strong>{total ? total : 0}</strong>건
                 </Typography>
                 <SearchSelect name="sort" handleChange={handleSort} />
             </Grid>

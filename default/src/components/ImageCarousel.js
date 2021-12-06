@@ -7,7 +7,9 @@ import Button from "@mui/material/Button";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-function ImageCarousel({ images, alt }) {
+import Heading from "layout/Page/Heading";
+
+function ImageCarousel({ text, images, alt }) {
     const classes = useStyles();
     const [imageIndex, setImageIndex] = useState(0);
 
@@ -33,7 +35,8 @@ function ImageCarousel({ images, alt }) {
     };
 
     return (
-        <>
+        <div className={classes.contentImage}>
+            <Heading type="default" text={text} />
             {images?.length > 0 ? (
                 <>
                     <Grid className={classes.imageContainer} container justifyContent="flex-start" alignItems="center">
@@ -54,7 +57,7 @@ function ImageCarousel({ images, alt }) {
             ) : (
                 <div className={classes.noImage}>image not found</div>
             )}
-        </>
+        </div>
     );
 }
 

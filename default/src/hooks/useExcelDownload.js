@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useQuery } from "react-query";
-import { getData } from "api/Api";
+import { getData } from "api";
 
 import { setMessage } from "slices/modalSlice";
+import { getMessageText } from "utils/common";
 
-const useExcel = (url, params) => {
+const useExcelDownload = (url, params) => {
     const dispatch = useDispatch();
 
     // 엑셀 데이터 API
@@ -31,7 +32,7 @@ const useExcel = (url, params) => {
                 document.querySelector(".file-download").dispatchEvent(event);
             }
         } catch (error) {
-            dispatch(setMessage({ open: true, type: "message", message: "엑셀 다운로드 요청 중 문제가 발생하였습니다. 잠시 후 다시 시도해주세요." }));
+            dispatch(setMessage({ open: true, type: "message", message: getMessageText("excel download") }));
         } finally {
             setExcelSuccess(false);
         }
@@ -40,4 +41,4 @@ const useExcel = (url, params) => {
     return [{ excelList: data, excelLoading: isLoading }, onExcelClick];
 };
 
-export default useExcel;
+export default useExcelDownload;

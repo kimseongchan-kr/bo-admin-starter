@@ -12,7 +12,18 @@ const useStyles = makeStyles(({ palette }) => ({
     },
     table: {
         borderTop: `1px solid ${palette.border["opacity0.1"]}`,
-        borderBottom: `1px solid ${palette.border["opacity0.1"]}`
+        borderBottom: `1px solid ${palette.border["opacity0.1"]}`,
+        "& tr": {
+            border: `1px solid ${palette.border["opacity0.1"]}`
+        },
+        "& th": {
+            minWidth: 100,
+            fontWeight: 600,
+            textAlign: "left",
+            color: palette.text["label"],
+            background: palette.background["light"],
+            borderRight: `1px solid ${palette.border["opacity0.1"]}`
+        }
     },
     selectContent: {
         "& > div": {
@@ -30,13 +41,6 @@ const useStyles = makeStyles(({ palette }) => ({
             height: 400,
             padding: 0
         }
-    },
-    label: {
-        minWidth: 100,
-        fontWeight: 600,
-        textAlign: "left",
-        color: palette.text["primary"],
-        background: palette.background["light"]
     }
 }));
 

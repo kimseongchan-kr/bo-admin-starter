@@ -15,6 +15,11 @@ function MessageModal({ handleConfirm }) {
     const dispatch = useDispatch();
     const { msgOpen, messageType, message } = useSelector(modalSelector);
 
+    const onConfirm = () => {
+        dispatch(setClose());
+        handleConfirm();
+    };
+
     // 모달 닫기
     const onClose = () => dispatch(setClose());
 
@@ -34,7 +39,7 @@ function MessageModal({ handleConfirm }) {
                         </DialogActions>
                     ) : (
                         <DialogActions sx={{ py: 2, px: 2.5 }}>
-                            <ModalButton size="small" text="확인" onClick={handleConfirm} />
+                            <ModalButton size="small" text="확인" onClick={onConfirm} />
                             <ModalButton size="small" color="error" text="취소" onClick={onClose} />
                         </DialogActions>
                     )}

@@ -38,7 +38,7 @@ export default function SearchTable(props) {
                 <TableCell align="center">{row.fat || "-"}</TableCell>
                 <TableCell align="center">{row.carbs || "-"}</TableCell>
                 <TableCell align="center">{row.protein || "-"}</TableCell>
-                <TableCell align="center">
+                <TableCell width={100} align="center">
                     <TableSelect name="useYn" rowIndex={row.idx} value={row.useYn} label={row.useYnText} options={tableSelectOptions["useYn"]} handleSelect={handleSelect} />
                 </TableCell>
                 <TableCell align="center">{row.regdate || "-"}</TableCell>

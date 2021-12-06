@@ -2,6 +2,16 @@
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles(({ palette }) => ({
+    contentImage: {
+        flex: "50%",
+        paddingBottom: 30,
+        "& h4": {
+            marginBottom: 15
+        },
+        "& input[type='file']": {
+            display: "none"
+        }
+    },
     imageContainer: {
         position: "relative",
         width: 500,
