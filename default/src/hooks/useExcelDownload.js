@@ -1,44 +1,35 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useQuery } from "react-query";
 import { getData } from "api";
 
-import { setMessage } from "slices/modalSlice";
+import useMessage from "hooks/useMessage";
 import { getMessageText } from "utils/common";
 
-const useExcelDownload = (url, params) => {
-    const dispatch = useDispatch();
+const useExcelDownload = ({ url, params }) => {
+    const handleMessage = useMessage();
 
     // 엑셀 데이터 API
-    const { isLoading, data, refetch } = useQuery(["excel"], () => getData(url, params), {
+    const {
+        isLoading,
+        data,
+        refetch: onExcelClick
+    } = useQuery(["excel"], () => getData(url, params), {
         enabled: false,
-        onSuccess: () => setExcelSuccess(true)
-    });
-
-    const [excelSuccess, setExcelSuccess] = useState(false);
-
-    // 엑셀 데이터 불러오기
-    const onExcelClick = () => refetch();
-
-    // 엑셀 다운로드하기
-    useEffect(() => {
-        try {
-            if (excelSuccess) {
+        onSuccess: () => {
+            try {
                 const event = new MouseEvent("click", {
                     view: window,
                     bubbles: true,
                     cancelable: true
                 });
                 document.querySelector(".file-download").dispatchEvent(event);
+            } catch (error) {
+                handleMessage("message", getMessageText("excel download"));
             }
-        } catch (error) {
-            dispatch(setMessage({ open: true, type: "message", message: getMessageText("excel download") }));
-        } finally {
-            setExcelSuccess(false);
-        }
-    }, [dispatch, excelSuccess]);
+        },
+        onError: () => handleMessage("message", getMessageText("excel download"))
+    });
 
-    return [{ excelList: data, excelLoading: isLoading }, onExcelClick];
+    return [{ excelLoading: isLoading, excelList: data }, onExcelClick];
 };
 
 export default useExcelDownload;

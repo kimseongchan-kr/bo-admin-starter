@@ -1,23 +1,23 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-
 import { setLogOut } from "slices/loginSlice";
-import { setMessage } from "slices/modalSlice";
+import useMessage from "hooks/useMessage";
 
-const useErrorMsg = ({ status, statusCode, errorMsg }) => {
+const useErrorMsg = ({ isError, statusCode, message }) => {
     const dispatch = useDispatch();
+    const handleMessage = useMessage();
 
     // 에러 메시지 노출하기
     useEffect(() => {
-        if (status === "failed" && errorMsg) {
-            dispatch(setMessage({ open: true, type: "message", message: errorMsg }));
+        if (isError) {
+            handleMessage("message", message);
         }
 
         if (parseInt(statusCode) === 401) {
             dispatch(setLogOut());
             window.location.reload();
         }
-    }, [dispatch, status, statusCode, errorMsg]);
+    }, [dispatch, handleMessage, isError, statusCode, message]);
 };
 
 export default useErrorMsg;

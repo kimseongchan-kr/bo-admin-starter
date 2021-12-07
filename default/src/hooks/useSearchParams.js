@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 import { searchSelector, setSearchFilters } from "slices/searchSlice";
-
 import { isEmpty, queryToObject } from "utils/common";
 
 const useSearchParams = (searchParams) => {
