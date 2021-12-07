@@ -1,6 +1,5 @@
 import { useQuery } from "react-query";
 import { getData } from "api";
-
 import useMessage from "hooks/useMessage";
 import { getMessageText } from "utils/common";
 
