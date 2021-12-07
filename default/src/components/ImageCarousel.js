@@ -55,7 +55,9 @@ function ImageCarousel({ text, images, alt }) {
                     </Grid>
                 </>
             ) : (
-                <div className={classes.noImage}>image not found</div>
+                <Grid className={classes.imageContainer} container justifyContent="flex-start" alignItems="center">
+                    <div className={classes.noImage}>image not found</div>
+                </Grid>
             )}
         </div>
     );
