@@ -1,4 +1,4 @@
-// README.MD 확인하기
+import * as yup from "yup";
 
 const dailyFormat = "yyyy/MM/dd";
 const monthlyFormat = "yyyy/MM";
@@ -219,6 +219,18 @@ const sampleData = {
     regDate: "2021-08-31"
 };
 
+const schema = {
+    Dashboard: yup.object().shape({
+        category: yup.object().shape({
+            value: yup.string().required()
+        }),
+        name: yup.string().required(),
+        description: yup.string().required(),
+        quantity: yup.number().min(0).positive().required(),
+        useYn: yup.string().required()
+    })
+};
+
 export {
     dailyFormat,
     monthlyFormat,
@@ -234,5 +246,6 @@ export {
     headCell,
     sampleRowData,
     sampleDetailData,
-    sampleData
+    sampleData,
+    schema
 };

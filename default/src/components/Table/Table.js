@@ -14,7 +14,7 @@ import TablePagination from "@mui/material/TablePagination";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import TableSelect from "common/table/Select";
-import TablePaginationActions from "components/Pagination";
+import TablePaginationActions from "components/Table/Pagination";
 
 import { headCell, sampleData, tableSelectOptions } from "components/Data";
 

@@ -7,6 +7,7 @@ import withPageContainer from "layout/Container/PageContainer";
 import Dashboard from "features/summary/Dashboard";
 import DashboardDetail from "features/summary/DashboardDetail";
 import DashboardUpload from "features/summary/DashboardUpload";
+import DashboardEdit from "features/summary/DashboardEdit";
 
 import Example from "features/example/Example";
 
@@ -27,7 +28,7 @@ export default function Router() {
         <Switch>
             <Route path="/" exact component={withContainer(Dashboard)} />
             <Route path="/upload" exact component={withPageContainer(DashboardUpload)} />
-            <Route path="/edit/:idx" exact component={withPageContainer(DashboardUpload)} />
+            <Route path="/edit/:idx" exact component={withPageContainer(DashboardEdit)} />
             <Route path="/detail/:idx" exact component={withPageContainer(DashboardDetail)} />
 
             <Route path="/example" exact component={withContainer(Example)} />

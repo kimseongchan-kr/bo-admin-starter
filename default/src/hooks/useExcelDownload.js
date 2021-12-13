@@ -22,10 +22,10 @@ const useExcelDownload = ({ url, params }) => {
                 });
                 document.querySelector(".file-download").dispatchEvent(event);
             } catch (error) {
-                handleMessage("message", getMessageText("excel download"));
+                handleMessage({ type: "message", message: getMessageText("excel download") });
             }
         },
-        onError: () => handleMessage("message", getMessageText("excel download"))
+        onError: () => handleMessage({ type: "message", message: getMessageText("excel download") })
     });
 
     return [{ excelLoading: isLoading, excelList: data }, onExcelClick];
