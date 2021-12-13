@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ExampleDetailModal({ handleDetailData }) {
+export default function ExampleDetail({ handleDetailData }) {
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -90,12 +90,20 @@ export default function ExampleDetailModal({ handleDetailData }) {
     return (
         <>
             {detailOpen && (
-                <Dialog open={detailOpen} onClose={onClose} sx={{ p: 10 }} classes={{ paper: classes.container }}>
+                <Dialog
+                    open={detailOpen}
+                    onClose={(event, reason) => {
+                        if (reason !== "backdropClick") {
+                            onClose(event, reason);
+                        }
+                    }}
+                    sx={{ p: 10 }}
+                    classes={{ paper: classes.container }}>
                     <Grid container justifyContent="space-between" alignItems="center">
-                        <Grid item xs={11}>
+                        <Grid item sx={{ width: "auto" }}>
                             <DialogTitle className={classes.title}>{title}</DialogTitle>
                         </Grid>
-                        <Grid item xs={1} container justifyContent="flex-end">
+                        <Grid item sx={{ width: "auto" }} container justifyContent="flex-end">
                             <Close onClick={onClose} className={classes.closeIcon} />
                         </Grid>
                     </Grid>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { modalSelector, setEdit, setEditClose } from "slices/modalSlice";
+import { modalSelector, setEditClose } from "slices/modalSlice";
 
 import useStyles from "styles/customize/components/ModalFormStyles";
 import theme from "styles/theme/form";
@@ -27,11 +27,12 @@ const options = [
     { value: "Snack", label: "Snack" }
 ];
 
-export default function ExampleUploadModal({ loading, handleDataSubmit }) {
+export default function ExampleUpload() {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const { editOpen, data } = useSelector(modalSelector);
+    const { editOpen, editData } = useSelector(modalSelector);
 
+    const [loading, setLoading] = useState(false);
     const [category, setCategory] = useState({ value: "", label: "카테고리를 선택해주세요" });
     const [newData, setNewData] = useState({
         name: "",
@@ -46,21 +47,21 @@ export default function ExampleUploadModal({ loading, handleDataSubmit }) {
     const [contents, setContents] = useState("");
 
     useEffect(() => {
-        if (data) {
-            setCategory(data.category);
+        if (editData) {
+            setCategory(editData.category);
             setNewData({
-                name: data.name,
-                calories: data.calories,
-                useYn: data.useYn
+                name: editData.name,
+                calories: editData.calories,
+                useYn: editData.useYn
             });
             setIngredients({
-                ingredients1: true,
-                ingredients2: true,
-                ingredients3: false
+                ingredients1: editData.ingredients.includes("chocolate"),
+                ingredients2: editData.ingredients.includes("strawberry"),
+                ingredients3: editData.ingredients.includes("cheese")
             });
-            setContents(data.contents);
+            setContents(editData.contents);
         }
-    }, [data]);
+    }, [editData]);
 
     const handleChange = (e) => setNewData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
 
@@ -68,9 +69,10 @@ export default function ExampleUploadModal({ loading, handleDataSubmit }) {
 
     const handleIngredients = (e) => setIngredients((prev) => ({ ...prev, [e.target.name]: e.target.checked }));
 
-    const handleBeforeSubmit = async () => {
-        await dispatch(setEdit({ open: true, data: { ...data, contents, category, ...newData } }));
-        await handleDataSubmit();
+    const handleSubmit = () => {
+        setLoading(true);
+        alert(JSON.stringify({ ...editData, contents, category, ...newData }, null, 2));
+        setLoading(false);
     };
 
     const onClose = () => {
@@ -85,9 +87,17 @@ export default function ExampleUploadModal({ loading, handleDataSubmit }) {
     return (
         <>
             {editOpen && (
-                <Dialog open={editOpen} onClose={onClose} sx={{ p: 10 }} classes={{ paper: classes.container }}>
+                <Dialog
+                    open={editOpen}
+                    onClose={(event, reason) => {
+                        if (reason !== "backdropClick") {
+                            onClose(event, reason);
+                        }
+                    }}
+                    sx={{ p: 10 }}
+                    classes={{ paper: classes.container }}>
                     <ThemeProvider theme={theme}>
-                        <DialogTitle className={classes.title}>Summary {data && data.modalStatus === "modify" ? "수정" : "추가"}</DialogTitle>
+                        <DialogTitle className={classes.title}>Summary {editData?.modalStatus === "modify" ? "수정" : "추가"}</DialogTitle>
                         <DialogContent>
                             <table className={classes.table}>
                                 <colgroup>
@@ -161,7 +171,7 @@ export default function ExampleUploadModal({ loading, handleDataSubmit }) {
                                     <ModalButton icon="cancel" onClick={onClose} text="닫기" />
                                 </Grid>
                                 <Grid item>
-                                    <SubmitButton type="button" text="제출" loading={loading} onClick={handleBeforeSubmit} />
+                                    <SubmitButton type="button" text="제출" loading={loading} onClick={handleSubmit} />
                                 </Grid>
                             </Grid>
                         </DialogActions>

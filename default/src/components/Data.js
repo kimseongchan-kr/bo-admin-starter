@@ -147,7 +147,7 @@ const headCell = {
         { id: "protein", label: "프로틴" },
         { id: "useYn", label: "사용여부" },
         { id: "viewYn", label: "메인노출" },
-        { id: "textExample", label: "사용자 입력" }
+        { id: "regDate", label: "등록일" }
     ],
     ExampleDetail: [
         { id: "name", label: "디저트" },
@@ -176,6 +176,18 @@ const buttons = {
     addTopButton: { Dashboard: true, Example: false },
     deleteButton: { Dashboard: true, Example: false },
     excelButton: { Dashboard: true, Example: false }
+};
+
+const schema = {
+    Dashboard: yup.object().shape({
+        category: yup.object().shape({
+            value: yup.string().required()
+        }),
+        name: yup.string().required(),
+        description: yup.string().required(),
+        quantity: yup.number().min(0).positive().required(),
+        useYn: yup.string().required()
+    })
 };
 
 // 샘플 데이터
@@ -217,18 +229,6 @@ const sampleData = {
     viewYn: "Y",
     viewYnText: "노출",
     regDate: "2021-08-31"
-};
-
-const schema = {
-    Dashboard: yup.object().shape({
-        category: yup.object().shape({
-            value: yup.string().required()
-        }),
-        name: yup.string().required(),
-        description: yup.string().required(),
-        quantity: yup.number().min(0).positive().required(),
-        useYn: yup.string().required()
-    })
 };
 
 export {
