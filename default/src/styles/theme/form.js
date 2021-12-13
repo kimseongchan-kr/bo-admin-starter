@@ -1,5 +1,3 @@
-// 참고: https://material-ui.com/customization/theming/#createmuitheme-options-args-theme
-// 참고: https://material-ui.com/customization/globals/#css
 import { createTheme } from "@mui/material/styles";
 import { typography } from "styles/theme/typography";
 import { palette } from "styles/theme/palette";
@@ -12,7 +10,8 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     minWidth: 320,
-                    minHeight: 32
+                    minHeight: 32,
+                    margin: "5px 0"
                 }
             }
         },
