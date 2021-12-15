@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { useQuery, useMutation, useQueryClient } from "react-query";
-import { getData, putData, deleteData } from "api";
+import { useMutation, useQueryClient } from "react-query";
+import { putData, deleteData } from "api";
 
 import useMenu from "hooks/useMenu";
 import useMessage from "hooks/useMessage";
@@ -17,18 +17,17 @@ import UploadModal from "features/example/ExampleUpload";
 import DetailModal from "features/example/ExampleDetail";
 import MessageModal from "common/modal/MessageModal";
 
-import { sampleRowData, sampleDetailData } from "components/Data";
+import { sampleRowData } from "components/Data";
 
 export default function Example() {
     const queryClient = useQueryClient();
     const dispatch = useDispatch();
     const location = useLocation();
 
-    const [selectedIndex, setSelectedIndex] = useState(null);
-    const [currentPage, setCurrentPage] = useState(null);
+    const menu = useMenu({ page: "Example", menu: "example", menuTitle: "Example", menuNum: 1 }); // 페이지/메뉴 설정하기
+    const handleMessage = useMessage(); // 메시지 / 확인 모달 열기
 
-    // 페이지/메뉴 설정하기
-    const menu = useMenu({ page: "Example", menu: "example", menuTitle: "Example", menuNum: 1 });
+    const [selectedIndex, setSelectedIndex] = useState(null);
 
     // 리스트 데이터 가져오기
     const {
@@ -43,46 +42,6 @@ export default function Example() {
 
     // 검색하기
     const handleSearch = useSearch({ params });
-
-    // 메시지 / 확인 모달 열기
-    const handleMessage = useMessage();
-
-    useQuery(["example detail", { selectedIndex, currentPage }], () => getData(`/web/detail/example/${selectedIndex}`, { page: currentPage }), {
-        enabled: selectedIndex && currentPage ? true : false,
-        onSuccess: (data) => {
-            console.log("detail data", data);
-            dispatch(setDetail({ open: true, data: { index: selectedIndex, menu, title: "Example 상세 조회", data: sampleDetailData } }));
-        },
-        onError: (error) => {
-            // handleMessage({ type: "message", ...error });
-
-            // -----SAMPLE-----
-            dispatch(setDetail({ open: true, data: { index: selectedIndex, menu, title: "Example 상세 조회", data: sampleDetailData } }));
-            // -----SAMPLE-----
-        }
-    });
-
-    // 상세 데이터 불러오고 modal 띄우기
-    const handleDetailData = (index, currentPage) => {
-        setSelectedIndex(index);
-        setCurrentPage(currentPage || 1);
-    };
-
-    // 수정할 데이터 불러오고 modal 띄우기
-    const handleOneData = (index, data) => {
-        dispatch(
-            setEdit({
-                open: true,
-                data: {
-                    index,
-                    modalStatus: "modify",
-                    contents: "hello",
-                    ...data,
-                    category: { value: data.category, label: data.category }
-                }
-            })
-        );
-    };
 
     // 수정 API
     const { mutate: updateMutation, reset: updateReset } = useMutation(({ url, fileYn, data }) => putData(url, fileYn, data), {
@@ -121,8 +80,27 @@ export default function Example() {
     // 선택한 데이터 삭제하기
     const handleDelete = () => deleteMutation({ url: "/web/delete/example", data: { index: selectedIndex } });
 
-    // 추가 모달 열기
+    // 추가 모달 띄우기
     const onAddClick = () => dispatch(setEdit({ open: true, data: null }));
+
+    // 상세 모달 띄우기
+    const onDetailClick = (index) => dispatch(setDetail({ open: true, data: { selectedIndex: index, menu: "Example", title: "상세 조회" } }));
+
+    // 수정 모달 띄우기
+    const onEditClick = (index, data) => {
+        dispatch(
+            setEdit({
+                open: true,
+                data: {
+                    index,
+                    modalStatus: "modify",
+                    contents: "hello",
+                    ...data,
+                    category: { value: data.category, label: data.category }
+                }
+            })
+        );
+    };
 
     // 삭제 확인 모달 띄우기
     const onConfirm = (_, data) => {
@@ -143,8 +121,8 @@ export default function Example() {
                 loading={isLoading}
                 data={sampleRowData || dataList} // data={dataList}
                 total={sampleRowData.length} // total={total}
-                handleOneData={handleOneData}
-                handleDetailData={handleDetailData}
+                handleOneData={onEditClick}
+                handleDetailData={onDetailClick}
                 handleSelect={handleSelect}
                 handleChange={handleChange}
                 handleSearch={handleSearch}
@@ -152,7 +130,7 @@ export default function Example() {
                 onConfirm={onConfirm}
             />
             <UploadModal />
-            <DetailModal handleDetailData={handleDetailData} />
+            <DetailModal />
             <MessageModal handleConfirm={handleDelete} />
         </>
     );

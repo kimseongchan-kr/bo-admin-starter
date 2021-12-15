@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { modalSelector, setClose } from "slices/modalSlice";
+import { useQuery } from "react-query";
+import { getData } from "api";
+
+import { modalSelector, setDetailClose } from "slices/modalSlice";
+import useMessage from "hooks/useMessage";
 
 import { makeStyles } from "@mui/styles";
 import Dialog from "@mui/material/Dialog";
@@ -16,8 +20,9 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import Pagination from "@mui/material/Pagination";
 import Close from "@mui/icons-material/Close";
+import CircularProgress from "@mui/material/CircularProgress";
 
-import { headCell } from "components/Data";
+import { headCell, sampleDetailData } from "components/Data";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -56,15 +61,26 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ExampleDetail({ handleDetailData }) {
+export default function ExampleDetail() {
     const classes = useStyles();
     const dispatch = useDispatch();
-
     const { detailOpen, detailData } = useSelector(modalSelector);
-    const { menu, title, index, data } = detailData || {};
+    const { menu, title, selectedIndex } = detailData || {};
+
+    const handleMessage = useMessage();
 
     const [pageNumber, setPageNumber] = useState(1);
-    const totalCount = detailOpen ? Math.ceil(data.length / 15) : 0; // total data
+
+    const { isLoading, data: exampleData } = useQuery(["example detail", { selectedIndex, pageNumber }], () => getData(`/web/example/detail/${selectedIndex}`, { page: pageNumber }), {
+        enabled: selectedIndex && pageNumber ? true : false,
+        onError: (error) => {
+            handleMessage({ type: "message", ...error });
+        }
+    });
+
+    const { data = sampleDetailData } = exampleData || {};
+
+    const totalCount = Math.ceil(data?.length / 15) || 0; // total data
 
     const ExampleData = ({ row }) => {
         return (
@@ -80,16 +96,13 @@ export default function ExampleDetail({ handleDetailData }) {
         );
     };
 
-    const handleChange = (_, value) => {
-        setPageNumber(value);
-        handleDetailData(index, value);
-    };
+    const handleChange = (_, value) => setPageNumber(value);
 
-    const onClose = () => dispatch(setClose());
+    const onClose = () => dispatch(setDetailClose());
 
     return (
         <>
-            {detailOpen && (
+            {detailData && (
                 <Dialog
                     open={detailOpen}
                     onClose={(event, reason) => {
@@ -120,38 +133,50 @@ export default function ExampleDetail({ handleDetailData }) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {data.length === 0 ? (
+                                    {isLoading ? (
                                         <TableRow>
-                                            <TableCell align="center" colSpan={6}>
-                                                No Data
+                                            <TableCell align="center" colSpan={7}>
+                                                <CircularProgress size={12} color="primary" /> Loading...
                                             </TableCell>
                                         </TableRow>
                                     ) : (
-                                        data.map((row, index) => {
-                                            return (
-                                                <TableRow hover tabIndex={-1} key={index}>
-                                                    {menu === "Example" && <ExampleData row={row} />}
+                                        <>
+                                            {data.length === 0 ? (
+                                                <TableRow>
+                                                    <TableCell align="center" colSpan={7}>
+                                                        No Data
+                                                    </TableCell>
                                                 </TableRow>
-                                            );
-                                        })
+                                            ) : (
+                                                data.map((row, index) => {
+                                                    return (
+                                                        <TableRow hover tabIndex={-1} key={index}>
+                                                            {menu === "Example" && <ExampleData row={row} />}
+                                                        </TableRow>
+                                                    );
+                                                })
+                                            )}
+                                        </>
                                     )}
                                 </TableBody>
                             </Table>
-                            <div className={classes.pagination}>
-                                <Pagination
-                                    color="primary"
-                                    variant="outlined"
-                                    shape="rounded"
-                                    count={totalCount}
-                                    defaultPage={1}
-                                    siblingCount={0}
-                                    boundaryCount={1}
-                                    showFirstButton
-                                    showLastButton
-                                    page={pageNumber}
-                                    onChange={handleChange}
-                                />
-                            </div>
+                            {data && (
+                                <div className={classes.pagination}>
+                                    <Pagination
+                                        color="primary"
+                                        variant="outlined"
+                                        shape="rounded"
+                                        count={totalCount}
+                                        defaultPage={1}
+                                        siblingCount={0}
+                                        boundaryCount={1}
+                                        showFirstButton
+                                        showLastButton
+                                        page={pageNumber}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            )}
                         </Paper>
                     </DialogContent>
                 </Dialog>
