@@ -7,7 +7,7 @@ import useSearchParams from "hooks/useSearchParams";
 import _ from "lodash";
 
 import { searchParams } from "components/Data";
-import useMessage from "hooks/useMessage";
+// import useMessage from "hooks/useMessage";
 
 const usePrevious = (value) => {
     const ref = useRef();
@@ -26,12 +26,12 @@ const useGetList = ({ menu, url }) => {
     // Previous Search Params
     const prevParams = usePrevious(params);
 
-    const handleMessage = useMessage();
+    // const handleMessage = useMessage();
 
     // API 호출
     const { isError, error, remove, ...rest } = useQuery([menu, { ...params }], () => getData(url, params), {
-        enabled: params && !_.isEqual(prevParams, params) ? true : false,
-        onError: (error) => handleMessage({ type: "message", ...error })
+        enabled: params && !_.isEqual(prevParams, params) ? true : false
+        // onError: (error) => handleMessage({ type: "message", ...error })
     });
 
     return { params, ...rest };
