@@ -187,6 +187,17 @@ const schema = {
         description: yup.string().required(),
         quantity: yup.number().min(0).positive().required(),
         useYn: yup.string().required()
+    }),
+    ChangeInfo: yup.object().shape({
+        name: yup.string().required(),
+        email: yup.string().required(),
+        phone: yup.string().required(),
+        image: yup
+            .mixed()
+            .required()
+            .test("image", "이미지를 선택해주세요", (value) => {
+                return value.length > 0;
+            })
     })
 };
 

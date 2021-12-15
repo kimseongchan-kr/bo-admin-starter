@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import useMenu from "hooks/useMenu";
-
-import { setClose, setMessage } from "slices/modalSlice";
+import useMessage from "hooks/useMessage";
 
 import theme from "styles/theme/form";
 import { makeStyles } from "@mui/styles";
@@ -20,7 +18,6 @@ const useStyles = makeStyles(({ palette }) => ({
         width: "100%",
         height: 560,
         margin: "0 auto",
-        background: palette.neutral["white"],
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
@@ -83,24 +80,19 @@ const useStyles = makeStyles(({ palette }) => ({
 
 export default function ChangePassword() {
     const classes = useStyles();
-    const dispatch = useDispatch();
+    useMenu({ page: "ChangePassword", menu: null, menuTitle: "비밀번호 변경", menuNum: null });
+
+    const handleMessage = useMessage();
 
     const [pw, setPw] = useState("");
     const [newPw, setNewPw] = useState("");
     const [pwCheck, setPwCheck] = useState("");
 
-    useMenu({ page: "Change Password", menu: null, menuTitle: "비밀번호 변경", menuNum: null });
-
     const handleSubmit = () => {
         console.log(pw, pwCheck, newPw);
-        dispatch(setMessage({ open: true, type: "message", message: "비밀번호가 변경되었습니다." }));
-        // dispatch(setMessage({open: true, type: "message", message: "비밀번호 변경에 실패하였습니다."}))
-        // dispatch(setMessage({open: true, type: "message", message: "비밀번호를 다시 확인해주시기 바랍니다."}))
-    };
-
-    // 모달 닫기
-    const onClose = () => {
-        dispatch(setClose());
+        handleMessage({ type: "message", message: "비밀번호가 변경되었습니다." });
+        // handleMessage({type: "message", message: "비밀번호 변경에 실패하였습니다."});
+        // handleMessage({type: "message", message: "비밀번호를 다시 확인해주시기 바랍니다."});
     };
 
     return (
@@ -158,7 +150,7 @@ export default function ChangePassword() {
                         </Button>
                     </Grid>
                 </Grid>
-                <MessageModal onClose={onClose} />
+                <MessageModal />
             </div>
         </ThemeProvider>
     );
