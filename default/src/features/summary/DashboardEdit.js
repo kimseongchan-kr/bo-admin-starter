@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { useParams } from "react-router";
 import { useMutation } from "react-query";
-import { postData } from "api";
+import { putData, deleteData } from "api";
 
 import useMenu from "hooks/useMenu";
 import useMessage from "hooks/useMessage";
 import usePageMove from "hooks/usePageMove";
+import useFetchDetail from "hooks/useGetById";
 
 import { getMessageText } from "utils/common";
 
@@ -28,10 +30,11 @@ import ErrorMessage from "common/form/ErrorMessage";
 
 import MessageModal from "common/modal/MessageModal";
 
-import { schema, tableSelectOptions } from "components/Data";
+import { sampleData, schema, tableSelectOptions } from "components/Data";
 
 export default function DashboardUpload() {
     const classes = useStyles();
+    const { idx } = useParams();
     const menu = useMenu({ page: "Dashboard", menu: "summary", menuTitle: "Dashboard", menuNum: 0 }); // 메뉴 설정하기
 
     const { errors, clearErrors, control, reset, getValues, handleSubmit } = useForm({
@@ -39,37 +42,67 @@ export default function DashboardUpload() {
     });
 
     const [imageFiles, setImageFiles] = useState([]);
+    const [deleteImage, setDeleteImage] = useState({});
     const [actionType, setActionType] = useState("submit"); // 모달 타입
 
     const handleMessage = useMessage(); // 메시지 / 확인 모달 열기
     const handlePageClick = usePageMove({ baseUrl: "/" }); // 페이지 이동하기
 
+    const { isSuccess, data: detailData } = useFetchDetail({ menu, url: `/web/example/detail/${idx}` });
+    // -----SAMPLE-----
+    const { data = sampleData, images = [] } = detailData || {};
+    // -----SAMPLE-----
+
     // 입력한 정보 초기화
     const handleReset = useCallback(() => {
         clearErrors();
         setImageFiles([]);
+        setDeleteImage({});
         reset({
-            category: { value: "", label: "카테고리를 선택해주세요" },
-            name: "",
-            quantity: 0,
-            ingredients_1: false,
-            ingredients_2: false,
-            ingredients_3: false,
+            category: { value: data?.category, label: data?.category },
+            name: data?.name,
+            quantity: data?.quantity,
+            description: data?.description,
+            ingredients_1: true,
+            ingredients_2: true,
+            ingredients_3: true,
             ingredients_4: false,
-            viewYn: "Y"
+            viewYn: data?.viewYn
         });
-    }, [clearErrors, reset]);
+
+        images?.forEach((image) => {
+            setImageFiles((prevState) => [
+                ...prevState,
+                {
+                    idx: image.idx,
+                    file: null,
+                    preview: image.src
+                }
+            ]);
+        });
+    }, [data, images, clearErrors, reset]);
 
     // react-hook-form 데이터 초기화
     useEffect(() => {
-        handleReset();
-    }, [handleReset]);
+        if (isSuccess) {
+            handleReset();
+        }
+    }, [isSuccess, handleReset]);
 
-    // 이미지 파일 삭제
+    // imageFiles에서 이미지 삭제
     const handleDeleteImageFile = (imageIndex) => setImageFiles(imageFiles.filter((_, index) => index !== imageIndex));
 
-    // 등록 API
-    const { isLoading, mutate: createMutation } = useMutation(({ url, fileYn, formData }) => postData(url, fileYn, formData), {
+    // 삭제 API
+    const { mutation: deleteMutation } = useMutation(({ url, data }) => deleteData(url, data), {
+        onSuccess: () => handleDeleteImageFile(deleteImage.index),
+        onError: (error) => handleMessage({ type: "message", ...error })
+    });
+
+    // 수정하기 -- 이미지 삭제
+    const handleRemoveImage = () => deleteMutation({ url: "/delete/example", data: { imageIndex: deleteImage.imageIndex } });
+
+    // 수정 API
+    const { isLoading, mutate: updateMutation } = useMutation(({ url, fileYn, formData }) => putData(url, fileYn, formData), {
         onSuccess: (data) => {
             handleMessage({ type: "message", message: data?.message });
             handlePageClick();
@@ -77,11 +110,12 @@ export default function DashboardUpload() {
         onError: (error) => handleMessage({ type: "message", ...error })
     });
 
-    // 등록하기 / 수정하기
+    // 수정하기
     const handleDataSubmit = () => {
         const data = getValues();
 
         let formData = new FormData();
+        formData.append("idx", idx);
         formData.append("category", data.category.value);
         formData.append("name", data.name);
 
@@ -90,22 +124,23 @@ export default function DashboardUpload() {
                 formData.append("images", imageFiles[key].file);
             }
         }
-
-        createMutation({ url: "/web/post/example", fileYn: true, formData });
+        updateMutation({ url: "/web/put/example", fileYn: true, formData });
     };
 
     // 확인 모달 띄우기
-    const onConfirm = (type) => {
+    const onConfirm = (type, data) => {
+        if (type === "delete") setDeleteImage(data);
+
         setActionType(type);
         handleMessage({ type: "confirm", message: getMessageText(type) });
     };
 
     return (
         <ThemeProvider theme={theme}>
-            <form onSubmit={handleSubmit(() => onConfirm("submit"))} noValidate autoComplete="off">
-                <Header text="디저트 등록하기" onPageClick={handlePageClick} />
+            <form onSubmit={handleSubmit(() => onConfirm("editSubmit"))} noValidate={false} autoComplete="off">
+                <Header text="디저트 수정하기" onPageClick={handlePageClick} />
                 <div className={classes.contentContainer}>
-                    <UploadImage text="디저트 사진 등록" imageFiles={imageFiles} setImageFiles={setImageFiles} onConfirm={onConfirm} handleDeleteImageFile={handleDeleteImageFile} />
+                    <UploadImage text="디저트 사진 수정" imageFiles={imageFiles} setImageFiles={setImageFiles} onConfirm={onConfirm} handleDeleteImageFile={handleDeleteImageFile} />
                     <div className={classes.tableContainer}>
                         <Heading type="default" text="디저트 정보 입력" />
                         <table className={classes.table}>
@@ -119,7 +154,7 @@ export default function DashboardUpload() {
                                     <td>
                                         <FormSelect
                                             name="category"
-                                            defaultValue={{ value: "", label: "카테고리를 선택해주세요" }}
+                                            defaultValue={{ value: data?.category || "", label: data?.category || "카테고리를 선택해주세요" }}
                                             control={control}
                                             options={[
                                                 { value: "", label: "카테고리를 선택해주세요" },
@@ -133,28 +168,21 @@ export default function DashboardUpload() {
                                 <tr>
                                     <th>디저트명</th>
                                     <td>
-                                        <Input inputType="text" name="name" defaultValue="" fullWidth={true} control={control} />
+                                        <Input inputType="text" name="name" defaultValue={data?.name || ""} fullWidth={true} control={control} />
                                         {errors.name && <ErrorMessage text="디저트명을 입력해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>색상</th>
-                                    <td>
-                                        <Input inputType="text" name="color" defaultValue="" control={control} />
-                                        {errors.color && <ErrorMessage text="색상을 입력해주세요." />}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>수량</th>
                                     <td>
-                                        <Input inputType="number" name="quantity" defaultValue="" control={control} />
+                                        <Input inputType="number" name="quantity" defaultValue={data?.quantity || ""} control={control} />
                                         {errors.quantity && <ErrorMessage text="수량을 입력해주세요." />}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>디저트 소개</th>
                                     <td>
-                                        <Input inputType="text" name="description" defaultValue="" multiline={true} rows={10} control={control} />
+                                        <Input inputType="text" name="description" defaultValue={data?.description || ""} multiline={true} rows={10} control={control} />
                                         {errors.description && <ErrorMessage text="디저트 소개를 입력해주세요." />}
                                     </td>
                                 </tr>
@@ -174,44 +202,9 @@ export default function DashboardUpload() {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>칼로리</th>
-                                    <td>
-                                        <Input inputType="number" name="calories" defaultValue="" control={control} />
-                                        {errors.calories && <ErrorMessage text="칼로리를 입력해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>지방</th>
-                                    <td>
-                                        <Input inputType="number" name="fat" defaultValue="" control={control} />
-                                        {errors.fat && <ErrorMessage text=" 지방을 입력해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>프로틴</th>
-                                    <td>
-                                        <Input inputType="number" name="protein" defaultValue="" control={control} />
-                                        {errors.protein && <ErrorMessage text="프로틴을 입력해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>탄수화물</th>
-                                    <td>
-                                        <Input inputType="number" name="carbs" defaultValue="" control={control} />
-                                        {errors.carbs && <ErrorMessage text="탄수화물을 입력해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>노출 여부</th>
-                                    <td>
-                                        <RadioButton name="viewYn" defaultValue="" control={control} options={tableSelectOptions["viewYn"]} />
-                                        {errors.viewYn && <ErrorMessage text="노출 여부를 선택해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
                                     <th>판매 여부</th>
                                     <td>
-                                        <RadioButton name="useYn" defaultValue="" control={control} options={tableSelectOptions["useYn"]} />
+                                        <RadioButton name="useYn" defaultValue={data?.useYn || "Y"} control={control} options={tableSelectOptions["useYn"]} />
                                         {errors.useYn && <ErrorMessage text="판매 여부를 선택해주세요." />}
                                     </td>
                                 </tr>
@@ -221,7 +214,9 @@ export default function DashboardUpload() {
                 </div>
                 <Buttons type="upload" loading={isLoading} onPageClick={() => handlePageClick("list")} onConfirm={onConfirm} />
             </form>
-            <MessageModal handleConfirm={actionType === "uploadCancel" ? () => handlePageClick("list") : actionType === "reset" ? handleReset : handleDataSubmit} />
+            <MessageModal
+                handleConfirm={actionType === "delete" ? handleRemoveImage : actionType === "editCancel" ? () => handlePageClick("list") : actionType === "reset" ? handleReset : handleDataSubmit}
+            />
         </ThemeProvider>
     );
 }

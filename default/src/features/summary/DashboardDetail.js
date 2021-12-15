@@ -1,283 +1,202 @@
-import React, { useEffect, useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation, useParams } from "react-router";
+import React, { useState } from "react";
+import { useParams } from "react-router";
+import { useDispatch } from "react-redux";
+import { setDetail } from "slices/modalSlice";
+import { useMutation, useQueryClient } from "react-query";
+import { putData } from "api";
+
 import useMenu from "hooks/useMenu";
-import useErrorMsg from "hooks/useErrorMsg";
+import useMessage from "hooks/useMessage";
+import usePageMove from "hooks/usePageMove";
+import useFetchDetail from "hooks/useGetById";
 
-import { summarySelector, getSummaryInfo, updateSummaryInfo, clearError, resetStates } from "slices/summarySlice";
-import { setMessage, setDetail, setClose } from "slices/modalSlice";
-
-import { isEmpty } from "utils/common";
+import { getMessageText, handleZipDownload, isEmpty } from "utils/common";
 
 import useStyles from "styles/customize/table/DetailTableStyles";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import Grid from "@mui/material/Grid";
 
+import Header from "layout/Page/Header";
+import Heading from "layout/Page/Heading";
+import Buttons from "layout/Page/Buttons";
+import ImageCarousel from "components/Image/ImageCarousel";
+
+import DefaultButton from "common/button/DefaultButton";
 import Select from "common/table/Select";
-import ListButton from "common/button/PageButton";
 import MessageModal from "common/modal/MessageModal";
 import DetailModal from "common/modal/DetailModal";
 
 import { sampleData, tableSelectOptions } from "components/Data";
 
 export default function DashboardDetail() {
-    const classes = useStyles();
+    const queryClient = useQueryClient();
     const dispatch = useDispatch();
-    const history = useHistory();
-    const location = useLocation();
+    const classes = useStyles();
     const { idx } = useParams();
 
-    const { data, images, status, statusCode, errorMsg } = useSelector(summarySelector);
-    const [imageIndex, setImageIndex] = useState(0);
-
     // 메뉴 설정하기
-    useMenu({ page: "Dashboard Detail", menu: "summary", title: "Dashboard", num: 1 });
+    // menu = Dashboard
+    const menu = useMenu({ page: "Dashboard", menu: "summary", menuTitle: "Dashboard", menuNum: 0 });
 
-    // 데이터 불러오기
-    const handleData = useCallback(async () => {
-        // await dispatch(getSummaryInfo(`/web?idx=${idx}`));
-    }, [dispatch, idx]);
+    const handleMessage = useMessage(); // 메시지 / 확인 모달 열기
+    const handlePageClick = usePageMove({ baseUrl: "/" }); // 페이지 이동하기
 
-    useEffect(() => {
-        handleData();
-    }, [handleData]);
+    const [downloading, setDownloading] = useState(false);
 
-    // 에러 메시지 노출하기
-    useErrorMsg(status, statusCode, errorMsg);
+    // 상세 데이터 API 호출
+    const { isSuccess, data: detailData } = useFetchDetail({ menu, url: "/web/detail/1" });
+    // -----SAMPLE-----
+    const { data = sampleData, images = [] } = detailData || {};
+    // -----SAMPLE-----
 
-    const handleSelect = async (type, idx, value) => {
+    const handleSelect = (name, idx, value) => {
         if (isEmpty(idx) || isEmpty(value)) {
-            return dispatch(setMessage({ open: true, message: "Error" }));
+            return handleMessage("message", getMessageText("fail"));
         }
 
-        // 수정 API
-        const resultAction = await dispatch(updateSummaryInfo({ url: "/web/change-status", data: { idx, [type]: value } }));
-        if (updateSummaryInfo.fulfilled.match(resultAction)) {
-            // 성공
-        } else {
-            if (resultAction.payload) {
-                dispatch(setMessage({ open: true, message: resultAction.payload.message }));
-            } else {
-                dispatch(setMessage({ open: true, message: "Error" }));
+        handleUpdateData.mutate({ url: "/web/update/example", fileYn: false, data: { idx, [name]: value } });
+    };
+
+    // 수정 API
+    const handleUpdateData = useMutation(({ url, fileYn, data }) => putData(url, fileYn, data), {
+        onSuccess: (data) => {
+            // API에서 수정된 값(=data)을 setQueryData를 사용해서 수정된 데이터로 변경하기
+            queryClient.setQueryData([`${menu} detail`, idx], (old) => {
+                return { ...old, ...data };
+            });
+        },
+        onError: (error) => handleMessage({ type: "message", ...error })
+    });
+
+    // 이미지 ZIP 파일 다운로드
+    const handleDownload = async () => {
+        let message = "";
+        try {
+            setDownloading(true);
+            message = await handleZipDownload(images);
+        } catch (error) {
+            handleMessage({ type: "message", message: getMessageText("image download") });
+        } finally {
+            setDownloading(false);
+            if (message.length > 0) {
+                handleMessage({ type: "message", message });
             }
         }
     };
 
-    // 페이지 이동하기
-    const onClick = (pageType) => {
-        dispatch(resetStates()); // redux reset
-
-        if (pageType === "edit") {
-            return history.push({
-                pathname: `/dashboard/edit/${idx}`,
-                search: location.search
-            });
-        } else {
-            return history.push({
-                pathname: "/",
-                search: location.search
-            });
-        }
-    };
-
-    // 이미지 이전 버튼
-    const onPreviousImage = () => {
-        if (imageIndex <= 0) {
-            setImageIndex(images.length - 1);
-        } else {
-            setImageIndex((prevState) => prevState - 1);
-        }
-    };
-
-    // 이미지 다음 버튼
-    const onNextImage = () => {
-        if (imageIndex >= images.length - 1) {
-            setImageIndex(0);
-        } else {
-            setImageIndex((prevState) => prevState + 1);
-        }
-    };
-
-    // 작은 이미지 클릭
-    const onImageClick = (index) => {
-        setImageIndex(index);
-    };
-
     // 이력 / 정보 조회 모달창 띄우기
-    const onOpen = async (type) => {
-        dispatch(setDetail({ open: true, data: { type, title: "판매량 조회", quantity: 140000 } }));
-    };
-
-    // 모달 닫기
-    const onClose = () => {
-        dispatch(setClose());
-        dispatch(clearError());
-    };
+    const onOpen = (type) => dispatch(setDetail({ open: true, data: { type, title: "판매량 조회", quantity: 140000 } }));
 
     return (
-        <div className={classes.root}>
-            <div className={classes.heading}>
-                <ChevronLeftIcon onClick={onClick} />
-                <Typography variant="h2" component="h3" display="inline">
-                    디저트 상세
-                </Typography>
-            </div>
-            <Paper className={classes.paper} elevation={0}>
-                <div className={classes.contentContainer}>
-                    <div className={classes.contentImage}>
-                        <Typography variant="h3" component="h4" display="block">
-                            디저트 사진
-                        </Typography>
-                        {images && images.length > 0 ? (
-                            <div>
-                                <Grid className={classes.imageContainer} container justify="flex-start" alignItems="center">
-                                    <img width={500} height={500} src={images[imageIndex].src} alt="" />
-                                    <Grid className={classes.imageButtonContainer} item container justify="space-between" alignItems="center">
-                                        <Button startIcon={<ChevronLeftIcon />} className={classes.imageButton} variant="contained" onClick={onPreviousImage}></Button>
-                                        <Button endIcon={<ChevronRightIcon />} className={classes.imageButton} variant="contained" onClick={onNextImage}></Button>
+        <>
+            <Header text="디저트 상세" onPageClick={handlePageClick} />
+            <div className={classes.contentContainer}>
+                <ImageCarousel text="디저트 이미지" images={images || []} alt="상품 이미지" />
+                <div className={classes.tableContainer}>
+                    <Heading type="button" text="디저트 정보" buttonText="이미지 다운로드" disabled={downloading} onClick={handleDownload} />
+                    <table className={classes.table}>
+                        <colgroup>
+                            <col width="12%"></col>
+                            <col width="88%"></col>
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>디저트명</th>
+                                <td>{data?.name || "-"}</td>
+                            </tr>
+                            <tr>
+                                <th>등록일</th>
+                                <td>{data?.regDate || "-"}</td>
+                            </tr>
+                            <tr>
+                                <th>카테고리</th>
+                                <td>{data?.category || "-"}</td>
+                            </tr>
+                            <tr>
+                                <th>색상</th>
+                                <td>{data?.color || "-"}</td>
+                            </tr>
+                            <tr>
+                                <th>원재료명</th>
+                                <td>{data?.ingredients || "-"}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <Heading type="default" text="영양정보" />
+                    <table className={classes.table}>
+                        <colgroup>
+                            <col width="12%"></col>
+                            <col width="88%"></col>
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>칼로리</th>
+                                <td>{data?.calories || "-"}</td>
+                            </tr>
+                            <tr>
+                                <th>지방</th>
+                                <td>{data?.fat || "-"}</td>
+                            </tr>
+                            <tr>
+                                <th>탄수화물</th>
+                                <td>{data?.carbs || "-"}</td>
+                            </tr>
+                            <tr>
+                                <th>프로틴</th>
+                                <td>{data?.protein || "-"}</td>
+                            </tr>
+                            <tr>
+                                <th>판매량</th>
+                                <td>
+                                    <Grid container justifyContent="space-between" alignItems="center">
+                                        <p>{data?.quantity || "-"}</p>
+                                        <DefaultButton text="판매량 확인하기" size="medium" color="primary" variant="outlined" onClick={() => onOpen("quantity")} />
                                     </Grid>
-                                </Grid>
-                                <Grid container justify="flex-start" alignItems="center" className={classes.imagePreviewContainer}>
-                                    {images.map((img, index) => (
-                                        <img onClick={() => onImageClick(index)} key={img.index} width={45} height={45} src={img.src} alt="" />
-                                    ))}
-                                </Grid>
-                            </div>
-                        ) : (
-                            <div className={classes.noImage}>No Image</div>
-                        )}
-                    </div>
-                    <div className={classes.tableContainer}>
-                        <Typography className={classes.heading} variant="h3" component="h4" display="block">
-                            디저트 정보
-                        </Typography>
-                        <table className={classes.noBorderTable}>
-                            <colgroup>
-                                <col width="20%"></col>
-                                <col width="80%"></col>
-                            </colgroup>
-                            <tbody>
-                                <tr className={classes.row}>
-                                    <th className={classes.label}>디저트명</th>
-                                    <td className={classes.content}>{sampleData && sampleData.name ? sampleData.name : "-"}</td>
-                                </tr>
-                                <tr className={classes.row}>
-                                    <th className={classes.label}>등록일</th>
-                                    <td className={classes.content}>{sampleData && sampleData.regDate ? sampleData.regDate : "-"}</td>
-                                </tr>
-                                <tr className={classes.row}>
-                                    <th className={classes.label}>카테고리</th>
-                                    <td className={classes.content}>{sampleData && sampleData.category ? sampleData.category : "-"}</td>
-                                </tr>
-                                <tr className={classes.row}>
-                                    <th className={classes.label}>색상</th>
-                                    <td className={classes.content}>{sampleData && sampleData.color ? sampleData.color : "-"}</td>
-                                </tr>
-                                <tr className={classes.row}>
-                                    <th className={classes.label}>원재료명</th>
-                                    <td className={classes.content}>{sampleData && sampleData.ingredients ? sampleData.ingredients : "-"}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <hr />
-                        <Typography className={classes.mb20} variant="h3" component="h4" display="block">
-                            영양정보
-                        </Typography>
-                        <table className={classes.noBorderTable}>
-                            <colgroup>
-                                <col width="20%"></col>
-                                <col width="80%"></col>
-                            </colgroup>
-                            <tbody>
-                                <tr className={classes.row}>
-                                    <th className={classes.label}>칼로리</th>
-                                    <td className={classes.content}>{sampleData && sampleData.calories ? sampleData.calories : "-"}</td>
-                                </tr>
-                                <tr className={classes.row}>
-                                    <th className={classes.label}>지방</th>
-                                    <td className={classes.content}>{sampleData && sampleData.fat ? sampleData.fat : "-"}</td>
-                                </tr>
-                                <tr className={classes.row}>
-                                    <th className={classes.label}>탄수화물</th>
-                                    <td className={classes.content}>{sampleData && sampleData.carbs ? sampleData.carbs : "-"}</td>
-                                </tr>
-                                <tr className={classes.row}>
-                                    <th className={classes.label}>프로틴</th>
-                                    <td className={classes.content}>{sampleData && sampleData.protein ? sampleData.protein : "-"}</td>
-                                </tr>
-                                <tr className={classes.row}>
-                                    <th className={classes.label}>판매량</th>
-                                    <td className={classes.content}>
-                                        <div className={classes.buttonContent}>
-                                            <p className={classes.buttonContentText}>{sampleData && sampleData.quantity ? sampleData.quantity : "-"} </p>
-                                            <Button className={classes.button} variant="outlined" onClick={() => onOpen("quantity")}>
-                                                판매량 확인하기
-                                            </Button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <hr />
-                        <Typography className={classes.mb20} variant="h3" component="h4" display="block">
-                            노출 여부
-                        </Typography>
-                        <table className={classes.noBorderTable}>
-                            <colgroup>
-                                <col width="20%"></col>
-                                <col width="80%"></col>
-                            </colgroup>
-                            <tbody>
-                                <tr className={classes.row}>
-                                    <th className={classes.label}>노출 여부</th>
-                                    <td align="left" className={classes.content}>
-                                        <Grid className={classes.selectContainer} container justify="flex-start" alignItems="center" direction="row">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <Heading type="default" text="노출 여부" />
+                    <table className={classes.table}>
+                        <colgroup>
+                            <col width="12%"></col>
+                            <col width="88%"></col>
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>노출 여부</th>
+                                <td>
+                                    {isSuccess && (
+                                        <Grid className={classes.selectContainer} container justifyContent="flex-start" alignItems="center" direction="row">
                                             <Select
                                                 name="viewYn"
-                                                rowIndex={sampleData.idx}
-                                                value={sampleData.viewYn}
-                                                label={sampleData.viewYnText}
+                                                rowIndex={data?.idx}
+                                                value={data?.viewYn}
+                                                label={data?.viewYnText}
                                                 options={tableSelectOptions["viewYn"]}
                                                 handleSelect={handleSelect}
                                             />
                                         </Grid>
-                                    </td>
-                                </tr>
-                                <tr className={classes.row}>
-                                    <th className={classes.label}>판매 여부</th>
-                                    <td className={classes.content}>
-                                        <Grid className={classes.selectContainer} container justify="flex-start" alignItems="center" direction="row">
-                                            <Select
-                                                name="useYn"
-                                                rowIndex={sampleData.idx}
-                                                value={sampleData.useYn}
-                                                label={sampleData.useYnText}
-                                                options={tableSelectOptions["useYn"]}
-                                                handleSelect={handleSelect}
-                                            />
-                                            <Typography className={classes.statusText} variant="body2">
-                                                판매중인 디저트입니다.
-                                            </Typography>
+                                    )}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>판매 여부</th>
+                                <td className={classes.selectContent}>
+                                    {isSuccess && (
+                                        <Grid className={classes.selectContainer} container justifyContent="flex-start" alignItems="center" direction="row">
+                                            <Select name="useYn" rowIndex={data?.idx} value={data?.useYn} label={data?.useYnText} options={tableSelectOptions["useYn"]} handleSelect={handleSelect} />
+                                            <p className={classes.statusText}>{data?.useYn === "Y" ? "판매중인 디저트입니다." : "판매 종료된 디저트입니다."}</p>
                                         </Grid>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </Paper>
-            <div className={classes.buttonsContainer}>
-                <div className={classes.marginAuto}>
-                    <ListButton text="목록" pageType="search" onClick={onClick} />
-                    <ListButton text="수정하기" pageType="edit" onClick={onClick} />
+                                    )}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <MessageModal onClose={onClose} />
-            <DetailModal onClose={onClose} />
-        </div>
+            <Buttons type="detail" onPageClick={handlePageClick} />
+            <MessageModal />
+            <DetailModal />
+        </>
     );
 }
