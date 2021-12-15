@@ -222,6 +222,7 @@ const sampleData = {
     carbs: 67,
     protein: 4.3,
     quantity: 7,
+    description: "This is Strawberry Chocolate Cupcake.",
     color: "white",
     ingredients: "chocolate, strawberry, cheese",
     useYn: "Y",

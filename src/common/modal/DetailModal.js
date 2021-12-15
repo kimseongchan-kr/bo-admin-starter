@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { modalSelector, setClose } from "slices/modalSlice";
+import { modalSelector, setDetailClose } from "slices/modalSlice";
 
 import useStyles from "styles/customize/table/DetailTableStyles";
 import Dialog from "@mui/material/Dialog";
@@ -16,7 +16,7 @@ function DetailModal() {
     const { detailOpen, detailData } = useSelector(modalSelector);
 
     // 모달 닫기
-    const onClose = () => dispatch(setClose());
+    const onClose = () => dispatch(setDetailClose());
 
     const QuantityTable = () => (
         <tbody>

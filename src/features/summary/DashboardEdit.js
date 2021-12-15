@@ -63,10 +63,10 @@ export default function DashboardUpload() {
             name: data?.name,
             quantity: data?.quantity,
             description: data?.description,
-            ingredients_1: true,
-            ingredients_2: true,
-            ingredients_3: true,
-            ingredients_4: false,
+            ingredients_1: data?.ingredients.includes("chocolate"),
+            ingredients_2: data?.ingredients.includes("strawberry"),
+            ingredients_3: data?.ingredients.includes("cheese"),
+            ingredients_4: data?.ingredients.includes("others"),
             viewYn: data?.viewYn
         });
 
@@ -158,8 +158,8 @@ export default function DashboardUpload() {
                                             control={control}
                                             options={[
                                                 { value: "", label: "카테고리를 선택해주세요" },
-                                                { value: "Cupcake", label: "Cupcake" },
-                                                { value: "Cookie", label: "Cookie" }
+                                                { value: "cupcake", label: "cupcake" },
+                                                { value: "cookie", label: "cookie" }
                                             ]}
                                         />
                                         {errors.category && <ErrorMessage text="카테고리를 선택해주세요." />}
@@ -191,10 +191,10 @@ export default function DashboardUpload() {
                                     <td>
                                         <CheckBox
                                             options={[
-                                                { defaultValue: false, name: "ingredients_1", label: "chocolate" },
-                                                { defaultValue: false, name: "ingredients_2", label: "strawberry" },
-                                                { defaultValue: false, name: "ingredients_3", label: "cheese" },
-                                                { defaultValue: false, name: "ingredients_4", label: "others" }
+                                                { defaultValue: data?.ingredients.includes("chocolate"), name: "ingredients_1", label: "chocolate" },
+                                                { defaultValue: data?.ingredients.includes("strawberry"), name: "ingredients_2", label: "strawberry" },
+                                                { defaultValue: data?.ingredients.includes("cheese"), name: "ingredients_3", label: "cheese" },
+                                                { defaultValue: data?.ingredients.includes("others"), name: "ingredients_4", label: "others" }
                                             ]}
                                             control={control}
                                         />
