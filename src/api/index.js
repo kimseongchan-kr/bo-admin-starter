@@ -11,7 +11,7 @@ export const getData = async (url, params) => {
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json; charset=UTF-8;",
-            token: JSON.parse(localStorage.getItem("token"))
+            token: localStorage.getItem("token")
         },
         params: params || {}
     });
@@ -25,7 +25,7 @@ export const postData = async (url, fileYn, body) => {
         headers: {
             Accept: "application/json",
             "Content-Type": fileYn ? "multipart/form-data" : "application/json; charset=UTF-8;",
-            token: JSON.parse(localStorage.getItem("token"))
+            token: localStorage.getItem("token")
         }
     });
 
@@ -38,7 +38,7 @@ export const putData = async (url, fileYn, body) => {
         headers: {
             Accept: "application/json",
             "Content-Type": fileYn ? "multipart/form-data" : "application/json; charset=UTF-8;",
-            token: JSON.parse(localStorage.getItem("token"))
+            token: localStorage.getItem("token")
         }
     });
 
@@ -51,7 +51,7 @@ export const deleteData = async (url, body) => {
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json; charset=UTF-8;",
-            token: JSON.parse(localStorage.getItem("token"))
+            token: localStorage.getItem("token")
         }
     });
 

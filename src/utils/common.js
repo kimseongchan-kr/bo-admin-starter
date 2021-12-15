@@ -111,7 +111,7 @@ export const handleDateClick = (name, months) => {
         dateObj.endDate = null;
     }
 
-    if (name === "week" && name === "month") {
+    if (name === "week" || name === "month") {
         dateObj.startDate = format("daily", prevDate);
         dateObj.endDate = format("daily", curDate);
     }

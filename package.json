@@ -39,13 +39,13 @@
     "scripts": {
         "start": "env-cmd -f .env.local react-scripts start",
         "dev": "env-cmd -f .env.development react-scripts start",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
         "build": "env-cmd -f .env.local react-scripts build",
         "build:dev": "env-cmd -f .env.development react-scripts build",
         "build:prod": "env-cmd -f .env.production react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject",
-        "predeploy": "npm run build",
-        "deploy": "gh-pages -d build"
+        "eject": "react-scripts eject"
     },
     "eslintConfig": {
         "extends": "react-app"
