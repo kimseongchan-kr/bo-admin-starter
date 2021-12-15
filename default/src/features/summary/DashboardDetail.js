@@ -195,8 +195,8 @@ export default function DashboardDetail() {
                 </div>
             </div>
             <Buttons type="detail" onPageClick={handlePageClick} />
-            <MessageModal />
             <DetailModal />
+            <MessageModal />
         </>
     );
 }
