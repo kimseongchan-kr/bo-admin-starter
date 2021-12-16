@@ -234,6 +234,7 @@ const sampleData = {
     protein: 4.3,
     quantity: 7,
     color: "white",
+    description: "This is a Strawberry Chocolate Cupcake.",
     ingredients: "chocolate, strawberry, cheese",
     useYn: "Y",
     useYnText: "사용",
