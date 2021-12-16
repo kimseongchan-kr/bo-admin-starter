@@ -16,8 +16,8 @@ const searchComponent = {
         date: false,
         radio: false,
         selects: false,
-        searchType: true,
-        searchKeyword: true
+        searchType: false,
+        searchKeyword: false
     },
     SearchComponent: {
         date: true,
@@ -26,6 +26,13 @@ const searchComponent = {
         selects: true,
         searchType: true,
         searchKeyword: true
+    },
+    Chart: {
+        date: false,
+        radio: false,
+        selects: false,
+        searchType: false,
+        searchKeyword: false
     }
 };
 
@@ -124,6 +131,11 @@ const searchParams = {
         endDate: "endDate",
         pageNumber: "pageNumber",
         pageShow: "pageShow"
+    },
+    Chart: {
+        term: "term",
+        startDate: "startDate",
+        endDate: "endDate"
     }
 };
 

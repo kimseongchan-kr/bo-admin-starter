@@ -6,7 +6,7 @@ import { putData, deleteData } from "api";
 import useMenu from "hooks/useMenu";
 import useMessage from "hooks/useMessage";
 import usePageMove from "hooks/usePageMove";
-import useFetchDetail from "hooks/useGetById";
+import useGetById from "hooks/useGetById";
 
 import { getMessageText } from "utils/common";
 
@@ -48,7 +48,7 @@ export default function DashboardUpload() {
     const handleMessage = useMessage(); // 메시지 / 확인 모달 열기
     const handlePageClick = usePageMove({ baseUrl: "/" }); // 페이지 이동하기
 
-    const { isSuccess, data: detailData } = useFetchDetail({ menu, url: `/web/example/detail/${idx}` });
+    const { isSuccess, data: detailData } = useGetById({ menu, url: `/web/example/detail/${idx}` });
     // -----SAMPLE-----
     const { data = sampleData, images = [] } = detailData || {};
     // -----SAMPLE-----

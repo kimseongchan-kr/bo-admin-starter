@@ -1,4 +1,4 @@
-import { Dashboard, Settings, Build } from "@mui/icons-material";
+import { Dashboard, Settings, Build, BarChart } from "@mui/icons-material";
 
 const MenuData = {
     public: [
@@ -81,6 +81,19 @@ const MenuData = {
                             path: "/button"
                         }
                     ]
+                }
+            ]
+        },
+        {
+            setCaption: true,
+            caption: "차트",
+            siblings: [
+                {
+                    num: 8,
+                    menu: "chart",
+                    menuTitle: "Chart",
+                    icon: <BarChart />,
+                    path: "/chart"
                 }
             ]
         }

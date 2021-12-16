@@ -8,8 +8,8 @@ import useMessage from "hooks/useMessage";
 import usePageMove from "hooks/usePageMove";
 import useSearch from "hooks/useSearch";
 
-import useFetchList from "hooks/useGetList";
-import useFetchMultiLists from "hooks/useGetLists";
+import useGetList from "hooks/useGetList";
+import useGetLists from "hooks/useGetLists";
 import useExcelDownload from "hooks/useExcelDownload";
 
 import DashboardSearch from "components/Search/Search";
@@ -26,7 +26,7 @@ export default function Dashboard() {
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     // 페이지/메뉴 설정하기
-    const menu = useMenu({ page: "Dashboard", menu: "summary", menuTitle: "Dashboard", menuNum: 0 });
+    const menu = useMenu({ page: "Dashboard", menu: "dashboard", menuTitle: "Dashboard", menuNum: 0 });
     const handleMessage = useMessage(); // 메시지 / 확인 모달 열기
     const handlePageClick = usePageMove({ baseUrl: "/" }); // 페이지 이동하기
 
@@ -36,12 +36,12 @@ export default function Dashboard() {
         isLoading,
         data: dataList,
         refetch: refetchList
-    } = useFetchList({
+    } = useGetList({
         menu,
         url: "/web/dashboard"
     });
 
-    const [{ data: brandList }, { data: categoryList }] = useFetchMultiLists({
+    const [{ data: brandList }, { data: categoryList }] = useGetLists({
         apiList: [
             { key: "brand-list", url: "/web/brand-list" },
             { key: "category-list", url: "/web/category-list" }

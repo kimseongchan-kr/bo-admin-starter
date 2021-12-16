@@ -1,6 +1,6 @@
 # bo-admin-starter
 
-:smiley: 블록오디세이를 위한 React 관리자 Boilerplate v2입니다. :smiley:   
+:smiley: 블록오디세이를 위한 React 관리자 Boilerplate v2.5입니다. :smiley:   
 :bangbang: [프로젝트 설치 방법](https://github.com/BlockOdyssey/bo-admin-starter#project-installation "project-installation") & [사용 설명서](https://github.com/BlockOdyssey/bo-admin-starter#사용방법 "usage") :bangbang:
 
 ## Project Main Features
@@ -17,7 +17,7 @@
 -   **DEVELOPMENT** : [redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension#13-use-redux-devtools-extension-package-from-npm "redux-devtools-extension")
 
 ## Project Extra Features
-
+-   **Chart** : [react-chartjs-2](https://github.com/reactchartjs/react-chartjs-2 "react-chartjs-2")
 -   **Editor** : [react-quill](https://github.com/zenoamaro/react-quill#api-reference "react-quill")
 -   **Excel** : [react-excel-workbook](https://github.com/ClearC2/react-excel-workbook#example "react-excel-workbook")
 -   **PopupState** : [material-ui-popup-state](https://github.com/jcoreio/material-ui-popup-state#material-ui-popup-state, "material-ui-popup-state")
@@ -42,6 +42,13 @@
     - Modal
     - Typography
     - Button
+- Chart
+    - LineChart
+    - PieChart
+    - BubbleChart
+    - Doughnut Chart
+    - Stacked Bar Chart
+    - Vertical Bar Chart
 
 [데모 확인하기](https://blockodyssey.github.io/bo-admin-starter "프로젝트 데모 웹페이지")
 
@@ -248,6 +255,8 @@ notion 페이지를 참고해주세요.
 -   [file-saver](https://github.com/eligrey/FileSaver.js#readme "file-saver")
 -   [jszip](https://github.com/Stuk/jszip "jszip")
 -   [prop-types](https://www.npmjs.com/package/prop-types "prop-types")
+-   [chart.js](https://github.com/chartjs/Chart.js "chart.js")
+-   [react-chartjs-2](https://github.com/reactchartjs/react-chartjs-2 "react-chartjs-2")
 -   [react-excel-workbook](https://github.com/ClearC2/react-excel-workbook "react-excel-workbook")
 -   [react-quill](https://github.com/zenoamaro/react-quill "react-quill")
 -   [react-select](https://react-select.com/home "react-select")

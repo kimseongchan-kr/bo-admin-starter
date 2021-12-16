@@ -8,7 +8,7 @@ import { putData } from "api";
 import useMenu from "hooks/useMenu";
 import useMessage from "hooks/useMessage";
 import usePageMove from "hooks/usePageMove";
-import useFetchDetail from "hooks/useGetById";
+import useGetById from "hooks/useGetById";
 
 import { getMessageText, handleZipDownload, isEmpty } from "utils/common";
 
@@ -43,7 +43,7 @@ export default function DashboardDetail() {
     const [downloading, setDownloading] = useState(false);
 
     // 상세 데이터 API 호출
-    const { isSuccess, data: detailData } = useFetchDetail({ menu, url: "/web/detail/1" });
+    const { isSuccess, data: detailData } = useGetById({ menu, url: "/web/detail/1" });
     // -----SAMPLE-----
     const { data = sampleData, images = [] } = detailData || {};
     // -----SAMPLE-----

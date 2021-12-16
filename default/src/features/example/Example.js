@@ -7,7 +7,7 @@ import { putData, deleteData } from "api";
 import useMenu from "hooks/useMenu";
 import useMessage from "hooks/useMessage";
 import useSearch from "hooks/useSearch";
-import useFetchList from "hooks/useGetList";
+import useGetList from "hooks/useGetList";
 
 import { setDetail, setEdit } from "slices/modalSlice";
 
@@ -35,7 +35,7 @@ export default function Example() {
         isLoading,
         data: dataList,
         refetch: refetchList
-    } = useFetchList({
+    } = useGetList({
         menu,
         url: "/web/example"
     });
