@@ -1,6 +1,4 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import Skeleton from "@mui/material/Skeleton";
 
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
@@ -56,16 +54,14 @@ export const data = {
 
 export default function StackedBarChart({ stackedBarLoading, stackedBarChartData }) {
     return (
-        <Grid sm={6} item>
-            <Paper elevation={0} sx={{ padding: 2.5 }}>
-                {stackedBarLoading ? (
-                    <Skeleton variant="rectangular" width="100%" height={500} />
-                ) : (
-                    <div style={{ position: "relative", width: "100%", height: "500px" }}>
-                        <Bar options={options} data={data} />
-                    </div>
-                )}
-            </Paper>
-        </Grid>
+        <>
+            {stackedBarLoading ? (
+                <Skeleton variant="rectangular" width="100%" height={500} />
+            ) : (
+                <div style={{ position: "relative", width: "100%", height: "500px" }}>
+                    <Bar options={options} data={data} />
+                </div>
+            )}
+        </>
     );
 }

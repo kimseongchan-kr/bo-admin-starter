@@ -8,8 +8,8 @@ import ChartSearch from "components/Search/ChartSearch";
 import Charts from "features/chart/components";
 import MessageModal from "common/modal/MessageModal";
 
-export default function Example() {
-    const menu = useMenu({ page: "Chart", menu: "chart", menuTitle: "Chart", menuNum: 8 }); // 페이지/메뉴 설정하기
+export default function Chart() {
+    const menu = useMenu({ page: "Chart", menu: "chart", menuTitle: "요약보기", menuNum: 8 }); // 페이지/메뉴 설정하기
 
     // line chart 데이터 가져오기
     const {

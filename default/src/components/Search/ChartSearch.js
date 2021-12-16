@@ -17,7 +17,7 @@ import DateSearchPicker from "common/search/DatePicker";
 
 import { searchOption as option } from "components/Data";
 
-export default function DateTermSearch(props) {
+export default function ChartSearch(props) {
     const { handleSearch } = props;
 
     const classes = useStyles();
@@ -43,11 +43,6 @@ export default function DateTermSearch(props) {
 
     // 검색하기
     const handleSearchFilter = (obj) => {
-        // 새로 검색할 경우 페이지 번호 초기화하기
-        if (parseInt(searchState["pageNumber"]) > 1) {
-            Object.assign(obj, { pageNumber: 1 });
-        }
-
         dispatch(setSearchFilters(obj));
         handleSearch(obj);
     };

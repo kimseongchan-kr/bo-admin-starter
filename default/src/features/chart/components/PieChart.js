@@ -1,6 +1,4 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import Skeleton from "@mui/material/Skeleton";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
@@ -38,16 +36,14 @@ const data = {
 
 export default function PieChart({ pieLoading, pieChartData }) {
     return (
-        <Grid sm={6} item>
-            <Paper elevation={0} sx={{ width: "100%", padding: 2.5, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                {pieLoading ? (
-                    <Skeleton variant="rectangular" width="100%" height={500} />
-                ) : (
-                    <div style={{ position: "relative", height: "500px", width: "500px" }}>
-                        <Pie data={data} options={options} />
-                    </div>
-                )}
-            </Paper>
-        </Grid>
+        <>
+            {pieLoading ? (
+                <Skeleton variant="rectangular" width="100%" height={500} />
+            ) : (
+                <div style={{ position: "relative", height: "500px", width: "500px" }}>
+                    <Pie data={data} options={options} />
+                </div>
+            )}
+        </>
     );
 }

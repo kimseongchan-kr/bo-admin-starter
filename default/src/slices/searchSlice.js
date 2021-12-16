@@ -18,7 +18,14 @@ const initialState = {
     dateType: "regDate",
     term: "daily",
     startDate: null,
-    endDate: null
+    endDate: null,
+
+    dessertStartDate: null,
+    dessertEndDate: null,
+    dessertTerm: null,
+    foodStartDate: null,
+    foodEndDate: null,
+    foodTerm: null
 };
 
 export const searchSlice = createSlice({

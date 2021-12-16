@@ -94,6 +94,13 @@ const MenuData = {
                     menuTitle: "Chart",
                     icon: <BarChart />,
                     path: "/chart"
+                },
+                {
+                    num: 9,
+                    menu: "chart",
+                    menuTitle: "Chart with Table",
+                    icon: <BarChart />,
+                    path: "/chart-table"
                 }
             ]
         }

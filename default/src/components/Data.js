@@ -33,6 +33,13 @@ const searchComponent = {
         selects: false,
         searchType: false,
         searchKeyword: false
+    },
+    ChartTable: {
+        date: false,
+        radio: false,
+        selects: false,
+        searchType: false,
+        searchKeyword: false
     }
 };
 
@@ -136,6 +143,11 @@ const searchParams = {
         term: "term",
         startDate: "startDate",
         endDate: "endDate"
+    },
+    ChartTable: {
+        term: "term",
+        startDate: "startDate",
+        endDate: "endDate"
     }
 };
 
@@ -169,7 +181,10 @@ const headCell = {
         { id: "protein", label: "프로틴" },
         { id: "useYn", label: "사용여부" },
         { id: "viewYn", label: "메인노출" }
-    ]
+    ],
+    ChartTable: Array.from(Array(50)).map((_, index) => {
+        return { id: `caloreis${index}`, label: `Day ${parseInt(index) + 1}` };
+    })
 };
 
 const tableSelectOptions = {
@@ -215,13 +230,34 @@ const schema = {
 
 // 샘플 데이터
 const sampleRowData = [
-    { idx: 1, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
-    { idx: 2, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
-    { idx: 3, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
-    { idx: 4, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
-    { idx: 5, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
-    { idx: 6, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
-    { idx: 7, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" }
+    { idx: 1, name: "Cheese Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    { idx: 2, name: "Strawberry Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    { idx: 3, name: "Chocolate Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    { idx: 4, name: "Peanut Butter Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    { idx: 5, name: "Banana Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    {
+        idx: 6,
+        name: "White Chocolate Cupcake",
+        calories: 1111,
+        fat: 5.5,
+        carbs: 144,
+        protein: 1.2,
+        useYn: "Y",
+        useYnText: "사용",
+        viewYn: "Y",
+        viewYnText: "노출",
+        sortOrder: 1,
+        regdate: "2020-02-02"
+    },
+    { idx: 7, name: "Fruits Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" }
+];
+
+// 샘플 데이터
+const sampleChartData = [
+    { idx: 1, name: "Cheese Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    { idx: 2, name: "Strawberry Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    { idx: 3, name: "Chocolate Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    { idx: 4, name: "Peanut Butter Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" }
 ];
 
 // 샘플 데이터
@@ -269,6 +305,7 @@ export {
     buttons,
     headCell,
     sampleRowData,
+    sampleChartData,
     sampleDetailData,
     sampleData,
     schema

@@ -12,6 +12,7 @@ import DashboardEdit from "features/summary/DashboardEdit";
 import Example from "features/example/Example";
 
 import Chart from "features/chart/Chart";
+import ChartTable from "features/chart/ChartTable";
 
 import ChangeInfo from "features/admin/ChangeInfo";
 import ChangePassword from "features/admin/ChangePassword";
@@ -36,6 +37,7 @@ export default function Router() {
             <Route path="/example" exact component={withContainer(Example)} />
 
             <Route path="/chart" exact component={withContainer(Chart)} />
+            <Route path="/chart-table" exact component={withContainer(ChartTable)} />
 
             <Route path="/info" exact component={withContainer(ChangeInfo)} />
             <Route path="/password" exact component={withContainer(ChangePassword)} />

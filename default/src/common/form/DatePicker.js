@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 import Picker from "@mui/lab/DatePicker";
 import TextField from "@mui/material/TextField";
 
-function DatePicker({ name, value, handleDate }) {
+function DatePicker({ term, name, value, handleDate }) {
     return (
         <Picker
-            mask="____-__-__"
-            inputFormat="yyyy-MM-dd"
-            views={["day"]}
+            mask={term === "daily" ? "____-__-__" : "____-__"}
+            inputFormat={term === "daily" ? "yyyy-MM-dd" : "yyyy-MM"}
+            views={term === "daily" ? ["day"] : ["month"]}
             value={value}
             onChange={(e) => handleDate(name, e)}
             inputProps={{ "aria-label": { name }, placeholder: "" }}

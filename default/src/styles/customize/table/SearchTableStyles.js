@@ -12,6 +12,11 @@ const useStyles = makeStyles(({ palette, breakpoints }) => ({
             borderBottom: `1px solid ${palette.border["opacity0.1"]}`
         }
     },
+    sticky: {
+        position: "sticky",
+        left: 0,
+        background: palette.background["light"]
+    },
     tableHead: {
         fontWeight: 500
     },
