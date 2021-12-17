@@ -20,12 +20,13 @@ const initialState = {
     startDate: null,
     endDate: null,
 
+    dessertTerm: "daily",
     dessertStartDate: null,
     dessertEndDate: null,
-    dessertTerm: null,
+
+    foodTerm: "monthly",
     foodStartDate: null,
-    foodEndDate: null,
-    foodTerm: null
+    foodEndDate: null
 };
 
 export const searchSlice = createSlice({

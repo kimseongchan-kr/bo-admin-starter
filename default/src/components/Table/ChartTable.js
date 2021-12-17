@@ -34,13 +34,13 @@ export default function ChartTable(props) {
                     <TableBody>
                         {loading ? (
                             <TableRow>
-                                <TableCell align="center" colSpan={8}>
+                                <TableCell align="center" colSpan={50}>
                                     <CircularProgress size={12} color="primary" /> 데이터를 불러오는 중입니다.
                                 </TableCell>
                             </TableRow>
                         ) : data.length === 0 ? (
                             <TableRow>
-                                <TableCell align="center" colSpan={8}>
+                                <TableCell align="center" colSpan={50}>
                                     데이터가 존재하지 않습니다.
                                 </TableCell>
                             </TableRow>

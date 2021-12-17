@@ -2,12 +2,12 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 
-import LineChart from "features/chart/components/LineChart";
-import PieChart from "features/chart/components/PieChart";
-import DoughnutChart from "features/chart/components/DoughnutChart";
-import BubbleChart from "features/chart/components/BubbleChart";
-import StackedBarChart from "features/chart/components/StackedBarChart";
-import BarChart from "features/chart/components/BarChart";
+import LineChart from "common/chart/LineChart";
+import PieChart from "common/chart/PieChart";
+import DoughnutChart from "common/chart/DoughnutChart";
+import BubbleChart from "common/chart/BubbleChart";
+import StackedBarChart from "common/chart/StackedBarChart";
+import BarChart from "common/chart/BarChart";
 
 export default function Charts(props) {
     return (

@@ -5,7 +5,7 @@ import useSearch from "hooks/useSearch";
 import useGetList from "hooks/useGetList";
 
 import ChartSearch from "components/Search/ChartSearch";
-import Charts from "features/chart/components";
+import Charts from "features/chart/components/Charts";
 import MessageModal from "common/modal/MessageModal";
 
 export default function Chart() {

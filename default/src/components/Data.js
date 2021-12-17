@@ -145,9 +145,16 @@ const searchParams = {
         endDate: "endDate"
     },
     ChartTable: {
-        term: "term",
-        startDate: "startDate",
-        endDate: "endDate"
+        food: {
+            term: "foodTerm",
+            startDate: "foodStartDate",
+            endDate: "foodEndDate"
+        },
+        dessert: {
+            term: "dessertTerm",
+            startDate: "dessertStartDate",
+            endDate: "dessertEndDate"
+        }
     }
 };
 

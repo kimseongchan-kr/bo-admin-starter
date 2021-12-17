@@ -1,111 +1,135 @@
 import React, { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { searchSelector, setSearchFilters } from "slices/searchSlice";
 import useMenu from "hooks/useMenu";
-import useSearch from "hooks/useSearch";
 import useGetList from "hooks/useGetList";
 
-import { sampleChartData, searchOption } from "components/Data";
+import { format, queryToString } from "utils/common";
+import { sampleChartData } from "components/Data";
 
-import useStyles from "styles/customize/components/SearchStyles";
-import theme from "styles/theme/search";
-import { ThemeProvider } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-import LineChart from "features/chart/components/LineChart";
-import DatePicker from "common/form/DatePicker";
+import Search from "features/chart/components/Search";
+import LineChart from "common/chart/LineChart";
 import Table from "components/Table/ChartTable";
 import MessageModal from "common/modal/MessageModal";
 
 export default function ChartTable() {
-    const classes = useStyles();
+    const history = useHistory();
+    const location = useLocation();
     const dispatch = useDispatch();
     const searchState = useSelector(searchSelector);
     const menu = useMenu({ page: "ChartTable", menu: "chart", menuTitle: "요약보기", menuNum: 9 }); // 페이지/메뉴 설정하기
 
-    const [term, setTerm] = useState({ dessert: "daily", food: "monthly" });
-    const [dates, setDates] = useState({ dessertStartDate: null, dessertEndDate: null });
+    const [dessert, setDessert] = useState({
+        term: "daily",
+        startDate: null,
+        endDate: null
+    });
+    const [food, setFood] = useState({
+        term: "monthly",
+        startDate: null,
+        endDate: null
+    });
 
     useEffect(() => {
-        setTerm((prev) => ({
+        setDessert((prev) => ({
             ...prev,
-            dessert: searchState["dessertTerm"] || "daily",
-            food: searchState["foodTerm"] || "monthly"
+            term: searchState["dessertTerm"] || "daily",
+            startDate: searchState["dessertStartDate"] || null,
+            endDate: searchState["dessertEndDate"] || null
         }));
-        setDates((prev) => ({
+
+        setFood((prev) => ({
             ...prev,
-            dessertStartDate: searchState["dessertStartDate"] || null,
-            dessertEndDate: searchState["dessertEndDate"] || null,
-            foodStartDate: searchState["foodStartDate"] || null,
-            foodEndDate: searchState["foodEndDate"] || null
+            term: searchState["foodTerm"] || "monthly",
+            startDate: searchState["foodStartDate"] || null,
+            endDate: searchState["foodEndDate"] || null
         }));
     }, [searchState]);
 
     // 검색 조건 (select) 변경
-    const handleChange = (name, value) => setTerm((prev) => ({ ...prev, [name]: value }));
+    const handleChange = (name, value) => {
+        if (name === "dessert") {
+            setDessert((prev) => ({ ...prev, term: value }));
+        } else if (name === "food") {
+            setFood((prev) => ({ ...prev, term: value }));
+        }
+    };
 
     // 검색 기간 변경
-    const handleDate = (type, date) => setDates((prev) => ({ ...prev, [type]: date }));
+    const handleDate = (type, date) => {
+        let selectedDate = {};
+        if (type?.includes("dessert")) {
+            if (type?.includes("StartDate")) {
+                Object.assign(selectedDate, { startDate: date });
+            } else {
+                Object.assign(selectedDate, { endDate: date });
+            }
+            setDessert((prev) => ({ ...prev, ...selectedDate }));
+        } else if (type?.includes("food")) {
+            if (type?.includes("StartDate")) {
+                Object.assign(selectedDate, { startDate: date });
+            } else {
+                Object.assign(selectedDate, { endDate: date });
+            }
+            setFood((prev) => ({ ...prev, ...selectedDate }));
+        }
+    };
 
     // 조회 버튼 클릭
-    const handleSubmit = () => handleSearchFilter({ ...dates, term });
+    const handleSubmit = (type) => {
+        if (type === "food") {
+            handleSearchFilter({
+                foodTerm: food.term,
+                foodStartDate: format(food.term, food.startDate),
+                foodEndDate: format(food.term, food.endDate)
+            });
+        } else if (type === "dessert") {
+            handleSearchFilter({
+                dessertTerm: dessert.term,
+                dessertStartDate: format(dessert.term, dessert.startDate),
+                dessertEndDate: format(dessert.term, dessert.endDate)
+            });
+        }
+    };
 
     // 검색하기
     const handleSearchFilter = (obj) => {
         dispatch(setSearchFilters(obj));
-        handleSearch(obj);
+        handleSearch({
+            foodTerm: food.startDate || food.endDate ? food.term : null,
+            foodStartDate: food.startDate,
+            foodEndDate: food.endDate,
+            dessertTerm: dessert.startDate || dessert.endDate ? dessert.term : null,
+            dessertStartDate: dessert.startDate,
+            dessertEndDate: dessert.endDate
+        });
     };
 
-    // 리스트 데이터 가져오기
-    const {
-        params,
-        isLoading,
-        data: dataList,
-        refetch
-    } = useGetList({
+    // Dataset 1
+    const { isLoading: dataset1Loading, data: dataset1 } = useGetList({
         menu,
-        url: "/web/chart"
+        url: "/web/food-chart",
+        type: "food"
+    });
+
+    // Dataset 2
+    const { isLoading: dataset2Loading, data: dataset2 } = useGetList({
+        menu,
+        url: "/web/dessert-chart",
+        type: "dessert"
     });
 
     // 검색하기
-    const handleSearch = useSearch({ params });
+    const handleSearch = (obj) => history.push({ pathname: location.pathname, search: queryToString(obj) });
 
     return (
-        <ThemeProvider theme={theme}>
+        <>
             <Paper elevation={0} sx={{ padding: 2.5 }}>
-                <Typography variant="h3" component="h3" gutterBottom>
-                    디저트별 칼로리 하루 섭취량
-                </Typography>
-                <Grid columnSpacing={2} container justifyContent="flex-start" alignItems="center" sx={{ marginBottom: 2.5 }}>
-                    <Grid item>
-                        <Select
-                            className={classes.searchSelect}
-                            IconComponent={KeyboardArrowDownIcon}
-                            displayEmpty
-                            size="small"
-                            name="dessert"
-                            value={term["dessert"]}
-                            onChange={(e) => handleChange("dessert", e.target.value)}>
-                            {searchOption["term"].map((list) => (
-                                <MenuItem key={`key-${list.label}`} value={list.value}>
-                                    {list.label}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </Grid>
-                    <Grid item>
-                        <DatePicker term={term["dessert"]} name="dessertStartDate" value={dates["dessertStartDate"]} handleDate={handleDate} />
-                    </Grid>
-                    <Grid item>~</Grid>
-                    <Grid item>
-                        <DatePicker term={term["dessert"]} name="dessertEndDate" value={dates["dessertEndDate"]} handleDate={handleDate} />
-                    </Grid>
-                </Grid>
+                <Search title="디저트별 칼로리 하루 섭취량" name="dessert" term={dessert} dates={dessert} handleChange={handleChange} handleDate={handleDate} handleSubmit={handleSubmit} />
                 <Grid container rowSpacing={2.5}>
                     <Grid sx={{ width: "100%" }} item>
                         <LineChart />
@@ -113,41 +137,14 @@ export default function ChartTable() {
                     <Grid sx={{ width: "100%" }} item>
                         <Table
                             menu={menu}
-                            loading={isLoading}
-                            data={sampleChartData || dataList} // data={dataList}
+                            loading={dataset1Loading}
+                            data={sampleChartData || dataset1} // data={dataList}
                         />
                     </Grid>
                 </Grid>
             </Paper>
             <Paper elevation={0} sx={{ marginTop: 2.5, padding: 2.5 }}>
-                <Typography variant="h3" component="h3" gutterBottom>
-                    음식별 칼로리 하루 섭취량
-                </Typography>
-                <Grid columnSpacing={2} container justifyContent="flex-start" alignItems="center" sx={{ marginBottom: 2.5 }}>
-                    <Grid item>
-                        <Select
-                            className={classes.searchSelect}
-                            IconComponent={KeyboardArrowDownIcon}
-                            displayEmpty
-                            size="small"
-                            name="food"
-                            value={term["food"]}
-                            onChange={(e) => handleChange("food", e.target.value)}>
-                            {searchOption["term"].map((list) => (
-                                <MenuItem key={`key-${list.label}`} value={list.value}>
-                                    {list.label}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </Grid>
-                    <Grid item>
-                        <DatePicker term={term["food"]} name="foodStartDate" value={dates["foodStartDate"]} handleDate={handleDate} />
-                    </Grid>
-                    <Grid item>~</Grid>
-                    <Grid item>
-                        <DatePicker term={term["food"]} name="foodEndDate" value={dates["foodEndDate"]} handleDate={handleDate} />
-                    </Grid>
-                </Grid>
+                <Search title="음식별 칼로리 하루 섭취량" name="food" term={food} dates={food} handleChange={handleChange} handleDate={handleDate} handleSubmit={handleSubmit} />
                 <Grid container rowSpacing={2.5}>
                     <Grid sx={{ width: "100%" }} item>
                         <LineChart />
@@ -155,13 +152,13 @@ export default function ChartTable() {
                     <Grid sx={{ width: "100%" }} item>
                         <Table
                             menu={menu}
-                            loading={isLoading}
-                            data={sampleChartData || dataList} // data={dataList}
+                            loading={dataset2Loading}
+                            data={sampleChartData || dataset2} // data={dataList}
                         />
                     </Grid>
                 </Grid>
             </Paper>
             <MessageModal />
-        </ThemeProvider>
+        </>
     );
 }

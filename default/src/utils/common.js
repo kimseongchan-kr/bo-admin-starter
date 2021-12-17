@@ -36,6 +36,7 @@ export const queryToObject = (search) => {
 // searchParams : 현재 메뉴에서 사용할 검색 필터 이름들
 export const getCurrentSearchParams = (searchStates, searchParams) => {
     let currentList = {};
+    console.log(searchStates, searchParams);
 
     Object.keys(searchStates).map((key) => {
         if (searchParams[key]) {

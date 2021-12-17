@@ -12,6 +12,7 @@ const useSearchParams = (searchParams) => {
     const [newParams, setNewParams] = useState(null);
 
     const handleSearchParams = useCallback(() => {
+        console.log("searchParams", searchParams);
         let params = {}; // API에 보낼 params
         let newObject = {}; // redux store에 보낼 값들
         const search = queryToObject(location.search);
@@ -25,6 +26,7 @@ const useSearchParams = (searchParams) => {
             const reduxStateName = searchParams[key]; // searchParams[key] : redux store에 있는 search state의 key
             const currentReduxState = searchStates[reduxStateName]; // searchStates[searchParams[key]] : redux store에 있는 search state의 value
 
+            console.log(currentSearchParam, reduxStateName, currentReduxState);
             if (!isEmpty(search[key])) {
                 // int값으로 들어가야 에러가 발생안함
                 if (key === "pageNumber" || key === "pageShow") {
