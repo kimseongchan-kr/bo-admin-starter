@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import axios from "axios";
 
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";

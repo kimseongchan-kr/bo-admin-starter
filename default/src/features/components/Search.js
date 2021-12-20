@@ -2,12 +2,12 @@ import React from "react";
 import useMenu from "hooks/useMenu";
 
 import theme from "styles/theme/search";
-import searchStyles from "styles/customize/components/SearchStyles";
-import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
+import { ThemeProvider } from "@mui/material/styles";
 
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 
 import DateSearchPicker from "common/search/DatePicker";
 import DateTermButton from "common/search/DateTermButton";
@@ -82,13 +82,10 @@ const useStyles = makeStyles(() => ({
 
 export default function Search() {
     const classes = useStyles();
-    const search = searchStyles();
 
-    useMenu({ page: "Search Component Demo", menu: "components", title: "Search", num: 4 });
+    useMenu({ page: "Search Component Demo", menu: "components", menuTitle: "Search", menuNum: 2 });
 
-    const handleDemo = () => {
-        alert("Search Demo :D");
-    };
+    const handleDemo = () => alert("Search Demo :D");
 
     return (
         <div className={classes.container}>
@@ -96,112 +93,43 @@ export default function Search() {
                 <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                     Date Picker
                 </Typography>
-                <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
-                    <DateSearchPicker classes={search} caption={false} dateFormat="yyyy/MM/dd" term="일간" views={["date"]} startDate="2021/03/23" endDate="2021/03/23" handleDate={handleDemo} />
+                <Grid className={classes.componentContainer} container spacing={2} alignItems="center" justifyContent="flex-start" direction="row">
+                    <DateSearchPicker dateFormat="yyyy-MM-dd" term="daily" dates={{ startDate: "2021-03-23", endDate: "2021-12-03" }} handleDate={handleDemo} />
                 </Grid>
-                <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
-                    <DateSearchPicker classes={search} caption={true} dateFormat="yyyy/MM" term="월간" views={["year", "month"]} startDate="2021/03/23" endDate="2021/03/23" handleDate={handleDemo} />
+                <Grid className={classes.componentContainer} container spacing={2} alignItems="center" justifyContent="flex-start" direction="row">
+                    <DateSearchPicker dateFormat="yyyy-MM" term="monthly" dates={{ startDate: "2021-03", endDate: "2021-12" }} handleDate={handleDemo} />
                 </Grid>
                 <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                     Date Term Button
                 </Typography>
-                <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
-                    <DateTermButton
-                        classes={search}
-                        dateSelect={false}
-                        dateFormat="yyyy/MM/dd"
-                        term="일간"
-                        views={["date"]}
-                        dateType="일간"
-                        startDate="2021/03/23"
-                        endDate="2021/03/23"
-                        handleDate={handleDemo}
-                        handleChange={handleDemo}
-                        handleClick={handleDemo}
-                    />
+                <Grid className={classes.componentContainer} container spacing={2} alignItems="center" justifyContent="flex-start" direction="row">
+                    <DateTermButton menu="Dashboard" dates={{ startDate: "2021-03-23", endDate: "2021-12-03" }} handleDate={handleDemo} handleChange={handleDemo} handleClick={handleDemo} />
                 </Grid>
-                <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
-                    <DateTermButton
-                        classes={search}
-                        dateSelect={true}
-                        dateFormat="yyyy/MM/dd"
-                        term="일간"
-                        views={["date"]}
-                        dateType="reg_dt"
-                        startDate="2021/03/23"
-                        endDate="2021/03/23"
-                        handleDate={handleDemo}
-                        handleChange={handleDemo}
-                        handleClick={handleDemo}
-                    />
-                </Grid>
-                <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
-                    <DateTermButton
-                        classes={search}
-                        dateSelect={true}
-                        dateFormat="yyyy/MM"
-                        term="월간"
-                        views={["year", "month"]}
-                        dateType="mod_dt"
-                        startDate="2021/03/23"
-                        endDate="2021/03/23"
-                        handleDate={handleDemo}
-                        handleChange={handleDemo}
-                        handleClick={handleDemo}
-                    />
+                <Grid className={classes.componentContainer} container spacing={2} alignItems="center" justifyContent="flex-start" direction="row">
+                    <DateTermButton menu="SearchComponent" dates={{ startDate: "2021-03-23", endDate: "2021-12-03" }} handleDate={handleDemo} handleChange={handleDemo} handleClick={handleDemo} />
                 </Grid>
                 <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                     Search Select
                 </Typography>
-                <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
-                    <SearchSelect
-                        name="gender"
-                        value=""
-                        options={[
-                            { value: "", label: "전체" },
-                            { value: "M", label: "M" },
-                            { value: "F", label: "F" }
-                        ]}
-                        handleChange={handleDemo}
-                    />
+                <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
+                    <SearchSelect menu="SearchComponent" name="gender" handleChange={handleDemo} />
                 </Grid>
                 <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                     Search Radio
                 </Typography>
-                <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
-                    <SearchRadio
-                        name="gender"
-                        value=""
-                        options={[
-                            { value: "", label: "전체" },
-                            { value: "M", label: "M" },
-                            { value: "F", label: "F" }
-                        ]}
-                        handleChange={handleDemo}
-                    />
+                <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
+                    <SearchRadio name="gender" handleChange={handleDemo} />
                 </Grid>
                 <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                     Search Condition + Search Keyword
                 </Typography>
-                <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
-                    <SearchField
-                        classes={search}
-                        searchType="전체"
-                        searchKeyword="EXAMPLE..."
-                        options={[
-                            { value: "전체", label: "전체" },
-                            { value: "아이디", label: "아이디" },
-                            { value: "이름", label: "이름" },
-                            { value: "연락처", label: "연락처" }
-                        ]}
-                        handleChange={handleDemo}
-                        handleKeyword={handleDemo}
-                    />
+                <Grid className={classes.componentContainer} container spacing={2} alignItems="center" justifyContent="flex-start">
+                    <SearchField menu="SearchComponent" searchType="" searchKeyword="EXAMPLE..." handleChange={handleDemo} handleKeyword={handleDemo} />
                 </Grid>
                 <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                     Search Button
                 </Typography>
-                <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+                <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                     <Grid item>
                         <div className={classes.spacer}></div>
                         <Button variant="contained" onClick={handleDemo}>
@@ -228,13 +156,6 @@ export default function Search() {
                     </thead>
                     <tbody>
                         <tr>
-                            <th>classes</th>
-                            <td>object</td>
-                            <td>Yes</td>
-                            <td></td>
-                            <td>styling object</td>
-                        </tr>
-                        <tr>
                             <th>caption</th>
                             <td>boolean</td>
                             <td>No</td>
@@ -242,45 +163,24 @@ export default function Search() {
                             <td>true || false</td>
                         </tr>
                         <tr>
-                            <th>dateFormat</th>
-                            <td>string</td>
-                            <td>Yes</td>
-                            <td></td>
-                            <td>"yyyy/MM/dd" || "yyyy/MM"</td>
-                        </tr>
-                        <tr>
                             <th>term</th>
                             <td>string</td>
                             <td>Yes</td>
-                            <td></td>
-                            <td>"일간" || "월간"</td>
+                            <td>-</td>
+                            <td>"daily" || "monthly"</td>
                         </tr>
                         <tr>
-                            <th>views</th>
-                            <td>array</td>
-                            <td>No</td>
-                            <td>["date"]</td>
-                            <td>["date"] || ["year", "month"]</td>
-                        </tr>
-                        <tr>
-                            <th>startDate</th>
-                            <td>string</td>
-                            <td>No</td>
-                            <td>""</td>
-                            <td>new Date()</td>
-                        </tr>
-                        <tr>
-                            <th>endDate</th>
-                            <td>string</td>
-                            <td>No</td>
-                            <td>""</td>
-                            <td>new Date()</td>
+                            <th>dates</th>
+                            <td>object</td>
+                            <td>Yes</td>
+                            <td>-</td>
+                            <td>{`{startDate: new Date(), endDate: new Date()}`}</td>
                         </tr>
                         <tr>
                             <th>handleDate</th>
                             <td>function</td>
                             <td>Yes</td>
-                            <td></td>
+                            <td>-</td>
                             <td>{`() => console.log("change date")`}</td>
                         </tr>
                     </tbody>
@@ -299,73 +199,38 @@ export default function Search() {
                     </thead>
                     <tbody>
                         <tr>
-                            <th>classes</th>
-                            <td>object</td>
-                            <td>Yes</td>
-                            <td></td>
-                            <td>styling object</td>
-                        </tr>
-                        <tr>
-                            <th>dateSelect</th>
-                            <td>boolean</td>
-                            <td>No</td>
-                            <td>false</td>
-                            <td>true || false</td>
-                        </tr>
-                        <tr>
-                            <th>dateType</th>
+                            <th>menu</th>
                             <td>string</td>
                             <td>No</td>
-                            <td></td>
-                            <td>"reg_dt" || "mod_dt"</td>
+                            <td>-</td>
+                            <td>"Dashboard" / "Example" ...</td>
                         </tr>
                         <tr>
                             <th>handleChange</th>
                             <td>function</td>
                             <td>No</td>
-                            <td></td>
-                            <td>{`() => console.log("change date select (reg_dt / mod_dt)")`}</td>
+                            <td>-</td>
+                            <td>{`() => console.log("change date select (regDate / modDate)")`}</td>
                         </tr>
                         <tr>
-                            <th>dateFormat</th>
-                            <td>string</td>
+                            <th>dates</th>
+                            <td>object</td>
                             <td>Yes</td>
-                            <td></td>
-                            <td>"yyyy/MM/dd" || "yyyy/MM"</td>
-                        </tr>
-                        <tr>
-                            <th>term</th>
-                            <td>string</td>
-                            <td>Yes</td>
-                            <td></td>
-                            <td>"일간" || "월간"</td>
-                        </tr>
-                        <tr>
-                            <th>startDate</th>
-                            <td>string</td>
-                            <td>No</td>
-                            <td>""</td>
-                            <td>new Date()</td>
-                        </tr>
-                        <tr>
-                            <th>endDate</th>
-                            <td>string</td>
-                            <td>No</td>
-                            <td>""</td>
-                            <td>new Date()</td>
+                            <td>-</td>
+                            <td>{`{startDate: new Date(), endDate: new Date()}`}</td>
                         </tr>
                         <tr>
                             <th>handleDate</th>
                             <td>function</td>
                             <td>Yes</td>
-                            <td></td>
+                            <td>-</td>
                             <td>{`() => console.log("change date")`}</td>
                         </tr>
                         <tr>
                             <th>handleClick</th>
                             <td>function</td>
                             <td>Yes</td>
-                            <td></td>
+                            <td>-</td>
                             <td>{`() => console.log("click button")`}</td>
                         </tr>
                     </tbody>
@@ -377,28 +242,45 @@ export default function Search() {
                         <tr>
                             <th>Name</th>
                             <th>Type</th>
+                            <th>isRequired</th>
+                            <th>Default</th>
                             <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th>name</th>
+                            <th>menu</th>
                             <td>string</td>
-                            <td>"useYn" / "viewYn" / "category" / "brand" ...</td>
+                            <td>No</td>
+                            <td>-</td>
+                            <td>"Dashboard" / "Example" ...</td>
+                        </tr>
+                        <tr>
+                            <th>dataList</th>
+                            <td>array</td>
+                            <td>No</td>
+                            <td>-</td>
+                            <td>{`[{"value": "", "label": "전체"}, {"value": "Y", "label": "사용"}]`}</td>
                         </tr>
                         <tr>
                             <th>value</th>
                             <td>string</td>
+                            <td>No</td>
+                            <td>""</td>
                             <td>"Y" ...</td>
                         </tr>
                         <tr>
-                            <th>options</th>
-                            <td>array</td>
-                            <td>{`[{"value": "", "label": "전체"}, {"value": "Y", "label": "사용"}]`}</td>
+                            <th>name</th>
+                            <td>string</td>
+                            <td>Yes</td>
+                            <td>-</td>
+                            <td>"useYn" / "viewYn" / "category" / "brand" ...</td>
                         </tr>
                         <tr>
                             <th>handleChange</th>
                             <td>function</td>
+                            <td>Yes</td>
+                            <td>-</td>
                             <td>{`() => console.log("change value")`}</td>
                         </tr>
                     </tbody>
@@ -410,28 +292,31 @@ export default function Search() {
                         <tr>
                             <th>Name</th>
                             <th>Type</th>
+                            <th>isRequired</th>
+                            <th>Default</th>
                             <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+                            <th>dataList</th>
+                            <td>array</td>
+                            <td>No</td>
+                            <td>-</td>
+                            <td>{`[{"value": "", "label": "전체"}, {"value": "Y", "label": "사용"}]`}</td>
+                        </tr>
+                        <tr>
                             <th>name</th>
                             <td>string</td>
+                            <td>Yes</td>
+                            <td>-</td>
                             <td>"useYn" / "viewYn" / "category" / "brand" ...</td>
-                        </tr>
-                        <tr>
-                            <th>value</th>
-                            <td>string</td>
-                            <td>"Y" ...</td>
-                        </tr>
-                        <tr>
-                            <th>options</th>
-                            <td>array</td>
-                            <td>{`[{"value": "", "label": "전체"}, {"value": "Y", "label": "사용"}]`}</td>
                         </tr>
                         <tr>
                             <th>handleChange</th>
                             <td>function</td>
+                            <td>Yes</td>
+                            <td>-</td>
                             <td>{`() => console.log("change value")`}</td>
                         </tr>
                     </tbody>
@@ -443,38 +328,52 @@ export default function Search() {
                         <tr>
                             <th>Name</th>
                             <th>Type</th>
+                            <th>isRequired</th>
+                            <th>Default</th>
                             <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th>classes</th>
-                            <td>object</td>
-                            <td>styling object</td>
+                            <th>dataList</th>
+                            <td>array</td>
+                            <td>No</td>
+                            <td>-</td>
+                            <td>{`[{"value": "", "label": "전체"}, {"value": "Y", "label": "사용"}]`}</td>
+                        </tr>
+                        <tr>
+                            <th>menu</th>
+                            <td>string</td>
+                            <td>Yes</td>
+                            <td>-</td>
+                            <td>"Dashboard" / "Example" </td>
                         </tr>
                         <tr>
                             <th>searchType</th>
                             <td>string</td>
-                            <td>"" / "Y" / "N" ...</td>
-                        </tr>
-                        <tr>
-                            <th>options</th>
-                            <td>array</td>
-                            <td>{`[{"value": "", "label": "전체"}, {"value": "name", "label": "디저트명"}]`}</td>
+                            <td>Yes</td>
+                            <td>-</td>
+                            <td>"all" / "id" / "name" ...</td>
                         </tr>
                         <tr>
                             <th>handleChange</th>
                             <td>function</td>
+                            <td>Yes</td>
+                            <td>-</td>
                             <td>{`() => console.log("change search condition")`}</td>
                         </tr>
                         <tr>
                             <th>searchKeyword</th>
                             <td>string</td>
+                            <td>Yes</td>
+                            <td>-</td>
                             <td>"test" ...</td>
                         </tr>
                         <tr>
                             <th>handleKeyword</th>
                             <td>function</td>
+                            <td>Yes</td>
+                            <td>-</td>
                             <td>{`() => console.log("search keyword")`}</td>
                         </tr>
                     </tbody>

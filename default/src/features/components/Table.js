@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import useMenu from "hooks/useMenu";
 
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import Pagination from "@material-ui/lab/Pagination";
-import Button from "common/table/Button";
+import { makeStyles } from "@mui/styles";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Pagination from "@mui/material/Pagination";
 
+import Button from "common/table/Button";
 import SingleTextField from "common/table/SingleTextField";
 import TextField from "common/table/TextField";
 import Select from "common/table/Select";
@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Table() {
     const classes = useStyles();
 
-    useMenu({ page: "Table Component Demo", menu: "components", title: "Table", num: 5 });
+    useMenu({ page: "Table Component Demo", menu: "components", menuTitle: "Table", menuNum: 3 });
 
     const handleDemo = () => {
         alert("Table Demo...");
@@ -105,7 +105,7 @@ export default function Table() {
             <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                 Table Text Input (검색 결과 테이블)
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
+            <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start" direction="row">
                 <Grid item>
                     <TextField index={0} inputType="number" name="sortOrder" value={1} handleChange={handleDemo} />
                 </Grid>
@@ -113,7 +113,7 @@ export default function Table() {
             <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                 Table Text Input (상세 / 모달)
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
+            <Grid className={classes.componentContainer} spacing={2} container alignItems="center" justifyContent="flex-start" direction="row">
                 <Grid item>
                     <SingleTextField inputType="text" name="textfield" value="Example..." handleChange={handleDemo} />
                 </Grid>
@@ -122,21 +122,21 @@ export default function Table() {
                 </Grid>
             </Grid>
             <Typography className={classes.title} variant="h3" component="h3" color="inherit">
-                Table Select (검색 리스트 결과 테이블)
+                Table Select (검색 결과 테이블)
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+            <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                 <Grid item>
-                    <Select name="useYn" rowIndex={0} value="Y" label="사용" options={tableSelectOptions["useYn"]} handleSelect={handleDemo} />
+                    <Select rowIndex={0} name="useYn" value="Y" label="사용" options={tableSelectOptions["useYn"]} handleSelect={handleDemo} />
                 </Grid>
                 <div className={classes.spacer} />
                 <Grid item>
-                    <Select name="viewYn" rowIndex={0} value="Y" label="노출" options={tableSelectOptions["viewYn"]} handleSelect={handleDemo} />
+                    <Select rowIndex={0} name="viewYn" value="Y" label="노출" options={tableSelectOptions["viewYn"]} handleSelect={handleDemo} />
                 </Grid>
             </Grid>
             <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                 Table Select (페이지 / 모달)
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+            <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                 <Grid item>
                     <SingleSelect name="useYn" value={{ value: "Y", label: "사용" }} options={tableSelectOptions["useYn"]} handleSelect={handleDemo} />
                 </Grid>
@@ -148,7 +148,7 @@ export default function Table() {
             <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                 Table Checkbox
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
+            <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start" direction="row">
                 <CheckBox
                     options={[
                         { name: "ingredients1", value: true, label: "Chocolate" },
@@ -160,22 +160,22 @@ export default function Table() {
             <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                 Table Radio Button
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start" direction="row">
+            <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start" direction="row">
                 <RadioButton name="useYn" value="Y" options={tableSelectOptions["useYn"]} handleChange={handleDemo} />
             </Grid>
             <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                 Table Button
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="center" justify="flex-start">
+            <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                 <Grid item>
-                    <Button text="수정" rowIndex={0} data={{ modalId: 1 }} onClick={handleDemo} />
-                    <Button text="삭제" rowIndex={0} data={{ modalId: 1 }} onClick={handleDemo} />
+                    <Button disabled={false} pageType="edit" text="수정" rowIndex={0} onClick={handleDemo} />
+                    <Button disabled={true} text="삭제" rowIndex={0} onClick={handleDemo} />
                 </Grid>
             </Grid>
             <Typography className={classes.title} variant="h3" component="h3" color="inherit">
                 Pagination
             </Typography>
-            <Grid className={classes.componentContainer} container alignItems="flex-start" justify="center" direction="column">
+            <Grid className={classes.componentContainer} container alignItems="flex-start" justifyContent="center" direction="column">
                 <Grid item>
                     <Pagination
                         color="primary"
@@ -231,21 +231,21 @@ export default function Table() {
                             <th>name</th>
                             <td>string</td>
                             <td>Yes</td>
-                            <td></td>
+                            <td>-</td>
                             <td>"name" / "quantity" / "calories" ...</td>
                         </tr>
                         <tr>
                             <th>value</th>
                             <td>string || number</td>
                             <td>Yes</td>
-                            <td></td>
+                            <td>-</td>
                             <td>"Strawberry Chocolate Cupcake" / 8.9 ...."</td>
                         </tr>
                         <tr>
                             <th>handleChange</th>
                             <td>function</td>
                             <td>Yes</td>
-                            <td></td>
+                            <td>-</td>
                             <td>{`() => console.log("change value")`}</td>
                         </tr>
                     </tbody>
@@ -274,21 +274,21 @@ export default function Table() {
                             <th>name</th>
                             <td>string</td>
                             <td>Yes</td>
-                            <td></td>
+                            <td>-</td>
                             <td>"name" / "quantity" / "calories" ...</td>
                         </tr>
                         <tr>
                             <th>value</th>
                             <td>string || number</td>
                             <td>Yes</td>
-                            <td></td>
+                            <td>-</td>
                             <td>"Strawberry Chocolate Cupcake" / 8.9 ...."</td>
                         </tr>
                         <tr>
                             <th>handleChange</th>
                             <td>function</td>
                             <td>Yes</td>
-                            <td></td>
+                            <td>-</td>
                             <td>{`() => console.log("change value")`}</td>
                         </tr>
                     </tbody>
@@ -305,14 +305,14 @@ export default function Table() {
                     </thead>
                     <tbody>
                         <tr>
-                            <th>name</th>
-                            <td>string</td>
-                            <td>"useYn" / "viewYn" / "category" ...</td>
-                        </tr>
-                        <tr>
                             <th>rowIndex</th>
                             <td>number</td>
                             <td>row index</td>
+                        </tr>
+                        <tr>
+                            <th>name</th>
+                            <td>string</td>
+                            <td>"useYn" / "viewYn" / "category" ...</td>
                         </tr>
                         <tr>
                             <th>value</th>
@@ -451,32 +451,32 @@ export default function Table() {
                             <td>false || true</td>
                         </tr>
                         <tr>
+                            <th>pageType</th>
+                            <td>string</td>
+                            <td>No</td>
+                            <td>""</td>
+                            <td>"edit" / "delete" / "add" ...</td>
+                        </tr>
+                        <tr>
                             <th>text</th>
                             <td>string</td>
                             <td>Yes</td>
-                            <td></td>
+                            <td>-</td>
                             <td>"수정" / "삭제" ...</td>
                         </tr>
                         <tr>
                             <th>rowIndex</th>
                             <td>number</td>
                             <td>Yes</td>
-                            <td></td>
+                            <td>-</td>
                             <td>row index</td>
-                        </tr>
-                        <tr>
-                            <th>data</th>
-                            <td>object</td>
-                            <td>Yes</td>
-                            <td></td>
-                            <td>{`{ pro_idx: 1, name: "test", email: "testexample@example.com" } ...`}</td>
                         </tr>
                         <tr>
                             <th>onClick</th>
                             <td>function</td>
                             <td>Yes</td>
-                            <td></td>
-                            <td>{`() => console.log("handle edit/delete")`}</td>
+                            <td>-</td>
+                            <td>{`() => console.log("clicked button inside table")`}</td>
                         </tr>
                     </tbody>
                 </table>

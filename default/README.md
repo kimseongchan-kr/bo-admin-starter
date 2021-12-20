@@ -1,46 +1,56 @@
 # bo-admin-starter
 
-:smiley: 블록오디세이를 위한 React 관리자 Boilerplate v2입니다. :smiley:   
+:smiley: 블록오디세이를 위한 React 관리자 Boilerplate v3입니다. :smiley:  
 :bangbang: [프로젝트 설치 방법](https://github.com/BlockOdyssey/bo-admin-starter#project-installation "project-installation") & [사용 설명서](https://github.com/BlockOdyssey/bo-admin-starter#사용방법 "usage") :bangbang:
 
 ## Project Main Features
 
--   **UI COMPONENT** : [MATERIAL-UI](https://material-ui.com/ "material-ui")
--   **STYLING** : [@material-ui/styles](https://material-ui.com/styles/basics/ "@material-ui/styles")
+-   **UI COMPONENT** : [MUI](https://mui.com/ "MUI")
+-   **STYLING** : [@mui/styles](https://mui.com/styles/basics/#getting-started "@mui/styles")
 -   **HTTP CLIENT** : [axios](https://github.com/axios/axios "axios")
+-   **SERVER STATE DATA MANAGEMENT** : [react-query](https://react-query.tanstack.com/ "react-query")
 -   **ROUTING AND NAVIGATION** : [react-router-dom](https://reactrouter.com/web/guides/quick-start "react-router-dom")
--   **STATE MANAGEMENT** : [Redux Toolkit](https://redux-toolkit.js.org/ "redux-toolkit")
+-   **STATE MANAGEMENT** : [@reduxjs/toolkit](https://redux-toolkit.js.org/ "@reduxjs/toolkit")
 -   **FORM** : [react-hook-form](https://react-hook-form.com/get-started "react-hook-form")
 -   **FORM VALIDATION** : [yup](https://github.com/jquense/yup#usage "yup")
 -   **TYPE CHECK** : [prop-types](https://github.com/facebook/prop-types "prop-types")
 -   **DEVELOPMENT** : [redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension#13-use-redux-devtools-extension-package-from-npm "redux-devtools-extension")
+
 ## Project Extra Features
 
--   **Date Picker** : [material-ui pickers](https://material-ui-pickers.dev/demo/datepicker "material-ui pickers")
+-   **Chart** : [react-chartjs-2](https://github.com/reactchartjs/react-chartjs-2 "react-chartjs-2")
 -   **Editor** : [react-quill](https://github.com/zenoamaro/react-quill#api-reference "react-quill")
 -   **Excel** : [react-excel-workbook](https://github.com/ClearC2/react-excel-workbook#example "react-excel-workbook")
--   **Modal** : [react-modal](https://github.com/reactjs/react-modal#react-modal "react-modal")
 -   **PopupState** : [material-ui-popup-state](https://github.com/jcoreio/material-ui-popup-state#material-ui-popup-state, "material-ui-popup-state")
 -   **Select** : [react-select](https://react-select.com/home "react-select")
 
 ## Menu / Page
-- 404
-- Login
-- Change Password
-- Change Info
-- Dashboard (Example Menu 1)
-    - Dashboard Upload
-    - Dashboard Detail
-- Example (Example Menu 2)
-    - Example Upload Modal
-    - Example Detail Modal
-- Components
-    - Search
-    - Table
-    - Form
-    - Modal
-    - Typography
-    - Button
+
+-   404
+-   Login
+-   Change Password
+-   Change Info
+-   Dashboard (Example Menu 1)
+    -   Dashboard Detail
+    -   Dashboard Upload
+    -   Dashboard Edit
+-   Example (Example Menu 2)
+    -   Example Detail Modal
+    -   Example Upload/Edit Modal
+-   Components (Component Guide Menu)
+    -   Search
+    -   Table
+    -   Form
+    -   Modal
+    -   Typography
+    -   Button
+-   Chart
+    -   LineChart
+    -   PieChart
+    -   BubbleChart
+    -   Doughnut Chart
+    -   Stacked Bar Chart
+    -   Vertical Bar Chart
 
 [데모 확인하기](https://blockodyssey.github.io/bo-admin-starter "프로젝트 데모 웹페이지")
 
@@ -69,436 +79,209 @@
 
 ## 사용방법
 
-### Data.js 파일 작성 방법
+notion 페이지를 참고해주세요.
 
-#### Search (검색)
-```javascript
-//  자세한 사용방법: components/Search.js
+---
 
-//  Data.js
-
-//  **메뉴별 필요한 검색 Components**
-//      필요한 경우 -> true
-//      사용하지 않는 경우 -> false
-
-//  Dashboard, Summary = 파일명/메뉴명
-const searchComponents = {
-    Dashboard: {
-        date: true,             //  Date Picker 사용
-        radio: true,            //  검색 radio button 사용
-        selects: true,          //  검색 select 사용
-        searchType: true,       //  조회조건 select 사용
-        searchKeyword: true     //  키워드 검색 사용
-    },
-    Summary: {
-        date: false,            //  Date Picker 미사용
-        radio: true,            //  검색 radio button 사용
-        selects: false,         //  검색 select 미사용
-        searchType: true,       //  조회조건 select 사용
-        searchKeyword: true     //  키워드 검색 사용
-    },
-    Example: {
-        date: false,            //  Date Picker 미사용
-        radio: true,            //  검색 radio button 사용
-        selects: false,         //  검색 select 미사용
-        searchType: true,       //  조회조건 select 사용
-        searchKeyword: true     //  키워드 검색 사용
-    },
-};
-
-//  메뉴별 검색 조건 설정
-const searchCaption = { gender: "성별", useYn: "판매여부" };
-
-//  사용할 검색 조건 추가
-const searchType = {
-    Dashboard: ["gender", "useYn"],
-    Summary: ["useYn"]
-};
-
-//  [["gender", "useYn"]] 
-//      -> "gender" 와 "useYn" => 1 row
-//  [["gender"], ["useYn"]] 
-//      -> gender => 1 row
-//      -> useYn => 1 row
-const searchRadioRow = {
-    Dashboard: [["gender", "useYn"], ["useYn"]],
-    Summary: [["useYn"]]
-};
-
-const searchSelect = {
-    Dashboard: [["gender"], ["gender", "useYn"]]
-};
-
-//  Select별 options
-const searchOptions = {
-    gender: [
-        { value: "", label: "전체" },
-        { value: "M", label: "M" },
-        { value: "F", label: "F" }
-    ],
-    useYn: [
-        { value: "", label: "전체" },
-        { value: "Y", label: "사용" },
-        { value: "N", label: "미사용" }
-    ],
-    searchType: [
-        { value: "", label: "전체" },
-        { value: "id", label: "아이디" },
-        { value: "name", label: "이름" },
-        { value: "tel", label: "연락처" }
-    ],
-    term: [
-        { value: "daily", label: "일간" },
-        { value: "monthly", label: "월간" }
-    ]
-};
-
-//  location.search을 위한 설정
-//  useSearchParams에서 사용
-const searchParams = {
-    Dashboard: {
-        startDate: "startDate",
-        endDate: "endDate",
-        gender: "gender",
-        useYn: "useYn",
-        searchType: "searchType",
-        searchKeyword: "searchKeyword",
-        sort: "sort",
-        pageNumber: "pageNumber",
-        pageShow: "pageShow"
-    },
-    Example: {
-        startDate: "startDate",
-        endDate: "endDate",
-        pageNumber: "pageNumber",
-        pageShow: "pageShow"
-    }
-};
-```
-
-#### Table (테이블)
-
-```javascript
-//  자세한 사용방법 : components/Table.js   
-//  또는 components/SelectionTable.js
-
-//  Data.js
-
-//  Dashboard, Summary = 파일명/메뉴명
-//  DashboardDetail = Dashboard + DetailModal
-
-//  **테이블의 THEAD 부분 설정**
-//  id = 컬럼 아이디
-//  label = 컬럼명
-const headCell = {
-    Dashboard: [
-        { id: "name", label: "이름" }
-    ],
-    Summary: [
-        { id: "name", label: "이름" }
-    ],
-    DashboardDetail: [
-        { id: "name", label: "이름" }
-    ]
-};
-
-// 검색 결과 테이블 (리스트)에서 사용하는 Select component의 options   
-const tableSelectOptions = {
-    viewYn: [
-        { label: "노출", value: "Y" },
-        { label: "미노출", value: "N" }
-    ],
-    useYn: [
-        { label: "사용", value: "Y" },
-        { label: "미사용", value: "N" }
-    ]
-};
-```
-
-### common 폴더 사용 방법
-
-#### 재사용할 수 있는 components   
-
-> prop-types를 사용해서 전달받는 값의 타입을 작성   
->   
-> 참고: https://ko.reactjs.org/docs/typechecking-with-proptypes.html
-
--   button
--   editor
--   excel
--   form
--   menu
--   modal
--   search
--   table
-
-#### button 폴더
-
-> 테이블 하단/상단에 있는 버튼 / 모달에서 사용하는 버튼   
-> 업로드 페이지에서 사용하는 submit 버튼   
-> 페이지 이동 버튼   
->    
-> styles/theme/button.js 파일에서 스타일을 확인해주세요.
-
--   DefaultButton.js
--   PageButton.js
--   SubmitButton.js
-
-#### editor 폴더
-
-> react-quill 에디터 사용 (+ 이미지 업로드)   
-> 자세한 사용방법 : common/editor/index.js   
->    
-> 이미지 업로드 참고: https://github.com/quilljs/quill/issues/1400
-
-#### form 폴더
-
-> react-hook-form 사용   
-> 자세한 사용방법 : features/summary/DashboardUpload.js   
->    
-> 참고: https://github.com/react-hook-form/react-hook-form/blob/master/app/src/controller.tsx
-
--   CheckBox
--   RadioButton
--   Select
--   Input
-
-#### modal 폴더
-
-> Alert / Confirm을 대신하는 모달  
-> 상세 조회 모달    
-
--   ConfirmModal
--   DetailModal
--   MessageModal
-
-#### search 폴더
-
-> 검색에서 사용되는 button, textfield, select, radio button, date picker
-
--   DatePicker
--   DateTermButton
--   SearchField
--   SearchRadio
--   SearchSelect
-
-#### table 폴더
-
-> 검색 결과 테이블에서 자주 사용되는 select / textfield   
->   
-> 상세 페이지 / 모달에서 사용할 수 있는 singleSelect / textfield / checkbox / radio button   
->   
-> 테이블 pagination   
-> 수정, 삭제 버튼   
-
-> 자세한 사용방법 : components/SelectionTable.js    
-> 또는 components/Table.js
-
--   Button
--   CheckBox
--   Pagination
--   RadioButton
--   Select
--   SingleSelect
--   SingleTextField
--   TextField
-
-```javascript
-//  자세한 사용방법 : common/table/Pagination.js
-
-// Data.js
-
-//  테이블 하단에 버튼을 추가하는 방법
-//      1. components/Data.js에 추가
-//      2. 메뉴마다 필요한 버튼 작성
-
-//  메뉴(페이지)별 필요한 버튼
-//      true -> 필요
-//      false -> 사용안함
-
-//  만약 검색 위에 생성하고 싶으면 [buttonName]Top 이렇게 설정 추가
-//  그리고 components/Search.js 파일에 버튼 import
-const buttons = {
-    Dashboard: { add: false, addTop: true, delete: true, excel: true },
-    Example: { add: true, delete: false, excel: false }
-};
-
-```
-
-## Project Flow
-
-### 새로운 메뉴 파일 생성
-
-| 순서 | 파일 / 폴더 |                      기능                      |
-| :--: | :---------: | :--------------------------------------------: |
-|  1   |  features   |        폴더 생성 -> 매뉴명.js 파일 생성        |
-|  2   |   slices    |          메뉴이름+Slices.js 파일 생성          |
-|  3   |     app     | rootReducer.js 파일에 새로 생성한 reducer 추가 |
-|  4   | components  | Data.js파일에 검색, 테이블 설정 추가 |
-
-
-***
 ## Project Structure
 
 ```
 .
-├── README.md                                   # 사용 설명서
-├── jsconfig.json                               # 프로젝트 환경 설정
+├── README.md
+├── jsconfig.json
 ├── package-lock.json
 ├── package.json
 ├── public
 │   ├── favicon.ico
-│   └── index.html                              # 폰트 설정 (link)
+│   ├── index.html
 │   ├── manifest.json
 │   └── robots.txt
 └── src
-    ├── App.test.js
-    ├── api                                     # API 
-    │   ├── Api.js                                  # axios 설정 파일
-    │   └── Url.js                                  # URL
-    ├── app                                     # APP
-    │   ├── App.js                                  # PublicRoutes, PrivateRoutes 구분
-    │   ├── rootReducer.js                          # reducer 설정
-    │   └── store.js                                # store 설정
-    ├── assets
-    │   └── images                              # Images
-    │       └── logout.png
-    ├── common                                  # Common
-    │   ├── button                                  # Button Component
-    │   │   ├── DefaultButton.js                    
+    ├── api
+    │   └── index.js
+    ├── app
+    │   ├── App.js
+    │   ├── rootReducer.js
+    │   └── store.js
+    ├── common
+    │   ├── button
+    │   │   ├── DefaultButton.js
     │   │   ├── PageButton.js
     │   │   └── SubmitButton.js
-    │   ├── editor                                  # 에디터
+    │   ├── chart
+    │   │   ├── BarChart.js
+    │   │   ├── BubbleChart.js
+    │   │   ├── DoughnutChart.js
+    │   │   ├── LineChart.js
+    │   │   ├── PieChart.js
+    │   │   └── StackedBarChart.js
+    │   ├── editor
     │   │   └── index.js
-    │   ├── excel                                   # 엑셀(CSV) 파일 다운로드 버튼
+    │   ├── excel
     │   │   └── index.js
-    │   ├── form                                    # Form Component (with react-hook-form)
+    │   ├── form
     │   │   ├── CheckBox.js
+    │   │   ├── DatePicker.js
+    │   │   ├── ErrorMessage.js
     │   │   ├── Input.js
     │   │   ├── RadioButton.js
     │   │   └── Select.js
-    │   ├── modal                                   # Modal Component
-    │   │   ├── ConfirmModal.js                         # 확인 모달 (Confirm)
-    │   │   ├── DetailModal.js                          # 상세 조회 모달
-    │   │   └── MessageModal.js                         # 메시지 모달
-    │   ├── search                                  # Search Component
-    │   │   ├── DatePicker.js                           # 기간 검색
-    │   │   ├── DateTermButton.js                       # 기간 검색 버튼
-    │   │   ├── SearchField.js                          # 검색 조건 + 검색어
-    │   │   ├── SearchRadio.js                          # 검색 radio button
-    │   │   └── SearchSelect.js                         # 검색 select
-    │   └── table                                   # Table Component (검색 결과 테이블 / 상세 / 추가/수정 테이블)
-    │       ├── Button.js                               
+    │   ├── modal
+    │   │   ├── DetailModal.js
+    │   │   └── MessageModal.js
+    │   ├── search
+    │   │   ├── DatePicker.js
+    │   │   ├── DateTermButton.js
+    │   │   ├── SearchField.js
+    │   │   ├── SearchRadio.js
+    │   │   └── SearchSelect.js
+    │   └── table
+    │       ├── Button.js
     │       ├── CheckBox.js
-    │       ├── Pagination.js
     │       ├── RadioButton.js
-    │       ├── Select.js                               # 검색 결과 테이블에서 사용
-    │       ├── SingleSelect.js                         # 추가/수정 / 모달창 에서 사용
+    │       ├── Select.js
+    │       ├── SingleSelect.js
+    │       ├── SingleTextField.js
     │       └── TextField.js
-    ├── components                                  # Components
-    │   ├── Data.js                                     # 검색, 테이블 설정 파일
-    │   ├── DateTermSearch.js                           # 기간 검색 
-    │   ├── Search.js                                   # 일반 검색
-    │   ├── SelectionTable.js                           # Checkbox가 있는 테이블
-    │   └── Table.js                                    # Checkbox가 없는 일반 테이블
-    ├── features                                    # Features
-    │   ├── 404                                         # 404 페이지
+    ├── components
+    │   ├── Data.js
+    │   ├── image
+    │   │   ├── ImageCarousel.js
+    │   │   ├── UploadImage.js
+    │   │   └── UploadImageCarousel.js
+    │   ├── search
+    │   │   ├── ChartSearch.js
+    │   │   ├── DateTermSearch.js
+    │   │   └── Search.js
+    │   └── table
+    │       ├── ChartTable.js
+    │       ├── Pagination.js
+    │       ├── SelectionTable.js
+    │       └── Table.js
+    ├── features
+    │   ├── 404
     │   │   └── index.js
-    │   ├── admin                                       # 관리자 페이지
+    │   ├── admin
     │   │   ├── ChangeInfo.js
     │   │   └── ChangePassword.js
-    │   ├── components                                  # Components 예제 페이지
+    │   ├── chart
+    │   │   ├── Chart.js
+    │   │   ├── ChartTable.js
+    │   │   └── components
+    │   │       ├── Charts.js
+    │   │       └── Search.js
+    │   ├── components
     │   │   ├── Button.js
     │   │   ├── Form.js
     │   │   ├── Modal.js
     │   │   ├── Search.js
     │   │   ├── Table.js
     │   │   └── Typography.js
-    │   ├── example                                     # Example
+    │   ├── example
     │   │   ├── Example.js
-    │   │   ├── ExampleDetailModal.js
-    │   │   └── ExampleUploadModal.js
-    │   ├── login                                       # 로그인
+    │   │   ├── ExampleDetail.js
+    │   │   └── ExampleUpload.js
+    │   ├── login
     │   │   └── index.js
-    │   └── summary                                     # Summary
+    │   └── summary
     │       ├── Dashboard.js
     │       ├── DashboardDetail.js
+    │       ├── DashboardEdit.js
     │       └── DashboardUpload.js
-    ├── hooks                                       # Hooks                                           
-    │   ├── useErrorMsg.js                              # 에러 메시지 노출
-    │   ├── useMenu.js                                  # 메뉴/페이지 설정
-    │   └── useSearchParams.js                          # 검색 설정
+    ├── hooks
+    │   ├── useExcelDownload.js
+    │   ├── useGetById.js
+    │   ├── useGetList.js
+    │   ├── useGetLists.js
+    │   ├── useMenu.js
+    │   ├── useMessage.js
+    │   ├── usePageMove.js
+    │   ├── useSearch.js
+    │   └── useSearchParams.js
     ├── index.js
-    ├── layout                                      # Layout
-    │   ├── CollapsedMenubar.js                         # Menubar v1
-    │   ├── Container.js
+    ├── layout
     │   ├── Header.js
-    │   └── SingleMenubar.js                            # Menubar v2
-    ├── routes                                      # Routes
-    │   └── Router.js                                   # Rotuer
-    ├── serviceWorker.js
-    ├── setupTests.js
-    ├── slices                                      # Slices
-    │   ├── commonSlice.js                              # 공용
-    │   ├── exampleSlice.js
-    │   ├── loginSlice.js                               # 로그인
-    │   ├── menuSlice.js                                # 메뉴
-    │   ├── modalSlice.js                               # 모달
-    │   ├── searchSlice.js                              # 검색
-    │   └── summarySlice.js
-    ├── styles                                      # Styles
-    │   ├── customize                                   # 커스터마이징
-    │   │   ├── components                                  # Components
-    │   │   │   ├── FormStyles.js
+    │   ├── container
+    │   │   ├── Container.js
+    │   │   └── PageContainer.js
+    │   ├── page
+    │   │   ├── Buttons.js
+    │   │   ├── Header.js
+    │   │   └── Heading.js
+    │   └── sidebar
+    │       ├── Data.js
+    │       └── index.js
+    ├── routes
+    │   └── Router.js
+    ├── slices
+    │   ├── loginSlice.js
+    │   ├── menuSlice.js
+    │   ├── modalSlice.js
+    │   └── searchSlice.js
+    ├── styles
+    │   ├── customize
+    │   │   ├── components
+    │   │   │   ├── ImageCarouselStyles.js
     │   │   │   ├── ModalFormStyles.js
     │   │   │   ├── ModalStyles.js
     │   │   │   └── SearchStyles.js
-    │   │   ├── layout                                      # Layout
+    │   │   ├── layout
     │   │   │   └── LayoutStyles.js
-    │   │   ├── select                                      # react-select 스타일
+    │   │   ├── select
     │   │   │   ├── FormSelectStyles.js
     │   │   │   └── TableSelectStyles.js
-    │   │   └── table                                       # Table
+    │   │   └── table
     │   │       ├── DetailTableStyles.js
     │   │       └── SearchTableStyles.js
-    │   └── theme                                       # material-ui theme
-    │       ├── button.js
+    │   └── theme
     │       ├── form.js
-    │       ├── palette.js                                  # 색상 설정 파일
+    │       ├── palette.js
     │       ├── search.js
     │       ├── textfield.js
     │       ├── theme.js
     │       └── typography.js
-    └── utils                                           # Utils
-        └── common.js                                       # 공용 함수
+    └── utils
+        └── common.js
 ```
 
 ## NPM Packages
+
 -   [React v17](https://reactjs.org/docs/getting-started.html "react")
+    -   [create-react-app](https://create-react-app.dev/docs/getting-started "create-react-app")
 -   [react-router-dom v5](https://github.com/ReactTraining/react-router#readme "react-router-dom")
--   [Material-UI v4](https://material-ui.com/ "material-ui")
-    - [@material-ui/core](https://www.npmjs.com/package/@material-ui/core "@material-ui")
-    - [@material-ui/icons](https://www.npmjs.com/package/@material-ui/icons "@material-ui/icons")
-    - [@material-ui/lab](https://www.npmjs.com/package/@material-ui/lab "@material-ui/lab")
-    - [@material-ui/pickers v3.2.10](https://www.npmjs.com/package/@material-ui/pickers "@material-ui/pickers")
-    - [material-ui-popup-state](https://github.com/jcoreio/material-ui-popup-state#readme "material-ui-popup-state")
+-   [Material-UI v5](https://mui.com/ "material-ui")
+    -   [@mui/material](https://www.npmjs.com/package/@material-ui/lab "@mui/material")
+    -   [@mui/lab](https://www.npmjs.com/package/@material-ui/icons "@mui/lab")
+    -   [@mui/styles](https://www.npmjs.com/package/@material-ui/pickers "@mui/styles")
+    -   [@mui/icons-material](https://www.npmjs.com/package/@material-ui/core "@mui/icons-material")
+    -   [@emotion/react](https://www.npmjs.com/package/@material-ui/pickers "@emotion/react")
+    -   [@emotion/styled](https://www.npmjs.com/package/@material-ui/pickers "@emotion/styled")
+    -   [material-ui-popup-state v2](https://github.com/jcoreio/material-ui-popup-state#readme "material-ui-popup-state")
 -   [@date-io](https://github.com/dmtrKovalenko/date-io#readme "@date-io")
-    - [@date-io/core](https://www.npmjs.com/package/@date-io/core "@date-io/core")
-    - [@date-io/date-fns](https://www.npmjs.com/package/@date-io/date-fns "@date-io/date-fns")
+    -   [@date-io/date-fns](https://www.npmjs.com/package/@date-io/date-fns "@date-io/date-fns")
 -   [react-hook-form v6](https://www.react-hook-form.com/ "react-hook-form")
-    - [@hookform/resolvers](https://github.com/react-hook-form/resolvers "@hookform/resolvers")
-    - [yup](https://github.com/jquense/yup "yup")
+    -   [@hookform/resolvers](https://github.com/react-hook-form/resolvers "@hookform/resolvers")
+    -   [yup](https://github.com/jquense/yup "yup")
 -   redux
     -   [react-redux](https://github.com/reduxjs/react-redux "react-redux")
     -   [@reduxjs/toolkit](https://redux-toolkit.js.org/ "@reduxjs/toolkit")
     -   [redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension "redux-devtools-extension")
 -   [axios](https://github.com/axios/axios "axios")
+-   [react-query](https://react-query.tanstack.com/ "react-query")
 -   [date-fns](https://github.com/date-fns/date-fns#readme "date-fns")
 -   [file-saver](https://github.com/eligrey/FileSaver.js#readme "file-saver")
+-   [jszip](https://github.com/Stuk/jszip "jszip")
 -   [prop-types](https://www.npmjs.com/package/prop-types "prop-types")
+-   [chart.js](https://github.com/chartjs/Chart.js "chart.js")
+-   [react-chartjs-2](https://github.com/reactchartjs/react-chartjs-2 "react-chartjs-2")
 -   [react-excel-workbook](https://github.com/ClearC2/react-excel-workbook "react-excel-workbook")
--   [react-modal](https://github.com/reactjs/react-modal "react-modal")
 -   [react-quill](https://github.com/zenoamaro/react-quill "react-quill")
 -   [react-select](https://react-select.com/home "react-select")
--   [edit-json-file](https://github.com/IonicaBizau/edit-json-file#readme "edit-json-file")
--   [ncp](https://github.com/AvianFlu/ncp "ncp")
+-   [react-perfect-scrollbar](https://github.com/goldenyz/react-perfect-scrollbar "react-perfect-scrollbar")
+-   Dev Dependencies
+    -   [dotenv](https://github.com/motdotla/dotenv "dotenv")
+    -   [env-cmd](https://github.com/toddbluhm/env-cmd "env-cmd")
+    -   [prettier](https://github.com/prettier/prettier "prettier")
+-   Extra Dependencies
+    -   [edit-json-file](https://github.com/IonicaBizau/edit-json-file#readme "edit-json-file")
+    -   [ncp](https://github.com/AvianFlu/ncp "ncp")

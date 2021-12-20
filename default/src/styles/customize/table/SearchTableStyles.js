@@ -1,18 +1,21 @@
-// 참고: https://material-ui.com/styles/basics/#hook-api
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: "100%",
-        marginTop: 10,
-        paddingBottom: 30
-    },
+const useStyles = makeStyles(({ palette, breakpoints }) => ({
     paper: {
         width: "100%",
-        marginBottom: theme.spacing(2)
+        borderRadius: 4
     },
     table: {
-        minWidth: 750
+        minWidth: 750,
+        "& tr": {
+            borderTop: `1px solid ${palette.border["opacity0.1"]}`,
+            borderBottom: `1px solid ${palette.border["opacity0.1"]}`
+        }
+    },
+    sticky: {
+        position: "sticky",
+        left: 0,
+        background: palette.background["light"]
     },
     tableHead: {
         fontWeight: 500
@@ -20,7 +23,12 @@ const useStyles = makeStyles((theme) => ({
     underlinedContent: {
         cursor: "pointer",
         textDecoration: "underline",
-        color: theme.palette.primary["main"]
+        color: palette.primary["main"]
+    },
+    toolbar: {
+        [breakpoints.up("sm")]: {
+            paddingLeft: 0
+        }
     },
     visuallyHidden: {
         position: "absolute",

@@ -2,20 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { Controller } from "react-hook-form";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import Radio from "@material-ui/core/Radio";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import RadioGroup from "@mui/material/RadioGroup";
+import Radio from "@mui/material/Radio";
 
-function RadioButton({ name, defaultValue, control, options }) {
+function RadioButton({ name, defaultValue, options, control }) {
     return (
         <Controller
             name={name}
             defaultValue={defaultValue}
             control={control}
             render={({ onChange, value }) => (
-                <RadioGroup aria-label="radio" onChange={(e) => onChange(e.target.value)} value={value}>
+                <RadioGroup aria-label="radio" row value={value} onChange={(e) => onChange(e.target.value)}>
                     {options.map((radio, index) => (
-                        <FormControlLabel key={`radio-${index}`} value={radio.value} control={<Radio color="primary" />} label={radio.label} />
+                        <FormControlLabel key={`radio-${index}`} label={radio.label} value={radio.value} control={<Radio color="primary" />} />
                     ))}
                 </RadioGroup>
             )}
@@ -26,8 +26,8 @@ function RadioButton({ name, defaultValue, control, options }) {
 RadioButton.propTypes = {
     name: PropTypes.string.isRequired,
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    control: PropTypes.object.isRequired,
-    options: PropTypes.array.isRequired
+    options: PropTypes.array.isRequired,
+    control: PropTypes.object.isRequired
 };
 
 export default RadioButton;

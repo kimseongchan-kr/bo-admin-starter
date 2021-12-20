@@ -1,16 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { postData } from "api/Api";
-
-export const login = createAsyncThunk("login/login", async (body, { rejectWithValue }) => {
-    try {
-        const response = await postData(body.url, null, { body });
-        console.log("api::", response);
-        return response.data;
-    } catch (error) {
-        console.log("error::", error);
-        return rejectWithValue(error.response.data);
-    }
-});
+import { createSlice } from "@reduxjs/toolkit";
 
 export const loginSlice = createSlice({
     name: "login",
@@ -20,9 +8,6 @@ export const loginSlice = createSlice({
         data: ""
     },
     reducers: {
-        // Sample
-        // Login API와 연결한 경우 삭제
-        // login을 사용
         setIsLogin: (state) => {
             state.isLogin = true;
         },
@@ -32,15 +17,7 @@ export const loginSlice = createSlice({
             localStorage.clear();
         }
     },
-    extraReducers: {
-        [login.fulfilled]: (state, { payload }) => {
-            state.isLogin = true;
-            state.data = payload;
-        },
-        [login.rejected]: (state) => {
-            state.hasErrors = true;
-        }
-    }
+    extraReducers: {}
 });
 
 export const { setIsLogin, setLogOut } = loginSlice.actions;

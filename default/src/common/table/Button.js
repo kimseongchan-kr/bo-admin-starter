@@ -1,25 +1,41 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import theme from "styles/theme/button";
-import { ThemeProvider } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import { styled } from "@mui/styles";
+import Button from "@mui/material/Button";
 
-function TableButton({ disabled = false, text, rowIndex, data, onClick }) {
+const StyledButton = styled(Button)(({ theme }) => ({
+    minWidth: 48,
+    height: 32,
+    marginRight: 4,
+    padding: 6,
+    boxShadow: "unset",
+    borderRadius: 4,
+    border: `1px solid ${theme.palette.border["main"]}`,
+    fontSize: 12,
+    letterSpacing: " -0.24px",
+    color: theme.palette.text["primary"],
+    backgroundColor: theme.palette.neutral["white"],
+    "&:hover": {
+        backgroundColor: theme.palette.background["light"],
+        border: `1px solid ${theme.palette.border["main"]}`,
+        boxShadow: "unset"
+    }
+}));
+
+function TableButton({ disabled = false, pageType = "", text, rowIndex, onClick }) {
     return (
-        <ThemeProvider theme={theme}>
-            <Button variant="contained" disabled={disabled} onClick={() => onClick(rowIndex, data)}>
-                {text}
-            </Button>
-        </ThemeProvider>
+        <StyledButton variant="contained" disabled={disabled} onClick={() => onClick(pageType, rowIndex)}>
+            {text}
+        </StyledButton>
     );
 }
 
 TableButton.propTypes = {
     disabled: PropTypes.bool,
+    pageType: PropTypes.string,
     text: PropTypes.string.isRequired,
     rowIndex: PropTypes.number.isRequired,
-    data: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired
 };
 

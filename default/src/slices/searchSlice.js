@@ -3,6 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     useYn: "",
     gender: "",
+    dessert: "",
+    sweets: "",
+    food: "",
+    drink: "",
 
     searchType: "",
     searchKeyword: "",
@@ -11,27 +15,35 @@ const initialState = {
     pageNumber: 1,
     pageShow: 10,
 
+    dateType: "regDate",
     term: "daily",
     startDate: null,
-    endDate: null
+    endDate: null,
+
+    dessertTerm: "daily",
+    dessertStartDate: null,
+    dessertEndDate: null,
+
+    foodTerm: "monthly",
+    foodStartDate: null,
+    foodEndDate: null
 };
 
 export const searchSlice = createSlice({
     name: "search",
     initialState,
     reducers: {
-        setPage: (state, { payload }) => {
-            state.pageNumber = payload.page;
-            state.pageShow = payload.pageShow;
-        },
         setSearchFilter: (state, { payload }) => {
             state[payload.type] = payload.value;
+        },
+        setSearchFilters: (state, { payload }) => {
+            return { ...state, ...payload };
         },
         reset: () => initialState
     }
 });
 
-export const { setPage, setSearchFilter, reset } = searchSlice.actions;
+export const { setSearchFilter, setSearchFilters, reset } = searchSlice.actions;
 
 export const searchSelector = (state) => state.search;
 

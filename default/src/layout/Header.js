@@ -1,55 +1,76 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { menuSelector, setMenu } from "slices/menuSlice";
+import { menuSelector } from "slices/menuSlice";
 import { setLogOut } from "slices/loginSlice";
 
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Button from "@material-ui/core/Button";
+import { makeStyles } from "@mui/styles";
+
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Box from "@mui/material/Box";
+import ButtonBase from "@mui/material/ButtonBase";
+import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Button from "@mui/material/Button";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import Popover from "material-ui-popup-state/HoverPopover";
 import PopupState, { bindHover, bindPopover } from "material-ui-popup-state";
 
-import user from "assets/images/logout.png";
-
 const drawerWidth = 240;
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ palette }) => ({
     root: {
         display: "flex"
     },
     toolbar: {
-        paddingRight: 24
+        paddingLeft: 0
     },
     dense: {
         minHeight: 80
     },
     appBar: {
-        width: `calc(100% - ${drawerWidth}px)`,
+        width: "100%",
         height: 80,
         minWidth: 1175,
         top: 0,
-        left: 240,
+        left: 0,
         zIndex: 10,
-        backgroundColor: "#ffffff",
-        color: "#333333"
+        color: palette.text["primary"],
+        backgroundColor: palette.neutral["white"]
     },
     title: {
         flexGrow: 1
     },
+    logoContainer: {
+        height: "100%",
+        width: drawerWidth,
+        marginRight: "24px",
+        backgroundColor: palette.neutral["main"]
+    },
+    logoButton: {
+        height: "100%",
+        fontSize: 48,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: palette.neutral["white"]
+    },
     userButton: {
         border: "none",
         boxShadow: "unset",
-        backgroundColor: "#ffffff",
+        backgroundColor: palette.neutral["white"],
         "&:hover": {
             border: "none",
             boxShadow: "unset",
-            backgroundColor: "#ffffff"
+            backgroundColor: palette.neutral["white"]
+        },
+        "& svg": {
+            width: 30,
+            height: 30,
+            color: palette.primary["main"]
         }
     },
     userImage: {
@@ -63,7 +84,7 @@ const useStyles = makeStyles(() => ({
         paddingRight: 30,
         paddingleft: 0,
         textAlign: "right",
-        borderBottom: "1px solid #3d39351a",
+        borderBottom: `1px solid ${palette.border["opacity0.1"]}`,
         "&:last-child": {
             borderBottom: "none"
         }
@@ -75,62 +96,60 @@ function Header(props) {
     const dispatch = useDispatch();
     const { menuTitle } = useSelector(menuSelector);
 
-    const handlePageChange = (menu, path) => {
-        dispatch(setMenu(menu));
-        return props.history.push(path);
-    };
+    const handlePageChange = (path) => props.history.push(path);
 
-    const handleLogOut = () => {
-        dispatch(setLogOut());
-    };
+    const handleLogOut = () => dispatch(setLogOut());
 
     return (
-        <AppBar position="absolute" elevation={0} className={classes.appBar}>
+        <AppBar position="fixed" elevation={0} className={classes.appBar}>
             <Toolbar variant="dense" className={classes.toolbar} classes={{ dense: classes.dense }}>
+                <Box component="div" className={classes.logoContainer}>
+                    <ButtonBase disableRipple className={classes.logoButton} component={Link} to="/">
+                        {/* <img src={`${LogoImage}`} alt="logo" /> */}
+                        ADMIN
+                    </ButtonBase>
+                </Box>
                 <Typography component="h2" variant="h2" color="inherit" className={classes.title}>
                     {menuTitle}
                 </Typography>
-                <div>
-                    <PopupState variant="popover" popupId="filterPopover">
-                        {(popupState) => (
-                            <div>
-                                <Button {...bindHover(popupState)} variant="contained" className={classes.userButton}>
-                                    <img src={user} alt="login user" width={30} height={30} className={classes.userImage} />
-                                    <Typography variant="button" display="block">
-                                        블록오디세이님
-                                    </Typography>
-                                </Button>
-                                <Popover
-                                    {...bindPopover(popupState)}
-                                    className={classes.popover}
-                                    classes={{
-                                        paper: classes.paper
-                                    }}
-                                    anchorOrigin={{
-                                        vertical: "bottom",
-                                        horizontal: "center"
-                                    }}
-                                    transformOrigin={{
-                                        vertical: "top",
-                                        horizontal: "center"
-                                    }}
-                                    disableRestoreFocus>
-                                    <List component="nav" aria-label="admin menu">
-                                        <ListItem classes={{ root: classes.listItem }} button onClick={() => handlePageChange({ menu: null, title: "비밀번호 변경", num: 0 }, "/password")}>
-                                            <ListItemText primary="비밀번호 변경" />
-                                        </ListItem>
-                                        <ListItem classes={{ root: classes.listItem }} button onClick={() => handlePageChange({ menu: null, title: "정보 변경", num: 0 }, "/info")}>
-                                            <ListItemText primary="정보 변경" />
-                                        </ListItem>
-                                        <ListItem classes={{ root: classes.listItem }} button onClick={handleLogOut}>
-                                            <ListItemText primary="로그아웃" />
-                                        </ListItem>
-                                    </List>
-                                </Popover>
-                            </div>
-                        )}
-                    </PopupState>
-                </div>
+                <PopupState variant="popover" popupId="filterPopover">
+                    {(popupState) => (
+                        <div>
+                            <Button startIcon={<AccountCircleIcon />} {...bindHover(popupState)} variant="contained" className={classes.userButton}>
+                                <Typography variant="button" display="block">
+                                    블록오디세이님
+                                </Typography>
+                            </Button>
+                            <Popover
+                                {...bindPopover(popupState)}
+                                className={classes.popover}
+                                classes={{
+                                    paper: classes.paper
+                                }}
+                                anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "center"
+                                }}
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "center"
+                                }}
+                                disableRestoreFocus>
+                                <List component="nav" aria-label="admin menu">
+                                    <ListItem classes={{ root: classes.listItem }} button onClick={() => handlePageChange("/password")}>
+                                        <ListItemText primary="비밀번호 수정" />
+                                    </ListItem>
+                                    <ListItem classes={{ root: classes.listItem }} button onClick={() => handlePageChange("/info")}>
+                                        <ListItemText primary="정보 수정" />
+                                    </ListItem>
+                                    <ListItem classes={{ root: classes.listItem }} button onClick={handleLogOut}>
+                                        <ListItemText primary="로그아웃" />
+                                    </ListItem>
+                                </List>
+                            </Popover>
+                        </div>
+                    )}
+                </PopupState>
             </Toolbar>
         </AppBar>
     );

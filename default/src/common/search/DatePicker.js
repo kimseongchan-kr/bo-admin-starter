@@ -3,18 +3,19 @@ import PropTypes from "prop-types";
 
 import { format } from "utils/common";
 
-import DateFnsUtils from "@date-io/date-fns";
-import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+import useStyles from "styles/customize/components/SearchStyles";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import DatePicker from "@mui/lab/DatePicker";
 
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import InsertInvitationIcon from "@material-ui/icons/InsertInvitation";
+import { dailyFormat, monthlyFormat } from "components/Data";
 
-function DateSearchPicker({ classes, caption = false, dateFormat, term, views, startDate, endDate, handleDate }) {
+function DateSearchPicker({ caption = false, term, dates, handleDate }) {
+    const classes = useStyles();
+
     return (
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <>
             <Grid item>
                 {caption && (
                     <Typography variant="caption" display="block">
@@ -22,30 +23,15 @@ function DateSearchPicker({ classes, caption = false, dateFormat, term, views, s
                     </Typography>
                 )}
                 <DatePicker
-                    autoOk
-                    id="date-picker-inline-start"
-                    variant="inline"
-                    inputVariant="outlined"
-                    allowKeyboardControl={false}
-                    format={dateFormat}
-                    views={views ? views : ["date"]}
-                    maxDate={endDate ? endDate : new Date()}
-                    maxDateMessage="시작일을 다시 선택해주세요"
-                    invalidDateMessage="시작일을 선택해주세요"
-                    value={startDate}
+                    disableCloseOnSelect={false}
+                    mask={term === "daily" ? "____/__/__" : "____/__"}
+                    views={term === "monthly" ? ["month", "year"] : ["day"]}
+                    maxDate={new Date()}
+                    inputFormat={term === "daily" ? dailyFormat : monthlyFormat}
+                    inputProps={{ "aria-label": "start date", placeholder: "" }}
+                    value={dates["startDate"] || null}
                     onChange={(e) => handleDate("startDate", format(term, e))}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton aria-label="calendar">
-                                    <InsertInvitationIcon />
-                                </IconButton>
-                            </InputAdornment>
-                        )
-                    }}
-                    inputProps={{
-                        "aria-label": "select start date"
-                    }}
+                    renderInput={(props) => <TextField size="small" {...props} />}
                 />
             </Grid>
             <Grid item>
@@ -59,44 +45,25 @@ function DateSearchPicker({ classes, caption = false, dateFormat, term, views, s
                     </Typography>
                 )}
                 <DatePicker
-                    autoOk
-                    id="date-picker-inline-end"
-                    variant="inline"
-                    inputVariant="outlined"
-                    allowKeyboardControl={false}
-                    format={dateFormat}
-                    views={views ? views : ["date"]}
-                    minDate={startDate ? startDate : new Date("1900", "01", "01")}
-                    minDateMessage="종료일을 다시 선택해주세요"
-                    invalidDateMessage="종료일을 선택해주세요"
-                    value={endDate}
+                    disableCloseOnSelect={false}
+                    mask={term === "daily" ? "____/__/__" : "____/__"}
+                    views={term === "monthly" ? ["month", "year"] : ["day"]}
+                    minDate={dates["startDate"] ? new Date(dates["startDate"]) : new Date("1900", "01", "01")}
+                    inputFormat={term === "daily" ? dailyFormat : monthlyFormat}
+                    inputProps={{ "aria-label": "end date", placeholder: "" }}
+                    value={dates["endDate"] || null}
                     onChange={(e) => handleDate("endDate", format(term, e))}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton aria-label="calendar">
-                                    <InsertInvitationIcon />
-                                </IconButton>
-                            </InputAdornment>
-                        )
-                    }}
-                    inputProps={{
-                        "aria-label": "select end date"
-                    }}
+                    renderInput={(props) => <TextField size="small" {...props} />}
                 />
             </Grid>
-        </MuiPickersUtilsProvider>
+        </>
     );
 }
 
 DateSearchPicker.propTypes = {
-    classes: PropTypes.object.isRequired,
     caption: PropTypes.bool,
-    dateFormat: PropTypes.string.isRequired,
+    dates: PropTypes.object,
     term: PropTypes.string.isRequired,
-    views: PropTypes.array,
-    startDate: PropTypes.string,
-    endDate: PropTypes.string,
     handleDate: PropTypes.func.isRequired
 };
 

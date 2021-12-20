@@ -1,13 +1,18 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
-import withContainer from "layout/Container";
+import withContainer from "layout/container/Container";
+import withPageContainer from "layout/container/PageContainer";
 
 import Dashboard from "features/summary/Dashboard";
 import DashboardDetail from "features/summary/DashboardDetail";
 import DashboardUpload from "features/summary/DashboardUpload";
+import DashboardEdit from "features/summary/DashboardEdit";
 
 import Example from "features/example/Example";
+
+import Chart from "features/chart/Chart";
+import ChartTable from "features/chart/ChartTable";
 
 import ChangeInfo from "features/admin/ChangeInfo";
 import ChangePassword from "features/admin/ChangePassword";
@@ -25,15 +30,17 @@ export default function Router() {
     return (
         <Switch>
             <Route path="/" exact component={withContainer(Dashboard)} />
-            <Route path="/dashboard" exact component={withContainer(Dashboard)} />
-            <Route path="/dashboard/detail/:idx" exact component={withContainer(DashboardDetail)} />
-            <Route path="/dashboard/upload" exact component={withContainer(DashboardUpload)} />
-            <Route path="/dashboard/edit/:idx" exact component={withContainer(DashboardUpload)} />
+            <Route path="/upload" exact component={withPageContainer(DashboardUpload)} />
+            <Route path="/edit/:idx" exact component={withPageContainer(DashboardEdit)} />
+            <Route path="/detail/:idx" exact component={withPageContainer(DashboardDetail)} />
 
             <Route path="/example" exact component={withContainer(Example)} />
 
-            <Route path="/info" exact component={withContainer(ChangeInfo)} />
-            <Route path="/password" exact component={withContainer(ChangePassword)} />
+            <Route path="/chart" exact component={withContainer(Chart)} />
+            <Route path="/chart-table" exact component={withContainer(ChartTable)} />
+
+            <Route path="/info" exact component={withPageContainer(ChangeInfo)} />
+            <Route path="/password" exact component={withPageContainer(ChangePassword)} />
 
             <Route path="/search" exact component={withContainer(SearchComponent)} />
             <Route path="/table" exact component={withContainer(TableComponent)} />

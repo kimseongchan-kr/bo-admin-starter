@@ -1,31 +1,34 @@
-// 참고: https://material-ui.com/styles/basics/#hook-api
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ palette }) => ({
+    container: {
+        minWidth: 1145,
+        maxWidth: "100%"
+    },
     title: {
         fontWeight: 500,
-        letterSpacing: "-1.44px",
-        marginBottom: 20
+        letterSpacing: "-1.44px"
     },
     table: {
-        width: "100%",
-        borderCollapse: "collapse",
-        borderTop: " 1px solid #3d35951a",
-        borderBottom: " 1px solid #3d35951a",
-        "& td": {
-            paddingLeft: 20
+        borderTop: `1px solid ${palette.border["opacity0.1"]}`,
+        borderBottom: `1px solid ${palette.border["opacity0.1"]}`,
+        "& tr": {
+            border: `1px solid ${palette.border["opacity0.1"]}`
+        },
+        "& th": {
+            minWidth: 100,
+            fontWeight: 600,
+            textAlign: "left",
+            color: palette.text["label"],
+            background: palette.background["light"],
+            borderRight: `1px solid ${palette.border["opacity0.1"]}`
         }
     },
-    row: {
-        borderBottom: " 1px solid #3d35951a"
-    },
     selectContent: {
-        height: 48,
-        padding: "7px 0 7px 20px",
         "& > div": {
-            width: "calc(100% - 20px)",
-            textAlign: "center",
+            width: "100%",
             margin: 0,
+            textAlign: "center",
             "& > div > div > div": {
                 width: "100%"
             }
@@ -35,20 +38,8 @@ const useStyles = makeStyles(() => ({
         height: 400,
         "&& td": {
             height: 400,
-            paddingLeft: 0
+            padding: 0
         }
-    },
-    label: {
-        width: 160,
-        height: 48,
-        background: "#fbfbfb",
-        textAlign: "left",
-        lineHeight: "48px",
-        color: "#333333b3"
-    },
-    textInput: {
-        width: 320,
-        height: 32
     }
 }));
 

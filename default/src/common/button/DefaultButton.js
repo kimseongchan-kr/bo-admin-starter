@@ -1,80 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import theme from "styles/theme/button";
-import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import CheckOutlined from "@material-ui/icons/CheckOutlined";
-import CreateIcon from "@material-ui/icons/Create";
-import Close from "@material-ui/icons/Close";
+import Button from "@mui/material/Button";
 
-const useStyles = makeStyles((theme) => ({
-    check: {
-        minWidth: 100,
-        width: "auto",
-        padding: 10,
-        color: theme.palette.primary.main,
-        border: `1px solid ${theme.palette.primary.main}`,
-        "&:hover": {
-            color: theme.palette.primary.main,
-            border: `1px solid ${theme.palette.primary.main}`
-        },
-        "&:active": {
-            color: theme.palette.primary.main,
-            border: `1px solid ${theme.palette.primary.main}`
-        }
-    },
-    cancel: {
-        minWidth: 100,
-        width: "auto",
-        padding: 10,
-        color: theme.palette.primary.red,
-        border: `1px solid ${theme.palette.primary.red}`,
-        "&:hover": {
-            color: theme.palette.primary.red,
-            border: `1px solid ${theme.palette.primary.red}`
-        },
-        "&:active": {
-            color: theme.palette.primary.red,
-            border: `1px solid ${theme.palette.primary.red}`
-        }
-    }
-}));
-function DefaultButton({ icon = "check", disabled = false, text, onClick }) {
-    const classes = useStyles();
-
-    const Icon = () => {
-        return (
-            <>
-                {icon === "check" ? (
-                    <CheckOutlined style={{ color: "#039BE5" }} />
-                ) : icon === "cancel" ? (
-                    <Close style={{ color: "#DE5D5D" }} />
-                ) : icon === "modify" ? (
-                    <CreateIcon style={{ color: "#039BE5" }} />
-                ) : (
-                    <></>
-                )}
-            </>
-        );
-    };
-
+function DefaultButton({ size = "large", color = "primary", variant = "outlined", disabled = false, text, onClick }) {
     return (
-        <ThemeProvider theme={theme}>
-            <Button
-                className={icon === "check" || icon === "modify" ? classes.check : icon === "cancel" ? classes.cancel : ""}
-                variant="outlined"
-                disabled={disabled}
-                startIcon={<Icon />}
-                onClick={onClick}>
-                {text}
-            </Button>
-        </ThemeProvider>
+        <Button size={size} color={color} variant={variant} disabled={disabled} onClick={onClick}>
+            {text}
+        </Button>
     );
 }
 
 DefaultButton.propTypes = {
-    icon: PropTypes.string,
+    size: PropTypes.string,
+    color: PropTypes.string,
+    variant: PropTypes.string,
     disabled: PropTypes.bool,
     text: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired

@@ -1,8 +1,12 @@
-// README.MD 확인하기
+import * as yup from "yup";
+
+const dailyFormat = "yyyy/MM/dd";
+const monthlyFormat = "yyyy/MM";
 
 const searchComponent = {
     Dashboard: {
         date: true,
+        dateSelect: false,
         radio: true,
         selects: true,
         searchType: true,
@@ -12,23 +16,45 @@ const searchComponent = {
         date: false,
         radio: false,
         selects: false,
+        searchType: false,
+        searchKeyword: false
+    },
+    SearchComponent: {
+        date: true,
+        dateSelect: true,
+        radio: true,
+        selects: true,
         searchType: true,
         searchKeyword: true
+    },
+    Chart: {
+        date: false,
+        radio: false,
+        selects: false,
+        searchType: false,
+        searchKeyword: false
+    },
+    ChartTable: {
+        date: false,
+        radio: false,
+        selects: false,
+        searchType: false,
+        searchKeyword: false
     }
 };
 
-const searchCaption = { gender: "성별", useYn: "판매여부" };
+const searchCaption = { gender: "성별", useYn: "판매여부", dessert: "디저트", sweets: "캔디", food: "음식", drink: "음료" };
 
 const searchType = {
-    Dashboard: ["gender", "useYn"]
+    Dashboard: ["gender", "useYn", "dessert", "sweets", "food", "drink"]
 };
 
 const searchRadioRow = {
-    Dashboard: [["gender", "useYn"], ["useYn"]]
+    Dashboard: [["sweets", "food"], ["drink"]]
 };
 
 const searchSelect = {
-    Dashboard: [["gender", "useYn"], ["gender"]]
+    Dashboard: [["gender", "useYn"], ["dessert"]]
 };
 
 const searchOption = {
@@ -39,26 +65,60 @@ const searchOption = {
     ],
     useYn: [
         { value: "", label: "전체" },
-        { label: "판매", value: "Y" },
-        { label: "미판매", value: "N" }
+        { value: "판매", label: "Y" },
+        { value: "미판매", label: "N" }
     ],
-    searchType: [
+    dessert: [
         { value: "", label: "전체" },
-        { value: "id", label: "아이디" },
-        { value: "name", label: "이름" },
-        { value: "tel", label: "연락처" }
+        { value: "cupcake", label: "컵케이크" },
+        { value: "cake", label: "케이크" }
     ],
-    sort: [
-        { value: "latest", label: "최신 등록순" },
-        { value: "oldest", label: "오래된 등록순" }
+    sweets: [
+        { value: "", label: "전체" },
+        { value: "candy", label: "캔디" },
+        { value: "chocolate", label: "초콜릿" }
     ],
+    food: [
+        { value: "", label: "전체" },
+        { value: "hamburger", label: "햄버거" },
+        { value: "fried chicken", label: "치킨" }
+    ],
+    drink: [
+        { value: "", label: "전체" },
+        { value: "tea", label: "티" },
+        { value: "water", label: "물" }
+    ],
+    searchType: {
+        Dashboard: [
+            { value: "", label: "전체" },
+            { value: "id", label: "아이디" },
+            { value: "name", label: "이름" },
+            { value: "tel", label: "연락처" }
+        ],
+        SearchComponent: [
+            { value: "", label: "전체" },
+            { value: "id", label: "아이디" },
+            { value: "name", label: "이름" },
+            { value: "tel", label: "연락처" }
+        ]
+    },
+    sort: {
+        Dashboard: [
+            { value: "latest", label: "최신 등록순" },
+            { value: "oldest", label: "오래된 등록순" }
+        ],
+        Example: [
+            { value: "latest", label: "최신 등록순" },
+            { value: "oldest", label: "오래된 등록순" }
+        ]
+    },
     term: [
         { value: "daily", label: "일간" },
         { value: "monthly", label: "월간" }
     ],
     dateType: [
-        { value: "reg_dt", label: "등록일" },
-        { value: "mod_dt", label: "수정일" }
+        { value: "regDate", label: "등록일" },
+        { value: "modDate", label: "수정일" }
     ]
 };
 
@@ -68,6 +128,10 @@ const searchParams = {
         endDate: "endDate",
         gender: "gender",
         useYn: "useYn",
+        dessert: "dessert",
+        food: "food",
+        sweets: "sweets",
+        drink: "drink",
         searchType: "searchType",
         searchKeyword: "searchKeyword",
         sort: "sort",
@@ -75,11 +139,38 @@ const searchParams = {
         pageShow: "pageShow"
     },
     Example: {
+        term: "term",
         startDate: "startDate",
         endDate: "endDate",
         pageNumber: "pageNumber",
         pageShow: "pageShow"
+    },
+    Chart: {
+        term: "term",
+        startDate: "startDate",
+        endDate: "endDate"
+    },
+    ChartTable: {
+        food: {
+            term: "foodTerm",
+            startDate: "foodStartDate",
+            endDate: "foodEndDate"
+        },
+        dessert: {
+            term: "dessertTerm",
+            startDate: "dessertStartDate",
+            endDate: "dessertEndDate"
+        }
     }
+};
+
+const chartSearchParams = {
+    foodTerm: "foodTerm",
+    foodStartDate: "foodStartDate",
+    foodEndDate: "foodEndDate",
+    dessertTerm: "dessertTerm",
+    dessertStartDate: "dessertStartDate",
+    dessertEndDate: "dessertEndDate"
 };
 
 const headCell = {
@@ -95,14 +186,13 @@ const headCell = {
         { id: "status", label: "관리" }
     ],
     Example: [
+        { id: "idx", label: "번호" },
         { id: "name", label: "디저트" },
         { id: "calories", label: "칼로리" },
         { id: "fat", label: "지방" },
         { id: "carbs", label: "탄수화물" },
         { id: "protein", label: "프로틴" },
-        { id: "useYn", label: "사용여부" },
-        { id: "viewYn", label: "메인노출" },
-        { id: "textExample", label: "사용자 입력" }
+        { id: "regDate", label: "등록일" }
     ],
     ExampleDetail: [
         { id: "name", label: "디저트" },
@@ -112,7 +202,10 @@ const headCell = {
         { id: "protein", label: "프로틴" },
         { id: "useYn", label: "사용여부" },
         { id: "viewYn", label: "메인노출" }
-    ]
+    ],
+    ChartTable: Array.from(Array(50)).map((_, index) => {
+        return { id: `caloreis${index}`, label: `Day ${parseInt(index) + 1}` };
+    })
 };
 
 const tableSelectOptions = {
@@ -127,19 +220,65 @@ const tableSelectOptions = {
 };
 
 const buttons = {
-    Dashboard: { add: false, addTop: true, delete: true, excel: true },
-    Example: { add: true, delete: false, excel: false }
+    addButton: { Dashboard: false, Example: true },
+    addTopButton: { Dashboard: true, Example: false },
+    deleteButton: { Dashboard: true, Example: false },
+    excelButton: { Dashboard: true, Example: false }
+};
+
+const schema = {
+    Dashboard: yup.object().shape({
+        category: yup.object().shape({
+            value: yup.string().required()
+        }),
+        name: yup.string().required(),
+        description: yup.string().required(),
+        quantity: yup.number().min(0).positive().required(),
+        useYn: yup.string().required()
+    }),
+    ChangeInfo: yup.object().shape({
+        name: yup.string().required(),
+        email: yup.string().required(),
+        phone: yup.string().required(),
+        image: yup
+            .mixed()
+            .required()
+            .test("image", "이미지를 선택해주세요", (value) => {
+                return value.length > 0;
+            })
+    })
 };
 
 // 샘플 데이터
 const sampleRowData = [
-    { idx: 1, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
-    { idx: 2, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
-    { idx: 3, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
-    { idx: 4, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
-    { idx: 5, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
-    { idx: 6, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
-    { idx: 7, name: "Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" }
+    { idx: 1, name: "Cheese Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    { idx: 2, name: "Strawberry Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    { idx: 3, name: "Chocolate Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    { idx: 4, name: "Peanut Butter Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    { idx: 5, name: "Banana Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    {
+        idx: 6,
+        name: "White Chocolate Cupcake",
+        calories: 1111,
+        fat: 5.5,
+        carbs: 144,
+        protein: 1.2,
+        useYn: "Y",
+        useYnText: "사용",
+        viewYn: "Y",
+        viewYnText: "노출",
+        sortOrder: 1,
+        regdate: "2020-02-02"
+    },
+    { idx: 7, name: "Fruits Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" }
+];
+
+// 샘플 데이터
+const sampleChartData = [
+    { idx: 1, name: "Cheese Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    { idx: 2, name: "Strawberry Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    { idx: 3, name: "Chocolate Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" },
+    { idx: 4, name: "Peanut Butter Cupcake", calories: 1111, fat: 5.5, carbs: 144, protein: 1.2, useYn: "Y", useYnText: "사용", viewYn: "Y", viewYnText: "노출", sortOrder: 1, regdate: "2020-02-02" }
 ];
 
 // 샘플 데이터
@@ -164,6 +303,7 @@ const sampleData = {
     protein: 4.3,
     quantity: 7,
     color: "white",
+    description: "This is a Strawberry Chocolate Cupcake.",
     ingredients: "chocolate, strawberry, cheese",
     useYn: "Y",
     useYnText: "사용",
@@ -172,4 +312,23 @@ const sampleData = {
     regDate: "2021-08-31"
 };
 
-export { searchParams, tableSelectOptions, searchComponent, searchRadioRow, searchSelect, searchType, searchOption, searchCaption, buttons, headCell, sampleRowData, sampleDetailData, sampleData };
+export {
+    dailyFormat,
+    monthlyFormat,
+    searchParams,
+    chartSearchParams,
+    tableSelectOptions,
+    searchComponent,
+    searchRadioRow,
+    searchSelect,
+    searchType,
+    searchOption,
+    searchCaption,
+    buttons,
+    headCell,
+    sampleRowData,
+    sampleChartData,
+    sampleDetailData,
+    sampleData,
+    schema
+};

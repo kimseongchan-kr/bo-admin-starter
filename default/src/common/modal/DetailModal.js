@@ -1,68 +1,51 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
-import { modalSelector } from "slices/modalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { modalSelector, setDetailClose } from "slices/modalSlice";
 
 import useStyles from "styles/customize/table/DetailTableStyles";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+
 import CloseButton from "common/button/DefaultButton";
 
-import Modal from "react-modal";
-import { disableScroll, enableScroll } from "utils/common";
-
-Modal.defaultStyles.overlay.zIndex = 9999;
-Modal.defaultStyles.overlay.backgroundColor = "rgba(0, 0, 0, .45)";
-
-function DetailModal({ onClose }) {
+function DetailModal() {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const { detailOpen, detailData } = useSelector(modalSelector);
+
+    // 모달 닫기
+    const onClose = () => dispatch(setDetailClose());
 
     const QuantityTable = () => (
         <tbody>
-            <tr className={classes.row}>
-                <th align="center" className={classes.tableHead}>
+            <tr>
+                <th align="center" width={150} className={classes.label}>
                     판매량
                 </th>
-                <td align="center" width={350} className={classes.content}>
-                    {detailData && detailData.quantity ? `${detailData.quantity.toLocaleString()}` : ""}
+                <td align="center" width={350}>
+                    {detailData?.quantity ? `${detailData.quantity.toLocaleString()}` : ""}
                 </td>
             </tr>
         </tbody>
     );
 
     return (
-        <Modal isOpen={detailOpen} onRequestClose={onClose} style={modalStyles} contentLabel="Detail Modal" onAfterOpen={disableScroll} onAfterClose={enableScroll}>
-            <Paper className={classes.detailPaper} elevation={0}>
-                <Typography className={classes.mb20} variant="body1" component="h4" display="block">
-                    {detailData && detailData.title}
-                </Typography>
-                <table className={classes.table}>{detailData && detailData.type === "quantity" && <QuantityTable />}</table>
-            </Paper>
-            <Grid container justify="flex-end" alignItems="center">
-                <CloseButton icon="cancel" text="닫기" onClick={onClose} />
-            </Grid>
-        </Modal>
+        <>
+            {detailOpen && (
+                <Dialog open={detailOpen} onClose={onClose} sx={{ p: 10 }}>
+                    <DialogTitle>{detailData && detailData.title}</DialogTitle>
+                    <DialogContent>
+                        <table className={classes.detailTable}>{detailData && detailData.type === "quantity" && <QuantityTable />}</table>
+                    </DialogContent>
+                    <DialogActions sx={{ py: 2, px: 2.5 }}>
+                        <CloseButton size="small" text="닫기" onClick={onClose} />
+                    </DialogActions>
+                </Dialog>
+            )}
+        </>
     );
 }
-
-const modalStyles = {
-    content: {
-        minWidth: 500,
-        padding: 20,
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-50%, -50%)",
-        maxHeight: "80%"
-    }
-};
-
-DetailModal.propTypes = {
-    onClose: PropTypes.func.isRequired
-};
 
 export default DetailModal;

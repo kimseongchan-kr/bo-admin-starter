@@ -1,37 +1,29 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setMenu } from "slices/menuSlice";
-import { setClose, setMessage } from "slices/modalSlice";
 import { setIsLogin } from "slices/loginSlice";
+import useMessage from "hooks/useMessage";
 
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import { palette } from "styles/theme/palette";
+import { makeStyles } from "@mui/styles";
+import Grid from "@mui/material/Grid";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
-import Modal from "react-modal";
 import MessageModal from "common/modal/MessageModal";
-
-Modal.setAppElement("body");
 
 const useStyles = makeStyles((theme) => ({
     loginContainer: {
-        width: 960,
-        height: 560,
-        margin: "auto",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: "#ffffff"
+        width: "100%",
+        height: "100%"
     },
     halfContainer: {
-        width: "50%",
-        height: "100%",
+        width: 480,
+        height: 560,
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        borderRadius: 4,
+        backgroundColor: theme.palette.neutral["white"]
     },
     contents: {
         display: "block",
@@ -59,19 +51,19 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 20,
         fontSize: 13,
         lineHeight: "20px",
-        color: "#333333b3",
+        color: theme.palette.text["label"],
         letterSpacing: "-0.48px"
     },
     loginButton: {
         width: "100%",
         height: 48,
         marginTop: 42,
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.primary["main"],
         cursor: "pointer",
         fontSize: 13,
         letterSpacing: "-0.26px",
-        fontWeight: 500,
-        color: "#ffffff",
+        fontWeight: 600,
+        color: theme.palette.neutral["white"],
         border: "none",
         borderRadius: 24,
         outline: "none"
@@ -94,20 +86,16 @@ export default function Login() {
     const [checked, setChecked] = useState(true);
     const [isFocused, setFocused] = useState(null);
 
+    const handleMessage = useMessage();
+
     // 로그인
     const handleSubmit = () => {
-        dispatch(setMessage({ open: true, message: "로그인" }));
-        dispatch(setMenu({ menu: "summary", title: "Dashboard", num: 1 }));
-    };
-
-    // 모달 닫기
-    const onClose = () => {
-        dispatch(setClose());
+        handleMessage({ type: "message", message: "로그인" });
         dispatch(setIsLogin());
     };
 
     return (
-        <Grid container justify="center" alignItems="center" direction="row" className={classes.loginContainer}>
+        <Grid container justifyContent="center" alignItems="center" direction="row" className={classes.loginContainer}>
             <Grid item className={classes.halfContainer}>
                 Img
             </Grid>
@@ -126,7 +114,7 @@ export default function Login() {
                         onChange={(e) => setEmail(e.target.value)}
                         onFocus={() => setFocused("email")}
                         onBlur={() => setFocused(null)}
-                        style={isFocused === "email" ? { borderBottom: "2px solid #039BE5" } : null}
+                        style={isFocused === "email" ? { borderBottom: `2px solid ${palette.primary["main"]}` } : null}
                     />
                     <input
                         className={classes.input}
@@ -137,7 +125,7 @@ export default function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                         onFocus={() => setFocused("password")}
                         onBlur={() => setFocused(null)}
-                        style={isFocused === "password" ? { borderBottom: "2px solid #039BE5" } : null}
+                        style={isFocused === "password" ? { borderBottom: `2px solid ${palette.primary["main"]}` } : null}
                     />
                     <FormControlLabel className={classes.checkbox} control={<Checkbox checked={checked} name="checked" onChange={(e) => setChecked(e.target.checked)} />} label="자동 로그인" />
                     <div>
@@ -145,7 +133,7 @@ export default function Login() {
                             로그인
                         </button>
                     </div>
-                    <MessageModal onClose={onClose} />
+                    <MessageModal />
                 </div>
             </Grid>
         </Grid>
