@@ -18,12 +18,12 @@ export default function Charts(props) {
                 </Paper>
             </Grid>
             <Grid item xs={6}>
-                <Paper elevation={0} sx={{ padding: 2.5 }}>
+                <Paper elevation={0} sx={{ width: "100%", padding: 2.5, display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <PieChart {...props} />
                 </Paper>
             </Grid>
             <Grid item xs={6}>
-                <Paper elevation={0} sx={{ width: "100%", padding: 2.5, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Paper elevation={0} sx={{ padding: 2.5 }}>
                     <BubbleChart {...props} />
                 </Paper>
             </Grid>

@@ -19,7 +19,7 @@ import SearchSelect from "common/search/SearchSelect";
 import { searchOption as option } from "components/Data";
 
 export default function DateTermSearch(props) {
-    const { total, handleSearch } = props;
+    const { menu, total, handleSearch } = props;
 
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -84,7 +84,7 @@ export default function DateTermSearch(props) {
                 <Typography variant="h4" component="h4">
                     검색된 데이터 : <span>{total || 0}</span>건
                 </Typography>
-                <SearchSelect name="sort" value={searchState["sort"]} options={option["sort"]} handleChange={handleSort} />
+                <SearchSelect menu={menu} name="sort" value={searchState["sort"]} options={option["sort"]} handleChange={handleSort} />
             </Grid>
         </ThemeProvider>
     );
