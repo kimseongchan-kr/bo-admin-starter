@@ -1,6 +1,6 @@
 # bo-admin-starter
 
-:smiley: 블록오디세이를 위한 React 관리자 Boilerplate v2.5입니다. :smiley:   
+:smiley: 블록오디세이를 위한 React 관리자 Boilerplate v3입니다. :smiley:  
 :bangbang: [프로젝트 설치 방법](https://github.com/BlockOdyssey/bo-admin-starter#project-installation "project-installation") & [사용 설명서](https://github.com/BlockOdyssey/bo-admin-starter#사용방법 "usage") :bangbang:
 
 ## Project Main Features
@@ -17,6 +17,7 @@
 -   **DEVELOPMENT** : [redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension#13-use-redux-devtools-extension-package-from-npm "redux-devtools-extension")
 
 ## Project Extra Features
+
 -   **Chart** : [react-chartjs-2](https://github.com/reactchartjs/react-chartjs-2 "react-chartjs-2")
 -   **Editor** : [react-quill](https://github.com/zenoamaro/react-quill#api-reference "react-quill")
 -   **Excel** : [react-excel-workbook](https://github.com/ClearC2/react-excel-workbook#example "react-excel-workbook")
@@ -24,31 +25,32 @@
 -   **Select** : [react-select](https://react-select.com/home "react-select")
 
 ## Menu / Page
-- 404
-- Login
-- Change Password
-- Change Info
-- Dashboard (Example Menu 1)
-    - Dashboard Detail
-    - Dashboard Upload
-    - Dashboard Edit
-- Example (Example Menu 2)
-    - Example Detail Modal
-    - Example Upload/Edit Modal
-- Components (Component Guide Menu)
-    - Search
-    - Table
-    - Form
-    - Modal
-    - Typography
-    - Button
-- Chart
-    - LineChart
-    - PieChart
-    - BubbleChart
-    - Doughnut Chart
-    - Stacked Bar Chart
-    - Vertical Bar Chart
+
+-   404
+-   Login
+-   Change Password
+-   Change Info
+-   Dashboard (Example Menu 1)
+    -   Dashboard Detail
+    -   Dashboard Upload
+    -   Dashboard Edit
+-   Example (Example Menu 2)
+    -   Example Detail Modal
+    -   Example Upload/Edit Modal
+-   Components (Component Guide Menu)
+    -   Search
+    -   Table
+    -   Form
+    -   Modal
+    -   Typography
+    -   Button
+-   Chart
+    -   LineChart
+    -   PieChart
+    -   BubbleChart
+    -   Doughnut Chart
+    -   Stacked Bar Chart
+    -   Vertical Bar Chart
 
 [데모 확인하기](https://blockodyssey.github.io/bo-admin-starter "프로젝트 데모 웹페이지")
 
@@ -76,9 +78,11 @@
 ---
 
 ## 사용방법
-notion 페이지를 참고해주세요.   
 
-***
+notion 페이지를 참고해주세요.
+
+---
+
 ## Project Structure
 
 ```
@@ -93,7 +97,6 @@ notion 페이지를 참고해주세요.
 │   ├── manifest.json
 │   └── robots.txt
 └── src
-    ├── App.test.js
     ├── api
     │   └── index.js
     ├── app
@@ -105,6 +108,13 @@ notion 페이지를 참고해주세요.
     │   │   ├── DefaultButton.js
     │   │   ├── PageButton.js
     │   │   └── SubmitButton.js
+    │   ├── chart
+    │   │   ├── BarChart.js
+    │   │   ├── BubbleChart.js
+    │   │   ├── DoughnutChart.js
+    │   │   ├── LineChart.js
+    │   │   ├── PieChart.js
+    │   │   └── StackedBarChart.js
     │   ├── editor
     │   │   └── index.js
     │   ├── excel
@@ -135,14 +145,16 @@ notion 페이지를 참고해주세요.
     │       └── TextField.js
     ├── components
     │   ├── Data.js
-    │   ├── Image
+    │   ├── image
     │   │   ├── ImageCarousel.js
     │   │   ├── UploadImage.js
     │   │   └── UploadImageCarousel.js
-    │   ├── Search
+    │   ├── search
+    │   │   ├── ChartSearch.js
     │   │   ├── DateTermSearch.js
     │   │   └── Search.js
-    │   └── Table
+    │   └── table
+    │       ├── ChartTable.js
     │       ├── Pagination.js
     │       ├── SelectionTable.js
     │       └── Table.js
@@ -152,6 +164,12 @@ notion 페이지를 참고해주세요.
     │   ├── admin
     │   │   ├── ChangeInfo.js
     │   │   └── ChangePassword.js
+    │   ├── chart
+    │   │   ├── Chart.js
+    │   │   ├── ChartTable.js
+    │   │   └── components
+    │   │       ├── Charts.js
+    │   │       └── Search.js
     │   ├── components
     │   │   ├── Button.js
     │   │   ├── Form.js
@@ -182,21 +200,19 @@ notion 페이지를 참고해주세요.
     │   └── useSearchParams.js
     ├── index.js
     ├── layout
-    │   ├── Container
+    │   ├── Header.js
+    │   ├── container
     │   │   ├── Container.js
     │   │   └── PageContainer.js
-    │   ├── Header.js
-    │   ├── Page
+    │   ├── page
     │   │   ├── Buttons.js
     │   │   ├── Header.js
     │   │   └── Heading.js
-    │   └── SideBar
+    │   └── sidebar
     │       ├── Data.js
     │       └── index.js
     ├── routes
     │   └── Router.js
-    ├── serviceWorker.js
-    ├── setupTests.js
     ├── slices
     │   ├── loginSlice.js
     │   ├── menuSlice.js
@@ -229,22 +245,23 @@ notion 페이지를 참고해주세요.
 ```
 
 ## NPM Packages
+
 -   [React v17](https://reactjs.org/docs/getting-started.html "react")
     -   [create-react-app](https://create-react-app.dev/docs/getting-started "create-react-app")
 -   [react-router-dom v5](https://github.com/ReactTraining/react-router#readme "react-router-dom")
 -   [Material-UI v5](https://mui.com/ "material-ui")
-    - [@mui/material](https://www.npmjs.com/package/@material-ui/lab "@mui/material")
-    - [@mui/lab](https://www.npmjs.com/package/@material-ui/icons "@mui/lab")
-    - [@mui/styles](https://www.npmjs.com/package/@material-ui/pickers "@mui/styles")
-    - [@mui/icons-material](https://www.npmjs.com/package/@material-ui/core "@mui/icons-material")
-    - [@emotion/react](https://www.npmjs.com/package/@material-ui/pickers "@emotion/react")
-    - [@emotion/styled](https://www.npmjs.com/package/@material-ui/pickers "@emotion/styled")
-    - [material-ui-popup-state v2](https://github.com/jcoreio/material-ui-popup-state#readme "material-ui-popup-state")
+    -   [@mui/material](https://www.npmjs.com/package/@material-ui/lab "@mui/material")
+    -   [@mui/lab](https://www.npmjs.com/package/@material-ui/icons "@mui/lab")
+    -   [@mui/styles](https://www.npmjs.com/package/@material-ui/pickers "@mui/styles")
+    -   [@mui/icons-material](https://www.npmjs.com/package/@material-ui/core "@mui/icons-material")
+    -   [@emotion/react](https://www.npmjs.com/package/@material-ui/pickers "@emotion/react")
+    -   [@emotion/styled](https://www.npmjs.com/package/@material-ui/pickers "@emotion/styled")
+    -   [material-ui-popup-state v2](https://github.com/jcoreio/material-ui-popup-state#readme "material-ui-popup-state")
 -   [@date-io](https://github.com/dmtrKovalenko/date-io#readme "@date-io")
-    - [@date-io/date-fns](https://www.npmjs.com/package/@date-io/date-fns "@date-io/date-fns")
+    -   [@date-io/date-fns](https://www.npmjs.com/package/@date-io/date-fns "@date-io/date-fns")
 -   [react-hook-form v6](https://www.react-hook-form.com/ "react-hook-form")
-    - [@hookform/resolvers](https://github.com/react-hook-form/resolvers "@hookform/resolvers")
-    - [yup](https://github.com/jquense/yup "yup")
+    -   [@hookform/resolvers](https://github.com/react-hook-form/resolvers "@hookform/resolvers")
+    -   [yup](https://github.com/jquense/yup "yup")
 -   redux
     -   [react-redux](https://github.com/reduxjs/react-redux "react-redux")
     -   [@reduxjs/toolkit](https://redux-toolkit.js.org/ "@reduxjs/toolkit")
