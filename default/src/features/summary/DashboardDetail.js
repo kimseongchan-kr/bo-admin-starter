@@ -92,7 +92,7 @@ export default function DashboardDetail() {
             <div className={classes.contentContainer}>
                 <ImageCarousel text="디저트 이미지" images={images || []} alt="상품 이미지" />
                 <div className={classes.tableContainer}>
-                    <Heading type="button" text="디저트 정보" buttonText="이미지 다운로드" disabled={downloading} onClick={handleDownload} />
+                    <Heading type="button" text="디저트 정보" buttonText="이미지 다운로드" disabled={downloading || images?.length === 0 ? true : false} onClick={handleDownload} />
                     <table className={classes.table}>
                         <colgroup>
                             <col width="12%"></col>
