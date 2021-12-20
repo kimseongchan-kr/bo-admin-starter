@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.js": "/bo-admin-starter/static/js/main.916edde0.chunk.js",
-    "main.js.map": "/bo-admin-starter/static/js/main.916edde0.chunk.js.map",
+    "main.js": "/bo-admin-starter/static/js/main.ebc7a8a7.chunk.js",
+    "main.js.map": "/bo-admin-starter/static/js/main.ebc7a8a7.chunk.js.map",
     "runtime-main.js": "/bo-admin-starter/static/js/runtime-main.d27b0632.js",
     "runtime-main.js.map": "/bo-admin-starter/static/js/runtime-main.d27b0632.js.map",
     "static/css/2.ab8d4ab2.chunk.css": "/bo-admin-starter/static/css/2.ab8d4ab2.chunk.css",
-    "static/js/2.2d5de64a.chunk.js": "/bo-admin-starter/static/js/2.2d5de64a.chunk.js",
-    "static/js/2.2d5de64a.chunk.js.map": "/bo-admin-starter/static/js/2.2d5de64a.chunk.js.map",
+    "static/js/2.09dd396d.chunk.js": "/bo-admin-starter/static/js/2.09dd396d.chunk.js",
+    "static/js/2.09dd396d.chunk.js.map": "/bo-admin-starter/static/js/2.09dd396d.chunk.js.map",
     "index.html": "/bo-admin-starter/index.html",
     "static/css/2.ab8d4ab2.chunk.css.map": "/bo-admin-starter/static/css/2.ab8d4ab2.chunk.css.map",
-    "static/js/2.2d5de64a.chunk.js.LICENSE.txt": "/bo-admin-starter/static/js/2.2d5de64a.chunk.js.LICENSE.txt"
+    "static/js/2.09dd396d.chunk.js.LICENSE.txt": "/bo-admin-starter/static/js/2.09dd396d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.d27b0632.js",
     "static/css/2.ab8d4ab2.chunk.css",
-    "static/js/2.2d5de64a.chunk.js",
-    "static/js/main.916edde0.chunk.js"
+    "static/js/2.09dd396d.chunk.js",
+    "static/js/main.ebc7a8a7.chunk.js"
   ]
 }
