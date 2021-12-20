@@ -38,7 +38,7 @@ export const getCurrentSearchParams = (searchStates, searchParams) => {
     let currentList = {};
 
     Object.keys(searchStates).map((key) => {
-        if (searchParams[key]) {
+        if (!isEmpty(searchParams[key])) {
             currentList[key] = searchStates[key];
         }
         return currentList;
@@ -205,7 +205,6 @@ export const handleZipDownload = async (images) => {
                     zip.file(`사진_${parseInt(i) + 1}${extension}`, imgData, { base64: true });
                 })
                 .catch((err) => {
-                    console.log("Error Downloading the File:: ", err);
                     errorMessage = `${parseInt(i) + 1}번째 사진 다운로드에 실패하였습니다.`;
                 });
             message += errorMessage;

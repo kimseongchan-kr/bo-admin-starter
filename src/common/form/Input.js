@@ -18,7 +18,7 @@ function Input({ fullWidth = true, multiline = false, rows = 0, inputType = "tex
                     multiline={multiline}
                     rows={rows}
                     fullWidth={fullWidth}
-                    InputLabelProps={{ shrink: true }}
+                    InputLabelProps={{ shrink: false }}
                     inputProps={{ "aria-label": `type ${name}` }}
                     type={inputType}
                     name={name}

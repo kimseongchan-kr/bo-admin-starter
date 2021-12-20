@@ -10,6 +10,7 @@ function SingleTextField({ inputType = "text", name, value, fullWidth = true, ha
         <ThemeProvider theme={theme}>
             <TextField
                 id={`outlined-${name}`}
+                InputLabelProps={{ shrink: false }}
                 inputProps={{ "aria-label": `type ${name}` }}
                 label=""
                 size="small"

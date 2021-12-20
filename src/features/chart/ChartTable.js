@@ -102,11 +102,7 @@ export default function ChartTable() {
                         <LineChart />
                     </Grid>
                     <Grid sx={{ width: "100%" }} item>
-                        <Table
-                            menu={menu}
-                            loading={dataset1Loading}
-                            data={sampleChartData || dataset1} // data={dataList}
-                        />
+                        <Table menu={menu} loading={dataset1Loading} data={sampleChartData || dataset1} />
                     </Grid>
                 </Grid>
             </Paper>
@@ -117,11 +113,7 @@ export default function ChartTable() {
                         <LineChart />
                     </Grid>
                     <Grid sx={{ width: "100%" }} item>
-                        <Table
-                            menu={menu}
-                            loading={dataset2Loading}
-                            data={sampleChartData || dataset2} // data={dataList}
-                        />
+                        <Table menu={menu} loading={dataset2Loading} data={sampleChartData || dataset2} />
                     </Grid>
                 </Grid>
             </Paper>

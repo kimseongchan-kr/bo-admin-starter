@@ -16,8 +16,9 @@ function SearchField({ menu, searchType, dataList, handleChange, searchKeyword, 
             </Grid>
             <Grid item>
                 <TextField
-                    className={classes.searchTextField}
+                    InputLabelProps={{ shrink: false }}
                     inputProps={{ "aria-label": "type search keyword" }}
+                    className={classes.searchTextField}
                     id="outlined-search-keyword"
                     label=""
                     size="small"

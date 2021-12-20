@@ -122,7 +122,7 @@ export default function Table() {
                 </Grid>
             </Grid>
             <Typography className={classes.title} variant="h3" component="h3" color="inherit">
-                Table Select (검색 리스트 결과 테이블)
+                Table Select (검색 결과 테이블)
             </Typography>
             <Grid className={classes.componentContainer} container alignItems="center" justifyContent="flex-start">
                 <Grid item>
