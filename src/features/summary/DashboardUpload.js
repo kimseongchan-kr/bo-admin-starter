@@ -15,10 +15,10 @@ import useStyles from "styles/customize/table/DetailTableStyles";
 import theme from "styles/theme/form";
 import { ThemeProvider } from "@mui/material/styles";
 
-import Header from "layout/Page/Header";
-import Heading from "layout/Page/Heading";
-import Buttons from "layout/Page/Buttons";
-import UploadImage from "components/Image/UploadImage";
+import Header from "layout/page/Header";
+import Heading from "layout/page/Heading";
+import Buttons from "layout/page/Buttons";
+import UploadImage from "components/image/UploadImage";
 
 import Input from "common/form/Input";
 import FormSelect from "common/form/Select";
@@ -32,7 +32,7 @@ import { schema, tableSelectOptions } from "components/Data";
 
 export default function DashboardUpload() {
     const classes = useStyles();
-    const menu = useMenu({ page: "Dashboard", menu: "summary", menuTitle: "Dashboard", menuNum: 0 }); // 메뉴 설정하기
+    const menu = useMenu({ page: "Dashboard", menu: "dashboard", menuTitle: "Dashboard", menuNum: 0 }); // 페이지 / 메뉴 설정하기
 
     const { errors, clearErrors, control, reset, getValues, handleSubmit } = useForm({
         resolver: yupResolver(schema[menu])
@@ -56,7 +56,7 @@ export default function DashboardUpload() {
             ingredients_2: false,
             ingredients_3: false,
             ingredients_4: false,
-            viewYn: "Y"
+            useYn: "Y"
         });
     }, [clearErrors, reset]);
 
@@ -77,7 +77,7 @@ export default function DashboardUpload() {
         onError: (error) => handleMessage({ type: "message", ...error })
     });
 
-    // 등록하기 / 수정하기
+    // 등록하기
     const handleDataSubmit = () => {
         const data = getValues();
 
@@ -133,15 +133,8 @@ export default function DashboardUpload() {
                                 <tr>
                                     <th>디저트명</th>
                                     <td>
-                                        <Input inputType="text" name="name" defaultValue="" fullWidth={true} control={control} />
+                                        <Input inputType="text" name="name" defaultValue="" control={control} />
                                         {errors.name && <ErrorMessage text="디저트명을 입력해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>색상</th>
-                                    <td>
-                                        <Input inputType="text" name="color" defaultValue="" control={control} />
-                                        {errors.color && <ErrorMessage text="색상을 입력해주세요." />}
                                     </td>
                                 </tr>
                                 <tr>
@@ -171,41 +164,6 @@ export default function DashboardUpload() {
                                             control={control}
                                         />
                                         {errors.ingredients && <ErrorMessage text="재료를 선택해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>칼로리</th>
-                                    <td>
-                                        <Input inputType="number" name="calories" defaultValue="" control={control} />
-                                        {errors.calories && <ErrorMessage text="칼로리를 입력해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>지방</th>
-                                    <td>
-                                        <Input inputType="number" name="fat" defaultValue="" control={control} />
-                                        {errors.fat && <ErrorMessage text=" 지방을 입력해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>프로틴</th>
-                                    <td>
-                                        <Input inputType="number" name="protein" defaultValue="" control={control} />
-                                        {errors.protein && <ErrorMessage text="프로틴을 입력해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>탄수화물</th>
-                                    <td>
-                                        <Input inputType="number" name="carbs" defaultValue="" control={control} />
-                                        {errors.carbs && <ErrorMessage text="탄수화물을 입력해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>노출 여부</th>
-                                    <td>
-                                        <RadioButton name="viewYn" defaultValue="" control={control} options={tableSelectOptions["viewYn"]} />
-                                        {errors.viewYn && <ErrorMessage text="노출 여부를 선택해주세요." />}
                                     </td>
                                 </tr>
                                 <tr>

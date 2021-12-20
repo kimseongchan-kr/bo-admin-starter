@@ -1,8 +1,8 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
-import withContainer from "layout/Container/Container";
-import withPageContainer from "layout/Container/PageContainer";
+import withContainer from "layout/container/Container";
+import withPageContainer from "layout/container/PageContainer";
 
 import Dashboard from "features/summary/Dashboard";
 import DashboardDetail from "features/summary/DashboardDetail";
@@ -10,6 +10,9 @@ import DashboardUpload from "features/summary/DashboardUpload";
 import DashboardEdit from "features/summary/DashboardEdit";
 
 import Example from "features/example/Example";
+
+import Chart from "features/chart/Chart";
+import ChartTable from "features/chart/ChartTable";
 
 import ChangeInfo from "features/admin/ChangeInfo";
 import ChangePassword from "features/admin/ChangePassword";
@@ -33,8 +36,11 @@ export default function Router() {
 
             <Route path="/example" exact component={withContainer(Example)} />
 
-            <Route path="/info" exact component={withPageContainer(ChangeInfo)} />
-            <Route path="/password" exact component={withPageContainer(ChangePassword)} />
+            <Route path="/chart" exact component={withContainer(Chart)} />
+            <Route path="/chart-table" exact component={withContainer(ChartTable)} />
+
+            <Route path="/info" exact component={withContainer(ChangeInfo)} />
+            <Route path="/password" exact component={withContainer(ChangePassword)} />
 
             <Route path="/search" exact component={withContainer(SearchComponent)} />
             <Route path="/table" exact component={withContainer(TableComponent)} />

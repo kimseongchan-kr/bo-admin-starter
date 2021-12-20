@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setMenu } from "slices/menuSlice";
-import { setClose, setMessage } from "slices/modalSlice";
 import { setIsLogin } from "slices/loginSlice";
+import useMessage from "hooks/useMessage";
 
+import { palette } from "styles/theme/palette";
 import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { palette } from "styles/theme/palette";
 
 import MessageModal from "common/modal/MessageModal";
 
@@ -87,15 +86,11 @@ export default function Login() {
     const [checked, setChecked] = useState(true);
     const [isFocused, setFocused] = useState(null);
 
+    const handleMessage = useMessage();
+
     // 로그인
     const handleSubmit = () => {
-        dispatch(setMessage({ open: true, type: "message", message: "로그인" }));
-        dispatch(setMenu({ menu: "summary", menuTitle: "Dashboard", menuNum: 0 }));
-    };
-
-    // 모달 닫기
-    const onClose = () => {
-        dispatch(setClose());
+        handleMessage({ type: "message", message: "로그인" });
         dispatch(setIsLogin());
     };
 
@@ -138,7 +133,7 @@ export default function Login() {
                             로그인
                         </button>
                     </div>
-                    <MessageModal onClose={onClose} />
+                    <MessageModal />
                 </div>
             </Grid>
         </Grid>

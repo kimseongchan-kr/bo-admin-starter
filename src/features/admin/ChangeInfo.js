@@ -38,6 +38,7 @@ export default function ChangeInfo() {
 
     // 데이터 수정하기
     const onSubmit = (data) => {
+        console.log("data", data);
         handleMessage({ type: "message", message: "수정되었습니다." });
     };
 

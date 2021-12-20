@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { menuSelector } from "slices/menuSlice";
 import { reset } from "slices/searchSlice";
 
-import MenuData from "layout/SideBar/Data";
+import MenuData from "layout/sidebar/Data";
 import { isEmpty } from "utils/common";
 
 import { makeStyles } from "@mui/styles";
@@ -141,7 +141,7 @@ const useStyles = makeStyles(({ palette }) => ({
     }
 }));
 
-function SideBar({ adminType = "public" }) {
+function SideBar({ adminType = "private" }) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -175,7 +175,7 @@ function SideBar({ adminType = "public" }) {
                     if (menus.subMenus) {
                         initMenu[menus.menu] = menus.subMenus.some((menu) => menu.num === Number(menuNum));
                     } else {
-                        initMenu[menus.menu] = menus.num === Number(menuNum);
+                        initMenu[menus.menu] = false;
                     }
                     return initMenu;
                 });
@@ -190,79 +190,66 @@ function SideBar({ adminType = "public" }) {
             <Drawer className={classes.drawer} classes={{ paper: classes.drawerPaper }} variant="permanent" anchor="left">
                 <PerfectScrollbar component="div" className={classes.scrollHeight}>
                     {MenuData[menuType]?.map((group, index) => (
-                        <React.Fragment key={`menu-${index}`}>
-                            {group?.siblings?.map((menu, index) => (
-                                <React.Fragment key={`collapsed-menu-${index}`}>
-                                    {menu?.subMenus ? (
-                                        <List
-                                            component="div"
-                                            className={classes.collapsedList}
-                                            subheader={
-                                                <>
-                                                    {group.setCaption ? (
-                                                        <Typography className={classes.caption} variant="caption" display="block">
-                                                            {group.caption}
-                                                        </Typography>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                </>
-                                            }>
-                                            <ListItem
-                                                button
-                                                disabled={menu.disabled}
-                                                selected={menu.subMenus.some((subMenu) => subMenu.num === Number(menuNum))}
-                                                className={classes.listItem}
-                                                onClick={() => handleToggleMenu(menu.menu)}>
-                                                <ListItemIcon>{menu.icon}</ListItemIcon>
-                                                <ListItemText
-                                                    primary={
-                                                        <Typography component="p" variant="h5">
-                                                            {menu.menuTitle}
-                                                        </Typography>
-                                                    }
-                                                />
-                                                {open[menu.menu] ? <ExpandLess /> : <ExpandMore />}
-                                            </ListItem>
-                                            <Collapse in={open[menu.menu]} unmountOnExit>
-                                                <List component="div">
-                                                    {menu.subMenus.map((subMenu, index) => (
-                                                        <ListItem
-                                                            button
-                                                            key={`sub-menu-${index}`}
-                                                            disabled={subMenu.disabled}
-                                                            selected={menuNum === subMenu.num}
-                                                            className={classes.listItem}
-                                                            sx={{ borderRadius: `12px`, paddingLeft: `46px` }}
-                                                            onClick={() => handlePageChange(subMenu.path)}>
-                                                            <ListItemIcon>{subMenu.icon}</ListItemIcon>
-                                                            <ListItemText
-                                                                primary={
-                                                                    <Typography component="p" variant="h5">
-                                                                        {subMenu.menuTitle}
-                                                                    </Typography>
-                                                                }
-                                                            />
-                                                        </ListItem>
-                                                    ))}
-                                                </List>
-                                            </Collapse>
-                                        </List>
-                                    ) : (
-                                        <List
-                                            component="div"
-                                            className={classes.list}
-                                            subheader={
-                                                <>
-                                                    {group.setCaption ? (
-                                                        <Typography className={classes.caption} variant="caption" display="block">
-                                                            {group.caption}
-                                                        </Typography>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                </>
-                                            }>
+                        <React.Fragment key={`navigation-${index}`}>
+                            <List
+                                component="div"
+                                className={group.menu.some((menuName) => open[menuName]) ? classes.collapsedList : classes.list}
+                                subheader={
+                                    <>
+                                        {group.setCaption ? (
+                                            <Typography className={classes.caption} variant="caption" display="block">
+                                                {group.caption}
+                                            </Typography>
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </>
+                                }>
+                                {group?.siblings?.map((menu, index) => (
+                                    <React.Fragment key={`collapsed-menu-${index}`}>
+                                        {menu?.subMenus ? (
+                                            <React.Fragment key={`list-${index}`}>
+                                                <ListItem
+                                                    button
+                                                    disabled={menu.disabled}
+                                                    selected={menu.subMenus.some((subMenu) => subMenu.num === Number(menuNum))}
+                                                    className={classes.listItem}
+                                                    onClick={() => handleToggleMenu(menu.menu)}>
+                                                    <ListItemIcon>{menu.icon}</ListItemIcon>
+                                                    <ListItemText
+                                                        primary={
+                                                            <Typography component="p" variant="h5">
+                                                                {menu.menuTitle}
+                                                            </Typography>
+                                                        }
+                                                    />
+                                                    {open[menu.menu] ? <ExpandLess /> : <ExpandMore />}
+                                                </ListItem>
+                                                <Collapse in={open[menu.menu]} unmountOnExit>
+                                                    <List component="div">
+                                                        {menu.subMenus.map((subMenu, index) => (
+                                                            <ListItem
+                                                                button
+                                                                key={`sub-menu-${index}`}
+                                                                disabled={subMenu.disabled}
+                                                                selected={menuNum === subMenu.num}
+                                                                className={classes.listItem}
+                                                                sx={{ borderRadius: `12px`, paddingLeft: `46px` }}
+                                                                onClick={() => handlePageChange(subMenu.path)}>
+                                                                <ListItemIcon>{subMenu.icon}</ListItemIcon>
+                                                                <ListItemText
+                                                                    primary={
+                                                                        <Typography component="p" variant="h5">
+                                                                            {subMenu.menuTitle}
+                                                                        </Typography>
+                                                                    }
+                                                                />
+                                                            </ListItem>
+                                                        ))}
+                                                    </List>
+                                                </Collapse>
+                                            </React.Fragment>
+                                        ) : (
                                             <ListItem button disabled={menu.disabled} className={classes.listItem} selected={menuNum === menu.num} onClick={() => handlePageChange(menu.path)}>
                                                 <ListItemIcon>{menu.icon}</ListItemIcon>
                                                 <ListItemText
@@ -273,17 +260,17 @@ function SideBar({ adminType = "public" }) {
                                                     }
                                                 />
                                             </ListItem>
-                                        </List>
-                                    )}
-                                </React.Fragment>
-                            ))}
+                                        )}
+                                    </React.Fragment>
+                                ))}
+                            </List>
                             <Divider className={classes.divider} />
                         </React.Fragment>
                     ))}
                 </PerfectScrollbar>
                 <Box className={classes.copyright}>
                     <p>
-                        Copyright © Blockodyssey Corp. <br />
+                        Copyright © BlockOdyssey Corp. <br />
                         All rights reserved.
                     </p>
                 </Box>

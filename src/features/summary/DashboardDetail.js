@@ -8,17 +8,17 @@ import { putData } from "api";
 import useMenu from "hooks/useMenu";
 import useMessage from "hooks/useMessage";
 import usePageMove from "hooks/usePageMove";
-import useFetchDetail from "hooks/useGetById";
+import useGetById from "hooks/useGetById";
 
 import { getMessageText, handleZipDownload, isEmpty } from "utils/common";
 
 import useStyles from "styles/customize/table/DetailTableStyles";
 import Grid from "@mui/material/Grid";
 
-import Header from "layout/Page/Header";
-import Heading from "layout/Page/Heading";
-import Buttons from "layout/Page/Buttons";
-import ImageCarousel from "components/Image/ImageCarousel";
+import Header from "layout/page/Header";
+import Heading from "layout/page/Heading";
+import Buttons from "layout/page/Buttons";
+import ImageCarousel from "components/image/ImageCarousel";
 
 import DefaultButton from "common/button/DefaultButton";
 import Select from "common/table/Select";
@@ -35,7 +35,7 @@ export default function DashboardDetail() {
 
     // 메뉴 설정하기
     // menu = Dashboard
-    const menu = useMenu({ page: "Dashboard", menu: "summary", menuTitle: "Dashboard", menuNum: 0 });
+    const menu = useMenu({ page: "Dashboard", menu: "dashboard", menuTitle: "Dashboard", menuNum: 0 });
 
     const handleMessage = useMessage(); // 메시지 / 확인 모달 열기
     const handlePageClick = usePageMove({ baseUrl: "/" }); // 페이지 이동하기
@@ -43,7 +43,7 @@ export default function DashboardDetail() {
     const [downloading, setDownloading] = useState(false);
 
     // 상세 데이터 API 호출
-    const { isSuccess, data: detailData } = useFetchDetail({ menu, url: "/web/detail/1" });
+    const { isSuccess, data: detailData } = useGetById({ menu, url: "/web/detail/1" });
     // -----SAMPLE-----
     const { data = sampleData, images = [] } = detailData || {};
     // -----SAMPLE-----
@@ -69,16 +69,18 @@ export default function DashboardDetail() {
 
     // 이미지 ZIP 파일 다운로드
     const handleDownload = async () => {
-        let message = "";
-        try {
-            setDownloading(true);
-            message = await handleZipDownload(images);
-        } catch (error) {
-            handleMessage({ type: "message", message: getMessageText("image download") });
-        } finally {
-            setDownloading(false);
-            if (message.length > 0) {
-                handleMessage({ type: "message", message });
+        if (!isEmpty(images)) {
+            let message = "";
+            try {
+                setDownloading(true);
+                message = await handleZipDownload(images);
+            } catch (error) {
+                handleMessage({ type: "message", message: getMessageText("image download") });
+            } finally {
+                setDownloading(false);
+                if (message.length > 0) {
+                    handleMessage({ type: "message", message });
+                }
             }
         }
     };
@@ -92,7 +94,7 @@ export default function DashboardDetail() {
             <div className={classes.contentContainer}>
                 <ImageCarousel text="디저트 이미지" images={images || []} alt="상품 이미지" />
                 <div className={classes.tableContainer}>
-                    <Heading type="button" text="디저트 정보" buttonText="이미지 다운로드" disabled={downloading} onClick={handleDownload} />
+                    <Heading type="button" text="디저트 정보" buttonText="이미지 다운로드" disabled={downloading || images?.length === 0 ? true : false} onClick={handleDownload} />
                     <table className={classes.table}>
                         <colgroup>
                             <col width="12%"></col>

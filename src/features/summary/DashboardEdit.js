@@ -6,7 +6,7 @@ import { putData, deleteData } from "api";
 import useMenu from "hooks/useMenu";
 import useMessage from "hooks/useMessage";
 import usePageMove from "hooks/usePageMove";
-import useFetchDetail from "hooks/useGetById";
+import useGetById from "hooks/useGetById";
 
 import { getMessageText } from "utils/common";
 
@@ -17,10 +17,10 @@ import useStyles from "styles/customize/table/DetailTableStyles";
 import theme from "styles/theme/form";
 import { ThemeProvider } from "@mui/material/styles";
 
-import Header from "layout/Page/Header";
-import Heading from "layout/Page/Heading";
-import Buttons from "layout/Page/Buttons";
-import UploadImage from "components/Image/UploadImage";
+import Header from "layout/page/Header";
+import Heading from "layout/page/Heading";
+import Buttons from "layout/page/Buttons";
+import UploadImage from "components/image/UploadImage";
 
 import Input from "common/form/Input";
 import FormSelect from "common/form/Select";
@@ -35,7 +35,7 @@ import { sampleData, schema, tableSelectOptions } from "components/Data";
 export default function DashboardUpload() {
     const classes = useStyles();
     const { idx } = useParams();
-    const menu = useMenu({ page: "Dashboard", menu: "summary", menuTitle: "Dashboard", menuNum: 0 }); // 메뉴 설정하기
+    const menu = useMenu({ page: "Dashboard", menu: "dashboard", menuTitle: "Dashboard", menuNum: 0 }); // 페이지 / 메뉴 설정하기
 
     const { errors, clearErrors, control, reset, getValues, handleSubmit } = useForm({
         resolver: yupResolver(schema[menu])
@@ -48,7 +48,7 @@ export default function DashboardUpload() {
     const handleMessage = useMessage(); // 메시지 / 확인 모달 열기
     const handlePageClick = usePageMove({ baseUrl: "/" }); // 페이지 이동하기
 
-    const { isSuccess, data: detailData } = useFetchDetail({ menu, url: `/web/example/detail/${idx}` });
+    const { isSuccess, data: detailData } = useGetById({ menu, url: `/web/example/detail/${idx}` });
     // -----SAMPLE-----
     const { data = sampleData, images = [] } = detailData || {};
     // -----SAMPLE-----
@@ -67,7 +67,7 @@ export default function DashboardUpload() {
             ingredients_2: data?.ingredients.includes("strawberry"),
             ingredients_3: data?.ingredients.includes("cheese"),
             ingredients_4: data?.ingredients.includes("others"),
-            viewYn: data?.viewYn
+            useYn: data?.useYn
         });
 
         images?.forEach((image) => {
@@ -158,8 +158,8 @@ export default function DashboardUpload() {
                                             control={control}
                                             options={[
                                                 { value: "", label: "카테고리를 선택해주세요" },
-                                                { value: "cupcake", label: "cupcake" },
-                                                { value: "cookie", label: "cookie" }
+                                                { value: "Cupcake", label: "Cupcake" },
+                                                { value: "Cookie", label: "Cookie" }
                                             ]}
                                         />
                                         {errors.category && <ErrorMessage text="카테고리를 선택해주세요." />}

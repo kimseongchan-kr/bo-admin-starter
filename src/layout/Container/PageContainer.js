@@ -1,6 +1,6 @@
 import React from "react";
 
-import Menu from "layout/SideBar";
+import Menu from "layout/sidebar";
 import Header from "layout/Header";
 
 import layoutStyles from "styles/customize/layout/LayoutStyles";

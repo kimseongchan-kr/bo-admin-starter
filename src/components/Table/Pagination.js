@@ -23,6 +23,7 @@ function TablePaginationActions(props) {
         <>
             <Grid container>
                 <Pagination
+                    sx={{ width: "100%", minWidth: 420, display: "flex", alignItems: "center", justifyContent: "center" }}
                     color="primary"
                     shape="rounded"
                     variant="outlined"

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { searchSelector, setSearchFilters } from "slices/searchSlice";
 import { isEmpty, queryToObject } from "utils/common";
 
-const useSearchParams = (searchParams) => {
+const useSearchParams = (searchParams, chartSearchParams) => {
     const dispatch = useDispatch();
     const location = useLocation();
     const searchStates = useSelector(searchSelector);
@@ -21,11 +21,12 @@ const useSearchParams = (searchParams) => {
         // 2. 만약 redux store에 있는 search state와 location.search가 다르다면
         // 3. dispatch를 해서 상태가 동일하도록
         Object.keys(searchParams).forEach((key) => {
-            const currentSearchParam = search[key]; // search[key] : location.search 값
-            const reduxStateName = searchParams[key]; // searchParams[key] : redux store에 있는 search state의 key
+            const reduxStateName = searchParams[key]; // searchParams[key] : searchSlice에 있는 search state의 key
             const currentReduxState = searchStates[reduxStateName]; // searchStates[searchParams[key]] : redux store에 있는 search state의 value
+            const currentSearchParam = search[key] || search[chartSearchParams[reduxStateName]]; // search[key] || search[chartSearchParams[reduxStateName]] : location.search 값
 
-            if (!isEmpty(search[key])) {
+            // location.search에 값이 있다면
+            if (!isEmpty(currentSearchParam)) {
                 // int값으로 들어가야 에러가 발생안함
                 if (key === "pageNumber" || key === "pageShow") {
                     params[key] = parseInt(currentSearchParam);
@@ -59,7 +60,7 @@ const useSearchParams = (searchParams) => {
         }
 
         setNewParams(params);
-    }, [dispatch, searchParams, searchStates, location]);
+    }, [dispatch, searchParams, chartSearchParams, searchStates, location]);
 
     useEffect(() => {
         handleSearchParams();
