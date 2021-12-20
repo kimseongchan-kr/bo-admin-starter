@@ -6,6 +6,8 @@ import theme from "styles/theme/search";
 import { ThemeProvider } from "@mui/material/styles";
 import useStyles from "styles/customize/components/SearchStyles";
 
+import { format } from "utils/common";
+
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Select from "@mui/material/Select";
@@ -30,11 +32,22 @@ export default function DateTermSearch(props) {
 
     useEffect(() => {
         setTerm(searchState["term"] || "daily");
-        setDates((prev) => ({ ...prev, startDate: searchState["startDate"] || null, endDate: searchState["endDate"] || null }));
+        setDates((prev) => ({
+            ...prev,
+            startDate: searchState["startDate"] ? format(searchState["term"] || "daily", searchState["startDate"]) : null,
+            endDate: searchState["endDate"] ? format(searchState["term"] || "daily", searchState["endDate"]) : null
+        }));
     }, [searchState]);
 
     // 검색 조건 (select) 변경
-    const handleChange = (e) => setTerm(e.target.value);
+    const handleChange = (e) => {
+        setTerm(e.target.value);
+        setDates((prev) => ({
+            ...prev,
+            startDate: searchState["startDate"] ? format(e.target.value || "daily", searchState["startDate"]) : null,
+            endDate: searchState["endDate"] ? format(e.target.value || "daily", searchState["endDate"]) : null
+        }));
+    };
 
     // 검색 기간 변경
     const handleDate = (type, date) => setDates((prev) => ({ ...prev, [type]: date }));
