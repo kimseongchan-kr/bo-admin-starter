@@ -107,6 +107,8 @@ export default function ChangePassword() {
                     </Grid>
                     <Grid item className={classes.curPassword}>
                         <TextField
+                            InputLabelProps={{ shrink: false }}
+                            inputProps={{ "aria-label": "current password" }}
                             className={classes.input}
                             id="outlined-pw"
                             label=""
@@ -120,6 +122,8 @@ export default function ChangePassword() {
                     </Grid>
                     <Grid item className={classes.newPassword}>
                         <TextField
+                            InputLabelProps={{ shrink: false }}
+                            inputProps={{ "aria-label": "new password" }}
                             className={classes.input}
                             id="outlined-new-pw"
                             label=""
@@ -133,6 +137,8 @@ export default function ChangePassword() {
                     </Grid>
                     <Grid item className={classes.pwCheck}>
                         <TextField
+                            InputLabelProps={{ shrink: false }}
+                            inputProps={{ "aria-label": "new password check" }}
                             className={classes.input}
                             id="outlined-pw-check"
                             label=""

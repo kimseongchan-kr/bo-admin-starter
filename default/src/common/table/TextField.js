@@ -10,6 +10,7 @@ function TextInput({ index = 0, inputType = "text", name, value, handleChange })
         <ThemeProvider theme={theme}>
             <TextField
                 id={`outlined-${name}-${index}`}
+                InputLabelProps={{ shrink: false }}
                 inputProps={{ "aria-label": `type ${name}` }}
                 label=""
                 size="small"
