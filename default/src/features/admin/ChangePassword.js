@@ -80,7 +80,7 @@ const useStyles = makeStyles(({ palette }) => ({
 
 export default function ChangePassword() {
     const classes = useStyles();
-    useMenu({ page: "ChangePassword", menu: null, menuTitle: "비밀번호 변경", menuNum: null });
+    useMenu({ page: "ChangePassword", menu: null, menuTitle: "비밀번호 수정", menuNum: null });
 
     const handleMessage = useMessage();
 
@@ -146,7 +146,7 @@ export default function ChangePassword() {
                     </Grid>
                     <Grid item className={classes.submitContainer}>
                         <Button variant="contained" className={classes.submitButton} onClick={handleSubmit}>
-                            변경
+                            비밀번호 수정하기
                         </Button>
                     </Grid>
                 </Grid>

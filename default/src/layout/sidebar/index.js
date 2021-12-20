@@ -270,7 +270,7 @@ function SideBar({ adminType = "private" }) {
                 </PerfectScrollbar>
                 <Box className={classes.copyright}>
                     <p>
-                        Copyright © Blockodyssey Corp. <br />
+                        Copyright © BlockOdyssey Corp. <br />
                         All rights reserved.
                     </p>
                 </Box>
