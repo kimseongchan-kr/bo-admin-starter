@@ -1,10 +1,11 @@
-import { Dashboard, Settings, Build, BarChart } from "@mui/icons-material";
+import { Dashboard, Article, Settings, Build, BarChart, TableChart, SettingsSuggest } from "@mui/icons-material";
 
 const MenuData = {
-    public: [
+    private: [
         {
             setCaption: true,
             caption: "홈",
+            menu: ["dashboard"],
             siblings: [
                 {
                     num: 0,
@@ -18,12 +19,13 @@ const MenuData = {
         {
             setCaption: true,
             caption: "예시",
+            menu: ["example"],
             siblings: [
                 {
                     num: 1,
                     menu: "example",
                     menuTitle: "Example",
-                    icon: <Settings />,
+                    icon: <Article />,
                     path: "/example"
                 }
             ]
@@ -31,6 +33,7 @@ const MenuData = {
         {
             setCaption: true,
             caption: "컴포넌트",
+            menu: ["components", "common"],
             siblings: [
                 {
                     num: null,
@@ -40,42 +43,44 @@ const MenuData = {
                     subMenus: [
                         {
                             num: 2,
-                            menu: "components",
                             menuTitle: "Search",
                             icon: <Build />,
                             path: "/search"
                         },
                         {
                             num: 3,
-                            menu: "components",
                             menuTitle: "Table",
                             icon: <Build />,
                             path: "/table"
-                        },
+                        }
+                    ]
+                },
+                {
+                    num: null,
+                    menu: "common",
+                    menuTitle: "Common",
+                    icon: <SettingsSuggest />,
+                    subMenus: [
                         {
                             num: 4,
-                            menu: "components",
                             menuTitle: "Form",
                             icon: <Build />,
                             path: "/form"
                         },
                         {
                             num: 5,
-                            menu: "components",
                             menuTitle: "Modal",
                             icon: <Build />,
                             path: "/modal"
                         },
                         {
                             num: 6,
-                            menu: "components",
                             menuTitle: "Typography",
                             icon: <Build />,
                             path: "/typography"
                         },
                         {
                             num: 7,
-                            menu: "components",
                             menuTitle: "Button",
                             icon: <Build />,
                             path: "/button"
@@ -87,6 +92,7 @@ const MenuData = {
         {
             setCaption: true,
             caption: "차트",
+            menu: ["chart"],
             siblings: [
                 {
                     num: 8,
@@ -99,16 +105,17 @@ const MenuData = {
                     num: 9,
                     menu: "chart",
                     menuTitle: "Chart with Table",
-                    icon: <BarChart />,
+                    icon: <TableChart />,
                     path: "/chart-table"
                 }
             ]
         }
     ],
-    private: [
+    public: [
         {
             setCaption: true,
             caption: "홈",
+            menu: ["dashboard"],
             siblings: [
                 {
                     num: 0,

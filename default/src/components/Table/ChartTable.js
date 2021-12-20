@@ -27,7 +27,9 @@ export default function ChartTable(props) {
                                 Total
                             </TableCell>
                             {headCell[menu].map((headCell) => (
-                                <TableCell align="center">{headCell.label}</TableCell>
+                                <TableCell key={headCell.id} align="center">
+                                    {headCell.label}
+                                </TableCell>
                             ))}
                         </TableRow>
                     </TableHead>
@@ -52,7 +54,9 @@ export default function ChartTable(props) {
                                             {row.name}
                                         </TableCell>
                                         {Array.from(Array(50)).map((_, index) => (
-                                            <TableCell align="center">{parseInt(index) + 1}</TableCell>
+                                            <TableCell key={index} align="center">
+                                                {parseInt(index) + 1}
+                                            </TableCell>
                                         ))}
                                     </TableRow>
                                 );

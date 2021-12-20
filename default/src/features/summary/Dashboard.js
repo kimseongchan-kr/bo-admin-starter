@@ -12,8 +12,8 @@ import useGetList from "hooks/useGetList";
 import useGetLists from "hooks/useGetLists";
 import useExcelDownload from "hooks/useExcelDownload";
 
-import DashboardSearch from "components/Search/Search";
-import DashboardTable from "components/Table/SelectionTable";
+import DashboardSearch from "components/search/Search";
+import DashboardTable from "components/table/SelectionTable";
 import MessageModal from "common/modal/MessageModal";
 
 import { sampleRowData } from "components/Data";

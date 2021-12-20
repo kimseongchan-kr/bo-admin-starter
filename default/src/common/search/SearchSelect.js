@@ -16,7 +16,7 @@ function SearchSelect({ menu, name, value, dataList, handleChange }) {
     const classes = useStyles();
     const searchState = useSelector(searchSelector);
 
-    const options = name === "searchType" ? option[name][menu] : option[name];
+    const options = name === "searchType" || name === "sort" ? option[name][menu] : option[name];
 
     const selectOptions = dataList?.[name]?.length > 0 ? [...options, ...dataList[name]] : options ? options : [];
 

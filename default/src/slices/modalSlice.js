@@ -6,9 +6,6 @@ const initialState = {
     messageType: "",
     message: "",
 
-    // Confirm 모달
-    msgConfirmOpen: false,
-
     // 이미지 모달
     imgOpen: false,
     imgData: null
@@ -30,11 +27,6 @@ export const modalSlice = createSlice({
         setMessage: (state, { payload }) => {
             state.msgOpen = payload.open;
             state.messageType = payload.type;
-            state.message = payload.message;
-        },
-        // Confirm 모달 띄우기
-        setMsgConfirm: (state, { payload }) => {
-            state.msgConfirmOpen = payload.open;
             state.message = payload.message;
         },
         // 상세 모달 띄우기
@@ -69,7 +61,7 @@ export const modalSlice = createSlice({
     }
 });
 
-export const { setMessage, setMsgConfirm, setDetail, setImage, setEdit, setClose, setDetailClose, setEditClose } = modalSlice.actions;
+export const { setMessage, setDetail, setImage, setEdit, setClose, setDetailClose, setEditClose } = modalSlice.actions;
 
 export const modalSelector = (state) => state.modal;
 

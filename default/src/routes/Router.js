@@ -1,8 +1,8 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
-import withContainer from "layout/Container/Container";
-import withPageContainer from "layout/Container/PageContainer";
+import withContainer from "layout/container/Container";
+import withPageContainer from "layout/container/PageContainer";
 
 import Dashboard from "features/summary/Dashboard";
 import DashboardDetail from "features/summary/DashboardDetail";

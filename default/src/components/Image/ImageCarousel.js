@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-import Heading from "layout/Page/Heading";
+import Heading from "layout/page/Heading";
 
 function ImageCarousel({ text, images, alt }) {
     const classes = useStyles();

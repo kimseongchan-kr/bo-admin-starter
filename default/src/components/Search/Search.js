@@ -28,13 +28,13 @@ export default function Search(props) {
     const dispatch = useDispatch();
     const searchState = useSelector(searchSelector);
 
-    const [searchType, setSearchType] = useState("all");
+    const [searchType, setSearchType] = useState("");
     const [keyword, setKeyword] = useState("");
     const [dates, setDates] = useState({ startDate: null, endDate: null }); // startDate: 시작일, endDate: 종료일
 
     useEffect(() => {
         setKeyword(searchState["searchKeyword"] || ""); // 검색어 초기화
-        setSearchType(searchState["searchType"] || "all"); // 검색 조건 초기화
+        setSearchType(searchState["searchType"] || ""); // 검색 조건 초기화
         setDates((prev) => ({ ...prev, startDate: searchState["startDate"] || null, endDate: searchState["endDate"] || null })); // 시작일, 종료일 초기화
     }, [searchState]);
 
@@ -190,7 +190,7 @@ export default function Search(props) {
                 <Typography variant="h4" component="h4">
                     검색된 데이터 : <strong>{total ? total : 0}</strong>건
                 </Typography>
-                <SearchSelect name="sort" handleChange={handleSort} />
+                <SearchSelect menu={menu} name="sort" handleChange={handleSort} />
             </Grid>
         </ThemeProvider>
     );

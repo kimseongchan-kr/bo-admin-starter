@@ -4,7 +4,7 @@ import useMenu from "hooks/useMenu";
 import useSearch from "hooks/useSearch";
 import useGetList from "hooks/useGetList";
 
-import ChartSearch from "components/Search/ChartSearch";
+import ChartSearch from "components/search/ChartSearch";
 import Charts from "features/chart/components/Charts";
 import MessageModal from "common/modal/MessageModal";
 

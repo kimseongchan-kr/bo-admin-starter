@@ -15,10 +15,10 @@ import { getMessageText, handleZipDownload, isEmpty } from "utils/common";
 import useStyles from "styles/customize/table/DetailTableStyles";
 import Grid from "@mui/material/Grid";
 
-import Header from "layout/Page/Header";
-import Heading from "layout/Page/Heading";
-import Buttons from "layout/Page/Buttons";
-import ImageCarousel from "components/Image/ImageCarousel";
+import Header from "layout/page/Header";
+import Heading from "layout/page/Heading";
+import Buttons from "layout/page/Buttons";
+import ImageCarousel from "components/image/ImageCarousel";
 
 import DefaultButton from "common/button/DefaultButton";
 import Select from "common/table/Select";

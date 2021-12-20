@@ -15,10 +15,10 @@ import useStyles from "styles/customize/table/DetailTableStyles";
 import theme from "styles/theme/form";
 import { ThemeProvider } from "@mui/material/styles";
 
-import Header from "layout/Page/Header";
-import Heading from "layout/Page/Heading";
-import Buttons from "layout/Page/Buttons";
-import UploadImage from "components/Image/UploadImage";
+import Header from "layout/page/Header";
+import Heading from "layout/page/Heading";
+import Buttons from "layout/page/Buttons";
+import UploadImage from "components/image/UploadImage";
 
 import Input from "common/form/Input";
 import FormSelect from "common/form/Select";

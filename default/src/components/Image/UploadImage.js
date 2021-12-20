@@ -6,8 +6,8 @@ import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import Close from "@mui/icons-material/Close";
 
-import Heading from "layout/Page/Heading";
-import UploadImageCarousel from "components/Image/UploadImageCarousel";
+import Heading from "layout/page/Heading";
+import UploadImageCarousel from "components/image/UploadImageCarousel";
 
 export default function UploadImage({ text, imageFiles, setImageFiles, onConfirm, handleDeleteImageFile }) {
     const classes = useStyles();

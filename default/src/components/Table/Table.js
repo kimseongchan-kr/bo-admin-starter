@@ -13,13 +13,12 @@ import TableCell from "@mui/material/TableCell";
 import TablePagination from "@mui/material/TablePagination";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import TableSelect from "common/table/Select";
-import TablePaginationActions from "components/Table/Pagination";
+import TablePaginationActions from "components/table/Pagination";
 
-import { headCell, sampleData, tableSelectOptions } from "components/Data";
+import { headCell, sampleData } from "components/Data";
 
 export default function SearchTable(props) {
-    const { menu, loading, data, total, handleSelect, handleSearch, handleOneData, handleDetailData, onAddClick } = props;
+    const { menu, loading, data, total, handleSearch, onEditClick, onDetailClick, onAddClick } = props;
 
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -28,19 +27,16 @@ export default function SearchTable(props) {
     const ExampleData = ({ row }) => {
         return (
             <>
-                <TableCell align="center" onClick={() => handleDetailData(row.idx)}>
+                <TableCell align="center" onClick={() => onDetailClick(row.idx)}>
                     <p className={classes.underlinedContent}>{row.idx || "-"}</p>
                 </TableCell>
-                <TableCell align="center" onClick={() => handleOneData(row.idx, sampleData)}>
+                <TableCell align="center" onClick={() => onEditClick(row.idx, sampleData)}>
                     <p className={classes.underlinedContent}>{row.name || "-"}</p>
                 </TableCell>
                 <TableCell align="center">{row.calories || "-"}</TableCell>
                 <TableCell align="center">{row.fat || "-"}</TableCell>
                 <TableCell align="center">{row.carbs || "-"}</TableCell>
                 <TableCell align="center">{row.protein || "-"}</TableCell>
-                <TableCell width={100} align="center">
-                    <TableSelect name="useYn" rowIndex={row.idx} value={row.useYn} label={row.useYnText} options={tableSelectOptions["useYn"]} handleSelect={handleSelect} />
-                </TableCell>
                 <TableCell align="center">{row.regdate || "-"}</TableCell>
             </>
         );

@@ -65,8 +65,8 @@ const searchOption = {
     ],
     useYn: [
         { value: "", label: "전체" },
-        { label: "판매", value: "Y" },
-        { label: "미판매", value: "N" }
+        { value: "판매", label: "Y" },
+        { value: "미판매", label: "N" }
     ],
     dessert: [
         { value: "", label: "전체" },
@@ -90,22 +90,28 @@ const searchOption = {
     ],
     searchType: {
         Dashboard: [
-            { value: "all", label: "전체" },
+            { value: "", label: "전체" },
             { value: "id", label: "아이디" },
             { value: "name", label: "이름" },
             { value: "tel", label: "연락처" }
         ],
         SearchComponent: [
-            { value: "all", label: "전체" },
+            { value: "", label: "전체" },
             { value: "id", label: "아이디" },
             { value: "name", label: "이름" },
             { value: "tel", label: "연락처" }
         ]
     },
-    sort: [
-        { value: "latest", label: "최신 등록순" },
-        { value: "oldest", label: "오래된 등록순" }
-    ],
+    sort: {
+        Dashboard: [
+            { value: "latest", label: "최신 등록순" },
+            { value: "oldest", label: "오래된 등록순" }
+        ],
+        Example: [
+            { value: "latest", label: "최신 등록순" },
+            { value: "oldest", label: "오래된 등록순" }
+        ]
+    },
     term: [
         { value: "daily", label: "일간" },
         { value: "monthly", label: "월간" }
@@ -158,6 +164,15 @@ const searchParams = {
     }
 };
 
+const chartSearchParams = {
+    foodTerm: "foodTerm",
+    foodStartDate: "foodStartDate",
+    foodEndDate: "foodEndDate",
+    dessertTerm: "dessertTerm",
+    dessertStartDate: "dessertStartDate",
+    dessertEndDate: "dessertEndDate"
+};
+
 const headCell = {
     Dashboard: [
         { id: "name", label: "디저트" },
@@ -171,13 +186,12 @@ const headCell = {
         { id: "status", label: "관리" }
     ],
     Example: [
+        { id: "idx", label: "번호" },
         { id: "name", label: "디저트" },
         { id: "calories", label: "칼로리" },
         { id: "fat", label: "지방" },
         { id: "carbs", label: "탄수화물" },
         { id: "protein", label: "프로틴" },
-        { id: "useYn", label: "사용여부" },
-        { id: "viewYn", label: "메인노출" },
         { id: "regDate", label: "등록일" }
     ],
     ExampleDetail: [
@@ -302,6 +316,7 @@ export {
     dailyFormat,
     monthlyFormat,
     searchParams,
+    chartSearchParams,
     tableSelectOptions,
     searchComponent,
     searchRadioRow,

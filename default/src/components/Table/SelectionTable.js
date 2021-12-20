@@ -18,7 +18,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import TableButton from "common/table/Button";
 import TableSelect from "common/table/Select";
 import TableTextField from "common/table/TextField";
-import TablePaginationActions from "components/Table/Pagination";
+import TablePaginationActions from "components/table/Pagination";
 
 import { headCell, tableSelectOptions } from "components/Data";
 
