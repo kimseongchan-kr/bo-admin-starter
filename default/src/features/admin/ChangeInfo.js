@@ -32,12 +32,13 @@ export default function ChangeInfo() {
         reset({
             name: "이름",
             email: "이메일",
-            전화번호: "전화번호"
+            phone: "전화번호"
         });
     }, [clearErrors, reset]);
 
     // 데이터 수정하기
     const onSubmit = (data) => {
+        console.log(data);
         handleMessage({ type: "message", message: "수정되었습니다." });
     };
 
@@ -53,21 +54,21 @@ export default function ChangeInfo() {
                         <tr>
                             <th>이름</th>
                             <td>
-                                <Input name="name" defaultValue="이름" inputType="text" control={control} classes={classes} />
+                                <Input name="name" defaultValue="이름" inputType="text" control={control} />
                                 {errors.name && <ErrorMessage text="이름을 입력해주세요." />}
                             </td>
                         </tr>
                         <tr>
                             <th>이메일</th>
                             <td>
-                                <Input name="email" defaultValue="이메일" inputType="text" control={control} classes={classes} />
+                                <Input name="email" defaultValue="이메일" inputType="text" control={control} />
                                 {errors.email && <ErrorMessage text="이메일을 입력해주세요." />}
                             </td>
                         </tr>
                         <tr>
                             <th>전화번호</th>
                             <td>
-                                <Input name="phone" defaultValue="전화번호" inputType="phone" control={control} classes={classes} />
+                                <Input name="phone" defaultValue="전화번호" inputType="phone" control={control} />
                                 {errors.phone && <ErrorMessage text="전화번호를 입력해주세요." />}
                             </td>
                         </tr>
@@ -80,7 +81,7 @@ export default function ChangeInfo() {
                         </tr>
                     </tbody>
                 </table>
-                <Grid sx={{ px: 2.5 }} container justifyContent="flex-end" alignItems="center">
+                <Grid container justifyContent="flex-end" alignItems="center">
                     <SubmitButton type="submit" text="정보 수정하기" />
                 </Grid>
             </form>
