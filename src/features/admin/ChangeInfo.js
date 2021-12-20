@@ -32,7 +32,7 @@ export default function ChangeInfo() {
         reset({
             name: "이름",
             email: "이메일",
-            전화번호: "전화번호"
+            phone: "전화번호"
         });
     }, [clearErrors, reset]);
 
