@@ -138,6 +138,12 @@ const useStyles = makeStyles(({ palette }) => ({
         marginLeft: 10,
         fontSize: 10,
         fontWeight: 500
+    },
+    form: {
+        padding: "20px 20px 0",
+        "& table": {
+            marginTop: 0
+        }
     }
 }));
 
