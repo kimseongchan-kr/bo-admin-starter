@@ -31,7 +31,7 @@ export default function Chart() {
 
     return (
         <>
-            <ChartSearch heading="기간 검색" menu={menu} handleSearch={handleSearch} />
+            <ChartSearch handleSearch={handleSearch} />
             <Charts lineLoading={lineLoading} lineChartData={lineChartData} pieLoading={pieLoading} pieChartData={pieChartData} />
             <MessageModal />
         </>
