@@ -1,35 +1,35 @@
 {
-    "name": "bo-admin-starter",
-    "version": "1.0.0",
-    "author": {
-        "name": "blockodyssey",
-        "email": "dev@blockodyssey.io",
-        "url": "https://blockodyssey.io/"
-    },
-    "homepage": "https://github.com/BlockOdyssey/bo-admin-starter",
-    "bugs": {
-        "url": "https://github.com/BlockOdyssey/bo-admin-starter/issues",
-        "email": "dev@blockodyssey.io"
-    },
-    "description": "블록오디세이에서 사용하는 admin starter입니다.",
-    "keywords": [
-        "blockodyssey"
-    ],
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/BlockOdyssey/bo-admin-starter.git"
-    },
-    "main": "index.js",
-    "bin": {
-        "bo-admin-starter": "bin/index.js"
-    },
-    "scripts": {
-        "start": "node bin/index.js",
-        "bo-admin-starter": "node bin/index.js"
-    },
-    "dependencies": {
-        "edit-json-file": "^1.6.0",
-        "ncp": "^2.0.0"
-    }
+	"name": "bo-admin-starter",
+	"version": "2.0.0",
+	"author": {
+		"name": "blockodyssey",
+		"email": "dev@blockodyssey.io",
+		"url": "https://blockodyssey.io/"
+	},
+	"homepage": "https://github.com/BlockOdyssey/bo-admin-starter",
+	"bugs": {
+		"url": "https://github.com/BlockOdyssey/bo-admin-starter/issues",
+		"email": "dev@blockodyssey.io"
+	},
+	"description": "블록오디세이에서 사용하는 admin starter입니다.",
+	"keywords": [
+		"blockodyssey"
+	],
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/BlockOdyssey/bo-admin-starter.git"
+	},
+	"main": "index.js",
+	"bin": {
+		"bo-admin-starter": "bin/index.js"
+	},
+	"scripts": {
+		"start": "node bin/index.js",
+		"bo-admin-starter": "node bin/index.js"
+	},
+	"dependencies": {
+		"edit-json-file": "^1.6.0",
+		"ncp": "^2.0.0"
+	}
 }
