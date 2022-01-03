@@ -19,8 +19,8 @@ const useStyles = makeStyles(({ palette }) => ({
             minWidth: 100,
             fontWeight: 600,
             textAlign: "left",
-            color: palette.text["label"],
-            background: palette.background["light"],
+            color: palette.text.label,
+            background: palette.background.light,
             borderRight: `1px solid ${palette.border["opacity0.1"]}`
         }
     },

@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
-import { typography } from "styles/theme/typography";
-import { palette } from "styles/theme/palette";
+import typography from "styles/theme/typography";
+import palette from "styles/theme/palette";
 import { koKR } from "@mui/material/locale";
 
 const theme = createTheme(
@@ -20,7 +20,7 @@ const theme = createTheme(
                         width: "100%"
                     },
                     body: {
-                        backgroundColor: palette.background["main"],
+                        backgroundColor: palette.background.main,
                         height: "100%",
                         width: "100%"
                     },
@@ -35,7 +35,7 @@ const theme = createTheme(
                     table: {
                         width: "100%",
                         borderCollapse: "collapse",
-                        backgroundColor: palette.neutral["white"],
+                        backgroundColor: palette.neutral.white,
                         "& th": {
                             height: 48,
                             padding: "0 20px"
@@ -76,7 +76,7 @@ const theme = createTheme(
                 styleOverrides: {
                     root: {
                         "&:hover": {
-                            backgroundColor: palette.neutral["white"]
+                            backgroundColor: palette.neutral.white
                         }
                     }
                 }
@@ -85,16 +85,16 @@ const theme = createTheme(
                 styleOverrides: {
                     root: {
                         "&&$focused fieldset": {
-                            borderColor: palette.border["main"],
+                            borderColor: palette.border.main,
                             borderWidth: 1
                         },
                         "&&:hover fieldset": {
-                            borderColor: palette.border["main"],
+                            borderColor: palette.border.main,
                             borderWidth: 1
                         }
                     },
                     notchedOutline: {
-                        borderColor: palette.border["main"]
+                        borderColor: palette.border.main
                     }
                 }
             },
@@ -112,7 +112,7 @@ const theme = createTheme(
                     },
                     hover: {
                         "&&:hover": {
-                            backgroundColor: palette.primary["light"]
+                            backgroundColor: palette.primary.light
                         }
                     }
                 }
@@ -123,7 +123,7 @@ const theme = createTheme(
                         height: 70,
                         fontSize: 12,
                         fontWeight: 500,
-                        borderBottom: `1px solid ${palette.border["light"]}`
+                        borderBottom: `1px solid ${palette.border.light}`
                     }
                 }
             },
@@ -132,7 +132,7 @@ const theme = createTheme(
                     root: {
                         padding: 10,
                         cursor: "context-menu",
-                        backgroundColor: palette.neutral["white"]
+                        backgroundColor: palette.neutral.white
                     },
                     head: {
                         height: 70

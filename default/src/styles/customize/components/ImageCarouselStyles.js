@@ -42,10 +42,10 @@ const useStyles = makeStyles(({ palette }) => ({
         justifyContent: "center",
         fontWeight: 500,
         borderRadius: 4,
-        color: palette.text["label"],
+        color: palette.text.label,
         textTransform: "uppercase",
         fontSize: "18px",
-        backgroundColor: palette.background["main"]
+        backgroundColor: palette.background.main
     },
     imageButtonContainer: {
         position: "absolute",
@@ -63,7 +63,7 @@ const useStyles = makeStyles(({ palette }) => ({
         borderRadius: 4,
         fontWeight: 600,
         fontSize: 12,
-        color: palette.neutral["dark"],
+        color: palette.neutral.dark,
         background: "none",
         "& > span": {
             marginLeft: 0,
@@ -78,7 +78,7 @@ const useStyles = makeStyles(({ palette }) => ({
             boxShadow: "unset",
             border: "none",
             background: "none",
-            color: palette.neutral["dark"]
+            color: palette.neutral.dark
         },
         "&:active": {
             boxShadow: "unset",

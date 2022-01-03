@@ -15,7 +15,7 @@ const useStyles = makeStyles(({ palette, breakpoints }) => ({
     sticky: {
         position: "sticky",
         left: 0,
-        background: palette.background["light"]
+        background: palette.background.light
     },
     tableHead: {
         fontWeight: 500
@@ -23,7 +23,7 @@ const useStyles = makeStyles(({ palette, breakpoints }) => ({
     underlinedContent: {
         cursor: "pointer",
         textDecoration: "underline",
-        color: palette.primary["main"]
+        color: palette.primary.main
     },
     toolbar: {
         [breakpoints.up("sm")]: {

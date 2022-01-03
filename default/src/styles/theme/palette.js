@@ -1,4 +1,4 @@
-export const palette = {
+const palette = {
     primary: {
         light: "#039be508",
         "opacity0.2": "#039be533",
@@ -38,3 +38,5 @@ export const palette = {
         primary: "#0000001f"
     }
 };
+
+export default palette;

@@ -22,7 +22,7 @@ const useStyles = makeStyles(({ palette }) => ({
         width: "100%",
         height: "100%",
         paddingBottom: 30,
-        backgroundColor: palette.neutral["white"]
+        backgroundColor: palette.neutral.white
     }
 }));
 

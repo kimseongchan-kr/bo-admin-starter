@@ -1,15 +1,15 @@
 // 참고: https://react-select.com/styles#style-object
-import { palette } from "styles/theme/palette";
+import palette from "styles/theme/palette";
 
 const customStyles = {
     option: (provided, state) => ({
         ...provided,
         height: 32,
         padding: "6px 10px",
-        color: palette.text["primary"],
-        backgroundColor: state.isSelected ? palette.primary["main"] : palette.neutral["white"],
+        color: palette.text.primary,
+        backgroundColor: state.isSelected ? palette.primary.main : palette.neutral.white,
         "&:hover": {
-            backgroundColor: state.isSelected ? palette.primary["main"] : palette.primary["opacity0.2"]
+            backgroundColor: state.isSelected ? palette.primary.main : palette.primary["opacity0.2"]
         }
     }),
     container: (provided) => ({
@@ -27,9 +27,9 @@ const customStyles = {
         height: 32,
         lineHeight: "32px",
         boxShadow: "unset",
-        borderColor: palette.border["main"],
+        borderColor: palette.border.main,
         "&:hover": {
-            borderColor: palette.border["main"]
+            borderColor: palette.border.main
         }
     }),
     valueContainer: (provided) => ({

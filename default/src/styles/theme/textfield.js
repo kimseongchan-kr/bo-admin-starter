@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
-import { typography } from "styles/theme/typography";
-import { palette } from "styles/theme/palette";
+import typography from "styles/theme/typography";
+import palette from "styles/theme/palette";
 
 const theme = createTheme({
     palette,
@@ -10,7 +10,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     height: 32,
-                    backgroundColor: palette.neutral["white"]
+                    backgroundColor: palette.neutral.white
                 }
             }
         },
@@ -26,11 +26,11 @@ const theme = createTheme({
                 root: {
                     height: "100%",
                     "&&.Mui-focused fieldset": {
-                        borderColor: palette.border["main"],
+                        borderColor: palette.border.main,
                         borderWidth: 1
                     },
                     "&&:hover fieldset": {
-                        borderColor: palette.border["main"],
+                        borderColor: palette.border.main,
                         borderWidth: 1
                     }
                 },
@@ -39,7 +39,7 @@ const theme = createTheme({
                     padding: "10px 8px"
                 },
                 notchedOutline: {
-                    borderColor: palette.border["main"]
+                    borderColor: palette.border.main
                 }
             }
         }

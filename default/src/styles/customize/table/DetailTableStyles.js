@@ -4,7 +4,7 @@ const useStyles = makeStyles(({ palette }) => ({
     header: {
         height: 70,
         padding: 20,
-        borderBottom: `2px solid ${palette.background["main"]}`,
+        borderBottom: `2px solid ${palette.background.main}`,
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-start",
@@ -21,7 +21,7 @@ const useStyles = makeStyles(({ palette }) => ({
     contentContainer: {
         display: "flex",
         alignItems: "flex-start",
-        backgroundColor: palette.neutral["white"],
+        backgroundColor: palette.neutral.white,
         padding: 30
     },
     contentImage: {
@@ -110,13 +110,13 @@ const useStyles = makeStyles(({ palette }) => ({
             minWidth: 100,
             fontWeight: 600,
             textAlign: "left",
-            color: palette.text["label"],
-            background: palette.background["light"],
+            color: palette.text.label,
+            background: palette.background.light,
             borderRight: `1px solid ${palette.border["opacity0.1"]}`
         }
     },
     detailTable: {
-        borderTop: `2px solid ${palette.border["dark"]}`,
+        borderTop: `2px solid ${palette.border.dark}`,
         "& tr": {
             border: `1px solid ${palette.border["opacity0.1"]}`
         },
@@ -124,8 +124,8 @@ const useStyles = makeStyles(({ palette }) => ({
             minWidth: 100,
             fontWeight: 600,
             textAlign: "left",
-            color: palette.text["label"],
-            background: palette.background["light"],
+            color: palette.text.label,
+            background: palette.background.light,
             borderRight: `1px solid ${palette.border["opacity0.1"]}`
         }
     },

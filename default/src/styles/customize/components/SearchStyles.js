@@ -4,8 +4,8 @@ const useStyles = makeStyles(({ palette }) => ({
     root: {
         width: "100%",
         marginBottom: 20,
-        backgroundColor: palette.neutral["white"],
-        boxShadow: `0px 2px 5px ${palette.shadow["primary"]}`,
+        backgroundColor: palette.neutral.white,
+        boxShadow: `0px 2px 5px ${palette.shadow.primary}`,
         borderRadius: 4
     },
     termSearchRoot: {
@@ -13,8 +13,8 @@ const useStyles = makeStyles(({ palette }) => ({
         margin: "0 auto 20px",
         paddingBottom: 20,
         borderRadius: 4,
-        backgroundColor: palette.neutral["white"],
-        boxShadow: `0px 2px 5px ${palette.shadow["primary"]}`
+        backgroundColor: palette.neutral.white,
+        boxShadow: `0px 2px 5px ${palette.shadow.primary}`
     },
     table: {
         borderRadius: 4,
@@ -27,7 +27,7 @@ const useStyles = makeStyles(({ palette }) => ({
             fontWeight: 500,
             lineHeight: "48px",
             textAlign: "left",
-            color: palette.text["primary"]
+            color: palette.text.primary
         },
         "& td": {
             padding: 7
@@ -36,7 +36,7 @@ const useStyles = makeStyles(({ palette }) => ({
     searchSelect: {
         minWidth: 120,
         maxWidth: 150,
-        backgroundColor: palette.neutral["white"]
+        backgroundColor: palette.neutral.white
     },
     searchTextField: {
         minWidth: 160,

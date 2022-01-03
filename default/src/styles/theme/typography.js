@@ -1,4 +1,4 @@
-export const typography = {
+const typography = {
     fontFamily: ["Noto Sans KR", "sans-serif", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue"].join(","),
     color: "#333333",
     fontSize: 12,
@@ -60,3 +60,5 @@ export const typography = {
         letterSpacing: "-0.6px"
     }
 };
+
+export default typography;

@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
-import { typography } from "styles/theme/typography";
-import { palette } from "styles/theme/palette";
+import typography from "styles/theme/typography";
+import palette from "styles/theme/palette";
 
 const theme = createTheme({
     palette,
@@ -26,16 +26,16 @@ const theme = createTheme({
                 root: {
                     height: "100%",
                     "&&.Mui-focused fieldset": {
-                        borderColor: palette.border["main"],
+                        borderColor: palette.border.main,
                         borderWidth: 1
                     },
                     "&&:hover fieldset": {
-                        borderColor: palette.border["main"],
+                        borderColor: palette.border.main,
                         borderWidth: 1
                     }
                 },
                 notchedOutline: {
-                    borderColor: palette.border["main"]
+                    borderColor: palette.border.main
                 }
             }
         },
@@ -47,12 +47,12 @@ const theme = createTheme({
                 contained: {
                     width: 64,
                     height: 40,
-                    backgroundColor: palette.neutral["dark"],
+                    backgroundColor: palette.neutral.dark,
                     boxShadow: "unset",
-                    color: palette.neutral["white"],
+                    color: palette.neutral.white,
                     fontWeight: 500,
                     "&:hover": {
-                        backgroundColor: palette.neutral["dark"],
+                        backgroundColor: palette.neutral.dark,
                         boxShadow: "unset"
                     },
                     "&:active": {
@@ -72,10 +72,10 @@ const theme = createTheme({
                     minWidth: 84,
                     padding: "11px 10px",
                     borderRadius: 4,
-                    backgroundColor: palette.neutral["white"],
+                    backgroundColor: palette.neutral.white,
                     "&:focus": {
                         borderRadius: 4,
-                        backgroundColor: palette.neutral["white"]
+                        backgroundColor: palette.neutral.white
                     }
                 }
             }
@@ -108,7 +108,7 @@ const theme = createTheme({
                 },
                 button: {
                     "&:hover": {
-                        backgroundColor: palette.primary["light"]
+                        backgroundColor: palette.primary.light
                     }
                 }
             }
