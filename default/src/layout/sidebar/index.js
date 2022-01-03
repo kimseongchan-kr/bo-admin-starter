@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { withRouter, useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { menuSelector } from "slices/menuSlice";
@@ -37,25 +38,25 @@ const useStyles = makeStyles(({ palette }) => ({
         width: drawerWidth,
         top: 80,
         paddingTop: 20,
-        color: palette.neutral["white"],
-        background: palette.neutral["main"],
+        color: palette.neutral.white,
+        background: palette.neutral.main,
         borderRight: "none"
     },
     list: {
         "& .MuiListItem-root.Mui-selected": {
-            backgroundColor: palette.background["main"],
+            backgroundColor: palette.background.main,
             "& p": {
-                color: palette.text["primary"]
+                color: palette.text.primary
             },
             "& svg": {
-                color: palette.text["primary"]
+                color: palette.text.primary
             }
         }
     },
     caption: {
         width: "90%",
         margin: "0 auto",
-        color: palette.neutral["white"],
+        color: palette.neutral.white,
         fontSize: 14,
         lineHeight: "32px",
         fontWeight: 500
@@ -66,16 +67,16 @@ const useStyles = makeStyles(({ palette }) => ({
         margin: "5px auto 0",
         paddingTop: 4,
         paddingBottom: 4,
-        backgroundColor: palette.neutral["main"],
+        backgroundColor: palette.neutral.main,
         borderRadius: 4,
         "&:hover": {
             borderRadius: 4,
-            backgroundColor: palette.background["main"],
+            backgroundColor: palette.background.main,
             "& p": {
-                color: palette.text["primary"]
+                color: palette.text.primary
             },
             "& svg": {
-                color: palette.text["primary"]
+                color: palette.text.primary
             }
         },
         "& > div:first-child": {
@@ -83,7 +84,7 @@ const useStyles = makeStyles(({ palette }) => ({
         },
         "& svg": {
             minWidth: 20,
-            color: palette.neutral["white"],
+            color: palette.neutral.white,
             width: 20,
             height: 20
         },
@@ -93,7 +94,7 @@ const useStyles = makeStyles(({ palette }) => ({
             lineHeight: "22px",
             letterSpacing: "-0.45px",
             textAlign: "left",
-            color: palette.neutral["white"],
+            color: palette.neutral.white,
             opacity: 0.7
         }
     },
@@ -101,20 +102,20 @@ const useStyles = makeStyles(({ palette }) => ({
         "&& > .MuiListItem-root.Mui-selected": {
             backgroundColor: palette.background["lightOpacity0.7"],
             "& p": {
-                color: palette.text["primary"]
+                color: palette.text.primary
             },
             "& svg": {
-                color: palette.text["primary"]
+                color: palette.text.primary
             },
             opacity: 0.7
         },
         "& .MuiListItem-root.Mui-selected": {
-            backgroundColor: palette.background["main"],
+            backgroundColor: palette.background.main,
             "& p": {
-                color: palette.text["primary"]
+                color: palette.text.primary
             },
             "& svg": {
-                color: palette.text["primary"]
+                color: palette.text.primary
             }
         }
     },
@@ -130,7 +131,7 @@ const useStyles = makeStyles(({ palette }) => ({
             lineHeight: "18px",
             fontWeight: 400,
             letterSpacing: "-0.12px",
-            color: palette.neutral["white"],
+            color: palette.neutral.white,
             opacity: 0.5
         }
     },
@@ -141,7 +142,7 @@ const useStyles = makeStyles(({ palette }) => ({
     }
 }));
 
-function SideBar({ adminType = "private" }) {
+function SideBar({ adminType }) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -169,7 +170,7 @@ function SideBar({ adminType = "private" }) {
 
     useEffect(() => {
         if (!isEmpty(menuNum)) {
-            let initMenu = {};
+            const initMenu = {};
             MenuData[menuType]?.map((group) => {
                 group?.siblings?.map((menus) => {
                     if (menus.subMenus) {
@@ -189,26 +190,24 @@ function SideBar({ adminType = "private" }) {
         <Box component="nav" sx={{ display: "flex" }} aria-label="mailbox folders">
             <Drawer className={classes.drawer} classes={{ paper: classes.drawerPaper }} variant="permanent" anchor="left">
                 <PerfectScrollbar component="div" className={classes.scrollHeight}>
-                    {MenuData[menuType]?.map((group, index) => (
-                        <React.Fragment key={`navigation-${index}`}>
+                    {MenuData[menuType]?.map((group) => (
+                        <React.Fragment key={`navigation-${group.caption}`}>
                             <List
                                 component="div"
                                 className={group.menu.some((menuName) => open[menuName]) ? classes.collapsedList : classes.list}
                                 subheader={
-                                    <>
-                                        {group.setCaption ? (
-                                            <Typography className={classes.caption} variant="caption" display="block">
-                                                {group.caption}
-                                            </Typography>
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </>
+                                    group.setCaption ? (
+                                        <Typography className={classes.caption} variant="caption" display="block">
+                                            {group.caption}
+                                        </Typography>
+                                    ) : (
+                                        <></>
+                                    )
                                 }>
                                 {group?.siblings?.map((menu, index) => (
-                                    <React.Fragment key={`collapsed-menu-${index}`}>
+                                    <React.Fragment key={`collapsed-menu-${menu.menu}-${index}`}>
                                         {menu?.subMenus ? (
-                                            <React.Fragment key={`list-${index}`}>
+                                            <React.Fragment key={`list-${menu.menu}`}>
                                                 <ListItem
                                                     button
                                                     disabled={menu.disabled}
@@ -227,10 +226,10 @@ function SideBar({ adminType = "private" }) {
                                                 </ListItem>
                                                 <Collapse in={open[menu.menu]} unmountOnExit>
                                                     <List component="div">
-                                                        {menu.subMenus.map((subMenu, index) => (
+                                                        {menu.subMenus.map((subMenu) => (
                                                             <ListItem
                                                                 button
-                                                                key={`sub-menu-${index}`}
+                                                                key={`sub-menu-${subMenu.num}`}
                                                                 disabled={subMenu.disabled}
                                                                 selected={menuNum === subMenu.num}
                                                                 className={classes.listItem}
@@ -278,5 +277,14 @@ function SideBar({ adminType = "private" }) {
         </Box>
     );
 }
+
+SideBar.propTypes = {
+    adminType: PropTypes.string // PropTypes.string.isRequired로 변경해서 사용해주세요.
+};
+
+// 이 부분은 나중에 삭제해주세요.
+SideBar.defaultProps = {
+    adminType: "private"
+};
 
 export default withRouter(SideBar);

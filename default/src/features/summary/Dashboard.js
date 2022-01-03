@@ -62,7 +62,7 @@ export default function Dashboard() {
         isLoading: updateLoading,
         mutate: updateMutation,
         reset: updateReset
-    } = useMutation(({ url, fileYn, data }) => putData(url, fileYn, data), {
+    } = useMutation(({ url, data }) => putData(url, data), {
         onSuccess: (data) => {
             // 새로운 데이터 가져오기
             if (location.search.includes("gender")) {
@@ -81,7 +81,7 @@ export default function Dashboard() {
     const handleSelect = (name, value, rowIndex) => {
         updateReset();
         setSelectedIndex(rowIndex);
-        updateMutation({ url: "/web/put/example", fileYn: false, data: { [name]: value } });
+        updateMutation({ url: "/web/put/example", data: { [name]: value } });
     };
 
     // 노출순서 등 input 데이터 수정하기

@@ -1,11 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Workbook from "react-excel-workbook";
 import { format } from "utils/common";
 
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export default function ExcelExport({ menu, loading, disabled, excelData, onExcelClick }) {
+function ExcelExport({ menu, loading, disabled, excelData, onExcelClick }) {
     const today = new Date();
 
     const DashboardExcel = () => (
@@ -44,3 +45,13 @@ export default function ExcelExport({ menu, loading, disabled, excelData, onExce
         </>
     );
 }
+
+ExcelExport.propTypes = {
+    menu: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    excelData: PropTypes.arrayOf(PropTypes.object).isRequired,
+    onExcelClick: PropTypes.func.isRequired
+};
+
+export default ExcelExport;

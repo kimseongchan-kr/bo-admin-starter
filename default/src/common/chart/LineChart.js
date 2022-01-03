@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Skeleton from "@mui/material/Skeleton";
 
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
@@ -57,16 +58,19 @@ const data = {
     ]
 };
 
-export default function LineChart({ lineLoading, lineChartData }) {
-    return (
-        <>
-            {lineLoading ? (
-                <Skeleton variant="rectangular" width="100%" height={500} />
-            ) : (
-                <div style={{ position: "relative", width: "100%", height: "500px" }}>
-                    <Line data={data} options={options} />
-                </div>
-            )}
-        </>
+function LineChart({ lineLoading, lineChartData }) {
+    return lineLoading ? (
+        <Skeleton variant="rectangular" width="100%" height={500} />
+    ) : (
+        <div style={{ position: "relative", width: "100%", height: "500px" }}>
+            <Line data={lineChartData || data} options={options} />
+        </div>
     );
 }
+
+LineChart.propTypes = {
+    lineLoading: PropTypes.bool.isRequired,
+    lineChartData: PropTypes.arrayOf(PropTypes.object).isRequired
+};
+
+export default LineChart;

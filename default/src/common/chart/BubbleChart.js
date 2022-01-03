@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Skeleton from "@mui/material/Skeleton";
 
 import { Chart as ChartJS, LinearScale, PointElement, Tooltip, Legend } from "chart.js";
@@ -49,16 +50,19 @@ const data = {
     ]
 };
 
-export default function BubbleChart({ bubbleLoading, bubbleChartData }) {
-    return (
-        <>
-            {bubbleLoading ? (
-                <Skeleton variant="rectangular" width="100%" height={500} />
-            ) : (
-                <div style={{ position: "relative", width: "100%", height: "500px" }}>
-                    <Bubble data={data} options={options} />
-                </div>
-            )}
-        </>
+function BubbleChart({ bubbleLoading, bubbleChartData }) {
+    return bubbleLoading ? (
+        <Skeleton variant="rectangular" width="100%" height={500} />
+    ) : (
+        <div style={{ position: "relative", width: "100%", height: "500px" }}>
+            <Bubble data={bubbleChartData || data} options={options} />
+        </div>
     );
 }
+
+BubbleChart.propTypes = {
+    bubbleLoading: PropTypes.bool.isRequired,
+    bubbleChartData: PropTypes.arrayOf(PropTypes.object).isRequired
+};
+
+export default BubbleChart;

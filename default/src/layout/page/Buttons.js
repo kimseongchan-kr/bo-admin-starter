@@ -1,15 +1,16 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useLocation, useParams } from "react-router-dom";
 
 import Grid from "@mui/material/Grid";
 import ListButton from "common/button/PageButton";
 import SubmitButton from "common/button/SubmitButton";
 
-export default function Buttons({ type, loading, onPageClick, onConfirm }) {
-    const { idx } = useParams();
+function Buttons({ type, loading, onPageClick, onConfirm }) {
     const location = useLocation();
+    const { idx } = useParams();
 
-    const DetailEditButtons = () => (
+    return type === "detail" ? (
         <Grid container spacing={2} justifyContent="center" alignItems="center">
             <Grid item>
                 <ListButton text="목록" pageType="list" onClick={onPageClick} />
@@ -18,9 +19,7 @@ export default function Buttons({ type, loading, onPageClick, onConfirm }) {
                 <ListButton text="수정하기" pageType="edit" onClick={onPageClick} />
             </Grid>
         </Grid>
-    );
-
-    const UploadButtons = () => (
+    ) : (
         <Grid sx={{ px: 3 }} container justifyContent="space-between" alignItems="center">
             <Grid item>
                 <ListButton disabled={loading} text="취소" pageType="search" onClick={() => onConfirm(idx ? "editCancel" : "uploadCancel")} />
@@ -35,6 +34,19 @@ export default function Buttons({ type, loading, onPageClick, onConfirm }) {
             </Grid>
         </Grid>
     );
-
-    return <>{type === "detail" ? <DetailEditButtons /> : <UploadButtons />}</>;
 }
+
+Buttons.propTypes = {
+    loading: PropTypes.bool,
+    onPageClick: PropTypes.func,
+    onConfirm: PropTypes.func,
+    type: PropTypes.string.isRequired
+};
+
+Buttons.defaultProps = {
+    loading: false,
+    onPageClick: () => {},
+    onConfirm: () => {}
+};
+
+export default Buttons;

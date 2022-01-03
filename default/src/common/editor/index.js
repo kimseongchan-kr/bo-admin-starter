@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
 
 import { makeStyles } from "@mui/styles";
@@ -20,13 +21,11 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function Editor({ contents, setContents }) {
+function Editor({ contents, setContents }) {
     const classes = useStyles();
     const quillRef = React.useRef(null);
 
-    const handleChange = (value) => {
-        setContents(value);
-    };
+    const handleChange = (value) => setContents(value);
 
     const imageCallBack = () => {
         // 이미지 업로드 참고: https://github.com/quilljs/quill/issues/1400
@@ -43,7 +42,7 @@ export default function Editor({ contents, setContents }) {
                 const formData = new FormData();
                 formData.append("files", file);
 
-                let headers = {
+                const headers = {
                     Accept: "application/json",
                     "Content-Type": "multipart/form-data"
                 };
@@ -55,8 +54,8 @@ export default function Editor({ contents, setContents }) {
                     .then((res) => {
                         const quill = quillRef.current.getEditor();
                         const range = quill.getSelection(true);
-                        let path = res.data.result;
-                        let imageSrc = "http://localhost:3000/" + path; //이미지의 URL
+                        const path = res.data.result;
+                        const imageSrc = `http://localhost:3000/${path}`; // 이미지의 URL
                         quill.insertEmbed(range.index, "image", imageSrc, "user");
                     })
                     .catch((err) => {
@@ -97,3 +96,10 @@ export default function Editor({ contents, setContents }) {
         </div>
     );
 }
+
+Editor.propTypes = {
+    contents: PropTypes.string.isRequired,
+    setContents: PropTypes.func.isRequired
+};
+
+export default Editor;

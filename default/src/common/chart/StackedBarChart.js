@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Skeleton from "@mui/material/Skeleton";
 
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
@@ -6,7 +7,7 @@ import { Bar } from "react-chartjs-2";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-export const options = {
+const options = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -31,7 +32,7 @@ const labels = ["January", "February", "March", "April", "May", "June", "July", 
 
 const getRandom = (max, min) => Math.floor(Math.random() * (max - min) + min);
 
-export const data = {
+const data = {
     labels,
     datasets: [
         {
@@ -52,16 +53,19 @@ export const data = {
     ]
 };
 
-export default function StackedBarChart({ stackedBarLoading, stackedBarChartData }) {
-    return (
-        <>
-            {stackedBarLoading ? (
-                <Skeleton variant="rectangular" width="100%" height={500} />
-            ) : (
-                <div style={{ position: "relative", width: "100%", height: "500px" }}>
-                    <Bar options={options} data={data} />
-                </div>
-            )}
-        </>
+function StackedBarChart({ stackedBarLoading, stackedBarChartData }) {
+    return stackedBarLoading ? (
+        <Skeleton variant="rectangular" width="100%" height={500} />
+    ) : (
+        <div style={{ position: "relative", width: "100%", height: "500px" }}>
+            <Bar options={options} data={stackedBarChartData || data} />
+        </div>
     );
 }
+
+StackedBarChart.propTypes = {
+    stackedBarLoading: PropTypes.bool.isRequired,
+    stackedBarChartData: PropTypes.arrayOf(PropTypes.object).isRequired
+};
+
+export default StackedBarChart;

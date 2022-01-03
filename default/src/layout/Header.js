@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link, useHistory, withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { menuSelector } from "slices/menuSlice";
 import { setLogOut } from "slices/loginSlice";
@@ -38,8 +38,8 @@ const useStyles = makeStyles(({ palette }) => ({
         top: 0,
         left: 0,
         zIndex: 10,
-        color: palette.text["primary"],
-        backgroundColor: palette.neutral["white"]
+        color: palette.text.primary,
+        backgroundColor: palette.neutral.white
     },
     title: {
         flexGrow: 1
@@ -48,7 +48,7 @@ const useStyles = makeStyles(({ palette }) => ({
         height: "100%",
         width: drawerWidth,
         marginRight: "24px",
-        backgroundColor: palette.neutral["main"]
+        backgroundColor: palette.neutral.main
     },
     logoButton: {
         height: "100%",
@@ -56,21 +56,21 @@ const useStyles = makeStyles(({ palette }) => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        color: palette.neutral["white"]
+        color: palette.neutral.white
     },
     userButton: {
         border: "none",
         boxShadow: "unset",
-        backgroundColor: palette.neutral["white"],
+        backgroundColor: palette.neutral.white,
         "&:hover": {
             border: "none",
             boxShadow: "unset",
-            backgroundColor: palette.neutral["white"]
+            backgroundColor: palette.neutral.white
         },
         "& svg": {
             width: 30,
             height: 30,
-            color: palette.primary["main"]
+            color: palette.primary.main
         }
     },
     userImage: {
@@ -91,12 +91,13 @@ const useStyles = makeStyles(({ palette }) => ({
     }
 }));
 
-function Header(props) {
+function Header() {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
     const { menuTitle } = useSelector(menuSelector);
 
-    const handlePageChange = (path) => props.history.push(path);
+    const handlePageChange = (path) => history.push(path);
 
     const handleLogOut = () => dispatch(setLogOut());
 
@@ -123,9 +124,7 @@ function Header(props) {
                             <Popover
                                 {...bindPopover(popupState)}
                                 className={classes.popover}
-                                classes={{
-                                    paper: classes.paper
-                                }}
+                                classes={{ paper: classes.paper }}
                                 anchorOrigin={{
                                     vertical: "bottom",
                                     horizontal: "center"

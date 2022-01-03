@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Skeleton from "@mui/material/Skeleton";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
@@ -34,16 +35,19 @@ const data = {
     ]
 };
 
-export default function PieChart({ pieLoading, pieChartData }) {
-    return (
-        <>
-            {pieLoading ? (
-                <Skeleton variant="rectangular" width="100%" height={500} />
-            ) : (
-                <div style={{ position: "relative", height: "500px", width: "500px" }}>
-                    <Pie data={data} options={options} />
-                </div>
-            )}
-        </>
+function PieChart({ pieLoading, pieChartData }) {
+    return pieLoading ? (
+        <Skeleton variant="rectangular" width="100%" height={500} />
+    ) : (
+        <div style={{ position: "relative", height: "500px", width: "500px" }}>
+            <Pie data={pieChartData || data} options={options} />
+        </div>
     );
 }
+
+PieChart.propTypes = {
+    pieLoading: PropTypes.bool.isRequired,
+    pieChartData: PropTypes.arrayOf(PropTypes.object).isRequired
+};
+
+export default PieChart;

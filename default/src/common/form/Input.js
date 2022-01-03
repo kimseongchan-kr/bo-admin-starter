@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import { Controller } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 
-function Input({ fullWidth = true, multiline = false, rows = 0, inputType = "text", name, defaultValue, control }) {
+function Input({ fullWidth, multiline, rows, inputType, name, defaultValue, control }) {
     return (
         <Controller
             name={name}
@@ -38,6 +37,13 @@ Input.propTypes = {
     name: PropTypes.string.isRequired,
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     control: PropTypes.object.isRequired
+};
+
+Input.defaultProps = {
+    fullWidth: true,
+    multiline: false,
+    rows: 0,
+    inputType: "text"
 };
 
 export default Input;

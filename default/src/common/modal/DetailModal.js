@@ -32,19 +32,17 @@ function DetailModal() {
     );
 
     return (
-        <>
-            {detailOpen && (
-                <Dialog open={detailOpen} onClose={onClose} sx={{ p: 10 }}>
-                    <DialogTitle>{detailData && detailData.title}</DialogTitle>
-                    <DialogContent>
-                        <table className={classes.detailTable}>{detailData && detailData.type === "quantity" && <QuantityTable />}</table>
-                    </DialogContent>
-                    <DialogActions sx={{ py: 2, px: 2.5 }}>
-                        <CloseButton size="small" text="닫기" onClick={onClose} />
-                    </DialogActions>
-                </Dialog>
-            )}
-        </>
+        detailOpen && (
+            <Dialog open={detailOpen} onClose={onClose} sx={{ p: 10 }}>
+                <DialogTitle>{detailData?.title}</DialogTitle>
+                <DialogContent>
+                    <table className={classes.detailTable}>{detailData?.type === "quantity" && <QuantityTable />}</table>
+                </DialogContent>
+                <DialogActions sx={{ py: 2, px: 2.5 }}>
+                    <CloseButton size="small" text="닫기" onClick={onClose} />
+                </DialogActions>
+            </Dialog>
+        )
     );
 }
 

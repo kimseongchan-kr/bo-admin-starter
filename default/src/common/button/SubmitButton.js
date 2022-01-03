@@ -7,12 +7,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 const StyledButton = styled(Button)(({ theme }) => ({
     "&.Mui-disabled": {
-        border: `1px solid ${theme.palette.disabled["primary"]}`,
-        backgroundColor: theme.palette.disabled["primary"]
+        border: `1px solid ${theme.palette.disabled.primary}`,
+        backgroundColor: theme.palette.disabled.primary
     }
 }));
-
-function SubmitButton({ type = "button", color = "secondary", loading = false, disabled = false, text, onClick }) {
+function SubmitButton({ type, color, loading, disabled, text, onClick }) {
     return (
         <StyledButton
             type={type}
@@ -36,4 +35,11 @@ SubmitButton.propTypes = {
     text: PropTypes.string.isRequired
 };
 
+SubmitButton.defaultProps = {
+    type: "button",
+    color: "secondary",
+    loading: false,
+    disabled: false,
+    onClick: () => {}
+};
 export default SubmitButton;

@@ -2,11 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import styles from "styles/customize/select/FormSelectStyles";
-
 import { Controller } from "react-hook-form";
 import Select from "react-select";
 
-function FormSelect({ isClearable = false, isSearchable = false, name, defaultValue, options, control }) {
+function FormSelect({ isClearable, isSearchable, name, defaultValue, options, control }) {
     return (
         <Controller
             name={name}
@@ -25,6 +24,11 @@ FormSelect.propTypes = {
     defaultValue: PropTypes.object.isRequired,
     options: PropTypes.array.isRequired,
     control: PropTypes.object.isRequired
+};
+
+FormSelect.defaultProps = {
+    isClearable: false,
+    isSearchable: false
 };
 
 export default FormSelect;

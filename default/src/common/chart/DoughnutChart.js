@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Skeleton from "@mui/material/Skeleton";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
@@ -34,16 +35,19 @@ const data = {
     ]
 };
 
-export default function DoughnutChart({ doughnutLoading, doughnutChartData }) {
-    return (
-        <>
-            {doughnutLoading ? (
-                <Skeleton variant="rectangular" width="100%" height={500} />
-            ) : (
-                <div style={{ position: "relative", height: "500px", width: "500px" }}>
-                    <Doughnut data={data} options={options} />
-                </div>
-            )}
-        </>
+function DoughnutChart({ doughnutLoading, doughnutChartData }) {
+    return doughnutLoading ? (
+        <Skeleton variant="rectangular" width="100%" height={500} />
+    ) : (
+        <div style={{ position: "relative", height: "500px", width: "500px" }}>
+            <Doughnut data={doughnutChartData || data} options={options} />
+        </div>
     );
 }
+
+DoughnutChart.propTypes = {
+    doughnutLoading: PropTypes.bool.isRequired,
+    doughnutChartData: PropTypes.arrayOf(PropTypes.object).isRequired
+};
+
+export default DoughnutChart;

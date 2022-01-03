@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Skeleton from "@mui/material/Skeleton";
 
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
@@ -44,16 +45,19 @@ const data = {
     ]
 };
 
-export default function BarChart({ barLoading, barChartData }) {
-    return (
-        <>
-            {barLoading ? (
-                <Skeleton variant="rectangular" width="100%" height={500} />
-            ) : (
-                <div style={{ position: "relative", width: "100%", height: "500px" }}>
-                    <Bar options={options} data={data} />
-                </div>
-            )}
-        </>
+function BarChart({ barLoading, barChartData }) {
+    return barLoading ? (
+        <Skeleton variant="rectangular" width="100%" height={500} />
+    ) : (
+        <div style={{ position: "relative", width: "100%", height: "500px" }}>
+            <Bar options={options} data={barChartData || data} />
+        </div>
     );
 }
+
+BarChart.propTypes = {
+    barLoading: PropTypes.bool.isRequired,
+    barChartData: PropTypes.arrayOf(PropTypes.object).isRequired
+};
+
+export default BarChart;

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import Picker from "@mui/lab/DatePicker";
 import TextField from "@mui/material/TextField";
 
@@ -19,9 +18,14 @@ function DatePicker({ term, name, value, handleDate }) {
 }
 
 DatePicker.propTypes = {
+    term: PropTypes.string.isRequired,
     value: PropTypes.instanceOf(Date),
     name: PropTypes.string.isRequired,
     handleDate: PropTypes.func.isRequired
+};
+
+DatePicker.defaultProps = {
+    value: null
 };
 
 export default DatePicker;
