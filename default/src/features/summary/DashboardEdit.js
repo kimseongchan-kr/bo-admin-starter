@@ -18,24 +18,18 @@ import theme from "styles/theme/form";
 import { ThemeProvider } from "@mui/material/styles";
 
 import Header from "layout/page/Header";
-import Heading from "layout/page/Heading";
 import Buttons from "layout/page/Buttons";
 import UploadImage from "components/image/UploadImage";
-
-import Input from "common/form/Input";
-import FormSelect from "common/form/Select";
-import CheckBox from "common/form/CheckBox";
-import RadioButton from "common/form/RadioButton";
-import ErrorMessage from "common/form/ErrorMessage";
+import EditForm from "features/summary/components/EditForm";
 
 import MessageModal from "common/modal/MessageModal";
 
-import { sampleData, schema, tableSelectOptions } from "components/Data";
+import { schema, sampleData } from "components/Data";
 
 export default function DashboardUpload() {
     const classes = useStyles();
     const { idx } = useParams();
-    const menu = useMenu({ page: "Dashboard", menu: "summary", menuTitle: "Dashboard", menuNum: 0 }); // 메뉴 설정하기
+    const menu = useMenu({ page: "Dashboard", menu: "dashboard", menuTitle: "Dashboard", menuNum: 0 }); // 메뉴 설정하기
 
     const { errors, clearErrors, control, reset, getValues, handleSubmit } = useForm({
         resolver: yupResolver(schema[menu])
@@ -102,7 +96,7 @@ export default function DashboardUpload() {
     const handleRemoveImage = () => deleteMutation({ url: "/delete/example", data: { imageIndex: deleteImage.imageIndex } });
 
     // 수정 API
-    const { isLoading, mutate: updateMutation } = useMutation(({ url, fileYn, formData }) => putData(url, fileYn, formData), {
+    const { isLoading, mutate: updateMutation } = useMutation(({ url, fileYn, formData }) => putData(url, formData, fileYn), {
         onSuccess: (data) => {
             handleMessage({ type: "message", message: data?.message });
             handlePageClick();
@@ -114,16 +108,17 @@ export default function DashboardUpload() {
     const handleDataSubmit = () => {
         const data = getValues();
 
-        let formData = new FormData();
+        const formData = new FormData();
         formData.append("idx", idx);
         formData.append("category", data.category.value);
         formData.append("name", data.name);
 
-        for (let key in imageFiles) {
-            if (imageFiles[key].file) {
-                formData.append("images", imageFiles[key].file);
+        imageFiles?.forEach((imageFile) => {
+            if (imageFile.file) {
+                formData.append("images", imageFile.file);
             }
-        }
+        });
+
         updateMutation({ url: "/web/put/example", fileYn: true, formData });
     };
 
@@ -141,76 +136,7 @@ export default function DashboardUpload() {
                 <Header text="디저트 수정하기" onPageClick={handlePageClick} />
                 <div className={classes.contentContainer}>
                     <UploadImage text="디저트 사진 수정" imageFiles={imageFiles} setImageFiles={setImageFiles} onConfirm={onConfirm} handleDeleteImageFile={handleDeleteImageFile} />
-                    <div className={classes.tableContainer}>
-                        <Heading type="default" text="디저트 정보 입력" />
-                        <table className={classes.table}>
-                            <colgroup>
-                                <col width="20%"></col>
-                                <col width="80%"></col>
-                            </colgroup>
-                            <tbody>
-                                <tr>
-                                    <th>카테고리</th>
-                                    <td>
-                                        <FormSelect
-                                            name="category"
-                                            defaultValue={{ value: data?.category || "", label: data?.category || "카테고리를 선택해주세요" }}
-                                            control={control}
-                                            options={[
-                                                { value: "", label: "카테고리를 선택해주세요" },
-                                                { value: "Cupcake", label: "Cupcake" },
-                                                { value: "Cookie", label: "Cookie" }
-                                            ]}
-                                        />
-                                        {errors.category && <ErrorMessage text="카테고리를 선택해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>디저트명</th>
-                                    <td>
-                                        <Input inputType="text" name="name" defaultValue={data?.name || ""} fullWidth={true} control={control} />
-                                        {errors.name && <ErrorMessage text="디저트명을 입력해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>수량</th>
-                                    <td>
-                                        <Input inputType="number" name="quantity" defaultValue={data?.quantity || ""} control={control} />
-                                        {errors.quantity && <ErrorMessage text="수량을 입력해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>디저트 소개</th>
-                                    <td>
-                                        <Input inputType="text" name="description" defaultValue={data?.description || ""} multiline={true} rows={10} control={control} />
-                                        {errors.description && <ErrorMessage text="디저트 소개를 입력해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>재료 선택</th>
-                                    <td>
-                                        <CheckBox
-                                            options={[
-                                                { defaultValue: data?.ingredients.includes("chocolate"), name: "ingredients_1", label: "chocolate" },
-                                                { defaultValue: data?.ingredients.includes("strawberry"), name: "ingredients_2", label: "strawberry" },
-                                                { defaultValue: data?.ingredients.includes("cheese"), name: "ingredients_3", label: "cheese" },
-                                                { defaultValue: data?.ingredients.includes("others"), name: "ingredients_4", label: "others" }
-                                            ]}
-                                            control={control}
-                                        />
-                                        {errors.ingredients && <ErrorMessage text="재료를 선택해주세요." />}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>판매 여부</th>
-                                    <td>
-                                        <RadioButton name="useYn" defaultValue={data?.useYn || "Y"} control={control} options={tableSelectOptions["useYn"]} />
-                                        {errors.useYn && <ErrorMessage text="판매 여부를 선택해주세요." />}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <EditForm control={control} data={data} errors={errors} />
                 </div>
                 <Buttons type="upload" loading={isLoading} onPageClick={() => handlePageClick("list")} onConfirm={onConfirm} />
             </form>

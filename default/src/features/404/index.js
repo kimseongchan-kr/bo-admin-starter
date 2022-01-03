@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
@@ -41,10 +42,11 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function Page404(props) {
+export default function Page404() {
     const classes = useStyles();
+    const history = useHistory();
 
-    const handlePageChange = () => props.history.replace("/");
+    const handlePageChange = () => history.replace("/");
 
     return (
         <div className={classes.root}>

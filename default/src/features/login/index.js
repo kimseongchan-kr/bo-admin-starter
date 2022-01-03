@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { setIsLogin } from "slices/loginSlice";
 import useMessage from "hooks/useMessage";
 
-import { palette } from "styles/theme/palette";
+import { useTheme } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -11,7 +11,7 @@ import Checkbox from "@mui/material/Checkbox";
 
 import MessageModal from "common/modal/MessageModal";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({ palette }) => ({
     loginContainer: {
         width: "100%",
         height: "100%"
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 4,
-        backgroundColor: theme.palette.neutral["white"]
+        backgroundColor: palette.neutral.white
     },
     contents: {
         display: "block",
@@ -44,26 +44,26 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 13,
         lineHeight: "56px",
         border: "none",
-        borderBottom: `1px solid ${theme.palette.border["opacity0.2"]}`,
+        borderBottom: `1px solid ${palette.border["opacity0.2"]}`,
         outline: "none"
     },
     checkbox: {
         marginTop: 20,
         fontSize: 13,
         lineHeight: "20px",
-        color: theme.palette.text["label"],
+        color: palette.text.label,
         letterSpacing: "-0.48px"
     },
     loginButton: {
         width: "100%",
         height: 48,
         marginTop: 42,
-        backgroundColor: theme.palette.primary["main"],
+        backgroundColor: palette.primary.main,
         cursor: "pointer",
         fontSize: 13,
         letterSpacing: "-0.26px",
         fontWeight: 600,
-        color: theme.palette.neutral["white"],
+        color: palette.neutral.white,
         border: "none",
         borderRadius: 24,
         outline: "none"
@@ -80,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const theme = useTheme();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -114,7 +115,7 @@ export default function Login() {
                         onChange={(e) => setEmail(e.target.value)}
                         onFocus={() => setFocused("email")}
                         onBlur={() => setFocused(null)}
-                        style={isFocused === "email" ? { borderBottom: `2px solid ${palette.primary["main"]}` } : null}
+                        style={isFocused === "email" ? { borderBottom: `2px solid ${theme.palette.primary.main}` } : null}
                     />
                     <input
                         className={classes.input}
@@ -125,7 +126,7 @@ export default function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                         onFocus={() => setFocused("password")}
                         onBlur={() => setFocused(null)}
-                        style={isFocused === "password" ? { borderBottom: `2px solid ${palette.primary["main"]}` } : null}
+                        style={isFocused === "password" ? { borderBottom: `2px solid ${theme.palette.primary.main}` } : null}
                     />
                     <FormControlLabel className={classes.checkbox} control={<Checkbox checked={checked} name="checked" onChange={(e) => setChecked(e.target.checked)} />} label="자동 로그인" />
                     <div>

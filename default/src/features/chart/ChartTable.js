@@ -29,22 +29,52 @@ export default function ChartTable() {
     useEffect(() => {
         setDessert((prev) => ({
             ...prev,
-            term: searchState["dessertTerm"] || "daily",
-            startDate: searchState["dessertStartDate"] ? new Date(searchState["dessertStartDate"]) : null,
-            endDate: searchState["dessertEndDate"] ? new Date(searchState["dessertEndDate"]) : null
+            term: searchState.dessertTerm || "daily",
+            startDate: searchState.dessertStartDate ? new Date(searchState.dessertStartDate) : null,
+            endDate: searchState.dessertEndDate ? new Date(searchState.dessertEndDate) : null
         }));
 
         setFood((prev) => ({
             ...prev,
-            term: searchState["foodTerm"] || "monthly",
-            startDate: searchState["foodStartDate"] ? new Date(searchState["foodStartDate"]) : null,
-            endDate: searchState["foodEndDate"] ? new Date(searchState["foodEndDate"]) : null
+            term: searchState.footTerm || "monthly",
+            startDate: searchState.foodStartDate ? new Date(searchState.foodStartDate) : null,
+            endDate: searchState.foodEndDate ? new Date(searchState.foodEndDate) : null
         }));
     }, [searchState]);
+
+    // Dataset 1
+    const { isLoading: dataset1Loading, data: dataset1 } = useGetList({
+        menu,
+        url: "/web/food-chart",
+        type: "food"
+    });
+
+    // Dataset 2
+    const { isLoading: dataset2Loading, data: dataset2 } = useGetList({
+        menu,
+        url: "/web/dessert-chart",
+        type: "dessert"
+    });
 
     const handleFood = (name, value) => setFood((prev) => ({ ...prev, [name]: value }));
 
     const handleDessert = (name, value) => setDessert((prev) => ({ ...prev, [name]: value }));
+
+    // 검색하기
+    const handleSearch = (obj) => history.push({ pathname: location.pathname, search: queryToString(obj) });
+
+    // 검색하기
+    const handleSearchFilter = (obj) => {
+        dispatch(setSearchFilters(obj));
+        handleSearch({
+            foodTerm: food.startDate || food.endDate ? food.term : null,
+            foodStartDate: food.startDate ? format(food.term, food.startDate) : null,
+            foodEndDate: food.endDate ? format(food.term, food.endDate) : null,
+            dessertTerm: dessert.startDate || dessert.endDate ? dessert.term : null,
+            dessertStartDate: dessert.startDate ? format(dessert.term, dessert.startDate) : null,
+            dessertEndDate: dessert.endDate ? format(dessert.term, dessert.endDate) : null
+        });
+    };
 
     // 조회 버튼 클릭
     const handleSubmit = (type) => {
@@ -62,36 +92,6 @@ export default function ChartTable() {
             });
         }
     };
-
-    // 검색하기
-    const handleSearchFilter = (obj) => {
-        dispatch(setSearchFilters(obj));
-        handleSearch({
-            foodTerm: food.startDate || food.endDate ? food.term : null,
-            foodStartDate: food.startDate ? format(food.term, food.startDate) : null,
-            foodEndDate: food.endDate ? format(food.term, food.endDate) : null,
-            dessertTerm: dessert.startDate || dessert.endDate ? dessert.term : null,
-            dessertStartDate: dessert.startDate ? format(dessert.term, dessert.startDate) : null,
-            dessertEndDate: dessert.endDate ? format(dessert.term, dessert.endDate) : null
-        });
-    };
-
-    // Dataset 1
-    const { isLoading: dataset1Loading, data: dataset1 } = useGetList({
-        menu,
-        url: "/web/food-chart",
-        type: "food"
-    });
-
-    // Dataset 2
-    const { isLoading: dataset2Loading, data: dataset2 } = useGetList({
-        menu,
-        url: "/web/dessert-chart",
-        type: "dessert"
-    });
-
-    // 검색하기
-    const handleSearch = (obj) => history.push({ pathname: location.pathname, search: queryToString(obj) });
 
     return (
         <>

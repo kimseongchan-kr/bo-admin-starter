@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import useStyles from "styles/customize/components/SearchStyles";
 import theme from "styles/theme/search";
@@ -14,7 +15,7 @@ import DatePicker from "common/search/DatePicker";
 
 import { searchOption } from "components/Data";
 
-export default function Search({ title, type, term, dates, handleChange, handleDate, handleSubmit }) {
+function Search({ title, type, term, dates, handleChange, handleDate, handleSubmit }) {
     const classes = useStyles();
 
     return (
@@ -32,14 +33,14 @@ export default function Search({ title, type, term, dates, handleChange, handleD
                         name="term"
                         value={term["term"]}
                         onChange={(e) => handleChange("term", e.target.value)}>
-                        {searchOption["term"].map((list) => (
-                            <MenuItem key={`key-${list.label}`} value={list.value}>
+                        {searchOption.term.map((list) => (
+                            <MenuItem key={`menu-item-${list.label}`} value={list.value}>
                                 {list.label}
                             </MenuItem>
                         ))}
                     </Select>
                 </Grid>
-                <DatePicker term={term["term"]} dates={dates} handleDate={handleDate} />
+                <DatePicker term={term.term} dates={dates} handleDate={handleDate} />
                 <Grid item>
                     <Button variant="contained" onClick={() => handleSubmit(type)}>
                         조회
@@ -49,3 +50,22 @@ export default function Search({ title, type, term, dates, handleChange, handleD
         </ThemeProvider>
     );
 }
+
+Search.propTypes = {
+    title: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    term: PropTypes.string.isRequired,
+    dates: PropTypes.shape({
+        startDate: PropTypes.string,
+        endDate: PropTypes.string
+    }),
+    handleChange: PropTypes.func.isRequired,
+    handleDate: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired
+};
+
+Search.defaultProps = {
+    dates: { startDate: null, endDate: null }
+};
+
+export default Search;

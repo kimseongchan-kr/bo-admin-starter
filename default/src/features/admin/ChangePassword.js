@@ -61,7 +61,7 @@ const useStyles = makeStyles(({ palette }) => ({
     submitButton: {
         width: "100%",
         height: "100%",
-        backgroundColor: palette.primary["main"],
+        backgroundColor: palette.primary.main,
         cursor: "pointer",
         boxShadow: "unset",
         fontSize: 13,
@@ -73,7 +73,7 @@ const useStyles = makeStyles(({ palette }) => ({
         outline: "none",
         "&:hover": {
             boxShadow: "unset",
-            backgroundColor: palette.primary["main"]
+            backgroundColor: palette.primary.main
         }
     }
 }));
