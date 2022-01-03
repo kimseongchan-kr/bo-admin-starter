@@ -1,59 +1,39 @@
 import axios from "axios";
-const BASE_URL = `${process.env.REACT_APP_BASE_URL}`;
 
-const returnData = (res) => res.data;
+const instance = axios.create({
+    baseURL: process.env.REACT_APP_BASE_URL,
+    timeout: 5000
+});
 
-const catchError = (err) => Promise.reject({ statusCode: err.response?.status || 500, message: err.response?.status ? err.message : "네트워크 에러" });
+instance.defaults.headers.common["Accept"] = "application/json";
+instance.defaults.headers.common["Content-Type"] = "application/json; charset=UTF-8";
+// instance.defaults.withCredentials = true; 토큰방식이 아닌 세션을 사용할 경우
 
-export const getData = async (url, params) => {
-    const instance = axios.create({
-        baseURL: `${BASE_URL}`,
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json; charset=UTF-8;",
-            token: localStorage.getItem("token")
-        },
-        params: params || {}
-    });
+// axios 헤더 설정
+instance.interceptors.request.use((config) => {
+    if (config.fileFlag === true) {
+        config.headers["Content-Type"] = "multipart/form-data";
+        delete config.fileFlag;
+    }
+    config.headers.token = localStorage.getItem("token");
 
-    return await instance.get(`${url}`).then(returnData).catch(catchError);
-};
+    return config;
+});
 
-export const postData = async (url, fileYn, body) => {
-    const instance = axios.create({
-        baseURL: `${BASE_URL}`,
-        headers: {
-            Accept: "application/json",
-            "Content-Type": fileYn ? "multipart/form-data" : "application/json; charset=UTF-8;",
-            token: localStorage.getItem("token")
-        }
-    });
+// 응답 처리
+instance.interceptors.response.use(
+    (res) => {
+        return res.data;
+    },
+    (err) => {
+        return Promise.reject({ statusCode: err.response?.status || 500, message: err.response?.status ? err.message : "네트워크 에러" });
+    }
+);
 
-    return await instance.post(`${url}`, body).then(returnData).catch(catchError);
-};
+export const getData = async (url, params = {}) => await instance.get(`${url}`, { params });
 
-export const putData = async (url, fileYn, body) => {
-    const instance = axios.create({
-        baseURL: `${BASE_URL}`,
-        headers: {
-            Accept: "application/json",
-            "Content-Type": fileYn ? "multipart/form-data" : "application/json; charset=UTF-8;",
-            token: localStorage.getItem("token")
-        }
-    });
+export const postData = async (url, body = {}, fileFlag = false) => await instance.post(`${url}`, body, { fileFlag });
 
-    return await instance.put(`${url}`, body).then(returnData).catch(catchError);
-};
+export const putData = async (url, body = {}, fileFlag = true) => await instance.put(`${url}`, body, { fileFlag });
 
-export const deleteData = async (url, body) => {
-    const instance = axios.create({
-        baseURL: `${BASE_URL}`,
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json; charset=UTF-8;",
-            token: localStorage.getItem("token")
-        }
-    });
-
-    return await instance.delete(`${url}`, { data: body }).then(returnData).catch(catchError);
-};
+export const deleteData = async (url, body = {}) => await instance.delete(`${url}`, { data: body });
