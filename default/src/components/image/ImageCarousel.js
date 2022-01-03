@@ -50,7 +50,9 @@ function ImageCarousel({ text, images, alt }) {
                     </Grid>
                     <Grid className={classes.imagePreviewContainer} container justifyContent="flex-start" alignItems="center">
                         {images.map((img, index) => (
-                            <img key={index} className={classes.proImg} src={img.img_detail} alt={alt} onClick={() => onImageClick(index)} />
+                            <div key={`${index}`} tabIndex={0} role="button" onClick={() => onImageClick(index)}>
+                                <img className={classes.proImg} src={img.img_detail} alt={alt} />
+                            </div>
                         ))}
                     </Grid>
                 </>
@@ -64,6 +66,7 @@ function ImageCarousel({ text, images, alt }) {
 }
 
 ImageCarousel.propTypes = {
+    text: PropTypes.string.isRequired,
     images: PropTypes.array.isRequired,
     alt: PropTypes.string.isRequired
 };

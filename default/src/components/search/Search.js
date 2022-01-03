@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { searchSelector, setSearchFilters } from "slices/searchSlice";
 import { handleDateClick } from "utils/common";
@@ -19,7 +20,7 @@ import SearchField from "common/search/SearchField";
 
 import { searchComponent as component, searchCaption as caption, searchRadioRow, searchSelect, buttons } from "components/Data";
 
-export default function Search(props) {
+function Search(props) {
     const { heading, total, dataList, menu, handleSearch, onAddButtonClick } = props;
     const { date, selects, radio, searchKeyword } = component[menu];
     const { addTopButton } = buttons;
@@ -33,15 +34,26 @@ export default function Search(props) {
     const [dates, setDates] = useState({ startDate: null, endDate: null }); // startDate: 시작일, endDate: 종료일
 
     useEffect(() => {
-        setKeyword(searchState["searchKeyword"] || ""); // 검색어 초기화
-        setSearchType(searchState["searchType"] || ""); // 검색 조건 초기화
-        setDates((prev) => ({ ...prev, startDate: searchState["startDate"] || null, endDate: searchState["endDate"] || null })); // 시작일, 종료일 초기화
+        setKeyword(searchState.searchKeyword || ""); // 검색어 초기화
+        setSearchType(searchState.searchType || ""); // 검색 조건 초기화
+        setDates((prev) => ({ ...prev, startDate: searchState.startDate || null, endDate: searchState.endDate || null })); // 시작일, 종료일 초기화
     }, [searchState]);
+
+    // 검색하기
+    const handleSearchFilter = (obj) => {
+        // 새로 검색할 경우 페이지 번호 초기화하기
+        if (parseInt(searchState.pageNumber, 10) > 1) {
+            Object.assign(obj, { pageNumber: 1 });
+        }
+
+        dispatch(setSearchFilters(obj));
+        handleSearch(obj);
+    };
 
     // 기간 검색 버튼
     const handleClick = (name, months) => {
-        const dates = handleDateClick(name, months); // dates: {startDate, endDate}
-        handleSearchFilter(dates);
+        const calculatedDates = handleDateClick(name, months); // dates: {startDate, endDate}
+        handleSearchFilter(calculatedDates);
     };
 
     // 검색 조건 (select) 변경
@@ -58,7 +70,10 @@ export default function Search(props) {
     const handleRadioChange = (e) => handleSearchFilter({ [e.target.name]: e.target.value });
 
     // 검색 기간 (기간 검색 부분의 Date Picker) 변경
-    const handleDate = (type, date) => setDates((prev) => ({ ...prev, [type]: date }));
+    const handleDate = (name, value) => setDates((prev) => ({ ...prev, [name]: value }));
+
+    // 조회 버튼 클릭
+    const handleSubmit = () => handleSearchFilter({ ...dates, searchType, searchKeyword: keyword });
 
     // 검색 키워드 변경
     const handleKeyword = (e) => {
@@ -69,22 +84,8 @@ export default function Search(props) {
         }
     };
 
-    // 조회 버튼 클릭
-    const handleSubmit = () => handleSearchFilter({ ...dates, searchType, searchKeyword: keyword });
-
     // 테이블 데이터 정렬하기
     const handleSort = (e) => handleSearchFilter({ [e.target.name]: e.target.value });
-
-    // 검색하기
-    const handleSearchFilter = (obj) => {
-        // 새로 검색할 경우 페이지 번호 초기화하기
-        if (parseInt(searchState["pageNumber"]) > 1) {
-            Object.assign(obj, { pageNumber: 1 });
-        }
-
-        dispatch(setSearchFilters(obj));
-        handleSearch(obj);
-    };
 
     return (
         <ThemeProvider theme={theme}>
@@ -114,31 +115,29 @@ export default function Search(props) {
                             </tr>
                         )}
                         {selects &&
-                            searchSelect[menu].map((row, index) => {
-                                return (
-                                    <tr key={`select-${index}`}>
-                                        {row.length > 1 ? (
-                                            row.map((type, index) => {
-                                                return (
-                                                    <React.Fragment key={`search-select-${index}`}>
-                                                        <th>{caption[type]}</th>
-                                                        <td>
-                                                            <SearchSelect name={type} dataList={dataList[type]} handleChange={handleChange} />
-                                                        </td>
-                                                    </React.Fragment>
-                                                );
-                                            })
-                                        ) : (
-                                            <>
-                                                <th>{caption[row[0]]}</th>
-                                                <td colSpan={3}>
-                                                    <SearchSelect name={row[0]} dataList={dataList[row[0]]} handleChange={handleChange} />
-                                                </td>
-                                            </>
-                                        )}
-                                    </tr>
-                                );
-                            })}
+                            searchSelect[menu].map((row, index) => (
+                                <tr key={`select-${index}`}>
+                                    {row.length > 1 ? (
+                                        row.map((type, index) => {
+                                            return (
+                                                <React.Fragment key={`search-select-${index}`}>
+                                                    <th>{caption[type]}</th>
+                                                    <td>
+                                                        <SearchSelect name={type} dataList={dataList[type]} handleChange={handleChange} />
+                                                    </td>
+                                                </React.Fragment>
+                                            );
+                                        })
+                                    ) : (
+                                        <>
+                                            <th>{caption[row[0]]}</th>
+                                            <td colSpan={3}>
+                                                <SearchSelect name={row[0]} dataList={dataList[row[0]]} handleChange={handleChange} />
+                                            </td>
+                                        </>
+                                    )}
+                                </tr>
+                            ))}
                         {radio &&
                             searchRadioRow[menu].map((row, index) => (
                                 <tr key={`radio-${index}`}>
@@ -195,3 +194,20 @@ export default function Search(props) {
         </ThemeProvider>
     );
 }
+
+Search.propTypes = {
+    total: PropTypes.number,
+    dataList: PropTypes.object,
+    onAddButtonClick: PropTypes.func,
+    menu: PropTypes.string.isRequired,
+    heading: PropTypes.string.isRequired,
+    handleSearch: PropTypes.func.isRequired
+};
+
+Search.defaultProps = {
+    total: 0,
+    dataList: {},
+    onAddButtonClick: () => {}
+};
+
+export default Search;

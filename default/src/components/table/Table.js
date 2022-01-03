@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { searchSelector, setSearchFilters } from "slices/searchSlice";
 
@@ -14,33 +15,15 @@ import TablePagination from "@mui/material/TablePagination";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import TablePaginationActions from "components/table/Pagination";
+import ExampleData from "features/example/components/ListTable";
 
-import { headCell, sampleData } from "components/Data";
+import { headCell } from "components/Data";
 
-export default function SearchTable(props) {
-    const { menu, loading, data, total, handleSearch, onEditClick, onDetailClick, onAddClick } = props;
-
+function SearchTable(props) {
+    const { menu, loading, data, total, handleSearch, onAddClick, ...rest } = props;
     const classes = useStyles();
     const dispatch = useDispatch();
     const { pageNumber, pageShow } = useSelector(searchSelector);
-
-    const ExampleData = ({ row }) => {
-        return (
-            <>
-                <TableCell align="center" onClick={() => onDetailClick(row.idx)}>
-                    <p className={classes.underlinedContent}>{row.idx || "-"}</p>
-                </TableCell>
-                <TableCell align="center" onClick={() => onEditClick(row.idx, sampleData)}>
-                    <p className={classes.underlinedContent}>{row.name || "-"}</p>
-                </TableCell>
-                <TableCell align="center">{row.calories || "-"}</TableCell>
-                <TableCell align="center">{row.fat || "-"}</TableCell>
-                <TableCell align="center">{row.carbs || "-"}</TableCell>
-                <TableCell align="center">{row.protein || "-"}</TableCell>
-                <TableCell align="center">{row.regdate || "-"}</TableCell>
-            </>
-        );
-    };
 
     // 테이블 페이지 번호 변경하기
     const handlePage = (paging) => {
@@ -60,10 +43,10 @@ export default function SearchTable(props) {
                 <Table className={classes.table} aria-labelledby={`${menu.toLowerCase()}Table`} size="medium" aria-label={`${menu.toLowerCase()} table`}>
                     <TableHead>
                         <TableRow>
-                            {headCell[menu].map((headCell) => {
+                            {headCell[menu].map(({ id, label }) => {
                                 return (
-                                    <TableCell key={headCell.id} align="center">
-                                        {headCell.label}
+                                    <TableCell key={id} align="center">
+                                        {label}
                                     </TableCell>
                                 );
                             })}
@@ -83,10 +66,10 @@ export default function SearchTable(props) {
                                 </TableCell>
                             </TableRow>
                         ) : (
-                            data.map((row, index) => {
+                            data.map((row) => {
                                 return (
-                                    <TableRow hover tabIndex={-1} key={index}>
-                                        {menu === "Example" && <ExampleData row={row} />}
+                                    <TableRow hover tabIndex={-1} key={row.idx}>
+                                        {menu === "Example" && <ExampleData row={row} {...rest} />}
                                     </TableRow>
                                 );
                             })
@@ -112,3 +95,20 @@ export default function SearchTable(props) {
         </Paper>
     );
 }
+
+SearchTable.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.object),
+    total: PropTypes.number,
+    onAddClick: PropTypes.func,
+    menu: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
+    handleSearch: PropTypes.func.isRequired
+};
+
+SearchTable.defaultProps = {
+    data: [],
+    total: 0,
+    onAddClick: () => {}
+};
+
+export default SearchTable;

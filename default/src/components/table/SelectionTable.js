@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { searchSelector, setSearchFilters } from "slices/searchSlice";
 
@@ -10,57 +11,20 @@ import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import Grid from "@mui/material/Grid";
 import Checkbox from "@mui/material/Checkbox";
 import TablePagination from "@mui/material/TablePagination";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import TableButton from "common/table/Button";
-import TableSelect from "common/table/Select";
-import TableTextField from "common/table/TextField";
 import TablePaginationActions from "components/table/Pagination";
+import DashboardData from "features/summary/components/ListTable";
 
-import { headCell, tableSelectOptions } from "components/Data";
+import { headCell } from "components/Data";
 
-export default function SelectionTable(props) {
-    const { menu, loading, data, total, disabled, selected, setSelected, handleChange, handleSelect, handleSearch, onPageClick, onDeleteClick, ...rest } = props;
-
+function SelectionTable(props) {
+    const { menu, loading, data, total, disabled, selected, setSelected, handleSearch, onDeleteClick, ...rest } = props;
     const classes = useStyles();
     const dispatch = useDispatch();
     const { pageNumber, pageShow } = useSelector(searchSelector);
-
-    const DashboardData = ({ row, index }) => {
-        return (
-            <>
-                <TableCell align="center" onClick={() => onPageClick("detail", row.idx)}>
-                    <p className={classes.underlinedContent}>{row.name || "-"}</p>
-                </TableCell>
-                <TableCell align="center">{row.calories || "-"}</TableCell>
-                <TableCell align="center">{row.fat || "-"}</TableCell>
-                <TableCell align="center">{row.carbs || "-"}</TableCell>
-                <TableCell align="center">{row.protein || "-"}</TableCell>
-                <TableCell align="center">
-                    <TableSelect rowIndex={index} name="useYn" options={tableSelectOptions["useYn"]} value={row.useYn} label={row.useYnText} handleSelect={handleSelect} />
-                </TableCell>
-                <TableCell align="center">
-                    <TableSelect rowIndex={index} name="viewYn" options={tableSelectOptions["viewYn"]} value={row.viewYn} label={row.viewYnText} handleSelect={handleSelect} />
-                </TableCell>
-                <TableCell align="center" width={300}>
-                    <TableTextField index={index} name="sortOrder" value={row.sortOrder} handleChange={handleChange} />
-                </TableCell>
-                <TableCell align="center">
-                    <Grid container justifyContent="center" alignItems="center" spacing={2}>
-                        <Grid item>
-                            <TableButton disabled={disabled} pageType="edit" text="수정" rowIndex={index} onClick={onPageClick} />
-                        </Grid>
-                        <Grid item>
-                            <TableButton disabled={disabled} pageType="delete" text="삭제" rowIndex={index} onClick={onDeleteClick} />
-                        </Grid>
-                    </Grid>
-                </TableCell>
-            </>
-        );
-    };
 
     // all rows selection
     const handleSelectAllClick = (event) => {
@@ -120,10 +84,10 @@ export default function SelectionTable(props) {
                                     inputProps={{ "aria-label": "select all data" }}
                                 />
                             </TableCell>
-                            {headCell[menu].map((cell) => {
+                            {headCell[menu].map(({ id, label }) => {
                                 return (
-                                    <TableCell key={cell.id} align="center">
-                                        {cell.label}
+                                    <TableCell key={id} align="center">
+                                        {label}
                                     </TableCell>
                                 );
                             })}
@@ -154,7 +118,8 @@ export default function SelectionTable(props) {
                                                 <TableCell padding="checkbox">
                                                     <Checkbox onClick={(event) => handleClick(event, row.idx)} checked={isItemSelected} inputProps={{ "aria-labelledby": labelId }} />
                                                 </TableCell>
-                                                <DashboardData row={row} index={index} />
+                                                {/* rest :  handleChange, handleSelect, onPageClick  */}
+                                                <DashboardData row={row} index={index} disabled={disabled} onDeleteClick={onDeleteClick} {...rest} />
                                             </TableRow>
                                         )}
                                     </React.Fragment>
@@ -185,3 +150,24 @@ export default function SelectionTable(props) {
         </Paper>
     );
 }
+
+SelectionTable.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.object),
+    total: PropTypes.number,
+    disabled: PropTypes.bool,
+    onDeleteClick: PropTypes.func,
+    menu: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
+    selected: PropTypes.array.isRequired,
+    setSelected: PropTypes.func.isRequired,
+    handleSearch: PropTypes.func.isRequired
+};
+
+SelectionTable.defaultProps = {
+    data: [],
+    total: 0,
+    disabled: false,
+    onDeleteClick: () => {}
+};
+
+export default SelectionTable;

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import useStyles from "styles/customize/table/SearchTableStyles";
 import TableContainer from "@mui/material/TableContainer";
@@ -12,9 +13,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import { headCell } from "components/Data";
 
-export default function ChartTable(props) {
+function ChartTable(props) {
     const { menu, loading, data } = props;
-
     const classes = useStyles();
 
     return (
@@ -26,9 +26,9 @@ export default function ChartTable(props) {
                             <TableCell width={50} className={classes.sticky}>
                                 Total
                             </TableCell>
-                            {headCell[menu].map((headCell) => (
-                                <TableCell key={headCell.id} align="center">
-                                    {headCell.label}
+                            {headCell[menu].map(({ id, label }) => (
+                                <TableCell key={id} align="center">
+                                    {label}
                                 </TableCell>
                             ))}
                         </TableRow>
@@ -68,3 +68,15 @@ export default function ChartTable(props) {
         </Paper>
     );
 }
+
+ChartTable.propTypes = {
+    menu: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
+    data: PropTypes.arrayOf(PropTypes.object)
+};
+
+ChartTable.defaultProps = {
+    data: []
+};
+
+export default ChartTable;

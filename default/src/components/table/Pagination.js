@@ -47,7 +47,7 @@ function TablePaginationActions(props) {
                 )}
                 {deleteButton[menu] && (
                     <Grid item>
-                        <DeleteButton color="error" disabled={disabled} text="디저트 삭제" onClick={onDeleteClick} />
+                        <DeleteButton color="error" disabled={disabled} text="삭제" onClick={onDeleteClick} />
                     </Grid>
                 )}
             </Grid>
@@ -56,13 +56,28 @@ function TablePaginationActions(props) {
 }
 
 TablePaginationActions.propTypes = {
+    text: PropTypes.string,
+    disabled: PropTypes.bool,
+    onAddClick: PropTypes.func,
+    onDeleteClick: PropTypes.func,
+    excelLoading: PropTypes.bool,
+    excelData: PropTypes.arrayOf(PropTypes.object),
+    onExcelClick: PropTypes.func,
     menu: PropTypes.string.isRequired,
-    onAddButtonClick: PropTypes.func,
-    onDeleteButtonClick: PropTypes.func,
     count: PropTypes.number.isRequired,
     page: PropTypes.number.isRequired,
     rowsPerPage: PropTypes.number.isRequired,
     onPageChange: PropTypes.func.isRequired
+};
+
+TablePaginationActions.defaultProps = {
+    text: "",
+    disabled: false,
+    onAddClick: () => {},
+    onDeleteClick: () => {},
+    excelLoading: false,
+    excelData: [],
+    onExcelClick: () => {}
 };
 
 export default TablePaginationActions;
