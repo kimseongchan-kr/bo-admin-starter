@@ -11,7 +11,7 @@ import DatePicker from "@mui/lab/DatePicker";
 
 import { dailyFormat, monthlyFormat } from "components/Data";
 
-function DateSearchPicker({ caption = false, term, dates, handleDate }) {
+function DateSearchPicker({ caption, term, dates, handleDate }) {
     const classes = useStyles();
 
     return (
@@ -65,6 +65,11 @@ DateSearchPicker.propTypes = {
     dates: PropTypes.object,
     term: PropTypes.string.isRequired,
     handleDate: PropTypes.func.isRequired
+};
+
+DateSearchPicker.defaultProps = {
+    caption: false,
+    dates: null
 };
 
 export default DateSearchPicker;

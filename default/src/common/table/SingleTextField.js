@@ -5,7 +5,7 @@ import theme from "styles/theme/textfield";
 import { ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 
-function SingleTextField({ inputType = "text", name, value, fullWidth = true, handleChange }) {
+function SingleTextField({ inputType, name, value, fullWidth, handleChange }) {
     return (
         <ThemeProvider theme={theme}>
             <TextField
@@ -26,10 +26,16 @@ function SingleTextField({ inputType = "text", name, value, fullWidth = true, ha
 }
 
 SingleTextField.propTypes = {
+    fullWidth: PropTypes.bool,
     inputType: PropTypes.string,
     name: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     handleChange: PropTypes.func.isRequired
+};
+
+SingleTextField.defaultProps = {
+    fullWidth: true,
+    inputType: "text"
 };
 
 export default SingleTextField;

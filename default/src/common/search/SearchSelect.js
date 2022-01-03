@@ -18,7 +18,7 @@ function SearchSelect({ menu, name, value, dataList, handleChange }) {
 
     const options = name === "searchType" || name === "sort" ? option[name][menu] : option[name];
 
-    const selectOptions = dataList?.[name]?.length > 0 ? [...options, ...dataList[name]] : options ? options : [];
+    const selectOptions = dataList?.length > 0 ? [...options, ...dataList] : options;
 
     return (
         <Grid item>
@@ -30,12 +30,11 @@ function SearchSelect({ menu, name, value, dataList, handleChange }) {
                 name={name}
                 value={name === "searchType" ? value : searchState[name]}
                 onChange={handleChange}>
-                {selectOptions &&
-                    selectOptions.map((list) => (
-                        <MenuItem key={`key-${list.label}`} value={list.value}>
-                            {list.label}
-                        </MenuItem>
-                    ))}
+                {selectOptions?.map((list) => (
+                    <MenuItem key={`menu-item-${list.label}`} value={list.value}>
+                        {list.label}
+                    </MenuItem>
+                ))}
             </Select>
         </Grid>
     );
@@ -43,10 +42,21 @@ function SearchSelect({ menu, name, value, dataList, handleChange }) {
 
 SearchSelect.propTypes = {
     menu: PropTypes.string,
-    dataList: PropTypes.array,
+    dataList: PropTypes.arrayOf(
+        PropTypes.shape({
+            label: PropTypes.string.isRequired,
+            value: PropTypes.string.isRequired
+        })
+    ),
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     name: PropTypes.string.isRequired,
     handleChange: PropTypes.func.isRequired
+};
+
+SearchSelect.defaultProps = {
+    menu: "",
+    dataList: [],
+    value: ""
 };
 
 export default SearchSelect;

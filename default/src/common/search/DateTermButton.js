@@ -51,4 +51,10 @@ DateTermButton.propTypes = {
     handleClick: PropTypes.func.isRequired
 };
 
+DateTermButton.defaultProps = {
+    menu: "",
+    handleChange: () => {},
+    dates: { startDate: null, endDate: null }
+};
+
 export default DateTermButton;

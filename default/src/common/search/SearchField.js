@@ -34,12 +34,21 @@ function SearchField({ menu, searchType, dataList, handleChange, searchKeyword, 
 }
 
 SearchField.propTypes = {
-    dataList: PropTypes.array,
+    dataList: PropTypes.arrayOf(
+        PropTypes.shape({
+            label: PropTypes.string.isRequired,
+            value: PropTypes.string.isRequired
+        })
+    ),
     menu: PropTypes.string.isRequired,
     searchType: PropTypes.string.isRequired,
     handleChange: PropTypes.func.isRequired,
     searchKeyword: PropTypes.string.isRequired,
     handleKeyword: PropTypes.func.isRequired
+};
+
+SearchField.defaultProps = {
+    dataList: []
 };
 
 export default SearchField;

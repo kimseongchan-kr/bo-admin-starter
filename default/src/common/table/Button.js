@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import { styled } from "@mui/styles";
 import Button from "@mui/material/Button";
 
@@ -11,19 +10,19 @@ const StyledButton = styled(Button)(({ theme }) => ({
     padding: 6,
     boxShadow: "unset",
     borderRadius: 4,
-    border: `1px solid ${theme.palette.border["main"]}`,
+    border: `1px solid ${theme.palette.border.main}`,
     fontSize: 12,
     letterSpacing: " -0.24px",
-    color: theme.palette.text["primary"],
-    backgroundColor: theme.palette.neutral["white"],
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.neutral.white,
     "&:hover": {
-        backgroundColor: theme.palette.background["light"],
-        border: `1px solid ${theme.palette.border["main"]}`,
+        backgroundColor: theme.palette.background.light,
+        border: `1px solid ${theme.palette.border.main}`,
         boxShadow: "unset"
     }
 }));
 
-function TableButton({ disabled = false, pageType = "", text, rowIndex, onClick }) {
+function TableButton({ disabled, pageType, text, rowIndex, onClick }) {
     return (
         <StyledButton variant="contained" disabled={disabled} onClick={() => onClick(pageType, rowIndex)}>
             {text}
@@ -39,4 +38,8 @@ TableButton.propTypes = {
     onClick: PropTypes.func.isRequired
 };
 
+TableButton.defaultProps = {
+    disabled: false,
+    pageType: ""
+};
 export default TableButton;

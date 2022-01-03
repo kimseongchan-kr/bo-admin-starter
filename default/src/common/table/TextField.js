@@ -5,7 +5,7 @@ import theme from "styles/theme/textfield";
 import { ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 
-function TextInput({ index = 0, inputType = "text", name, value, handleChange }) {
+function TextInput({ index, inputType, name, value, handleChange }) {
     return (
         <ThemeProvider theme={theme}>
             <TextField
@@ -30,6 +30,11 @@ TextInput.propTypes = {
     name: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     handleChange: PropTypes.func.isRequired
+};
+
+TextInput.defaultProps = {
+    index: 0,
+    inputType: "text"
 };
 
 export default TextInput;
